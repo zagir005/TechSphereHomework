@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.AuthHomework" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowSplashScreenBackground">@color/black</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@color/black</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/spinner_anim</item>
+        <item name="android:windowSplashScreenAnimationDuration">2000</item>
+    </style>
+</resources>

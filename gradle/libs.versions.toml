@@ -15,6 +15,8 @@ decompose = { group = "com.arkivanov.decompose", name = "decompose", version.ref
 decompose-extension = { group = "com.arkivanov.decompose", name = "extensions-compose", version.ref = "decompose" }
 
 
+
+androidx-core-splash = { group = "androidx.core", name = "core-splashscreen", version = "1.0.1" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
