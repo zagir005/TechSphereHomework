@@ -1,4 +1,4 @@
-package com.zagirlek.authhomework
+package com.zagirlek.authhomework.ui.screen.loading
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -6,10 +6,8 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInVertically
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -25,18 +23,40 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ModifierInfo
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.arkivanov.decompose.extensions.compose.subscribeAsState
+import com.zagirlek.authhomework.ui.components.SpinningLoader
+import com.zagirlek.authhomework.ui.screen.loading.cmp.SplashAction
+import com.zagirlek.authhomework.ui.screen.loading.cmp.SplashComponent
+import com.zagirlek.authhomework.ui.screen.loading.cmp.SplashMutation
 import com.zagirlek.authhomework.ui.theme.robotoFlexFamily
+import kotlinx.coroutines.delay
+
 
 @Composable
-fun Loading(modifier: Modifier = Modifier) {
+fun SplashUi(
+    splashComponent: SplashComponent,
+    modifier: Modifier = Modifier
+) {
     Scaffold { paddingValues ->
+        val state by splashComponent.state.subscribeAsState()
+
         var animVisibility by remember { mutableStateOf(false) }
-        LaunchedEffect(Unit) {
-            animVisibility = true
+
+        when(state){
+            SplashMutation.Loading -> {
+                LaunchedEffect(Unit) {
+                    animVisibility = true
+                }
+            }
+            SplashMutation.OnFinish -> {
+                LaunchedEffect(Unit) {
+                    animVisibility = false
+                    delay(200)
+                    splashComponent.action(SplashAction.Finish)
+                }
+            }
         }
 
         Column (
@@ -59,10 +79,10 @@ fun Loading(modifier: Modifier = Modifier) {
                     visible = animVisibility,
                     enter = slideInVertically(
                         animationSpec = tween(
-                            durationMillis = 300,
+                            durationMillis = 200,
                             easing = FastOutSlowInEasing
                         ),
-                        initialOffsetY = { -100 }
+                        initialOffsetY = { it }
                     ) + expandVertically(expandFrom = Alignment.Top) + fadeIn(initialAlpha = 0.3f)
                 ) {
                     Text(
@@ -78,7 +98,7 @@ fun Loading(modifier: Modifier = Modifier) {
                 visible = animVisibility,
                 enter = slideInVertically(
                     animationSpec = tween(
-                        durationMillis = 300,
+                        durationMillis = 200,
                         easing = FastOutSlowInEasing
                     ),
                     initialOffsetY = { +100 }
