@@ -1,4 +1,4 @@
-package com.zagirlek.authhomework
+package com.zagirlek.authhomework.ui.components
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -19,7 +20,6 @@ import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.DrawStyle
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -44,7 +44,8 @@ fun SpinningLoader(modifier: Modifier = Modifier) {
             animation = tween(durationMillis = 1200, easing = LinearEasing),
             repeatMode = RepeatMode.Restart
         )
-    ) ?: remember { mutableStateOf(0f) }
+    ) ?: remember { mutableFloatStateOf(0f) }
+
     LaunchedEffect(Unit) {
         delay(200)
         startAnimation = true
@@ -83,7 +84,7 @@ fun SpinningLoader(modifier: Modifier = Modifier) {
     showBackground = true
 )
 @Composable
-fun SpinningLoaderPreview(modifier: Modifier = Modifier) {
+private fun SpinningLoaderPreview(modifier: Modifier = Modifier) {
     AuthHomeworkTheme {
         SpinningLoader(
             modifier = Modifier.size(200.dp)
