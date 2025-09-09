@@ -84,7 +84,7 @@ fun SpinningLoader(modifier: Modifier = Modifier) {
     showBackground = true
 )
 @Composable
-fun SpinningLoaderPreview(modifier: Modifier = Modifier) {
+private fun SpinningLoaderPreview(modifier: Modifier = Modifier) {
     AuthHomeworkTheme {
         SpinningLoader(
             modifier = Modifier.size(200.dp)

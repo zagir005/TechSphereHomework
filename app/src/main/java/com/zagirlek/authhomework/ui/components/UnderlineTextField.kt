@@ -12,6 +12,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
@@ -21,6 +22,7 @@ fun UnderlineTextField(
     onValueChange: (String) -> Unit = {},
     label: String = "",
     errorMessage: String? = null,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
     trailingIcon: @Composable () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
@@ -38,6 +40,7 @@ fun UnderlineTextField(
                 color = Color.Red
             )
         },
+        visualTransformation = visualTransformation,
         trailingIcon = trailingIcon,
         colors = TextFieldDefaults.colors().copy(
             focusedContainerColor = Color.Transparent,
@@ -50,21 +53,4 @@ fun UnderlineTextField(
             errorLabelColor = TextFieldDefaults.colors().unfocusedLabelColor
         )
     )
-}
-
-@Preview(
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    backgroundColor = 4278190080,
-    showSystemUi = true
-)
-@Composable
-private fun UnderlineTextFieldPreview(modifier: Modifier = Modifier) {
-    Box{
-        UnderlineTextField(
-            label = "Логин",
-            modifier = Modifier.fillMaxWidth().padding(20.dp)
-        )
-    }
-
 }

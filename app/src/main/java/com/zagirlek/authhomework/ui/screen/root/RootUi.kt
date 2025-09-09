@@ -17,7 +17,8 @@ fun RootUi(
 ) {
     Children(
         stack = rootComponent.state,
-        animation = stackAnimation(animator = fade() + scale())
+        animation = stackAnimation(animator = fade() + scale()),
+        modifier = modifier
     ) {
         when (val child = it.instance) {
             is RootComponent.Child.SplashChild -> SplashUi(
