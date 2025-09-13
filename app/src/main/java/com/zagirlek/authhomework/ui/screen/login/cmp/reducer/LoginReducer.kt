@@ -1,5 +1,6 @@
 package com.zagirlek.authhomework.ui.screen.login.cmp.reducer
 
+import android.util.Log
 import com.zagirlek.authhomework.ui.screen.login.cmp.state.LoginAction
 import com.zagirlek.authhomework.ui.screen.login.cmp.state.LoginState
 import com.zagirlek.authhomework.ui.screen.login.cmp.state.textfield.TextFieldState
@@ -17,7 +18,7 @@ class LoginReducer() {
                         error = loginError
                     ),
                     buttonEnabled = loginError == null && !state.passwordTextFieldState.hasError()
-                            && (state.passwordTextFieldState.value.isNotEmpty() && state.loginTextFieldState.value.isNotEmpty())
+                            && (action.text.isNotEmpty() && state.passwordTextFieldState.value.isNotEmpty())
                 )
             }
             is LoginAction.PasswordTextChanged -> {
@@ -28,7 +29,7 @@ class LoginReducer() {
                         error = validatePassword(action.text)
                     ),
                     buttonEnabled = passwordError == null && !state.loginTextFieldState.hasError()
-                            && (state.passwordTextFieldState.value.isNotEmpty() && state.loginTextFieldState.value.isNotEmpty())
+                            && (action.text.isNotEmpty() && state.loginTextFieldState.value.isNotEmpty())
                 )
             }
             LoginAction.Submit -> {
@@ -39,6 +40,7 @@ class LoginReducer() {
 
     private fun validateLogin(login: String): LoginTextFieldError? {
         return when {
+            login.isEmpty() -> null
             !login.matches(Regex("^[^A-Za-z]+$")) -> LoginTextFieldError.OnlyCyrillic
             login != "Логин_Юзера" -> LoginTextFieldError.WrongLogin
             else -> null
@@ -47,6 +49,7 @@ class LoginReducer() {
 
     private fun validatePassword(password: String): PasswordTextFieldError? {
         return when {
+            password.isEmpty() -> null
             password.length < 6 -> PasswordTextFieldError.LengthLessThenSix
             password.length > 12 -> PasswordTextFieldError.LengthMoreThenTwelve
             password.toCharArray().none { it.isDigit() } -> PasswordTextFieldError.WithoutNumber

@@ -36,10 +36,12 @@ fun UnderlineTextField(
         modifier = modifier,
         isError = errorMessage != null,
         supportingText = {
-            Text(
-                text = errorMessage.orEmpty(),
-                color = Color.Red
-            )
+            if(errorMessage != null){
+                Text(
+                    text = errorMessage,
+                    color = Color.Red
+                )
+            }
         },
         visualTransformation = visualTransformation,
         trailingIcon = trailingIcon,
