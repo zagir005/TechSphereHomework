@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">NYTIMES</string>
+    <string name="password">Пароль</string>
+    <string name="login">Логин</string>
+    <string name="enter">Войти</string>
+    <string name="login_error_cyrillic">Логин пользователя должен быть на кириллице</string>
+    <string name="login_error_invalid">Неверный логин</string>
+    <string name="password_less_then_6">Пароль должен содержать не менее 6 символов</string>
+    <string name="password_more_then_12">Пароль должен содержать не более 12 символов</string>
+    <string name="password_without_number">Пароль должен содержать хотя бы одну цифру</string>
+    <string name="password_without_letter">Пароль должен содержать хотя бы одну букву</string>
 </resources>

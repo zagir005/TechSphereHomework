@@ -23,9 +23,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
+import com.zagirlek.authhomework.BuildConfig
+import com.zagirlek.authhomework.R
 import com.zagirlek.authhomework.ui.components.SpinningLoader
 import com.zagirlek.authhomework.ui.screen.loading.cmp.SplashAction
 import com.zagirlek.authhomework.ui.screen.loading.cmp.SplashComponent
@@ -39,25 +42,25 @@ fun SplashUi(
     splashComponent: SplashComponent,
     modifier: Modifier = Modifier
 ) {
+
     Scaffold { paddingValues ->
         val state by splashComponent.state.subscribeAsState()
 
         var animVisibility by remember { mutableStateOf(false) }
+        val animDuration = 200
 
-        when(state){
-            SplashMutation.Loading -> {
-                LaunchedEffect(Unit) {
-                    animVisibility = true
-                }
-            }
-            SplashMutation.OnFinish -> {
-                LaunchedEffect(Unit) {
+        LaunchedEffect(state) {
+            when (state) {
+                SplashMutation.Loading -> animVisibility = true
+                SplashMutation.OnFinish -> {
                     animVisibility = false
-                    delay(200)
+                    delay(animDuration.toLong())
                     splashComponent.action(SplashAction.Finish)
                 }
             }
+
         }
+
 
         Column (
             modifier = Modifier
@@ -79,14 +82,14 @@ fun SplashUi(
                     visible = animVisibility,
                     enter = slideInVertically(
                         animationSpec = tween(
-                            durationMillis = 200,
+                            durationMillis = animDuration,
                             easing = FastOutSlowInEasing
                         ),
                         initialOffsetY = { it }
                     ) + expandVertically(expandFrom = Alignment.Top) + fadeIn(initialAlpha = 0.3f)
                 ) {
                     Text(
-                        text = "NYTIMES",
+                        text = stringResource(R.string.app_name),
                         color = Color.White,
                         fontSize = 40.sp,
                         fontFamily = robotoFlexFamily
@@ -98,14 +101,14 @@ fun SplashUi(
                 visible = animVisibility,
                 enter = slideInVertically(
                     animationSpec = tween(
-                        durationMillis = 200,
+                        durationMillis = animDuration,
                         easing = FastOutSlowInEasing
                     ),
-                    initialOffsetY = { +100 }
+                    initialOffsetY = { it }
                 ) + expandVertically(expandFrom = Alignment.Top) + fadeIn(initialAlpha = 0.3f),
             ) {
                 Text(
-                    text = "1.0.41",
+                    text = BuildConfig.VERSION_NAME,
                     color = Color.White,
                     fontSize = 14.sp,
                     fontFamily = robotoFlexFamily

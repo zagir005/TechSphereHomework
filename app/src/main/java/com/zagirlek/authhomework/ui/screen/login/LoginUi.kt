@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -15,7 +13,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -36,6 +33,8 @@ import com.zagirlek.authhomework.R
 import com.zagirlek.authhomework.ui.components.UnderlineTextField
 import com.zagirlek.authhomework.ui.screen.login.cmp.LoginComponent
 import com.zagirlek.authhomework.ui.screen.login.cmp.state.LoginAction
+import com.zagirlek.authhomework.ui.screen.login.cmp.state.textfield.textfielderror.LoginTextFieldError
+import com.zagirlek.authhomework.ui.screen.login.cmp.state.textfield.textfielderror.PasswordTextFieldError
 import com.zagirlek.authhomework.ui.theme.robotoFlexFamily
 
 @Composable
@@ -82,8 +81,12 @@ fun LoginUi(
                     onValueChange = {
                         component.action(LoginAction.LoginTextChanged(it))
                     },
-                    label = "Логин",
-                    errorMessage = state.loginTextFieldState.error,
+                    label = stringResource(R.string.login),
+                    errorMessage = when(state.loginTextFieldState.error){
+                        LoginTextFieldError.OnlyCyrillic -> stringResource(R.string.login_error_cyrillic)
+                        LoginTextFieldError.WrongLogin -> stringResource(R.string.login_error_invalid)
+                        null -> null
+                    },
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -93,8 +96,14 @@ fun LoginUi(
                     onValueChange = {
                         component.action(LoginAction.PasswordTextChanged(it))
                     },
-                    label = "Пароль",
-                    errorMessage = state.passwordTextFieldState.error,
+                    label = stringResource(R.string.password),
+                    errorMessage = when(state.passwordTextFieldState.error){
+                        PasswordTextFieldError.LengthLessThenSix -> stringResource(R.string.password_less_then_6)
+                        PasswordTextFieldError.LengthMoreThenTwelve -> stringResource(R.string.password_more_then_12)
+                        PasswordTextFieldError.WithoutLetter -> stringResource(R.string.password_without_letter)
+                        PasswordTextFieldError.WithoutNumber -> stringResource(R.string.password_without_number)
+                        null -> null
+                    },
                     trailingIcon = {
                         IconButton(
                             onClick = {
@@ -116,7 +125,6 @@ fun LoginUi(
 
                 Row{
                     Spacer(modifier = Modifier.weight(1f))
-
                     Button(
                         onClick = {
                             component.action(LoginAction.Submit)
@@ -124,7 +132,7 @@ fun LoginUi(
                         shape = RoundedCornerShape(4.dp),
                         enabled = state.buttonEnabled
                     ) {
-                        Text(text = "Войти")
+                        Text(text = stringResource(R.string.enter))
                     }
                 }
 

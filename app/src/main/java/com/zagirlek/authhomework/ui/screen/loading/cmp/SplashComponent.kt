@@ -29,7 +29,6 @@ class SplashComponent(
     }
 
     private suspend fun hasToken(): Boolean {
-        //...типо проверяем наличие токена в DataStore, если есть то в mainScreen, иначе на loginScreen
         delay(2000)
         return true
     }

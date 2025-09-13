@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -42,7 +43,7 @@ fun UnderlineTextField(
         },
         visualTransformation = visualTransformation,
         trailingIcon = trailingIcon,
-        colors = TextFieldDefaults.colors().copy(
+        colors = TextFieldDefaults.colors(
             focusedContainerColor = Color.Transparent,
             errorContainerColor = Color.Transparent,
             disabledContainerColor = Color.Transparent,
