@@ -13,72 +13,72 @@
                 <path
                     android:name="path_3"
                     android:fillAlpha="0.83"
-                    android:fillColor="@color/black"
+                    android:fillColor="@color/white"
                     android:pathData="M 290.534 107.13 C 300.817 101.193 313.967 104.717 319.904 115 C 325.841 125.283 322.317 138.432 312.034 144.37 L 282.589 161.37 C 272.306 167.307 259.157 163.783 253.22 153.5 C 247.283 143.217 250.806 130.067 261.089 124.13 L 290.534 107.13 Z"
                     android:strokeWidth="1" />
                 <path
                     android:name="path_1"
-                    android:fillColor="@color/black"
+                    android:fillColor="@color/white"
                     android:pathData="M 168.5 61.5 C 168.5 49.626 178.126 40 190 40 C 201.874 40 211.5 49.626 211.5 61.5 L 211.5 95.5 C 211.5 107.374 201.874 117 190 117 C 178.126 117 168.5 107.374 168.5 95.5 L 168.5 61.5 Z"
                     android:strokeWidth="1" />
                 <path
                     android:name="path_2"
                     android:fillAlpha="0.91"
-                    android:fillColor="@color/black"
+                    android:fillColor="@color/white"
                     android:pathData="M 235.63 67.966 C 241.567 57.682 254.717 54.159 265 60.096 C 275.283 66.033 278.807 79.182 272.87 89.466 L 255.87 118.911 C 249.932 129.194 236.783 132.717 226.5 126.78 C 216.217 120.843 212.693 107.694 218.63 97.411 L 235.63 67.966 Z"
                     android:strokeWidth="1" />
                 <path
                     android:name="path_4"
                     android:fillAlpha="0.75"
-                    android:fillColor="@color/black"
+                    android:fillColor="@color/white"
                     android:pathData="M 321.25 168.5 C 333.124 168.5 342.75 178.126 342.75 190 C 342.75 201.874 333.124 211.5 321.25 211.5 L 287.25 211.5 C 275.376 211.5 265.75 201.874 265.75 190 C 265.75 178.126 275.376 168.5 287.25 168.5 L 321.25 168.5 Z"
                     android:strokeWidth="1" />
                 <path
                     android:name="path_5"
                     android:fillAlpha="0.66"
-                    android:fillColor="@color/black"
+                    android:fillColor="@color/white"
                     android:pathData="M 312.034 235.63 C 322.317 241.567 325.841 254.717 319.904 265 C 313.967 275.283 300.817 278.807 290.534 272.869 L 261.089 255.869 C 250.806 249.932 247.283 236.783 253.22 226.5 C 259.157 216.217 272.306 212.693 282.589 218.63 L 312.034 235.63 Z"
                     android:strokeWidth="1" />
                 <path
                     android:name="path_6"
                     android:fillAlpha="0.58"
-                    android:fillColor="@color/black"
+                    android:fillColor="@color/white"
                     android:pathData="M 271.996 290.534 C 277.933 300.818 274.409 313.967 264.126 319.904 C 253.843 325.841 240.693 322.318 234.756 312.034 L 217.756 282.589 C 211.819 272.306 215.343 259.157 225.626 253.22 C 235.909 247.283 249.058 250.806 254.996 261.089 L 271.996 290.534 Z"
                     android:strokeWidth="1" />
                 <path
                     android:name="path_7"
                     android:fillAlpha="0.5"
-                    android:fillColor="@color/black"
+                    android:fillColor="@color/white"
                     android:pathData="M 168.5 284.5 C 168.5 272.626 178.126 263 190 263 C 201.874 263 211.5 272.626 211.5 284.5 L 211.5 318.5 C 211.5 330.374 201.874 340 190 340 C 178.126 340 168.5 330.374 168.5 318.5 L 168.5 284.5 Z"
                     android:strokeWidth="1" />
                 <path
                     android:name="path_8"
                     android:fillAlpha="0.41"
-                    android:fillColor="@color/black"
+                    android:fillColor="@color/white"
                     android:pathData="M 124.13 261.089 C 130.067 250.806 143.217 247.283 153.5 253.22 C 163.783 259.157 167.307 272.306 161.37 282.589 L 144.37 312.034 C 138.432 322.318 125.283 325.841 115 319.904 C 104.717 313.967 101.193 300.818 107.13 290.534 L 124.13 261.089 Z"
                     android:strokeWidth="1" />
                 <path
                     android:name="path_9"
                     android:fillAlpha="0.33"
-                    android:fillColor="@color/black"
+                    android:fillColor="@color/white"
                     android:pathData="M 97.411 218.63 C 107.694 212.693 120.843 216.217 126.78 226.5 C 132.717 236.783 129.194 249.932 118.911 255.87 L 89.466 272.87 C 79.183 278.807 66.033 275.283 60.096 265 C 54.159 254.717 57.682 241.567 67.966 235.63 L 97.411 218.63 Z"
                     android:strokeWidth="1" />
                 <path
                     android:name="path_10"
                     android:fillAlpha="0.25"
-                    android:fillColor="@color/black"
+                    android:fillColor="@color/white"
                     android:pathData="M 95.5 168.5 C 107.374 168.5 117 178.126 117 190 C 117 201.874 107.374 211.5 95.5 211.5 L 61.5 211.5 C 49.626 211.5 40 201.874 40 190 C 40 178.126 49.626 168.5 61.5 168.5 L 95.5 168.5 Z"
                     android:strokeWidth="1" />
                 <path
                     android:name="path_11"
                     android:fillAlpha="0.17"
-                    android:fillColor="@color/black"
+                    android:fillColor="@color/white"
                     android:pathData="M 118.911 124.13 C 129.194 130.067 132.717 143.217 126.78 153.5 C 120.843 163.783 107.694 167.307 97.41 161.369 L 67.966 144.369 C 57.682 138.432 54.159 125.283 60.096 115 C 66.033 104.717 79.182 101.193 89.466 107.13 L 118.911 124.13 Z"
                     android:strokeWidth="1" />
                 <path
                     android:name="path_12"
                     android:fillAlpha="0.08"
-                    android:fillColor="@color/black"
+                    android:fillColor="@color/white"
                     android:pathData="M 161.37 97.41 C 167.307 107.694 163.783 120.843 153.5 126.78 C 143.217 132.717 130.067 129.194 124.13 118.91 L 107.13 89.466 C 101.193 79.182 104.717 66.033 115 60.096 C 125.283 54.159 138.432 57.682 144.37 67.966 L 161.37 97.41 Z"
                     android:strokeWidth="1" />
             </group>

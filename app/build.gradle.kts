@@ -6,15 +6,15 @@ plugins {
 }
 
 android {
-    namespace = "com.zagirlek.authhomework"
+    namespace = "com.zagirlek.nytimes"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.zagirlek.authhomework"
+        applicationId = "com.zagirlek.nytimes"
         minSdk = 28
         targetSdk = 36
         versionCode = 1
-        versionName = "1.0"
+        versionName = "0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
