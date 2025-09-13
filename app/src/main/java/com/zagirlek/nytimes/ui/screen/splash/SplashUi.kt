@@ -77,6 +77,7 @@ fun SplashUi(
             SpinningLoader(
                 modifier = Modifier.size(80.dp)
             )
+
             AnimatedVisibility(
                 visible = animVisibility,
                 enter = slideInVertically(
