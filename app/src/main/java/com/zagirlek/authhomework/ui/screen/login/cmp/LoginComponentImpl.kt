@@ -7,16 +7,17 @@ import com.arkivanov.decompose.value.update
 import com.zagirlek.authhomework.ui.screen.login.cmp.reducer.LoginReducer
 import com.zagirlek.authhomework.ui.screen.login.cmp.state.LoginAction
 import com.zagirlek.authhomework.ui.screen.login.cmp.state.LoginState
+import com.zagirlek.authhomework.ui.screen.root.components.LoginComponent
 
-class LoginComponent(
+class LoginComponentImpl(
     componentContext: ComponentContext
-): ComponentContext by componentContext {
+): ComponentContext by componentContext, LoginComponent {
     private val reducer = LoginReducer()
 
     private val _state = MutableValue(LoginState())
-    val state: Value<LoginState> = _state
+    override val state: Value<LoginState> = _state
 
-    fun action(loginAction: LoginAction){
+    override fun action(loginAction: LoginAction){
         when(loginAction){
             is LoginAction.LoginTextChanged -> {
                 _state.update {

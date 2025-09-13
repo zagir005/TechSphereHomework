@@ -1,6 +1,7 @@
 package com.zagirlek.authhomework.ui.screen.login
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,10 +32,10 @@ import androidx.compose.ui.unit.sp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.zagirlek.authhomework.R
 import com.zagirlek.authhomework.ui.components.UnderlineTextField
-import com.zagirlek.authhomework.ui.screen.login.cmp.LoginComponent
 import com.zagirlek.authhomework.ui.screen.login.cmp.state.LoginAction
 import com.zagirlek.authhomework.ui.screen.login.cmp.state.textfield.textfielderror.LoginTextFieldError
 import com.zagirlek.authhomework.ui.screen.login.cmp.state.textfield.textfielderror.PasswordTextFieldError
+import com.zagirlek.authhomework.ui.screen.root.components.LoginComponent
 import com.zagirlek.authhomework.ui.theme.robotoFlexFamily
 
 @Composable
@@ -135,8 +136,8 @@ fun LoginUi(
                         Text(text = stringResource(R.string.enter))
                     }
                 }
-
             }
         }
     }
 }
+

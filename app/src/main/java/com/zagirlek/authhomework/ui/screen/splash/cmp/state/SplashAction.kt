@@ -1,4 +1,4 @@
-package com.zagirlek.authhomework.ui.screen.loading.cmp
+package com.zagirlek.authhomework.ui.screen.splash.cmp.state
 
 sealed class SplashAction {
     object Finish: SplashAction()
