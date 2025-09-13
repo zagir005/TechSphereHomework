@@ -1,5 +1,6 @@
 package com.zagirlek.authhomework.ui.screen.splash
 
+import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
@@ -10,7 +11,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -22,9 +25,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
+import com.arkivanov.decompose.value.MutableValue
+import com.arkivanov.decompose.value.Value
 import com.zagirlek.authhomework.BuildConfig
 import com.zagirlek.authhomework.R
 import com.zagirlek.authhomework.ui.components.SpinningLoader
@@ -38,6 +44,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun SplashUi(
     splashComponent: SplashComponent,
+    modifier: Modifier = Modifier
 ) {
     val state by splashComponent.state.subscribeAsState()
 
@@ -57,9 +64,8 @@ fun SplashUi(
 
 
     Column (
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Black),
+        modifier = modifier
+            .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Column(
@@ -107,5 +113,33 @@ fun SplashUi(
                 fontFamily = robotoFlexFamily
             )
         }
+    }
+}
+
+
+
+
+@Preview(
+    showSystemUi = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
+@Composable
+fun SplashUiPreview() {
+    val previewComponent = object: SplashComponent {
+        override val state: Value<SplashMutation> = MutableValue(SplashMutation.Loading)
+
+        override fun action(splashAction: SplashAction) {
+        }
+    }
+
+    Scaffold(
+        containerColor = Color.Black
+    ) { paddingValues ->
+        SplashUi(
+            splashComponent = previewComponent,
+            modifier = Modifier
+                .padding(paddingValues)
+                .fillMaxSize()
+        )
     }
 }

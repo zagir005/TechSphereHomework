@@ -5,7 +5,7 @@ import com.zagirlek.authhomework.ui.screen.login.cmp.state.textfield.textfielder
 import com.zagirlek.authhomework.ui.screen.login.cmp.state.textfield.textfielderror.PasswordTextFieldError
 
 data class LoginState (
-    val passwordTextFieldState: TextFieldState<PasswordTextFieldError> = TextFieldState(),
     val loginTextFieldState: TextFieldState<LoginTextFieldError> = TextFieldState(),
+    val passwordTextFieldState: TextFieldState<PasswordTextFieldError> = TextFieldState(),
     val buttonEnabled: Boolean = false
 )

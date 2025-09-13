@@ -6,6 +6,7 @@ import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.push
+import com.arkivanov.decompose.router.stack.replaceCurrent
 import com.arkivanov.decompose.value.Value
 import com.zagirlek.authhomework.ui.screen.login.cmp.LoginComponentImpl
 import com.zagirlek.authhomework.ui.screen.root.components.LoginComponent
@@ -43,7 +44,7 @@ class RootComponent(
             componentContext = component,
             mainContext = Dispatchers.Main
         ) {
-            nav.push(Config.Login)
+            nav.replaceCurrent(Config.Login)
         }
     )
 
