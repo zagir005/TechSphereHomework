@@ -6,9 +6,12 @@ import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.push
+import com.arkivanov.decompose.router.stack.replaceCurrent
 import com.arkivanov.decompose.value.Value
-import com.zagirlek.authhomework.ui.screen.loading.cmp.SplashComponent
-import com.zagirlek.authhomework.ui.screen.login.cmp.LoginComponent
+import com.zagirlek.authhomework.ui.screen.login.cmp.LoginComponentImpl
+import com.zagirlek.authhomework.ui.screen.root.components.LoginComponent
+import com.zagirlek.authhomework.ui.screen.root.components.SplashComponent
+import com.zagirlek.authhomework.ui.screen.splash.cmp.SplashComponentImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.Serializable
 
@@ -37,16 +40,16 @@ class RootComponent(
 
     @OptIn(DelicateDecomposeApi::class)
     private fun splashChild(component: ComponentContext): Child.SplashChild = Child.SplashChild(
-        splashChild = SplashComponent(
+        splashChild = SplashComponentImpl(
             componentContext = component,
             mainContext = Dispatchers.Main
         ) {
-            nav.push(Config.Login)
+            nav.replaceCurrent(Config.Login)
         }
     )
 
     private fun loginChild(component: ComponentContext): Child.LoginChild = Child.LoginChild(
-        loginChild = LoginComponent(
+        loginChild = LoginComponentImpl(
             componentContext = component
         )
     )

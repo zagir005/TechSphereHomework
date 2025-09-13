@@ -1,53 +1,61 @@
 package com.zagirlek.authhomework.ui.screen.login.cmp.reducer
 
+import android.util.Log
 import com.zagirlek.authhomework.ui.screen.login.cmp.state.LoginAction
 import com.zagirlek.authhomework.ui.screen.login.cmp.state.LoginState
-import com.zagirlek.authhomework.ui.screen.login.cmp.state.TextFieldState
+import com.zagirlek.authhomework.ui.screen.login.cmp.state.textfield.TextFieldState
+import com.zagirlek.authhomework.ui.screen.login.cmp.state.textfield.textfielderror.LoginTextFieldError
+import com.zagirlek.authhomework.ui.screen.login.cmp.state.textfield.textfielderror.PasswordTextFieldError
 
 class LoginReducer() {
-
     fun reduce(state: LoginState, action: LoginAction): LoginState {
         return when(action){
-            is LoginAction.LoginTextChanged -> state.copy(
+            is LoginAction.LoginTextChanged -> {
+                val loginError: LoginTextFieldError? = validateLogin(action.text)
+                state.copy(
                     loginTextFieldState = TextFieldState(
                         value = action.text,
-                        error = validateLogin(action.text)
+                        error = loginError
                     ),
-                    buttonEnabled = state.loginTextFieldState.hasError() || state.passwordTextFieldState.hasError()
+                    buttonEnabled = loginError == null && !state.passwordTextFieldState.hasError()
+                            && (action.text.isNotEmpty() && state.passwordTextFieldState.value.isNotEmpty())
                 )
-            is LoginAction.PasswordTextChanged -> state.copy(
+            }
+            is LoginAction.PasswordTextChanged -> {
+                val passwordError: PasswordTextFieldError? = validatePassword(action.text)
+                state.copy(
                     passwordTextFieldState = TextFieldState(
                         value = action.text,
                         error = validatePassword(action.text)
                     ),
-                    buttonEnabled = !(state.passwordTextFieldState.hasError() || state.passwordTextFieldState.hasError())
+                    buttonEnabled = passwordError == null && !state.loginTextFieldState.hasError()
+                            && (action.text.isNotEmpty() && state.loginTextFieldState.value.isNotEmpty())
                 )
+            }
             LoginAction.Submit -> {
-                //по идее тут мы залогиниться
                 return state
             }
         }
     }
 
-    private fun validateLogin(login: String): String? {
-        return if (!login.matches(Regex("^[^A-Za-z]+$")))
-            "Логин пользователя должен быть на кириллице"
-        else if (login != "Логин_Юзера")
-            "Неверный логин"
-        else
-            null
+    private fun validateLogin(login: String): LoginTextFieldError? {
+        return when {
+            login.isEmpty() -> null
+            !login.matches(Regex("^[^A-Za-z]+$")) -> LoginTextFieldError.OnlyCyrillic
+            login != "Логин_Юзера" -> LoginTextFieldError.WrongLogin
+            else -> null
+        }
     }
 
-    private fun validatePassword(password: String): String? {
-        return if (password.length < 6)
-            "Пароль должен содержать не менее 6 символов"
-        else if (password.length > 12)
-            "Пароль должен содержать не более 12 символов"
-        else if (password.toCharArray().none { it.isDigit() })
-            "Пароль должен содержать хотя бы одну цифру"
-        else if (password.toCharArray().none { it.isLetter() })
-            "Пароль должен содержать хотя бы одну букву"
-        else
-            null
+    private fun validatePassword(password: String): PasswordTextFieldError? {
+        return when {
+            password.isEmpty() -> null
+            password.length < 6 -> PasswordTextFieldError.LengthLessThenSix
+            password.length > 12 -> PasswordTextFieldError.LengthMoreThenTwelve
+            password.toCharArray().none { it.isDigit() } -> PasswordTextFieldError.WithoutNumber
+            password.toCharArray().none { it.isLetter() } -> PasswordTextFieldError.WithoutLetter
+            else -> null
+        }
     }
+
 }

@@ -1,23 +1,26 @@
-package com.zagirlek.authhomework.ui.screen.loading.cmp
+package com.zagirlek.authhomework.ui.screen.splash.cmp
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.update
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
+import com.zagirlek.authhomework.ui.screen.root.components.SplashComponent
+import com.zagirlek.authhomework.ui.screen.splash.cmp.state.SplashAction
+import com.zagirlek.authhomework.ui.screen.splash.cmp.state.SplashMutation
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-class SplashComponent(
+class SplashComponentImpl(
     componentContext: ComponentContext,
     mainContext: CoroutineContext,
     private val toLogin: () -> Unit
-): ComponentContext by componentContext {
+): ComponentContext by componentContext, SplashComponent {
 
     private val _state = MutableValue<SplashMutation>(initialValue = SplashMutation.Loading)
-    val state: Value<SplashMutation> = _state
+    override val state: Value<SplashMutation> = _state
 
     private val scope = coroutineScope(mainContext + SupervisorJob())
 
@@ -29,12 +32,11 @@ class SplashComponent(
     }
 
     private suspend fun hasToken(): Boolean {
-        //...типо проверяем наличие токена в DataStore, если есть то в mainScreen, иначе на loginScreen
         delay(2000)
         return true
     }
 
-    fun action(splashAction: SplashAction){
+    override fun action(splashAction: SplashAction){
         when(splashAction){
             SplashAction.Finish -> toLogin()
         }
