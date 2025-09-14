@@ -46,6 +46,8 @@ dependencies {
     implementation(libs.decompose.extension)
     implementation(libs.essenty.coroutines)
 
+    implementation(libs.kotlin.serialization.json)
+
     implementation(libs.androidx.core.splash)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

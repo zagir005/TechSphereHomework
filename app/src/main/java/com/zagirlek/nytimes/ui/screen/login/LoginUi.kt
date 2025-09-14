@@ -198,7 +198,7 @@ private fun LoginUiPreview(modifier: Modifier = Modifier) {
             )
         )
 
-        override fun action(loginAction: LoginAction) {
+        override fun action(action: LoginAction) {
 
         }
     }
@@ -237,7 +237,7 @@ private fun LoginUiNightPreview(modifier: Modifier = Modifier) {
             )
         )
 
-        override fun action(loginAction: LoginAction) {
+        override fun action(action: LoginAction) {
 
         }
     }

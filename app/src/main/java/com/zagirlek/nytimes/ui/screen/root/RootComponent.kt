@@ -7,10 +7,10 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.replaceCurrent
 import com.arkivanov.decompose.value.Value
-import com.zagirlek.nytimes.ui.screen.login.cmp.LoginComponentImpl
+import com.zagirlek.nytimes.ui.screen.login.cmp.DefaultLoginComponent
 import com.zagirlek.nytimes.ui.screen.root.components.LoginComponent
 import com.zagirlek.nytimes.ui.screen.root.components.SplashComponent
-import com.zagirlek.nytimes.ui.screen.splash.cmp.SplashComponentImpl
+import com.zagirlek.nytimes.ui.screen.splash.cmp.DefaultSplashComponent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.Serializable
 
@@ -39,7 +39,7 @@ class RootComponent(
 
     @OptIn(DelicateDecomposeApi::class)
     private fun splashChild(component: ComponentContext): Child.SplashChild = Child.SplashChild(
-        splashChild = SplashComponentImpl(
+        splashChild = DefaultSplashComponent(
             componentContext = component,
             mainContext = Dispatchers.Main
         ) {
@@ -48,7 +48,7 @@ class RootComponent(
     )
 
     private fun loginChild(component: ComponentContext): Child.LoginChild = Child.LoginChild(
-        loginChild = LoginComponentImpl(
+        loginChild = DefaultLoginComponent(
             componentContext = component
         )
     )

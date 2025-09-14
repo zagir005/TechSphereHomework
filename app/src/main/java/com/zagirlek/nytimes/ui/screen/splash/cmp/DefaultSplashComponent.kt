@@ -13,7 +13,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-class SplashComponentImpl(
+class DefaultSplashComponent(
     componentContext: ComponentContext,
     mainContext: CoroutineContext,
     private val toLogin: () -> Unit

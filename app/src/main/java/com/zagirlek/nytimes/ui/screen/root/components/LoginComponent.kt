@@ -7,5 +7,5 @@ import com.zagirlek.nytimes.ui.screen.login.cmp.state.LoginState
 interface LoginComponent {
     val state: Value<LoginState>
 
-    fun action(loginAction: LoginAction)
+    fun action(action: LoginAction)
 }
