@@ -20,13 +20,11 @@
 
 
 ## ⏯️ Видео-демонстрация
-
 <div align="center">
 
-[Видеооо](https://github.com/zagir005/TechSphereHomework/releases/download/0.1/gameplay01.webm)
+[gameplay01.webm](https://github.com/user-attachments/assets/cdeb8c16-ae12-4e97-8d56-8c9ecb1ff5a3)
 
 </div>
-
 
 <div align="center">
 
