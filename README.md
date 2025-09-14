@@ -1,6 +1,10 @@
 # 🪩 TechSphere Homework
 
-<div align="center"> **Проект еще пока что пишется..** </div>
+<div align="center"> 
+
+**Проект еще пока что пишется..** 
+
+</div>
 Домашнее задание выполненное в рамках отбора на стажировку в компанию "Техносфера". Ниже дам краткое описание стеку и фичам проекта. 
 
 ## ✨ Фичи
@@ -19,7 +23,7 @@
 
 <div align="center">
 
-[![Watch the video](https://img.shields.io/badge/Watch-Demo-blue)](https://github.com/zagir005/TechSphereHomework/releases/download/0.1/gameplay01.mp4)
+[Видеооо](https://github.com/zagir005/TechSphereHomework/releases/download/0.1/gameplay01.webm)
 
 </div>
 
