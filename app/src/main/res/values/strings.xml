@@ -9,4 +9,7 @@
     <string name="password_more_then_12">Пароль должен содержать не более 12 символов</string>
     <string name="password_without_number">Пароль должен содержать хотя бы одну цифру</string>
     <string name="password_without_letter">Пароль должен содержать хотя бы одну букву</string>
+    <string name="news">Новости</string>
+    <string name="continue_without_auth">Продолжить без авторизации</string>
+    <string name="weather">Погода</string>
 </resources>

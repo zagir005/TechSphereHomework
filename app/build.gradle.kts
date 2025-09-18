@@ -48,6 +48,8 @@ dependencies {
 
     implementation(libs.kotlin.serialization.json)
 
+    implementation(libs.androidx.datastore)
+
     implementation(libs.androidx.core.splash)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

@@ -5,8 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.arkivanov.decompose.defaultComponentContext
-import com.zagirlek.nytimes.ui.screen.root.RootComponent
+import com.zagirlek.nytimes.data.repository.MockAuthRepository
 import com.zagirlek.nytimes.ui.screen.root.RootUi
+import com.zagirlek.nytimes.ui.screen.root.components.DefaultRootComponent
 import com.zagirlek.nytimes.ui.theme.NyTimesTheme
 
 class MainActivity : ComponentActivity() {
@@ -14,11 +15,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val rootComponent = RootComponent(defaultComponentContext())
-
+        val defaultRootComponent = DefaultRootComponent(
+            componentContext = defaultComponentContext(),
+            authRepository = MockAuthRepository()
+        )
         setContent {
             NyTimesTheme {
-                RootUi(rootComponent)
+                RootUi(defaultRootComponent)
             }
         }
     }

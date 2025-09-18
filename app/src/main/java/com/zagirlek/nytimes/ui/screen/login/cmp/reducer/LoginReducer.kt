@@ -31,9 +31,8 @@ class LoginReducer() {
                             && (action.text.isNotEmpty() && state.loginTextFieldState.value.isNotEmpty())
                 )
             }
-            LoginAction.Submit -> {
-                return state
-            }
+            LoginAction.Submit -> state
+            LoginAction.ContinueWithoutAuth -> state
         }
     }
 

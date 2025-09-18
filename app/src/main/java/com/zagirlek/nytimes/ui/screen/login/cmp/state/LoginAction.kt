@@ -7,4 +7,6 @@ sealed class LoginAction{
 
     data object Submit: LoginAction()
 
+    data object ContinueWithoutAuth: LoginAction()
+
 }

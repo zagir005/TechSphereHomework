@@ -1,9 +1,7 @@
 package com.zagirlek.nytimes.ui.components
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material3.Icon
@@ -81,7 +79,7 @@ fun AppTextField(
     showBackground = true
 )
 @Composable
-private fun EmptyUnderlineTextFieldPreview(modifier: Modifier = Modifier) {
+private fun EmptyUnderlineTextFieldPreview() {
     NyTimesTheme {
         Surface(Modifier.padding(20.dp)){
             AppTextField(
@@ -103,7 +101,7 @@ private fun EmptyUnderlineTextFieldPreview(modifier: Modifier = Modifier) {
     showBackground = true
 )
 @Composable
-private fun ExampleTextUnderlineTextFieldPreview(modifier: Modifier = Modifier) {
+private fun ExampleTextUnderlineTextFieldPreview() {
     NyTimesTheme {
         Surface(Modifier.padding(20.dp)) {
             AppTextField(
@@ -126,12 +124,11 @@ private fun ExampleTextUnderlineTextFieldPreview(modifier: Modifier = Modifier) 
     showBackground = true
 )
 @Composable
-private fun UnderlineTextFieldWithErrorPreview(modifier: Modifier = Modifier) {
+private fun UnderlineTextFieldWithErrorPreview() {
     NyTimesTheme {
         Surface(Modifier.padding(20.dp)) {
             AppTextField(
-                modifier = modifier,
-                "Example text",
+                value = "Example text",
                 errorMessage = "Error!",
                 label = "Write here",
                 trailingIcon = {
@@ -152,7 +149,7 @@ private fun UnderlineTextFieldWithErrorPreview(modifier: Modifier = Modifier) {
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
-private fun EmptyTextFieldNightPreview(modifier: Modifier = Modifier) {
+private fun EmptyTextFieldNightPreview() {
     NyTimesTheme {
         Surface(Modifier.padding(20.dp)) {
             AppTextField(
@@ -175,7 +172,7 @@ private fun EmptyTextFieldNightPreview(modifier: Modifier = Modifier) {
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
-private fun ExampleTextFieldNightPreview(modifier: Modifier = Modifier) {
+private fun ExampleTextFieldNightPreview() {
     NyTimesTheme {
         Surface(Modifier.padding(20.dp)) {
             AppTextField(
@@ -199,12 +196,11 @@ private fun ExampleTextFieldNightPreview(modifier: Modifier = Modifier) {
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
-private fun WithErrorFieldNightPreview(modifier: Modifier = Modifier) {
+private fun WithErrorFieldNightPreview() {
     NyTimesTheme {
         Surface(Modifier.padding(20.dp)) {
             AppTextField(
-                modifier = modifier,
-                "Example text",
+                value = "Example text",
                 errorMessage = "Error!",
                 label = "Write here",
                 trailingIcon = {
