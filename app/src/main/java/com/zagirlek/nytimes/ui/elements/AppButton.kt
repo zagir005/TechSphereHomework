@@ -1,4 +1,4 @@
-package com.zagirlek.nytimes.ui.components
+package com.zagirlek.nytimes.ui.elements
 
 import android.content.res.Configuration
 import androidx.compose.foundation.shape.RoundedCornerShape

@@ -39,7 +39,7 @@ class DefaultMainComponent(
         childFactory = ::child,
     )
 
-    override fun selectTab(index: Int) {
+    override fun selectPage(index: Int) {
          navigation.select(index)
     }
 
@@ -59,9 +59,6 @@ class DefaultMainComponent(
 
     private fun weather(componentContext: ComponentContext): WeatherComponent =
         DefaultWeatherComponent(componentContext)
-
-
-
 
     @Serializable
     sealed class Config{

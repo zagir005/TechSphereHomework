@@ -34,8 +34,8 @@ import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import com.zagirlek.nytimes.R
-import com.zagirlek.nytimes.ui.components.AppButton
-import com.zagirlek.nytimes.ui.components.AppTextField
+import com.zagirlek.nytimes.ui.elements.AppButton
+import com.zagirlek.nytimes.ui.elements.AppTextField
 import com.zagirlek.nytimes.ui.screen.login.cmp.state.LoginAction
 import com.zagirlek.nytimes.ui.screen.login.cmp.state.LoginState
 import com.zagirlek.nytimes.ui.screen.login.cmp.state.textfield.textfielderror.LoginTextFieldError
@@ -161,8 +161,8 @@ private fun PasswordField(
             ) {
                 Icon(
                     painterResource(
-                        if (!passwordVisibility) R.drawable.outline_visibility_24
-                        else R.drawable.outline_visibility_off_24
+                        if (!passwordVisibility) R.drawable.ic_visibility
+                        else R.drawable.ic_visibility_off
                     ),
                     null
                 )
@@ -188,7 +188,7 @@ private fun LoginHeader() {
             fontFamily = robotoFlexFamily
         )
         Image(
-            painterResource(R.drawable.spinner_main_icon),
+            painterResource(R.drawable.icon_main_loader),
             contentDescription = null,
             modifier = Modifier.size(48.dp)
         )
@@ -196,32 +196,32 @@ private fun LoginHeader() {
 }
 
 
+private val previewComponent = object: LoginComponent {
+    override val state: Value<LoginState> = MutableValue(
+        LoginState(
+            loginTextFieldState = TextFieldState(
+                "Some text",
+                error = null
+            ),
+            passwordTextFieldState = TextFieldState(
+                "Some password",
+                error = null
+            ),
+            true
+        )
+    )
+
+    override fun action(action: LoginAction) {
+
+    }
+}
+
 @Preview(
     name = "Default",
     showSystemUi = true
 )
 @Composable
 private fun LoginUiDefaultPreview() {
-    val previewComponent = object: LoginComponent {
-        override val state: Value<LoginState> = MutableValue(
-            LoginState(
-                loginTextFieldState = TextFieldState(
-                    "Some text",
-                    error = null
-                ),
-                passwordTextFieldState = TextFieldState(
-                    "Some password",
-                    error = null
-                ),
-                true
-            )
-        )
-
-        override fun action(action: LoginAction) {
-
-        }
-    }
-
     NyTimesTheme {
         Scaffold { paddingValues ->
             LoginUi(
@@ -233,7 +233,6 @@ private fun LoginUiDefaultPreview() {
     }
 }
 
-
 @Preview(
     name = "Default",
     showSystemUi = true,
@@ -241,25 +240,6 @@ private fun LoginUiDefaultPreview() {
 )
 @Composable
 private fun LoginUiNightPreview() {
-    val previewComponent = object: LoginComponent {
-        override val state: Value<LoginState> = MutableValue(
-            LoginState(
-                loginTextFieldState = TextFieldState(
-                    "Some text",
-                    error = null
-                ),
-                passwordTextFieldState = TextFieldState(
-                    "Some password",
-                    error = null
-                ),
-                true
-            )
-        )
-
-        override fun action(action: LoginAction) {
-
-        }
-    }
 
     NyTimesTheme {
         Scaffold { paddingValues ->

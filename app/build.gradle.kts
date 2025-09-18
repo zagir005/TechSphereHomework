@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.ksp)
 }
 
 android {
@@ -33,7 +34,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "18"
     }
     buildFeatures {
         compose = true
@@ -48,7 +49,15 @@ dependencies {
 
     implementation(libs.kotlin.serialization.json)
 
-    implementation(libs.androidx.datastore)
+    implementation(libs.chiptextfield)
+
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
+
+    ksp(libs.androidx.room.ksp)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.paging)
 
     implementation(libs.androidx.core.splash)
     implementation(libs.androidx.core.ktx)
