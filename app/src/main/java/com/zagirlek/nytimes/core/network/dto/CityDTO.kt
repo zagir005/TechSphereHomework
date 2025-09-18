@@ -1,4 +1,4 @@
-package com.zagirlek.nytimes.core.network.model
+package com.zagirlek.nytimes.core.network.dto
 
 data class CityDTO(
     val id: Long,

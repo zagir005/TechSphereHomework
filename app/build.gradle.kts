@@ -49,6 +49,11 @@ dependencies {
 
     implementation(libs.kotlin.serialization.json)
 
+    implementation(libs.chiptextfield)
+
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
+
     ksp(libs.androidx.room.ksp)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)

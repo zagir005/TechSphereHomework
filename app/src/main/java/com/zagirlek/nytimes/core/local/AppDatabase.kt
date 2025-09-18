@@ -2,6 +2,7 @@ package com.zagirlek.nytimes.core.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.zagirlek.nytimes.core.local.dao.CityDao
 import com.zagirlek.nytimes.core.local.dao.WeatherDao
 import com.zagirlek.nytimes.core.local.entity.CityEntity
 import com.zagirlek.nytimes.core.local.entity.WeatherInfoEntity
@@ -12,4 +13,6 @@ import com.zagirlek.nytimes.core.local.entity.WeatherInfoEntity
 )
 abstract class NyTimesDatabase: RoomDatabase() {
     abstract fun weatherDao(): WeatherDao
+
+    abstract fun cityDao(): CityDao
 }

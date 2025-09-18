@@ -60,9 +60,6 @@ class DefaultMainComponent(
     private fun weather(componentContext: ComponentContext): WeatherComponent =
         DefaultWeatherComponent(componentContext)
 
-
-
-
     @Serializable
     sealed class Config{
         @Serializable
