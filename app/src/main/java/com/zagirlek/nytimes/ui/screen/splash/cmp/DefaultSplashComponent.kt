@@ -44,7 +44,7 @@ class DefaultSplashComponent(
 
     override fun action(splashAction: SplashAction){
         when(splashAction){
-            SplashAction.SplashFinished -> if (token != null) onAuthSuccess else onAuthRequired
+            SplashAction.SplashFinished -> if (token != null) onAuthSuccess() else onAuthRequired()
         }
     }
 }

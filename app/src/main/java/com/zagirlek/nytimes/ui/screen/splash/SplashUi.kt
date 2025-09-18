@@ -73,20 +73,40 @@ fun SplashUi(
     }
 
 
-    Column (
-        modifier = modifier
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.weight(1f)
+    Scaffold { paddingValues ->
+        Column (
+            modifier = modifier
+                .fillMaxSize()
+                .padding(paddingValues),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.weight(1f)
+            ) {
 
-            SpinningLoader(
-                modifier = Modifier.size(80.dp)
-            )
+                SpinningLoader(
+                    modifier = Modifier.size(80.dp)
+                )
+
+                AnimatedVisibility(
+                    visible = animVisibility,
+                    enter = slideInVertically(
+                        animationSpec = tween(
+                            durationMillis = animDuration,
+                            easing = FastOutSlowInEasing
+                        ),
+                        initialOffsetY = { it }
+                    ) + expandVertically(expandFrom = Alignment.Top) + fadeIn(initialAlpha = 0.3f)
+                ) {
+                    Text(
+                        text = stringResource(R.string.app_name),
+                        fontSize = 40.sp,
+                        fontFamily = robotoFlexFamily
+                    )
+                }
+            }
 
             AnimatedVisibility(
                 visible = animVisibility,
@@ -96,31 +116,14 @@ fun SplashUi(
                         easing = FastOutSlowInEasing
                     ),
                     initialOffsetY = { it }
-                ) + expandVertically(expandFrom = Alignment.Top) + fadeIn(initialAlpha = 0.3f)
+                ) + expandVertically(expandFrom = Alignment.Top) + fadeIn(initialAlpha = 0.3f),
             ) {
                 Text(
-                    text = stringResource(R.string.app_name),
-                    fontSize = 40.sp,
+                    text = BuildConfig.VERSION_NAME,
+                    fontSize = 14.sp,
                     fontFamily = robotoFlexFamily
                 )
             }
-        }
-
-        AnimatedVisibility(
-            visible = animVisibility,
-            enter = slideInVertically(
-                animationSpec = tween(
-                    durationMillis = animDuration,
-                    easing = FastOutSlowInEasing
-                ),
-                initialOffsetY = { it }
-            ) + expandVertically(expandFrom = Alignment.Top) + fadeIn(initialAlpha = 0.3f),
-        ) {
-            Text(
-                text = BuildConfig.VERSION_NAME,
-                fontSize = 14.sp,
-                fontFamily = robotoFlexFamily
-            )
         }
     }
 }

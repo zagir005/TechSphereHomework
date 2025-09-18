@@ -6,16 +6,15 @@ import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.update
 import com.arkivanov.essenty.instancekeeper.InstanceKeeper
 import com.arkivanov.essenty.instancekeeper.getOrCreate
+import com.zagirlek.nytimes.ui.screen.login.LoginComponent
 import com.zagirlek.nytimes.ui.screen.login.cmp.reducer.LoginReducer
 import com.zagirlek.nytimes.ui.screen.login.cmp.state.LoginAction
 import com.zagirlek.nytimes.ui.screen.login.cmp.state.LoginState
-import com.zagirlek.nytimes.ui.screen.root.components.LoginComponent
 
 class DefaultLoginComponent(
     componentContext: ComponentContext,
-
+    private val onAuth: () -> Unit
 ): ComponentContext by componentContext, LoginComponent {
-
     private val stateHolder = instanceKeeper.getOrCreate(HolderKey){ StateHolder() }
     override val state: Value<LoginState> = stateHolder._state
 
@@ -29,13 +28,16 @@ class DefaultLoginComponent(
                 }
                 is LoginAction.PasswordTextChanged -> {
                     _state.update {
-                        reducer.reduce(state.value, action)
+                        reducer.reduce(_state.value, action)
                     }
                 }
                 LoginAction.Submit -> {
                     _state.update {
-                        reducer.reduce(state.value, action)
+                        reducer.reduce(_state.value, action)
                     }
+                }
+                LoginAction.ContinueWithoutAuth -> {
+                    onAuth()
                 }
             }
         }

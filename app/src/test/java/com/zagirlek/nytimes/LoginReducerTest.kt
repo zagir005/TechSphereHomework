@@ -5,7 +5,6 @@ import com.zagirlek.nytimes.ui.screen.login.cmp.state.LoginAction
 import com.zagirlek.nytimes.ui.screen.login.cmp.state.LoginState
 import com.zagirlek.nytimes.ui.screen.login.cmp.state.textfield.TextFieldState
 import com.zagirlek.nytimes.ui.screen.login.cmp.state.textfield.textfielderror.LoginTextFieldError
-import com.zagirlek.nytimes.ui.screen.login.cmp.state.textfield.textfielderror.PasswordTextFieldError
 import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue
 import kotlin.test.Test

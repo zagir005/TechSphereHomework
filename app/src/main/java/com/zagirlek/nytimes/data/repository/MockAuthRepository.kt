@@ -1,6 +1,5 @@
 package com.zagirlek.nytimes.data.repository
 
-import android.content.Context
 import com.zagirlek.nytimes.domain.model.AuthToken
 import com.zagirlek.nytimes.domain.repository.AuthRepository
 import kotlinx.coroutines.delay

@@ -15,6 +15,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -39,59 +40,77 @@ import com.zagirlek.nytimes.ui.screen.login.cmp.state.LoginAction
 import com.zagirlek.nytimes.ui.screen.login.cmp.state.LoginState
 import com.zagirlek.nytimes.ui.screen.login.cmp.state.textfield.textfielderror.LoginTextFieldError
 import com.zagirlek.nytimes.ui.screen.login.cmp.state.textfield.textfielderror.PasswordTextFieldError
-import com.zagirlek.nytimes.ui.screen.root.components.LoginComponent
 import com.zagirlek.nytimes.ui.theme.NyTimesTheme
+import com.zagirlek.nytimes.ui.theme.Typography
 import com.zagirlek.nytimes.ui.theme.robotoFlexFamily
 
 @Composable
 fun LoginUi(
     component: LoginComponent,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val state by component.state.subscribeAsState()
 
-    Column(
-        modifier = modifier
-            .padding(horizontal = 12.dp)
-    ) {
-        LoginHeader()
+    Scaffold { paddingValues ->
+        Column(
+            modifier = modifier
+                .padding(paddingValues)
+                .padding(horizontal = 12.dp)
+        ) {
+            LoginHeader()
 
-        Box(modifier = Modifier.weight(1f)){
-            Column(
-                modifier = Modifier.align(Alignment.Center),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                LoginField(
-                    value = state.loginTextFieldState.value,
-                    error = state.loginTextFieldState.error,
-                    modifier = Modifier.fillMaxWidth()
-                ){
-                    component.action(LoginAction.LoginTextChanged(it))
-                }
-
-                PasswordField(
-                    value = state.passwordTextFieldState.value,
-                    error = state.passwordTextFieldState.error,
-                    modifier = Modifier.fillMaxWidth()
+            Box(modifier = Modifier.weight(1f)){
+                Column(
+                    modifier = Modifier.align(Alignment.Center),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
                 ) {
-                    component.action(LoginAction.PasswordTextChanged(it))
-                }
+                    LoginField(
+                        value = state.loginTextFieldState.value,
+                        error = state.loginTextFieldState.error,
+                        modifier = Modifier.fillMaxWidth()
+                    ){
+                        component.action(LoginAction.LoginTextChanged(it))
+                    }
 
-                Row{
-                    Spacer(modifier = Modifier.weight(1f))
-                    AppButton(
-                        onClick = {
-                            component.action(LoginAction.Submit)
-                        },
-                        enabled = state.buttonEnabled
+                    PasswordField(
+                        value = state.passwordTextFieldState.value,
+                        error = state.passwordTextFieldState.error,
+                        modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text(text = stringResource(R.string.enter).uppercase())
+                        component.action(LoginAction.PasswordTextChanged(it))
+                    }
+
+                    Row{
+                        Spacer(modifier = Modifier.weight(1f))
+                        AppButton(
+                            onClick = {
+                                component.action(LoginAction.Submit)
+                            },
+                            enabled = state.buttonEnabled
+                        ) {
+                            Text(text = stringResource(R.string.enter).uppercase())
+                        }
+                    }
+
+                    TextButton(
+                        onClick = {
+                            component.action(
+                                LoginAction.ContinueWithoutAuth
+                            )
+                        }
+                    ) {
+                        Text(
+                            text = stringResource(R.string.continue_without_auth),
+                            fontFamily = robotoFlexFamily,
+                            fontSize = Typography.bodyLarge.fontSize
+                        )
                     }
                 }
             }
         }
     }
+
 }
 
 @Composable
@@ -182,7 +201,7 @@ private fun LoginHeader() {
     showSystemUi = true
 )
 @Composable
-private fun LoginUiPreview(modifier: Modifier = Modifier) {
+private fun LoginUiDefaultPreview() {
     val previewComponent = object: LoginComponent {
         override val state: Value<LoginState> = MutableValue(
             LoginState(
@@ -221,7 +240,7 @@ private fun LoginUiPreview(modifier: Modifier = Modifier) {
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
-private fun LoginUiNightPreview(modifier: Modifier = Modifier) {
+private fun LoginUiNightPreview() {
     val previewComponent = object: LoginComponent {
         override val state: Value<LoginState> = MutableValue(
             LoginState(

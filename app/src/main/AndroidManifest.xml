@@ -10,11 +10,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/spinner_ic_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AuthHomework">
+        android:theme="@style/Theme.NyTimes">
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.AuthHomework">
+            android:theme="@style/Theme.NyTimes">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
