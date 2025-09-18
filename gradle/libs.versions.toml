@@ -7,6 +7,7 @@ junitVersion = "1.3.0"
 espressoCore = "3.7.0"
 lifecycleRuntimeKtx = "2.9.3"
 activityCompose = "1.10.1"
+room = "2.8.0"
 composeBom = "2025.08.01"
 decompose = "3.3.0"
 
@@ -18,6 +19,11 @@ essenty-coroutines = { group = "com.arkivanov.essenty", name = "lifecycle-corout
 kotlin-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.9.0"}
 
 androidx-datastore = { group = "androidx.datastore", name = "datastore-preferences", version = "1.1.7"}
+
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room"}
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room"}
+androidx-room-paging = { group = "androidx.room", name = "room-paging", version.ref = "room"}
+androidx-room-ksp = { group = "androidx.room", name = "room-compiler", version.ref = "room"}
 
 androidx-core-splash = { group = "androidx.core", name = "core-splashscreen", version = "1.0.1" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -36,6 +42,7 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 
 [plugins]
+kotlin-ksp = { id = "com.google.devtools.ksp", version = "2.2.10-2.0.2" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin"}
