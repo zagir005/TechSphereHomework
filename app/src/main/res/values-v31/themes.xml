@@ -3,7 +3,7 @@
     <style name="Theme.NyTimes" parent="android:Theme.Material.NoActionBar">
         <item name="android:windowSplashScreenBackground">@color/white</item>
         <item name="android:windowSplashScreenIconBackgroundColor">@color/white</item>
-        <item name="android:windowSplashScreenAnimatedIcon">@drawable/spinner_anim</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/anim_loader</item>
         <item name="android:windowSplashScreenAnimationDuration">2000</item>
     </style>
 </resources>

@@ -3,5 +3,5 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:ignore="MonochromeLauncherIcon">
     <background android:drawable="@color/spinner_ic_background"/>
-    <foreground android:drawable="@drawable/spinner_ic_foreground"/>
+    <foreground android:drawable="@drawable/ic_loader_foreground"/>
 </adaptive-icon>

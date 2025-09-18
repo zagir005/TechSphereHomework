@@ -39,7 +39,7 @@ class DefaultMainComponent(
         childFactory = ::child,
     )
 
-    override fun selectTab(index: Int) {
+    override fun selectPage(index: Int) {
          navigation.select(index)
     }
 

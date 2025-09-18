@@ -16,7 +16,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,7 +31,7 @@ import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import com.zagirlek.nytimes.BuildConfig
 import com.zagirlek.nytimes.R
-import com.zagirlek.nytimes.ui.components.SpinningLoader
+import com.zagirlek.nytimes.ui.elements.SpinningLoader
 import com.zagirlek.nytimes.ui.screen.splash.cmp.state.SplashAction
 import com.zagirlek.nytimes.ui.screen.splash.cmp.state.SplashEffect
 import com.zagirlek.nytimes.ui.screen.splash.cmp.state.SplashState
