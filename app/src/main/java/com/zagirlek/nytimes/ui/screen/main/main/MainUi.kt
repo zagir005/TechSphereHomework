@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.zagirlek.nytimes.R
+import com.zagirlek.nytimes.ui.screen.main.weather.WeatherUi
 import com.zagirlek.nytimes.ui.theme.NyTimesTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -62,7 +63,7 @@ fun MainUi(
         ){
             when(val child = pages.items[pages.selectedIndex].instance!!){
                 is MainComponent.Child.Weather -> {
-                    
+                    WeatherUi(child.component)
                 }
                 is MainComponent.Child.News -> {
 
@@ -187,11 +188,4 @@ private fun MainBottomNavigationDefaultPreview() {
             }
         }
     }
-}
-
-
-@Preview
-@Composable
-private fun MainUiDefaultPreview() {
-
 }

@@ -34,7 +34,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "18"
+        jvmTarget = "11"
     }
     buildFeatures {
         compose = true
@@ -48,8 +48,6 @@ dependencies {
     implementation(libs.essenty.coroutines)
 
     implementation(libs.kotlin.serialization.json)
-
-    implementation(libs.chiptextfield)
 
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)

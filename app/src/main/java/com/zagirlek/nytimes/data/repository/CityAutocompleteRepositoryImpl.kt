@@ -3,11 +3,11 @@ package com.zagirlek.nytimes.data.repository
 import com.zagirlek.nytimes.core.network.service.AutocompleteService
 import com.zagirlek.nytimes.data.mapper.toDomain
 import com.zagirlek.nytimes.domain.model.City
-import com.zagirlek.nytimes.domain.repository.AutocompleteRepository
+import com.zagirlek.nytimes.domain.repository.CityAutocompleteRepository
 
-class AutocompleteRepositoryImpl(
+class CityAutocompleteRepositoryImpl(
     private val autocompleteService: AutocompleteService
-): AutocompleteRepository {
+): CityAutocompleteRepository {
 
     override suspend fun autocompleteSearch(query: String): Result<List<City>> =
         runCatching {

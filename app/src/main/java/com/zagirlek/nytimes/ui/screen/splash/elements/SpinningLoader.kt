@@ -1,4 +1,4 @@
-package com.zagirlek.nytimes.ui.elements
+package com.zagirlek.nytimes.ui.screen.splash.elements
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
