@@ -7,6 +7,10 @@ import com.arkivanov.decompose.router.pages.PagesNavigation
 import com.arkivanov.decompose.router.pages.select
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.router.pages.*
+import com.zagirlek.nytimes.data.repository.CityRepositoryImpl
+import com.zagirlek.nytimes.domain.repository.CityAutocompleteRepository
+import com.zagirlek.nytimes.domain.repository.CityRepository
+import com.zagirlek.nytimes.domain.repository.WeatherRepository
 import com.zagirlek.nytimes.ui.screen.main.favorites.FavoritesComponent
 import com.zagirlek.nytimes.ui.screen.main.favorites.cmp.DefaultFavoriteComponent
 import com.zagirlek.nytimes.ui.screen.main.main.MainComponent
@@ -19,7 +23,10 @@ import kotlinx.serialization.Serializable
 
 
 class DefaultMainComponent(
-    private val componentContext: ComponentContext
+    private val componentContext: ComponentContext,
+    val cityRepository: CityRepository,
+    val weatherRepository: WeatherRepository,
+    val cityAutocompleteRepository: CityAutocompleteRepository
 ): ComponentContext by componentContext, MainComponent {
     private val navigation = PagesNavigation<Config>()
 
@@ -58,7 +65,12 @@ class DefaultMainComponent(
         DefaultNewsComponent(componentContext)
 
     private fun weather(componentContext: ComponentContext): WeatherComponent =
-        DefaultWeatherComponent(componentContext)
+        DefaultWeatherComponent(
+            componentContext = componentContext,
+            cityRepository = cityRepository,
+            weatherRepository = weatherRepository,
+            autocompleteRepository = cityAutocompleteRepository
+            )
 
     @Serializable
     sealed class Config{

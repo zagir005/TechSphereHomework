@@ -27,13 +27,14 @@ fun AppTextField(
     errorMessage: String? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     trailingIcon: @Composable () -> Unit = {},
+    singleLine: Boolean = false
 ) {
 
     TextField(
         value = value,
         onValueChange = onValueChange,
         label = { Text(label) },
-        singleLine = true,
+        singleLine = singleLine,
         modifier = modifier,
         isError = errorMessage != null,
         supportingText = {

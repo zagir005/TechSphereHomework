@@ -6,7 +6,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface WeatherRepository {
 
-    suspend fun addWeatherPoint(city: City, degree: Int)
+    suspend fun addWeatherPoint(city: City, degree: Int): Long
+
+    suspend fun getWeatherPointById(id: Long): WeatherPoint
 
     fun getWeatherPoints(): Flow<List<WeatherPoint>>
 }

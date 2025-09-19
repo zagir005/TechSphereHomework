@@ -38,6 +38,7 @@ fun AutocompleteCityTextField(
     modifier: Modifier = Modifier,
     loadedVariants: List<City> = emptyList(),
     autocompleteVariants: List<City> = emptyList(),
+    errorMessage: String? = null,
     onNewCity: (String) -> Unit = { },
     onVariantClick: (City) -> Unit = { }
 ) {
@@ -49,6 +50,7 @@ fun AutocompleteCityTextField(
             onValueChange = onValueChange,
             singleLine = true,
             label = stringResource(R.string.city),
+            errorMessage = errorMessage,
             modifier = Modifier
                 .fillMaxWidth()
                 .onFocusChanged { focusState ->

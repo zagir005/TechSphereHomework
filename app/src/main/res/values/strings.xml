@@ -13,4 +13,9 @@
     <string name="continue_without_auth">Продолжить без авторизации</string>
     <string name="weather">Погода</string>
     <string name="favorites">Избранное</string>
+    <string name="save">Сохранить</string>
+    <string name="saved_cities">Сохранённые города</string>
+    <string name="choose_city">Выбрать город</string>
+    <string name="not_found_anything">Ничего не найдено</string>
+    <string name="city">Город</string>
 </resources>

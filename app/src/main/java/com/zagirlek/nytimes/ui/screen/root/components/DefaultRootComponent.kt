@@ -8,6 +8,9 @@ import com.arkivanov.decompose.value.Value
 import com.zagirlek.nytimes.ui.screen.root.RootComponent
 import com.arkivanov.decompose.router.stack.replaceCurrent
 import com.zagirlek.nytimes.domain.repository.AuthRepository
+import com.zagirlek.nytimes.domain.repository.CityAutocompleteRepository
+import com.zagirlek.nytimes.domain.repository.CityRepository
+import com.zagirlek.nytimes.domain.repository.WeatherRepository
 import com.zagirlek.nytimes.ui.screen.login.LoginComponent
 import com.zagirlek.nytimes.ui.screen.login.cmp.DefaultLoginComponent
 import com.zagirlek.nytimes.ui.screen.main.main.MainComponent
@@ -19,7 +22,10 @@ import kotlinx.serialization.Serializable
 
 class DefaultRootComponent(
     private val componentContext: ComponentContext,
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val cityRepository: CityRepository,
+    private val cityAutocompleteRepository: CityAutocompleteRepository,
+    private val weatherRepository: WeatherRepository
 ): ComponentContext by componentContext, RootComponent {
     private val navigation = StackNavigation<Config>()
 
@@ -55,7 +61,10 @@ class DefaultRootComponent(
 
     private fun main(componentContext: ComponentContext): MainComponent =
         DefaultMainComponent(
-            componentContext
+            componentContext = componentContext,
+            cityRepository = cityRepository,
+            weatherRepository = weatherRepository,
+            cityAutocompleteRepository = cityAutocompleteRepository
         )
 
     @Serializable
