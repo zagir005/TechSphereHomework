@@ -18,4 +18,6 @@
     <string name="choose_city">Выбрать город</string>
     <string name="not_found_anything">Ничего не найдено</string>
     <string name="city">Город</string>
+    <string name="icon">Icon</string>
+    <string name="temperature_with_celsius">Температура (°C)</string>
 </resources>

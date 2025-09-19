@@ -4,20 +4,22 @@ import com.zagirlek.nytimes.domain.model.City
 import com.zagirlek.nytimes.domain.model.WeatherPoint
 
 sealed class WeatherAction {
-    data class AddCity(val city: City): WeatherAction()
+    data class CityFieldAddCity(val city: City): WeatherAction()
 
     data class WeatherPointHistoryLoaded(val list: List<WeatherPoint>): WeatherAction()
 
-    data class AddWeatherPoint(val weatherPoint: WeatherPoint): WeatherAction()
+    data class SubmitWeatherPoint(val weatherPoint: WeatherPoint): WeatherAction()
+
+    data class CityFieldAutocompleteVariantLoaded(val autocompleteVariants: List<City>): WeatherAction()
+
+    data class CityFieldLastVariantsLoaded(val lastVariants: List<City>): WeatherAction()
 
     data object ReloadWeatherPointFields: WeatherAction()
 
     data class DeleteWeatherPoint(val id: Long): WeatherAction()
 
     data class CityFieldValueChanged(
-        val value: String,
-        val lastVariants: List<City>,
-        val autocompleteVariants: List<City>
+        val value: String
     ): WeatherAction()
 
     data class CityFieldVariantPick(val variant: City): WeatherAction()

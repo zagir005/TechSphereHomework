@@ -7,5 +7,7 @@ data class CityTextFieldState(
     val selectedCity: City? = null,
     val autocompleteVariants: List<City> = emptyList(),
     val lastVariants: List<City> = emptyList(),
+    val autocompleteVariantsLoading: Boolean = false,
+    val lastVariantsLoading: Boolean = false,
     val errorMessage: Int? = null
 )

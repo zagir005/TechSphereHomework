@@ -189,10 +189,3 @@ private fun MainBottomNavigationDefaultPreview() {
         }
     }
 }
-
-
-@Preview
-@Composable
-private fun MainUiDefaultPreview() {
-
-}

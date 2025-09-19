@@ -53,7 +53,7 @@ class DefaultWeatherComponent(
                         _state.update {
                             reduce(
                                 state = it,
-                                action = WeatherAction.AddCity(
+                                action = WeatherAction.CityFieldAddCity(
                                     city
                                 )
                             )
@@ -66,24 +66,39 @@ class DefaultWeatherComponent(
                         _state.update {
                             reduce(
                                 state = it,
-                                action = WeatherAction.AddWeatherPoint(weatherPoint)
+                                action = WeatherAction.SubmitWeatherPoint(weatherPoint)
                             )
                         }
                     }
                 }
                 is WeatherUiAction.CityFieldValueChanged ->
                     scope.launch {
-                        val filter = action.value
-                        val lastVariants = getLastVariants(filter)
-                        val autocompleteVariants = getAutocompleteVariants(filter)
-
+                        val value = action.value
                         _state.update {
                             reduce(
                                 state = it,
                                 action = WeatherAction.CityFieldValueChanged(
-                                    value = filter,
-                                    lastVariants = lastVariants,
-                                    autocompleteVariants = autocompleteVariants
+                                    value = value
+                                )
+                            )
+                        }
+
+                        val lastVariants = getLastVariants(value)
+                        _state.update {
+                            reduce(
+                                state = it,
+                                action = WeatherAction.CityFieldLastVariantsLoaded(
+                                    lastVariants
+                                )
+                            )
+                        }
+
+                        val autocompleteVariants = getAutocompleteVariants(value)
+                        _state.update {
+                            reduce(
+                                state = it,
+                                action = WeatherAction.CityFieldAutocompleteVariantLoaded(
+                                    autocompleteVariants
                                 )
                             )
                         }
@@ -96,7 +111,7 @@ class DefaultWeatherComponent(
                         )
                     }
                 }
-                is WeatherUiAction.DegreeFieldValueChanged -> {
+                is WeatherUiAction.TemperatureFieldValueChanged -> {
                     _state.update {
                         reduce(
                             state = it,

@@ -15,5 +15,5 @@ sealed class WeatherUiAction{
 
     data class CityFieldVariantPick(val variant: City): WeatherUiAction()
 
-    data class DegreeFieldValueChanged(val value: Int): WeatherUiAction()
+    data class TemperatureFieldValueChanged(val value: Int): WeatherUiAction()
 }

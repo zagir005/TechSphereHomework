@@ -6,7 +6,7 @@ import com.zagirlek.nytimes.ui.screen.main.weather.cmp.state.textfield.DegreeTex
 
 data class WeatherState(
     val cityTextFieldState: CityTextFieldState = CityTextFieldState(),
-    val degreeTextFieldState: DegreeTextFieldState = DegreeTextFieldState(),
+    val temperatureTextFieldState: DegreeTextFieldState = DegreeTextFieldState(),
     val weatherPointsHistory: List<WeatherPoint> = listOf(),
     val lastWeatherPoint: WeatherPoint? = null
 )

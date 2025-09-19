@@ -36,11 +36,11 @@ fun AutocompleteCityTextField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    loadedVariants: List<City> = emptyList(),
+    lastVariants: List<City> = emptyList(),
     autocompleteVariants: List<City> = emptyList(),
     errorMessage: String? = null,
     onNewCity: (String) -> Unit = { },
-    onVariantClick: (City) -> Unit = { }
+    onVariantPick: (City) -> Unit = { }
 ) {
     var isFocused by remember { mutableStateOf(false) }
 
@@ -82,7 +82,7 @@ fun AutocompleteCityTextField(
                         )
                     }
 
-                    if (loadedVariants.isNotEmpty()) {
+                    if (lastVariants.isNotEmpty()) {
                         item {
                             Text(
                                 stringResource(R.string.saved_cities),
@@ -90,22 +90,22 @@ fun AutocompleteCityTextField(
                                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                             )
                         }
-                        items(loadedVariants) { city ->
+                        items(lastVariants) { city ->
                             DropdownMenuItem(
                                 text = { Text(city.name) },
-                                onClick = { onVariantClick(city) }
+                                onClick = { onVariantPick(city) }
                             )
                         }
                     }
 
-                    if (loadedVariants.isNotEmpty() && autocompleteVariants.isNotEmpty()) {
+                    if (lastVariants.isNotEmpty() && autocompleteVariants.isNotEmpty()) {
                         item { HorizontalDivider() }
                     }
 
                     if (autocompleteVariants.isNotEmpty()) {
                         item {
                             Text(
-                                stringResource(R.string.choose_city),
+                                text = stringResource(R.string.choose_city),
                                 style = MaterialTheme.typography.labelSmall,
                                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                             )
@@ -113,12 +113,12 @@ fun AutocompleteCityTextField(
                         items(autocompleteVariants) { city ->
                             DropdownMenuItem(
                                 text = { Text(city.name) },
-                                onClick = { onVariantClick(city) }
+                                onClick = { onVariantPick(city) }
                             )
                         }
                     }
 
-                    if (loadedVariants.isEmpty() && autocompleteVariants.isEmpty()) {
+                    if (lastVariants.isEmpty() && autocompleteVariants.isEmpty()) {
                         item {
                             DropdownMenuItem(
                                 text = { Text(stringResource(R.string.not_found_anything)) },
@@ -154,7 +154,7 @@ private fun DropdownTextFieldDefaultPreview() {
             AutocompleteCityTextField(
                 value = value,
                 onValueChange = { value = it },
-                loadedVariants = savedCities.filter { it.name.contains(value) },
+                lastVariants = savedCities.filter { it.name.contains(value) },
                 autocompleteVariants = suggestions.filter { it.name.contains(value) }
             )
         }
