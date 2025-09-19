@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -39,6 +40,8 @@ fun AutocompleteCityTextField(
     lastVariants: List<City> = emptyList(),
     autocompleteVariants: List<City> = emptyList(),
     errorMessage: String? = null,
+    lastVariantsLoading: Boolean = false,
+    autocompleteVariantsLoading: Boolean = false,
     onNewCity: (String) -> Unit = { },
     onVariantPick: (City) -> Unit = { }
 ) {
@@ -78,10 +81,18 @@ fun AutocompleteCityTextField(
                                 )
                             },
                             text = { Text("Сохранить город \"$value\"") },
-                            onClick = { onNewCity(value.trim()) }
+                            onClick = {
+                                onNewCity(value)
+                                isFocused = false
+                            }
                         )
                     }
 
+                    if (lastVariantsLoading){
+                        item {
+                            CircularProgressIndicator()
+                        }
+                    }
                     if (lastVariants.isNotEmpty()) {
                         item {
                             Text(
@@ -93,7 +104,10 @@ fun AutocompleteCityTextField(
                         items(lastVariants) { city ->
                             DropdownMenuItem(
                                 text = { Text(city.name) },
-                                onClick = { onVariantPick(city) }
+                                onClick = {
+                                    onVariantPick(city)
+                                    isFocused = false
+                                }
                             )
                         }
                     }
@@ -101,6 +115,12 @@ fun AutocompleteCityTextField(
                     if (lastVariants.isNotEmpty() && autocompleteVariants.isNotEmpty()) {
                         item { HorizontalDivider() }
                     }
+
+
+                    if (autocompleteVariantsLoading)
+                        item {
+                            CircularProgressIndicator()
+                        }
 
                     if (autocompleteVariants.isNotEmpty()) {
                         item {
@@ -113,7 +133,10 @@ fun AutocompleteCityTextField(
                         items(autocompleteVariants) { city ->
                             DropdownMenuItem(
                                 text = { Text(city.name) },
-                                onClick = { onVariantPick(city) }
+                                onClick = {
+                                    onVariantPick(city)
+                                    isFocused = false
+                                }
                             )
                         }
                     }

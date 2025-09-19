@@ -104,11 +104,14 @@ class DefaultWeatherComponent(
                         }
                     }
                 is WeatherUiAction.CityFieldVariantPick -> {
-                    _state.update {
-                        reduce(
-                            state = it,
-                            action = WeatherAction.CityFieldVariantPick(action.variant)
-                        )
+                    scope.launch {
+                        val pickedCity = cityRepository.getCityById(action.variant.id) ?: addCity(action.variant.name)
+                        _state.update {
+                            reduce(
+                                state = it,
+                                action = WeatherAction.CityFieldVariantPick(pickedCity)
+                            )
+                        }
                     }
                 }
                 is WeatherUiAction.TemperatureFieldValueChanged -> {

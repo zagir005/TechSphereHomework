@@ -50,6 +50,7 @@ class WeatherReducer {
             )
 
             is WeatherAction.DeleteWeatherPoint -> state
+
             WeatherAction.ReloadWeatherPointFields -> state.copy(
                 lastWeatherPoint = null
             )

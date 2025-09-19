@@ -16,7 +16,9 @@ class AppDi(private val context: Context) {
         context = context,
         klass = NyTimesDatabase::class.java,
         name = "nytimesDatabase"
-    ).build()
+    )
+        .fallbackToDestructiveMigration(true)
+        .build()
 
     private val autocompleteService = Retrofit.Builder()
         .baseUrl("https://api.weatherapi.com/v1/")

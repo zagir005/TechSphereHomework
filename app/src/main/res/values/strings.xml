@@ -20,4 +20,8 @@
     <string name="city">Город</string>
     <string name="icon">Icon</string>
     <string name="temperature_with_celsius">Температура (°C)</string>
+    <string name="rate">Оценить</string>
+    <string name="create_new_query">Сделать новый запрос</string>
+    <string name="your_last_search">Недавно вы искали:</string>
+    <string name="your_previous_queries_will_appear_here">Здесь появятся ваши предыдущие запросы</string>
 </resources>
