@@ -69,15 +69,11 @@ private fun CityChip(
     }
 }
 
-
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@Preview(
-    showBackground = true
-)
+@Preview
 @Composable
 private fun WeatherPointCardDefaultPreview() {
     NyTimesTheme {
-        Scaffold {
+        Surface {
             WeatherPointInfo(
                 WeatherPoint(
                     City(id = 0, name = "Москва"),
@@ -90,16 +86,13 @@ private fun WeatherPointCardDefaultPreview() {
     }
 }
 
-
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Preview(
-    showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
 private fun WeatherPointCardNightPreview() {
     NyTimesTheme {
-        Scaffold {
+        Surface {
             WeatherPointInfo(
                 WeatherPoint(
                     City(id = 0, name = "Москва"),

@@ -69,54 +69,37 @@ fun describeTemperature(city: String, temperature: Int): String {
 
 
 
-@Preview(
-    showSystemUi = true,
-    showBackground = true
-)
+@Preview
 @Composable
 private fun RatedWeatherCardDefaultPreview() {
     NyTimesTheme {
-        Scaffold { paddingValues ->
-            Box(
-                modifier = Modifier
-                    .padding(paddingValues)
-                    .padding(horizontal = 8.dp)
-            ){
-                RatedWeatherCard(
-                    WeatherPoint(
-                        City(id = 0, name = "Москва"),
-                        temperature = 10,
-                        id = 0
-                    )
+        Surface{
+            RatedWeatherCard(
+                WeatherPoint(
+                    City(id = 0, name = "Москва"),
+                    temperature = 10,
+                    id = 0
                 )
-            }
+            )
         }
     }
 }
 
 
 @Preview(
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showSystemUi = true,
-    showBackground = true
+    uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
 private fun RatedWeatherCardNightPreview() {
     NyTimesTheme {
-        Scaffold { paddingValues ->
-            Box(
-                modifier = Modifier
-                    .padding(paddingValues)
-                    .padding(horizontal = 8.dp)
-            ){
-                RatedWeatherCard(
-                    WeatherPoint(
-                        City(id = 0, name = "Москва"),
-                        temperature = 10,
-                        id = 0
-                    )
+        Surface {
+            RatedWeatherCard(
+                WeatherPoint(
+                    City(id = 0, name = "Москва"),
+                    temperature = 10,
+                    id = 0
                 )
-            }
+            )
         }
     }
 }

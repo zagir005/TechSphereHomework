@@ -1,8 +1,11 @@
 package com.zagirlek.nytimes.ui.screen.main.weather.elements
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -26,6 +29,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.max
 import com.zagirlek.nytimes.R
 import com.zagirlek.nytimes.domain.model.City
 import com.zagirlek.nytimes.ui.elements.AppTextField
@@ -67,10 +71,12 @@ fun AutocompleteCityTextField(
                 shape = MaterialTheme.shapes.medium,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 4.dp)
+                    .padding(top = 4.dp, bottom = 4.dp)
             ) {
                 LazyColumn(
-                    modifier = Modifier.fillMaxWidth().height(200.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(max = 200.dp)
                 ) {
                     item {
                         DropdownMenuItem(
@@ -86,6 +92,10 @@ fun AutocompleteCityTextField(
                                 isFocused = false
                             }
                         )
+                        Spacer(
+                            modifier = Modifier.height(4.dp)
+                        )
+                        HorizontalDivider()
                     }
 
                     if (lastVariantsLoading){
@@ -98,7 +108,7 @@ fun AutocompleteCityTextField(
                             Text(
                                 stringResource(R.string.saved_cities),
                                 style = MaterialTheme.typography.labelSmall,
-                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                             )
                         }
                         items(lastVariants) { city ->
@@ -127,7 +137,7 @@ fun AutocompleteCityTextField(
                             Text(
                                 text = stringResource(R.string.choose_city),
                                 style = MaterialTheme.typography.labelSmall,
-                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                             )
                         }
                         items(autocompleteVariants) { city ->
@@ -163,22 +173,50 @@ fun AutocompleteCityTextField(
 @Composable
 private fun DropdownTextFieldDefaultPreview() {
     NyTimesTheme {
-        Surface(Modifier.padding(20.dp)) {
+        Surface {
             var value by remember { mutableStateOf("") }
 
-            val savedCities = listOf(City(0, "Москва"), City(0, "Махачкала"))
-            val suggestions = listOf(
-                City(0, "Москва"), City(0, "Махачкала"),
-                City(0, "Москва"), City(0, "Махачкала"),
-                City(0, "Москва"), City(0, "Махачкала"),
-                City(0, "Москва"), City(0, "Махачкала"),
+            val savedCities = listOf(City(0, "Moscow"), City(0, "Махачкала"))
+            val autocompleteVariants = listOf(
+                City(0, "Moscow"), City(0, "Makhachkala"),
+                City(0, "Moscow"), City(0, "Makhachkala"),
+                City(0, "Moscow"), City(0, "Makhachkala"),
+                City(0, "Moscow"), City(0, "Makhachkala"),
             )
 
             AutocompleteCityTextField(
                 value = value,
                 onValueChange = { value = it },
                 lastVariants = savedCities.filter { it.name.contains(value) },
-                autocompleteVariants = suggestions.filter { it.name.contains(value) }
+                autocompleteVariants = autocompleteVariants.filter { it.name.contains(value) }
+            )
+        }
+    }
+}
+
+@Preview(
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
+@Composable
+private fun DropdownTextFieldNightPreview() {
+    NyTimesTheme {
+        Surface {
+            var value by remember { mutableStateOf("") }
+
+            val savedCities = listOf(City(0, "Moscow"), City(0, "Махачкала"))
+            val autocompleteVariants = listOf(
+                City(0, "Moscow"), City(0, "Makhachkala"),
+                City(0, "Moscow"), City(0, "Makhachkala"),
+                City(0, "Moscow"), City(0, "Makhachkala"),
+                City(0, "Moscow"), City(0, "Makhachkala"),
+            )
+
+            AutocompleteCityTextField(
+                value = value,
+                onValueChange = { value = it },
+                lastVariants = savedCities.filter { it.name.contains(value) },
+                autocompleteVariants = autocompleteVariants.filter { it.name.contains(value) }
             )
         }
     }

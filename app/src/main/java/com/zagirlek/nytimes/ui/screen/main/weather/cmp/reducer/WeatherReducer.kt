@@ -5,7 +5,7 @@ import com.zagirlek.nytimes.ui.screen.main.weather.cmp.state.WeatherState
 class WeatherReducer {
     fun reduce(state: WeatherState, action: WeatherAction): WeatherState {
         return when(action){
-            is WeatherAction.CityFieldValueChanged -> state.copy(
+            is WeatherAction.CityFieldAction.ValueChanged -> state.copy(
                 cityTextFieldState = state.cityTextFieldState.copy(
                     value = action.value,
                     errorMessage = null,
@@ -14,25 +14,25 @@ class WeatherReducer {
                     lastVariantsLoading = true
                 )
             )
-            is WeatherAction.CityFieldVariantPick -> state.copy(
+            is WeatherAction.CityFieldAction.VariantPick -> state.copy(
                 cityTextFieldState = state.cityTextFieldState.copy(
                     selectedCity = action.variant,
                     value = action.variant.name
                 )
             )
-            is WeatherAction.CityFieldAddCity -> state.copy(
+            is WeatherAction.CityFieldAction.SaveCity -> state.copy(
                 cityTextFieldState = state.cityTextFieldState.copy(
                     selectedCity = action.city,
                     value = action.city.name
                 )
             )
-            is WeatherAction.CityFieldAutocompleteVariantLoaded -> state.copy(
+            is WeatherAction.CityFieldAction.AutocompleteVariantsLoaded -> state.copy(
                 cityTextFieldState = state.cityTextFieldState.copy(
                     autocompleteVariantsLoading = false,
                     autocompleteVariants = action.autocompleteVariants
                 )
             )
-            is WeatherAction.CityFieldLastVariantsLoaded -> state.copy(
+            is WeatherAction.CityFieldAction.LastVariantsLoaded -> state.copy(
                 cityTextFieldState = state.cityTextFieldState.copy(
                     lastVariantsLoading = false,
                     lastVariants = action.lastVariants
