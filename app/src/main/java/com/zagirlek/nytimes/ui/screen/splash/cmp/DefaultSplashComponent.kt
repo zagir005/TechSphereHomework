@@ -21,16 +21,13 @@ class DefaultSplashComponent(
     private val authRepository: AuthRepository
 ): ComponentContext by componentContext, SplashComponent {
 
-    private val _state: MutableValue<SplashState> = MutableValue(initialValue = SplashState(isLoading = false))
+    private val _state: MutableValue<SplashState> = MutableValue(initialValue = SplashState(isLoading = true))
     override val state: Value<SplashState> get() = _state
     private val scope = coroutineScope(Dispatchers.IO + SupervisorJob())
     private var token: AuthToken? = null
 
     init {
         scope.launch {
-            _state.update {
-                it.copy(isLoading = true)
-            }
             token = authRepository.getCurrToken()
             _state.update {
                 it.copy(isLoading = false)

@@ -16,6 +16,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -36,8 +40,11 @@ fun SplashScreenContent(
     action: (SplashAction) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val animDuration = 200
+    val animDuration = 180
+    var animVisibility by remember { mutableStateOf(false) }
+
     LaunchedEffect(state) {
+        animVisibility = state.isLoading
         delay(animDuration.toLong())
         if(!state.isLoading){
             action(SplashAction.SplashFinished)
@@ -60,7 +67,7 @@ fun SplashScreenContent(
             )
 
             AnimatedVisibility(
-                visible = state.isLoading,
+                visible = animVisibility,
                 enter = slideInVertically(
                     animationSpec = tween(
                         durationMillis = animDuration,
@@ -78,7 +85,7 @@ fun SplashScreenContent(
         }
 
         AnimatedVisibility(
-            visible = state.isLoading,
+            visible = animVisibility,
             enter = slideInVertically(
                 animationSpec = tween(
                     durationMillis = animDuration,

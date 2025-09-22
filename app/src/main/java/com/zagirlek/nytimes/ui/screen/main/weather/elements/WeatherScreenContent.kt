@@ -39,20 +39,19 @@ fun WeatherScreenContent(
         if(state.lastWeatherPoint != null) {
             RatedWeatherCard(state.lastWeatherPoint)
         } else {
-            AutocompleteCityTextField(
+            CityAutocompleteTextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = state.cityTextFieldState.value,
+                selectedCity = state.cityTextFieldState.selectedCity,
                 autocompleteVariants = state.cityTextFieldState.autocompleteVariants,
-                autocompleteVariantsLoading = state.cityTextFieldState.autocompleteVariantsLoading,
                 lastVariants = state.cityTextFieldState.lastVariants,
-                lastVariantsLoading = state.cityTextFieldState.lastVariantsLoading,
                 onValueChange = {
                     sendAction(WeatherAction.CityField.ValueChanged(it))
                 },
-                onNewCity = {
+                onCustomCitySelected = {
                     sendAction(WeatherAction.CityField.SaveCity(it))
                 },
-                onVariantPick = {
+                onCitySelected = {
                     sendAction(WeatherAction.CityField.VariantPick(it))
                 }
             )

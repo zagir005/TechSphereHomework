@@ -10,9 +10,7 @@ class WeatherReducer: Reducer<WeatherState, WeatherMutation> {
                 cityTextFieldState = state.cityTextFieldState.copy(
                     value = mutation.value,
                     errorMessage = null,
-                    selectedCity = null,
-                    autocompleteVariantsLoading = true,
-                    lastVariantsLoading = true
+                    selectedCity = null
                 )
             )
             is WeatherMutation.CityField.VariantPick -> state.copy(
@@ -29,13 +27,11 @@ class WeatherReducer: Reducer<WeatherState, WeatherMutation> {
             )
             is WeatherMutation.CityField.AutocompleteVariantsLoaded -> state.copy(
                 cityTextFieldState = state.cityTextFieldState.copy(
-                    autocompleteVariantsLoading = false,
                     autocompleteVariants = mutation.autocompleteVariants
                 )
             )
             is WeatherMutation.CityField.LastVariantsLoaded -> state.copy(
                 cityTextFieldState = state.cityTextFieldState.copy(
-                    lastVariantsLoading = false,
                     lastVariants = mutation.lastVariants
                 )
             )
