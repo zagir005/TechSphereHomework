@@ -4,9 +4,8 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
-import com.arkivanov.decompose.value.Value
-import com.zagirlek.nytimes.ui.screen.root.RootComponent
 import com.arkivanov.decompose.router.stack.replaceCurrent
+import com.arkivanov.decompose.value.Value
 import com.zagirlek.nytimes.domain.repository.AuthRepository
 import com.zagirlek.nytimes.domain.repository.CityAutocompleteRepository
 import com.zagirlek.nytimes.domain.repository.CityRepository
@@ -15,6 +14,7 @@ import com.zagirlek.nytimes.ui.screen.login.LoginComponent
 import com.zagirlek.nytimes.ui.screen.login.cmp.DefaultLoginComponent
 import com.zagirlek.nytimes.ui.screen.main.main.MainComponent
 import com.zagirlek.nytimes.ui.screen.main.main.cmp.DefaultMainComponent
+import com.zagirlek.nytimes.ui.screen.root.RootComponent
 import com.zagirlek.nytimes.ui.screen.splash.SplashComponent
 import com.zagirlek.nytimes.ui.screen.splash.cmp.DefaultSplashComponent
 import kotlinx.serialization.Serializable
@@ -56,6 +56,7 @@ class DefaultRootComponent(
     private fun login(componentContext: ComponentContext): LoginComponent =
         DefaultLoginComponent(
             componentContext = componentContext,
+            authRepository = authRepository,
             onAuth = { navigation.replaceCurrent(Config.Main) }
         )
 

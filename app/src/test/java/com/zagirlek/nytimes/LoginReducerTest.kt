@@ -1,7 +1,7 @@
 package com.zagirlek.nytimes
 
+import com.zagirlek.nytimes.ui.screen.login.cmp.reducer.LoginMutation
 import com.zagirlek.nytimes.ui.screen.login.cmp.reducer.LoginReducer
-import com.zagirlek.nytimes.ui.screen.login.cmp.state.LoginAction
 import com.zagirlek.nytimes.ui.screen.login.cmp.state.LoginState
 import com.zagirlek.nytimes.ui.screen.login.cmp.state.textfield.TextFieldState
 import com.zagirlek.nytimes.ui.screen.login.cmp.state.textfield.textfielderror.LoginTextFieldError
@@ -21,7 +21,7 @@ class LoginReducerTest {
             passwordTextFieldState = TextFieldState(value = "Pass123")
         )
 
-        val action = LoginAction.LoginTextChanged("Логин_Юзера")
+        val action = LoginMutation.LoginTextChanged("Логин_Юзера")
         val newState = reducer.reduce(initialState, action)
 
         assertEquals("Логин_Юзера", newState.loginTextFieldState.value)
@@ -33,7 +33,7 @@ class LoginReducerTest {
     fun onlyCyrillicErrorCheck() {
         //Проверяем выдачу ошибки OnlyCyrillic
         val initialState = LoginState()
-        val action = LoginAction.LoginTextChanged("Login123")
+        val action = LoginMutation.LoginTextChanged("Login123")
         val newState = reducer.reduce(initialState, action)
 
         assertEquals("Login123", newState.loginTextFieldState.value)
@@ -45,7 +45,7 @@ class LoginReducerTest {
     fun wrongLoginErrorCheck() {
         //Проверяем выдачу ошибки WrongLogin
         val initialState = LoginState()
-        val action = LoginAction.LoginTextChanged("Другая_учетка")
+        val action = LoginMutation.LoginTextChanged("Другая_учетка")
         val newState = reducer.reduce(initialState, action)
 
         assertEquals("Другая_учетка", newState.loginTextFieldState.value)
@@ -60,7 +60,7 @@ class LoginReducerTest {
             loginTextFieldState = TextFieldState(value = "Логин_Юзера")
         )
 
-        val action = LoginAction.PasswordTextChanged("Pass123")
+        val action = LoginMutation.PasswordTextChanged("Pass123")
         val newState = reducer.reduce(initialState, action)
 
         assertEquals("Pass123", newState.passwordTextFieldState.value)

@@ -1,39 +1,49 @@
 package com.zagirlek.nytimes.ui.screen.login.cmp.reducer
 
-import com.zagirlek.nytimes.ui.screen.login.cmp.state.LoginAction
+import com.zagirlek.nytimes.core.base.reducer.Reducer
 import com.zagirlek.nytimes.ui.screen.login.cmp.state.LoginState
 import com.zagirlek.nytimes.ui.screen.login.cmp.state.textfield.TextFieldState
 import com.zagirlek.nytimes.ui.screen.login.cmp.state.textfield.textfielderror.LoginTextFieldError
 import com.zagirlek.nytimes.ui.screen.login.cmp.state.textfield.textfielderror.PasswordTextFieldError
 
-class LoginReducer() {
-    fun reduce(state: LoginState, action: LoginAction): LoginState {
-        return when(action){
-            is LoginAction.LoginTextChanged -> {
-                val loginError: LoginTextFieldError? = validateLogin(action.text)
+class LoginReducer(): Reducer<LoginState, LoginMutation> {
+    override fun reduce(state: LoginState, mutation: LoginMutation): LoginState {
+        return when(mutation){
+            is LoginMutation.LoginTextChanged -> {
+                val loginTextFieldState = TextFieldState(
+                    value = mutation.text,
+                    error = validateLogin(mutation.text)
+                )
                 state.copy(
-                    loginTextFieldState = TextFieldState(
-                        value = action.text,
-                        error = loginError
-                    ),
-                    buttonEnabled = loginError == null && !state.passwordTextFieldState.hasError()
-                            && (action.text.isNotEmpty() && state.passwordTextFieldState.value.isNotEmpty())
+                    loginTextFieldState = loginTextFieldState,
+                    buttonEnabled = isButtonEnabled(
+                        loginTextFieldState = loginTextFieldState,
+                        passwordTextFieldState = state.passwordTextFieldState
+                    )
                 )
             }
-            is LoginAction.PasswordTextChanged -> {
-                val passwordError: PasswordTextFieldError? = validatePassword(action.text)
+            is LoginMutation.PasswordTextChanged -> {
+                val passwordTextFieldState: TextFieldState<PasswordTextFieldError> = TextFieldState(
+                    value = mutation.text,
+                    error = validatePassword(mutation.text)
+                )
                 state.copy(
-                    passwordTextFieldState = TextFieldState(
-                        value = action.text,
-                        error = validatePassword(action.text)
-                    ),
-                    buttonEnabled = passwordError == null && !state.loginTextFieldState.hasError()
-                            && (action.text.isNotEmpty() && state.loginTextFieldState.value.isNotEmpty())
+                    passwordTextFieldState = passwordTextFieldState,
+                    buttonEnabled = isButtonEnabled(
+                        loginTextFieldState = state.loginTextFieldState,
+                        passwordTextFieldState = passwordTextFieldState
+                    )
                 )
             }
-            LoginAction.Submit -> state
-            LoginAction.ContinueWithoutAuth -> state
         }
+    }
+
+    private fun isButtonEnabled(
+        loginTextFieldState: TextFieldState<LoginTextFieldError>,
+        passwordTextFieldState: TextFieldState<PasswordTextFieldError>,
+    ): Boolean {
+        return loginTextFieldState.isNotEmpty() && passwordTextFieldState.isNotEmpty()
+                && loginTextFieldState.isValid() && passwordTextFieldState.isValid()
     }
 
     private fun validateLogin(login: String): LoginTextFieldError? {

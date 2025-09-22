@@ -1,7 +1,7 @@
 package com.zagirlek.nytimes.data.repository
 
-import com.zagirlek.nytimes.core.local.dao.CityDao
-import com.zagirlek.nytimes.core.local.entity.CityEntity
+import com.zagirlek.nytimes.data.local.dao.CityDao
+import com.zagirlek.nytimes.data.local.entity.CityEntity
 import com.zagirlek.nytimes.data.mapper.toDomain
 import com.zagirlek.nytimes.domain.model.City
 import com.zagirlek.nytimes.domain.repository.CityRepository

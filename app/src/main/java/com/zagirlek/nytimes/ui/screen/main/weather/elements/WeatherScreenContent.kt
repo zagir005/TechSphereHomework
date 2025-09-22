@@ -1,12 +1,11 @@
-package com.zagirlek.nytimes.ui.screen.main.weather
+package com.zagirlek.nytimes.ui.screen.main.weather.elements
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,47 +13,48 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.zagirlek.nytimes.R
+import com.zagirlek.nytimes.domain.model.City
 import com.zagirlek.nytimes.domain.model.WeatherPoint
 import com.zagirlek.nytimes.ui.elements.AppButton
 import com.zagirlek.nytimes.ui.elements.AppTextField
 import com.zagirlek.nytimes.ui.elements.NyTimesPreview
-import com.zagirlek.nytimes.ui.screen.main.weather.cmp.MockWeatherComponent
+import com.zagirlek.nytimes.ui.screen.main.weather.cmp.state.WeatherAction
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.state.WeatherState
-import com.zagirlek.nytimes.ui.screen.main.weather.cmp.state.WeatherUiAction
-import com.zagirlek.nytimes.ui.screen.main.weather.elements.AutocompleteCityTextField
-import com.zagirlek.nytimes.ui.screen.main.weather.elements.RatedWeatherCard
-import com.zagirlek.nytimes.ui.screen.main.weather.elements.WeatherPointInfo
+
 
 @Composable
-fun WeatherUi(
-    component: WeatherComponent
+fun WeatherScreenContent(
+    state: WeatherState,
+    sendAction: (WeatherAction) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    val state by component.state.subscribeAsState()
-
-    Column(
-        Modifier.padding(horizontal = 4.dp)
-    ) {
-        if(state.lastWeatherPoint != null)
-            RatedWeatherCard(state.lastWeatherPoint!!)
-        else{
+    Column(modifier = modifier) {
+        if(state.lastWeatherPoint != null) {
+            RatedWeatherCard(state.lastWeatherPoint)
+        } else {
             AutocompleteCityTextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = state.cityTextFieldState.value,
-                onValueChange = { component.action(WeatherUiAction.CityFieldValueChanged(it)) },
-                lastVariants = state.cityTextFieldState.lastVariants,
                 autocompleteVariants = state.cityTextFieldState.autocompleteVariants,
-                lastVariantsLoading = state.cityTextFieldState.lastVariantsLoading,
                 autocompleteVariantsLoading = state.cityTextFieldState.autocompleteVariantsLoading,
-                onNewCity = { component.action(WeatherUiAction.AddCity(it)) },
-                onVariantPick = { component.action(WeatherUiAction.CityFieldVariantPick(it)) }
+                lastVariants = state.cityTextFieldState.lastVariants,
+                lastVariantsLoading = state.cityTextFieldState.lastVariantsLoading,
+                onValueChange = {
+                    sendAction(WeatherAction.CityField.ValueChanged(it))
+                },
+                onNewCity = {
+                    sendAction(WeatherAction.CityField.SaveCity(it))
+                },
+                onVariantPick = {
+                    sendAction(WeatherAction.CityField.VariantPick(it))
+                }
             )
 
             AppTextField(
@@ -62,8 +62,8 @@ fun WeatherUi(
                 value = state.temperatureTextFieldState.value.toString(),
                 label = stringResource(R.string.temperature_with_celsius),
                 onValueChange = {
-                    component.action(
-                        action = WeatherUiAction.TemperatureFieldValueChanged(
+                    sendAction(
+                        WeatherAction.TemperatureFieldValueChanged(
                             value = it.toIntOrNull() ?: state.temperatureTextFieldState.value
                         )
                     )
@@ -71,30 +71,29 @@ fun WeatherUi(
             )
         }
 
-        Row {
-            Spacer(
-                modifier = Modifier.weight(1f)
+        AppButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentWidth(Alignment.End),
+            onClick = {
+                if (state.lastWeatherPoint == null){
+                    sendAction(
+                        WeatherAction.AddWeatherPoint(
+                        city = state.cityTextFieldState.selectedCity!!,
+                        degree = state.temperatureTextFieldState.value
+                    ))
+                }else{
+                    sendAction(WeatherAction.ReloadWeatherPointFields)
+                }
+            },
+            enabled = state.cityTextFieldState.selectedCity != null
+        ) {
+            Text(
+                text = if (state.lastWeatherPoint == null)
+                    stringResource(R.string.rate).uppercase()
+                else
+                    stringResource(R.string.create_new_query).uppercase()
             )
-            AppButton(
-                onClick = {
-                    if (state.lastWeatherPoint == null){
-                        component.action(WeatherUiAction.AddWeatherPoint(
-                            city = state.cityTextFieldState.selectedCity!!,
-                            degree = state.temperatureTextFieldState.value
-                        ))
-                    }else{
-                        component.action(WeatherUiAction.ReloadWeatherPointFields)
-                    }
-                },
-                enabled = state.cityTextFieldState.selectedCity != null
-            ) {
-                Text(
-                    text = if (state.lastWeatherPoint == null)
-                        stringResource(R.string.rate).uppercase()
-                    else
-                        stringResource(R.string.create_new_query).uppercase()
-                )
-            }
         }
 
         Text(
@@ -150,18 +149,16 @@ fun WeatherPointsHistoryList(
     }
 }
 
-
 @Preview(
     showSystemUi = true
 )
 @Composable
-private fun WeatherUiDefaultPreview() {
+private fun WeatherUiDayPreview() {
     NyTimesPreview {
-        WeatherUi(MockWeatherComponent(
-            WeatherState(
-                weatherPointsHistory = MockWeatherComponent.getWeatherPointList()
-            )
-        ))
+        WeatherScreenContent(
+            state = WeatherState(),
+            sendAction = {}
+        )
     }
 }
 
@@ -172,11 +169,10 @@ private fun WeatherUiDefaultPreview() {
 @Composable
 private fun WeatherUiNightPreview() {
     NyTimesPreview {
-        WeatherUi(MockWeatherComponent(
-            WeatherState(
-                weatherPointsHistory = MockWeatherComponent.getWeatherPointList()
-            )
-        ))
+        WeatherScreenContent(
+            state = WeatherState(),
+            sendAction = {}
+        )
     }
 }
 
@@ -186,12 +182,16 @@ private fun WeatherUiNightPreview() {
 @Composable
 private fun WeatherUiLastWeatherPointDefaultPreview() {
     NyTimesPreview {
-        WeatherUi(MockWeatherComponent(
-            WeatherState(
-                weatherPointsHistory = MockWeatherComponent.getWeatherPointList(),
-                lastWeatherPoint = MockWeatherComponent.getWeatherPoint()
-            )
-        ))
+        WeatherScreenContent(
+            state = WeatherState(
+                lastWeatherPoint = WeatherPoint(
+                    city = City(0, "Москва"),
+                    temperature = 0,
+                    id = 0
+                )
+            ),
+            sendAction = {}
+        )
     }
 }
 
@@ -202,12 +202,15 @@ private fun WeatherUiLastWeatherPointDefaultPreview() {
 @Composable
 private fun WeatherUiLastWeatherPointNightPreview() {
     NyTimesPreview {
-        WeatherUi(MockWeatherComponent(
-            WeatherState(
-                weatherPointsHistory = MockWeatherComponent.getWeatherPointList(),
-                lastWeatherPoint = MockWeatherComponent.getWeatherPoint()
-            )
-        ))
+        WeatherScreenContent(
+            state = WeatherState(
+                lastWeatherPoint = WeatherPoint(
+                    city = City(0, "Москва"),
+                    temperature = 0,
+                    id = 0
+                )
+            ),
+            sendAction = {}
+        )
     }
 }
-

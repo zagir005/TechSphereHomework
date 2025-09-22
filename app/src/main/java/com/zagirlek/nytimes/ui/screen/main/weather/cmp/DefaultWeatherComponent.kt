@@ -4,19 +4,20 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.update
-import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
+import com.arkivanov.essenty.instancekeeper.InstanceKeeper
+import com.arkivanov.essenty.instancekeeper.getOrCreate
+import com.zagirlek.nytimes.core.base.component.BaseComponent
 import com.zagirlek.nytimes.domain.model.City
 import com.zagirlek.nytimes.domain.model.WeatherPoint
 import com.zagirlek.nytimes.domain.repository.CityAutocompleteRepository
 import com.zagirlek.nytimes.domain.repository.CityRepository
 import com.zagirlek.nytimes.domain.repository.WeatherRepository
 import com.zagirlek.nytimes.ui.screen.main.weather.WeatherComponent
-import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherAction
+import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherMutation
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherReducer
+import com.zagirlek.nytimes.ui.screen.main.weather.cmp.state.WeatherAction
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.state.WeatherState
-import com.zagirlek.nytimes.ui.screen.main.weather.cmp.state.WeatherUiAction
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class DefaultWeatherComponent(
@@ -24,137 +25,116 @@ class DefaultWeatherComponent(
     private val cityRepository: CityRepository,
     private val weatherRepository: WeatherRepository,
     private val autocompleteRepository: CityAutocompleteRepository
-): ComponentContext by componentContext, WeatherComponent{
-    private val _state: MutableValue<WeatherState> = MutableValue(WeatherState())
-    override val state: Value<WeatherState> = _state
+) : BaseComponent<WeatherState, WeatherAction, WeatherMutation, WeatherReducer>(
+    componentContext = componentContext,
+    reducer = WeatherReducer()
+), WeatherComponent {
+    private val stateHolder = instanceKeeper.getOrCreate(HolderKey) { StateHolder() }
+    private val _state get() = stateHolder.state
+    override val state: Value<WeatherState> get() = stateHolder.state
 
-    private val reducer = WeatherReducer()
-    private val scope = coroutineScope(Dispatchers.IO + SupervisorJob())
+    private var cityJob: Job? = null
 
     init {
-        scope.launch {
+        componentScope.launch {
             weatherRepository.getWeatherPoints().collect { list ->
                 _state.update {
-                    reducer.reduce(
-                        state = it,
-                        action = WeatherAction.WeatherPointHistoryLoaded(list)
+                    WeatherMutation.WeatherPointHistoryLoaded(list).reduce(_state.value)
+                }
+            }
+        }
+    }
+
+    override fun action(action: WeatherAction) {
+        when (action) {
+            is WeatherAction.CityField.SaveCity -> {
+                componentScope.launch {
+                    val city = saveCity(action.cityName)
+                    _state.update {
+                        WeatherMutation.CityField.SaveCity(city).reduce(it)
+                    }
+                }
+            }
+
+            is WeatherAction.AddWeatherPoint -> {
+                componentScope.launch {
+                    val weatherPoint = addWeatherPoint(action.city, action.degree)
+                    _state.update {
+                        WeatherMutation.AddWeatherPoint(weatherPoint).reduce(it)
+                    }
+                }
+            }
+            is WeatherAction.CityField.ValueChanged -> {
+                _state.update {
+                    WeatherMutation.CityField.ValueChanged(action.value).reduce(it)
+                }
+
+                cityJob?.cancel()
+                cityJob = componentScope.launch {
+                    val lastVariants = getLastCityVariants(action.value)
+                    _state.update {
+                        WeatherMutation.CityField.LastVariantsLoaded(lastVariants).reduce(it)
+                    }
+
+                    val autocompleteVariants = getCityAutocompleteVariants(action.value)
+                    _state.update {
+                        WeatherMutation.CityField.AutocompleteVariantsLoaded(autocompleteVariants).reduce(it)
+                    }
+                }
+            }
+
+            is WeatherAction.CityField.VariantPick -> {
+                componentScope.launch {
+                    val pickedCity = cityRepository.getCityById(action.variant.id) ?: saveCity(
+                        name = action.variant.name
                     )
+                    _state.update {
+                        WeatherMutation.CityField.VariantPick(pickedCity).reduce(it)
+                    }
+                }
+            }
+
+            is WeatherAction.TemperatureFieldValueChanged -> {
+                _state.update {
+                    WeatherMutation.DegreeFieldValueChanged(value = action.value).reduce(it)
+                }
+            }
+
+            is WeatherAction.DeleteWeatherPoint -> {
+            }
+
+            WeatherAction.ReloadWeatherPointFields -> {
+                _state.update {
+                    WeatherMutation.ReloadWeatherPointFields.reduce(it)
                 }
             }
         }
     }
 
-    override fun action(action: WeatherUiAction) {
-        with(reducer){
-            when(action){
-                is WeatherUiAction.AddCity -> {
-                    scope.launch {
-                        val city = addCity(action.cityName)
-                        _state.update {
-                            reduce(
-                                state = it,
-                                action = WeatherAction.CityFieldAddCity(
-                                    city
-                                )
-                            )
-                        }
-                    }
-                }
-                is WeatherUiAction.AddWeatherPoint -> {
-                    scope.launch {
-                        val weatherPoint = addWeatherPoint(action.city, action.degree)
-                        _state.update {
-                            reduce(
-                                state = it,
-                                action = WeatherAction.SubmitWeatherPoint(weatherPoint)
-                            )
-                        }
-                    }
-                }
-                is WeatherUiAction.CityFieldValueChanged ->
-                    scope.launch {
-                        val value = action.value
-                        _state.update {
-                            reduce(
-                                state = it,
-                                action = WeatherAction.CityFieldValueChanged(
-                                    value = value
-                                )
-                            )
-                        }
-
-                        val lastVariants = getLastVariants(value)
-                        _state.update {
-                            reduce(
-                                state = it,
-                                action = WeatherAction.CityFieldLastVariantsLoaded(
-                                    lastVariants
-                                )
-                            )
-                        }
-
-                        val autocompleteVariants = getAutocompleteVariants(value)
-                        _state.update {
-                            reduce(
-                                state = it,
-                                action = WeatherAction.CityFieldAutocompleteVariantLoaded(
-                                    autocompleteVariants
-                                )
-                            )
-                        }
-                    }
-                is WeatherUiAction.CityFieldVariantPick -> {
-                    scope.launch {
-                        val pickedCity = cityRepository.getCityById(action.variant.id) ?: addCity(action.variant.name)
-                        _state.update {
-                            reduce(
-                                state = it,
-                                action = WeatherAction.CityFieldVariantPick(pickedCity)
-                            )
-                        }
-                    }
-                }
-                is WeatherUiAction.TemperatureFieldValueChanged -> {
-                    _state.update {
-                        reduce(
-                            state = it,
-                            action = WeatherAction.DegreeFieldValueChanged(value = action.value)
-                        )
-                    }
-                }
-                is WeatherUiAction.DeleteWeatherPoint -> {
-
-                }
-                WeatherUiAction.ReloadWeatherPointFields -> {
-                    _state.update {
-                        reduce(
-                            state = it,
-                            action = WeatherAction.ReloadWeatherPointFields
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-    private suspend fun addCity(name: String): City {
+    private suspend fun saveCity(name: String): City {
         val id = cityRepository.saveCity(name)
         return cityRepository.getCityById(id)!!
     }
 
-    private suspend fun addWeatherPoint(city: City, degree: Int): WeatherPoint{
-        val id = weatherRepository.addWeatherPoint(city,degree)
+    private suspend fun addWeatherPoint(city: City, degree: Int): WeatherPoint {
+        val id = weatherRepository.addWeatherPoint(city, degree)
         return weatherRepository.getWeatherPointById(id)
     }
 
-    private suspend fun getAutocompleteVariants(filter: String): List<City>{
+    private suspend fun getCityAutocompleteVariants(filter: String): List<City> {
         autocompleteRepository.autocompleteSearch(filter)
             .onSuccess { return it }
         return emptyList()
     }
 
-    private suspend fun getLastVariants(filter: String): List<City>{
+    private suspend fun getLastCityVariants(filter: String): List<City> {
         return cityRepository.findCity(filter)
     }
+
+    private class StateHolder : InstanceKeeper.Instance {
+        val state: MutableValue<WeatherState> = MutableValue(WeatherState())
+    }
+
+    private object HolderKey
 
 }

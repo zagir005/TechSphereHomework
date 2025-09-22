@@ -1,6 +1,6 @@
-package com.zagirlek.nytimes.core.network.service
+package com.zagirlek.nytimes.data.network.service
 
-import com.zagirlek.nytimes.core.network.dto.CityDTO
+import com.zagirlek.nytimes.data.network.dto.CityDTO
 import retrofit2.http.GET
 import retrofit2.http.Query
 

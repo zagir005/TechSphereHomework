@@ -4,10 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.room.RoomDatabase
 import com.arkivanov.decompose.defaultComponentContext
-import com.zagirlek.nytimes.data.repository.AuthRepositoryImpl
-import com.zagirlek.nytimes.data.repository.CityRepositoryImpl
 import com.zagirlek.nytimes.ui.screen.root.RootUi
 import com.zagirlek.nytimes.ui.screen.root.components.DefaultRootComponent
 import com.zagirlek.nytimes.ui.theme.NyTimesTheme

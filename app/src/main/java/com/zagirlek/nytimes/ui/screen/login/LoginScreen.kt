@@ -6,11 +6,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import com.zagirlek.nytimes.ui.screen.login.cmp.state.textfield.TextFieldState
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -38,6 +37,7 @@ import com.zagirlek.nytimes.ui.elements.AppButton
 import com.zagirlek.nytimes.ui.elements.AppTextField
 import com.zagirlek.nytimes.ui.screen.login.cmp.state.LoginAction
 import com.zagirlek.nytimes.ui.screen.login.cmp.state.LoginState
+import com.zagirlek.nytimes.ui.screen.login.cmp.state.textfield.TextFieldState
 import com.zagirlek.nytimes.ui.screen.login.cmp.state.textfield.textfielderror.LoginTextFieldError
 import com.zagirlek.nytimes.ui.screen.login.cmp.state.textfield.textfielderror.PasswordTextFieldError
 import com.zagirlek.nytimes.ui.theme.NyTimesTheme
@@ -45,7 +45,7 @@ import com.zagirlek.nytimes.ui.theme.Typography
 import com.zagirlek.nytimes.ui.theme.robotoFlexFamily
 
 @Composable
-fun LoginUi(
+fun LoginScreen(
     component: LoginComponent,
     modifier: Modifier = Modifier,
 ) {
@@ -81,16 +81,16 @@ fun LoginUi(
                         component.action(LoginAction.PasswordTextChanged(it))
                     }
 
-                    Row{
-                        Spacer(modifier = Modifier.weight(1f))
-                        AppButton(
-                            onClick = {
-                                component.action(LoginAction.Submit)
-                            },
-                            enabled = state.buttonEnabled
-                        ) {
-                            Text(text = stringResource(R.string.enter).uppercase())
-                        }
+                    AppButton(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentWidth(Alignment.End),
+                        onClick = {
+                            component.action(LoginAction.Submit)
+                        },
+                        enabled = state.buttonEnabled
+                    ) {
+                        Text(text = stringResource(R.string.enter).uppercase())
                     }
 
                     TextButton(
@@ -224,7 +224,7 @@ private val previewComponent = object: LoginComponent {
 private fun LoginUiDefaultPreview() {
     NyTimesTheme {
         Scaffold { paddingValues ->
-            LoginUi(
+            LoginScreen(
                 component = previewComponent,
                 modifier = Modifier
                     .padding(paddingValues)
@@ -243,7 +243,7 @@ private fun LoginUiNightPreview() {
 
     NyTimesTheme {
         Scaffold { paddingValues ->
-            LoginUi(
+            LoginScreen(
                 component = previewComponent,
                 modifier = Modifier
                     .padding(paddingValues)

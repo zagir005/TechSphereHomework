@@ -8,13 +8,10 @@ import androidx.compose.ui.Modifier
 import com.zagirlek.nytimes.ui.theme.NyTimesTheme
 
 @Composable
-fun NyTimesPreview(
-    modifier: Modifier = Modifier,
-    content: @Composable () -> Unit
-) {
+fun NyTimesPreview(content: @Composable () -> Unit) {
     NyTimesTheme {
         Scaffold { paddingValues ->
-            Box(modifier = modifier.padding(paddingValues)){
+            Box(modifier = Modifier.padding(paddingValues)) {
                 content()
             }
         }

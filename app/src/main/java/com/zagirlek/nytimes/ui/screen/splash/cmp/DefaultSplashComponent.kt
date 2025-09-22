@@ -9,13 +9,9 @@ import com.zagirlek.nytimes.domain.model.AuthToken
 import com.zagirlek.nytimes.domain.repository.AuthRepository
 import com.zagirlek.nytimes.ui.screen.splash.SplashComponent
 import com.zagirlek.nytimes.ui.screen.splash.cmp.state.SplashAction
-import com.zagirlek.nytimes.ui.screen.splash.cmp.state.SplashEffect
 import com.zagirlek.nytimes.ui.screen.splash.cmp.state.SplashState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
 class DefaultSplashComponent(
@@ -25,20 +21,20 @@ class DefaultSplashComponent(
     private val authRepository: AuthRepository
 ): ComponentContext by componentContext, SplashComponent {
 
-    private val _state = MutableValue<SplashState>(initialValue = SplashState.Loading)
-    override val state: Value<SplashState> = _state
-
-    private val _effect = MutableSharedFlow<SplashEffect>()
-    override val effect: SharedFlow<SplashEffect> = _effect.asSharedFlow()
-
+    private val _state: MutableValue<SplashState> = MutableValue(initialValue = SplashState(isLoading = false))
+    override val state: Value<SplashState> get() = _state
     private val scope = coroutineScope(Dispatchers.IO + SupervisorJob())
-
     private var token: AuthToken? = null
 
     init {
         scope.launch {
+            _state.update {
+                it.copy(isLoading = true)
+            }
             token = authRepository.getCurrToken()
-            _effect.emit(SplashEffect.FinishSplash)
+            _state.update {
+                it.copy(isLoading = false)
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 package com.zagirlek.nytimes.ui.elements
 
 import android.content.res.Configuration
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -29,9 +30,9 @@ fun AppTextField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
     trailingIcon: @Composable () -> Unit = {},
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    singleLine: Boolean = false
+    singleLine: Boolean = false,
+    interactionSource: MutableInteractionSource? = null,
 ) {
-
     TextField(
         value = value,
         onValueChange = onValueChange,
@@ -40,6 +41,7 @@ fun AppTextField(
         modifier = modifier,
         isError = errorMessage != null,
         keyboardOptions = keyboardOptions,
+        interactionSource = interactionSource,
         supportingText = {
             if(errorMessage != null){
                 Text(

@@ -4,8 +4,7 @@ import com.zagirlek.nytimes.domain.model.AuthToken
 import com.zagirlek.nytimes.domain.repository.AuthRepository
 import kotlinx.coroutines.delay
 
-class AuthRepositoryImpl(): AuthRepository {
-
+class MockAuthRepositoryImpl(): AuthRepository {
     override suspend fun getCurrToken(): AuthToken? {
         delay(2000)
         return null
@@ -22,5 +21,4 @@ class AuthRepositoryImpl(): AuthRepository {
     override suspend fun getTokenWithoutLogin(): AuthToken {
         return AuthToken.DEFAULT_TOKEN
     }
-
 }

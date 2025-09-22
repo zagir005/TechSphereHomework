@@ -27,15 +27,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.zagirlek.nytimes.R
-import com.zagirlek.nytimes.ui.screen.main.weather.WeatherUi
+import com.zagirlek.nytimes.ui.screen.main.weather.WeatherScreen
 import com.zagirlek.nytimes.ui.theme.NyTimesTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainUi(
-    mainComponent: MainComponent
+    component: MainComponent
 ) {
-    val pages by mainComponent.pages.subscribeAsState()
+    val pages by component.pages.subscribeAsState()
     val tabItems = listOf(Tab.Weather, Tab.News, Tab.Favorites)
 
     Scaffold(
@@ -53,7 +53,7 @@ fun MainUi(
                 tabs = tabItems,
                 selected = pages.selectedIndex,
             ){ selectedIndex ->
-                mainComponent.selectPage(selectedIndex)
+                component.selectPage(selectedIndex)
             }
         }
     ){ paddingValues ->
@@ -63,7 +63,7 @@ fun MainUi(
         ){
             when(val child = pages.items[pages.selectedIndex].instance!!){
                 is MainComponent.Child.Weather -> {
-                    WeatherUi(child.component)
+                    WeatherScreen(child.component)
                 }
                 is MainComponent.Child.News -> {
 

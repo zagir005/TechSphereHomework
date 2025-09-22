@@ -1,11 +1,11 @@
-package com.zagirlek.nytimes.core.local
+package com.zagirlek.nytimes.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.zagirlek.nytimes.core.local.dao.CityDao
-import com.zagirlek.nytimes.core.local.dao.WeatherDao
-import com.zagirlek.nytimes.core.local.entity.CityEntity
-import com.zagirlek.nytimes.core.local.entity.WeatherInfoEntity
+import com.zagirlek.nytimes.data.local.dao.CityDao
+import com.zagirlek.nytimes.data.local.dao.WeatherDao
+import com.zagirlek.nytimes.data.local.entity.CityEntity
+import com.zagirlek.nytimes.data.local.entity.WeatherInfoEntity
 
 @Database(
     entities = [CityEntity::class, WeatherInfoEntity::class],

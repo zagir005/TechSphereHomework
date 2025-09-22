@@ -1,4 +1,4 @@
-package com.zagirlek.nytimes.core.local.entity
+package com.zagirlek.nytimes.data.local.entity
 
 import androidx.room.Embedded
 import androidx.room.Relation

@@ -6,5 +6,7 @@ data class TextFieldState<E: TextFieldError> (
     val value: String = "",
     val error: E?  = null
 ){
-    fun hasError() = error != null
+    fun isNotEmpty() = value.isNotEmpty()
+
+    fun isValid() = error == null
 }

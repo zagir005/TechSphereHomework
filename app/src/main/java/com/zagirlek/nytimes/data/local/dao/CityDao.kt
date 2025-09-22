@@ -1,10 +1,10 @@
-package com.zagirlek.nytimes.core.local.dao
+package com.zagirlek.nytimes.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.zagirlek.nytimes.core.local.entity.CityEntity
+import com.zagirlek.nytimes.data.local.entity.CityEntity
 
 
 @Dao

@@ -1,10 +1,11 @@
 package com.zagirlek.nytimes
 
 import android.app.Application
-import com.zagirlek.nytimes.data.repository.AuthRepositoryImpl
 import com.zagirlek.nytimes.data.repository.CityAutocompleteRepositoryImpl
 import com.zagirlek.nytimes.data.repository.CityRepositoryImpl
+import com.zagirlek.nytimes.data.repository.MockAuthRepositoryImpl
 import com.zagirlek.nytimes.data.repository.WeatherRepositoryImpl
+import com.zagirlek.nytimes.di.AppDi
 import com.zagirlek.nytimes.domain.repository.AuthRepository
 import com.zagirlek.nytimes.domain.repository.CityAutocompleteRepository
 import com.zagirlek.nytimes.domain.repository.CityRepository
@@ -34,6 +35,6 @@ class NyTimesApp: Application() {
     }
 
     val authRepository: AuthRepository by lazy {
-        AuthRepositoryImpl()
+        MockAuthRepositoryImpl()
     }
 }

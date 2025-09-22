@@ -1,6 +1,8 @@
 package com.zagirlek.nytimes.ui.screen.login.cmp.state
 
-sealed class LoginAction{
+import com.zagirlek.nytimes.core.base.component.Action
+
+sealed class LoginAction: Action{
     data class LoginTextChanged(val text: String): LoginAction()
 
     data class PasswordTextChanged(val text: String): LoginAction()
@@ -8,5 +10,4 @@ sealed class LoginAction{
     data object Submit: LoginAction()
 
     data object ContinueWithoutAuth: LoginAction()
-
 }

@@ -1,62 +1,63 @@
 package com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer
 
+import com.zagirlek.nytimes.core.base.reducer.Reducer
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.state.WeatherState
 
-class WeatherReducer {
-    fun reduce(state: WeatherState, action: WeatherAction): WeatherState {
-        return when(action){
-            is WeatherAction.CityFieldAction.ValueChanged -> state.copy(
+class WeatherReducer: Reducer<WeatherState, WeatherMutation> {
+    override fun reduce(state: WeatherState, mutation: WeatherMutation): WeatherState {
+        return when(mutation){
+            is WeatherMutation.CityField.ValueChanged -> state.copy(
                 cityTextFieldState = state.cityTextFieldState.copy(
-                    value = action.value,
+                    value = mutation.value,
                     errorMessage = null,
                     selectedCity = null,
                     autocompleteVariantsLoading = true,
                     lastVariantsLoading = true
                 )
             )
-            is WeatherAction.CityFieldAction.VariantPick -> state.copy(
+            is WeatherMutation.CityField.VariantPick -> state.copy(
                 cityTextFieldState = state.cityTextFieldState.copy(
-                    selectedCity = action.variant,
-                    value = action.variant.name
+                    selectedCity = mutation.variant,
+                    value = mutation.variant.name
                 )
             )
-            is WeatherAction.CityFieldAction.SaveCity -> state.copy(
+            is WeatherMutation.CityField.SaveCity -> state.copy(
                 cityTextFieldState = state.cityTextFieldState.copy(
-                    selectedCity = action.city,
-                    value = action.city.name
+                    selectedCity = mutation.city,
+                    value = mutation.city.name
                 )
             )
-            is WeatherAction.CityFieldAction.AutocompleteVariantsLoaded -> state.copy(
+            is WeatherMutation.CityField.AutocompleteVariantsLoaded -> state.copy(
                 cityTextFieldState = state.cityTextFieldState.copy(
                     autocompleteVariantsLoading = false,
-                    autocompleteVariants = action.autocompleteVariants
+                    autocompleteVariants = mutation.autocompleteVariants
                 )
             )
-            is WeatherAction.CityFieldAction.LastVariantsLoaded -> state.copy(
+            is WeatherMutation.CityField.LastVariantsLoaded -> state.copy(
                 cityTextFieldState = state.cityTextFieldState.copy(
                     lastVariantsLoading = false,
-                    lastVariants = action.lastVariants
+                    lastVariants = mutation.lastVariants
                 )
             )
 
-            is WeatherAction.DegreeFieldValueChanged -> state.copy(
+            is WeatherMutation.DegreeFieldValueChanged -> state.copy(
                 temperatureTextFieldState = state.temperatureTextFieldState.copy(
-                    value = action.value
+                    value = mutation.value
                 )
             )
 
-            is WeatherAction.SubmitWeatherPoint -> state.copy(
-                lastWeatherPoint = action.weatherPoint
+            is WeatherMutation.AddWeatherPoint -> state.copy(
+                lastWeatherPoint = mutation.weatherPoint
             )
 
-            is WeatherAction.DeleteWeatherPoint -> state
+            is WeatherMutation.DeleteWeatherPoint -> state
 
-            WeatherAction.ReloadWeatherPointFields -> state.copy(
+            WeatherMutation.ReloadWeatherPointFields -> state.copy(
                 lastWeatherPoint = null
             )
 
-            is WeatherAction.WeatherPointHistoryLoaded -> state.copy(
-                weatherPointsHistory = action.list
+            is WeatherMutation.WeatherPointHistoryLoaded -> state.copy(
+                weatherPointsHistory = mutation.list
             )
         }
     }

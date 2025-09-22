@@ -1,6 +1,7 @@
 package com.zagirlek.nytimes.ui.screen.main.weather.elements
 
 import android.content.res.Configuration
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,7 +30,6 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.max
 import com.zagirlek.nytimes.R
 import com.zagirlek.nytimes.domain.model.City
 import com.zagirlek.nytimes.ui.elements.AppTextField
@@ -49,6 +49,7 @@ fun AutocompleteCityTextField(
     onNewCity: (String) -> Unit = { },
     onVariantPick: (City) -> Unit = { }
 ) {
+    val interactionSource = remember { MutableInteractionSource() }
     var isFocused by remember { mutableStateOf(false) }
 
     Column(modifier = modifier.fillMaxWidth()) {
@@ -58,6 +59,7 @@ fun AutocompleteCityTextField(
             singleLine = true,
             label = stringResource(R.string.city),
             errorMessage = errorMessage,
+            interactionSource = interactionSource,
             modifier = Modifier
                 .fillMaxWidth()
                 .onFocusChanged { focusState ->
