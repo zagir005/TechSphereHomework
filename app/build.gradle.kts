@@ -57,6 +57,7 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.room.paging)
 
+    implementation(libs.androidx.ui.animation)
     implementation(libs.androidx.core.splash)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

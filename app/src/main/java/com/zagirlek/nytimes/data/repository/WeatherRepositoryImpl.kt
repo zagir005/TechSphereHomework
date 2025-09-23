@@ -33,4 +33,8 @@ class WeatherRepositoryImpl(
             it.toDomain()
         }
     }
+
+    override suspend fun deleteWeatherPointById(id: Long) {
+        weatherDao.deleteWeatherInfoById(id)
+    }
 }
