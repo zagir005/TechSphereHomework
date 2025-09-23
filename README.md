@@ -3,6 +3,7 @@
 <div align="center"> 
 
 **Проект еще пока что пишется..** 
+**Можно следить над чем я работаю с помощью [Project](https://github.com/users/zagir005/projects/2)**
 
 </div>
 Домашнее задание выполненное в рамках отбора на стажировку в компанию "Техносфера". Ниже дам краткое описание стеку и фичам проекта. 
@@ -30,6 +31,11 @@
 <div align="center">
 
 **Made by zagir_lek**
-**tg: @zagir_lek**
+
+</div>
+
+<div align="center">
+  
+**tg: [@zagir_lek](https://t.me/@zagir_lek)**
 
 </div>
