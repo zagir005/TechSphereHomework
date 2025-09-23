@@ -101,6 +101,7 @@ class DefaultWeatherComponent(
             }
 
             is WeatherAction.DeleteWeatherPoint -> {
+
             }
 
             WeatherAction.ReloadWeatherPointFields -> {

@@ -15,4 +15,4 @@ val White = Color(0xFFFFFFFF)
 
 val Gray = Color(0xFF888888)
 val DarkGray = Color(0xFF444444)
-val LightGray = Color(0xFF676767)
+val LightGray = Color(0xFFC0C0C0)

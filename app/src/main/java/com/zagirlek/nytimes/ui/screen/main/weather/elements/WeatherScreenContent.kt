@@ -1,13 +1,10 @@
 package com.zagirlek.nytimes.ui.screen.main.weather.elements
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -104,7 +101,9 @@ fun WeatherScreenContent(
         else
             WeatherPointsHistoryList(
                 list = state.weatherPointsHistory
-            )
+            ){
+                sendAction(WeatherAction.DeleteWeatherPoint(it.id))
+            }
     }
 }
 
@@ -122,29 +121,6 @@ fun EmptyHistoryAttention(modifier: Modifier = Modifier) {
                 .padding(8.dp),
             textAlign = TextAlign.Center
         )
-    }
-}
-
-@Composable
-fun WeatherPointsHistoryList(
-    list: List<WeatherPoint>,
-    modifier: Modifier = Modifier,
-) {
-    LazyColumn(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(4.dp)
-    ) {
-        items(list) {
-            Surface(
-                color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f),
-                shape = RoundedCornerShape(8.dp)
-            ) {
-                WeatherPointInfo(
-                    weatherPoint = it,
-                    modifier = Modifier.padding(14.dp)
-                )
-            }
-        }
     }
 }
 
