@@ -3,6 +3,7 @@ package com.zagirlek.nytimes.ui.screen.main.weather.elements
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -35,17 +36,20 @@ fun WeatherPointsHistoryList(
     modifier: Modifier = Modifier,
     onItemDelete: (WeatherPoint) -> Unit = {},
 ) {
+
     LazyColumn(
-        modifier = modifier,
+        modifier = modifier
+            .fillMaxHeight(),
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         items(
             items = list,
             key = { it.id }
-        ) {
+        ) { item ->
             WeatherPointListItem(
-                weatherPoint = it,
-                onDelete = onItemDelete
+                weatherPoint = item,
+                onDelete = onItemDelete,
+                modifier = Modifier.animateItem()
             )
         }
     }
@@ -59,15 +63,17 @@ private fun WeatherPointListItem(
 ) {
     val swipeToDismissBoxState = rememberSwipeToDismissBoxState(
         confirmValueChange = {
-            if (it == SwipeToDismissBoxValue.EndToStart) onDelete(weatherPoint)
-            true
+            if (it == SwipeToDismissBoxValue.EndToStart){
+                onDelete(weatherPoint)
+                true
+            } else false
         }
     )
 
     SwipeToDismissBox(
         state = swipeToDismissBoxState,
         enableDismissFromStartToEnd = false,
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         backgroundContent = {
             if (swipeToDismissBoxState.dismissDirection == SwipeToDismissBoxValue.EndToStart){
                 Icon(
@@ -76,7 +82,7 @@ private fun WeatherPointListItem(
                     tint = Color.White,
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(Color.Red)
+                        .background(color = Color.Red, shape = RoundedCornerShape(8.dp))
                         .wrapContentSize(Alignment.CenterEnd)
                         .padding(8.dp)
                 )
@@ -84,7 +90,6 @@ private fun WeatherPointListItem(
         }
     ) {
         Surface(
-            modifier = modifier,
             color = MaterialTheme.colorScheme.surfaceVariant,
             shape = RoundedCornerShape(8.dp)
         ) {
@@ -115,5 +120,6 @@ private fun WeatherPointsHistoryListDefaultPreview() {
             }
         }
     }
-
 }
+
+

@@ -27,6 +27,4 @@ class CityRepositoryImpl(
     override suspend fun getCityById(id: Long): City? {
         return cityDao.getCityById(id)?.toDomain()
     }
-
-
 }

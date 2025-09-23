@@ -35,19 +35,14 @@ class WeatherReducer: Reducer<WeatherState, WeatherMutation> {
                     lastVariants = mutation.lastVariants
                 )
             )
-
             is WeatherMutation.DegreeFieldValueChanged -> state.copy(
                 temperatureTextFieldState = state.temperatureTextFieldState.copy(
                     value = mutation.value
                 )
             )
-
             is WeatherMutation.AddWeatherPoint -> state.copy(
                 lastWeatherPoint = mutation.weatherPoint
             )
-
-            is WeatherMutation.DeleteWeatherPoint -> state
-
             WeatherMutation.ReloadWeatherPointFields -> state.copy(
                 lastWeatherPoint = null
             )

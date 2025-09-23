@@ -101,7 +101,9 @@ class DefaultWeatherComponent(
             }
 
             is WeatherAction.DeleteWeatherPoint -> {
-
+                componentScope.launch {
+                    deleteWeatherPointById(action.id)
+                }
             }
 
             WeatherAction.ReloadWeatherPointFields -> {
@@ -130,6 +132,10 @@ class DefaultWeatherComponent(
 
     private suspend fun getLastCityVariants(filter: String): List<City> {
         return cityRepository.findCity(filter)
+    }
+
+    private suspend fun deleteWeatherPointById(id: Long){
+        weatherRepository.deleteWeatherPointById(id)
     }
 
     private class StateHolder : InstanceKeeper.Instance {
