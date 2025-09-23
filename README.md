@@ -36,6 +36,6 @@
 
 <div align="center">
   
-**tg: [@zagir_lek](https://t.me/@zagir_lek)**
+**tg: [@zagir_lek](https://t.me/zagir_lek)**
 
 </div>
