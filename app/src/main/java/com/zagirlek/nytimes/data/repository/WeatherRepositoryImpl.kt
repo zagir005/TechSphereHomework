@@ -24,17 +24,12 @@ class WeatherRepositoryImpl(
         )
     }
 
-    override suspend fun getWeatherPointById(id: Long): WeatherPoint {
-        return weatherDao.getWeatherInfoById(id).toDomain()
-    }
+    override suspend fun getWeatherPointById(id: Long): WeatherPoint = weatherDao.getWeatherInfoById(id).toDomain()
 
-    override fun getWeatherPoints(): Flow<List<WeatherPoint>> {
-        return weatherDao.getWeatherByOfAllCities().map {
+    override fun getWeatherPoints(): Flow<List<WeatherPoint>> = weatherDao.getWeatherByOfAllCities().map {
             it.toDomain()
         }
-    }
 
-    override suspend fun deleteWeatherPointById(id: Long) {
-        weatherDao.deleteWeatherInfoById(id)
-    }
+
+    override suspend fun deleteWeatherPointById(id: Long) = weatherDao.deleteWeatherInfoById(id)
 }
