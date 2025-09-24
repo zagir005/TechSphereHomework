@@ -5,7 +5,7 @@ import com.zagirlek.nytimes.domain.model.WeatherPoint
 
 fun WeatherWithCity.toDomain(): WeatherPoint = WeatherPoint(
     city = cityEntity.toDomain(),
-    temperature = weather.degree,
+    temperature = weather.temperature,
     id = weather.id
 )
 

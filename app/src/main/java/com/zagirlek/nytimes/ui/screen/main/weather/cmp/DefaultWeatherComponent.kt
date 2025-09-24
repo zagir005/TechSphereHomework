@@ -9,9 +9,12 @@ import com.arkivanov.essenty.instancekeeper.getOrCreate
 import com.zagirlek.nytimes.core.base.component.BaseComponent
 import com.zagirlek.nytimes.domain.model.City
 import com.zagirlek.nytimes.domain.model.WeatherPoint
-import com.zagirlek.nytimes.domain.repository.CityAutocompleteRepository
-import com.zagirlek.nytimes.domain.repository.CityRepository
-import com.zagirlek.nytimes.domain.repository.WeatherRepository
+import com.zagirlek.nytimes.domain.usecase.AddWeatherPointUseCase
+import com.zagirlek.nytimes.domain.usecase.DeleteWeatherPointUseCase
+import com.zagirlek.nytimes.domain.usecase.GetCityAutocompleteUseCase
+import com.zagirlek.nytimes.domain.usecase.GetOrPutCityUseCase
+import com.zagirlek.nytimes.domain.usecase.GetRecentCityListUseCase
+import com.zagirlek.nytimes.domain.usecase.GetWeatherPointsHistoryFlowUseCase
 import com.zagirlek.nytimes.ui.screen.main.weather.WeatherComponent
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherMutation
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherMutation.AddWeatherPoint
@@ -29,9 +32,12 @@ import kotlinx.coroutines.launch
 
 class DefaultWeatherComponent(
     componentContext: ComponentContext,
-    private val cityRepository: CityRepository,
-    private val weatherRepository: WeatherRepository,
-    private val autocompleteRepository: CityAutocompleteRepository
+    private val getCityAutocompleteUseCase: GetCityAutocompleteUseCase,
+    private val getWeatherPointsHistoryFlowUseCase: GetWeatherPointsHistoryFlowUseCase,
+    private val getRecentCityListUseCase: GetRecentCityListUseCase,
+    private val deleteWeatherPointUseCase: DeleteWeatherPointUseCase,
+    private val addWeatherPointUseCase: AddWeatherPointUseCase,
+    private val getOrPutCityUseCase: GetOrPutCityUseCase
 ) : BaseComponent<WeatherState, WeatherAction, WeatherMutation, WeatherReducer>(
     componentContext = componentContext,
     reducer = WeatherReducer()
@@ -44,7 +50,7 @@ class DefaultWeatherComponent(
 
     init {
         componentScope.launch {
-            weatherRepository.getWeatherPoints().collect { list ->
+            getWeatherPointsHistoryFlowUseCase().collect { list ->
                 _state.update {
                     WeatherMutation.WeatherPointHistoryLoaded(list).reduce(_state.value)
                 }
@@ -77,7 +83,7 @@ class DefaultWeatherComponent(
 
                 cityJob?.cancel()
                 cityJob = componentScope.launch {
-                    val lastVariants = getLastCityVariants(action.value)
+                    val lastVariants = getRecentCityVariants(action.value)
                     _state.update {
                         LastVariantsLoaded(lastVariants).reduce(it)
                     }
@@ -121,31 +127,28 @@ class DefaultWeatherComponent(
         }
     }
 
-    private suspend fun saveCity(name: String): City = cityRepository.saveOrGetCity(name)
-
-    private suspend fun addWeatherPoint(city: City, degree: Int): WeatherPoint {
-        val id = weatherRepository.addWeatherPoint(city, degree)
-        return weatherRepository.getWeatherPointById(id)
-    }
+    private suspend fun saveCity(name: String): City =  getOrPutCityUseCase(name)
 
     private suspend fun getCityAutocompleteVariants(filter: String): List<City> {
-        autocompleteRepository.autocompleteSearch(filter)
+        // TODO: Обработать onFailure кейс
+        getCityAutocompleteUseCase(filter)
             .onSuccess { return it }
+            .onFailure { throw it }
         return emptyList()
     }
 
-    private suspend fun getLastCityVariants(filter: String): List<City> {
-        return cityRepository.findCitiesByName(filter)
+    private suspend fun getRecentCityVariants(filter: String): List<City> {
+        return getRecentCityListUseCase(filter)
     }
 
-    private suspend fun deleteWeatherPointById(id: Long){
-        weatherRepository.deleteWeatherPointById(id)
-    }
+    private suspend fun addWeatherPoint(city: City, temperature: Int): WeatherPoint =
+        addWeatherPointUseCase(city = city, temperature = temperature)
+
+    private suspend fun deleteWeatherPointById(id: Long) = deleteWeatherPointUseCase(id)
 
     private class StateHolder : InstanceKeeper.Instance {
         val state: MutableValue<WeatherState> = MutableValue(WeatherState())
     }
 
     private object HolderKey
-
 }

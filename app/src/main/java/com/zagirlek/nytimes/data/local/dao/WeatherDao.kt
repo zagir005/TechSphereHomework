@@ -23,7 +23,7 @@ interface WeatherDao {
     fun getWeatherByOfAllCities(): Flow<List<WeatherWithCity>>
 
     @Query("SELECT * FROM weather_info WHERE id = :id")
-    suspend fun getWeatherInfoById(id: Long): WeatherWithCity
+    suspend fun getWeatherInfoById(id: Long): WeatherWithCity?
 
     @Query("DELETE FROM weather_info WHERE id = :id")
     suspend fun deleteWeatherInfoById(id: Long)

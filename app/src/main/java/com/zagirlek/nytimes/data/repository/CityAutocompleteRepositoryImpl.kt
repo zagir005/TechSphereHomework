@@ -1,5 +1,6 @@
 package com.zagirlek.nytimes.data.repository
 
+import android.util.Log
 import com.zagirlek.nytimes.data.mapper.toDomain
 import com.zagirlek.nytimes.data.network.service.AutocompleteService
 import com.zagirlek.nytimes.domain.model.City
@@ -10,8 +11,10 @@ class CityAutocompleteRepositoryImpl(
 ): CityAutocompleteRepository {
     override suspend fun autocompleteSearch(query: String): Result<List<City>> =
         runCatching {
-            autocompleteService.autocompleteSearch(query).map {
+            val cities = autocompleteService.autocompleteSearch(query).map {
                 it.toDomain()
             }
+            Log.d("MYTAGAUTOCOMPLETE", cities.joinToString())
+            cities
         }
 }

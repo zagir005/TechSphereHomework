@@ -9,6 +9,7 @@ import com.zagirlek.nytimes.data.local.dao.CityDao
 import com.zagirlek.nytimes.data.local.dao.WeatherDao
 import com.zagirlek.nytimes.data.network.service.AutocompleteService
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -21,8 +22,12 @@ class AppDi(private val context: Context) {
         .fallbackToDestructiveMigration(true)
         .build()
 
+
     private val client = OkHttpClient.Builder()
         .addInterceptor(APIKeyInterceptor())
+        .addInterceptor(HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        })
         .build()
     private val autocompleteService = Retrofit.Builder()
         .client(client)

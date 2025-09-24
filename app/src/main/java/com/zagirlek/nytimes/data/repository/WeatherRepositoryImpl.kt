@@ -14,19 +14,19 @@ class WeatherRepositoryImpl(
 ): WeatherRepository {
     override suspend fun addWeatherPoint(
         city: City,
-        degree: Int
+        temperature: Int
     ): Long {
         return weatherDao.insertWeatherInfo(
             WeatherInfoEntity(
                 cityId = city.id,
-                degree = degree
+                temperature = temperature
             )
         )
     }
 
-    override suspend fun getWeatherPointById(id: Long): WeatherPoint = weatherDao.getWeatherInfoById(id).toDomain()
+    override suspend fun getWeatherPointById(id: Long): WeatherPoint? = weatherDao.getWeatherInfoById(id)?.toDomain()
 
-    override fun getWeatherPoints(): Flow<List<WeatherPoint>> = weatherDao.getWeatherByOfAllCities().map {
+    override fun getWeatherPointsFlow(): Flow<List<WeatherPoint>> = weatherDao.getWeatherByOfAllCities().map {
             it.toDomain()
         }
 

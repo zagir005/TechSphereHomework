@@ -1,6 +1,5 @@
 package com.zagirlek.nytimes.data.repository
 
-import android.util.Log
 import com.zagirlek.nytimes.data.local.dao.CityDao
 import com.zagirlek.nytimes.data.local.entity.CityEntity
 import com.zagirlek.nytimes.data.mapper.toDomain
@@ -19,17 +18,9 @@ class CityRepositoryImpl(
             it.toDomain()
         }
 
-    override suspend fun saveOrGetCity(name: String): City {
+    override suspend fun getOrPutCity(name: String): City {
         val id = saveCity(name)
-        if (id == -1L){
-            val city = getCityByName(name) ?: throw IllegalStateException("Город вроде существует, но не нашли")
-            Log.d("MYTAGDATA", "City ${city.id}")
-            return city
-        } else{
-            val city = getCityById(id) ?: throw IllegalStateException("Город вроде существует, но не нашли")
-            Log.d("MYTAGDATA", "City ${city.id}")
-            return city
-        }
+        return if (id == -1L) getCityByName(name)!! else getCityById(id)!!
     }
 
     override suspend fun getCityByName(name: String): City? = cityDao.findCityByName(name = name)?.toDomain()
