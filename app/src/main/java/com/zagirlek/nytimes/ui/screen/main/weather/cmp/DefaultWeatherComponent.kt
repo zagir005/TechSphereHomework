@@ -14,6 +14,13 @@ import com.zagirlek.nytimes.domain.repository.CityRepository
 import com.zagirlek.nytimes.domain.repository.WeatherRepository
 import com.zagirlek.nytimes.ui.screen.main.weather.WeatherComponent
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherMutation
+import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherMutation.AddWeatherPoint
+import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherMutation.CityField.AutocompleteVariantsLoaded
+import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherMutation.CityField.LastVariantsLoaded
+import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherMutation.CityField.SaveCity
+import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherMutation.CityField.ValueChanged
+import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherMutation.CityField.VariantPick
+import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherMutation.DegreeFieldValueChanged
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherReducer
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.state.WeatherAction
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.state.WeatherState
@@ -51,66 +58,66 @@ class DefaultWeatherComponent(
                 componentScope.launch {
                     val city = saveCity(action.cityName)
                     _state.update {
-                        WeatherMutation.CityField.SaveCity(city).reduce(it)
+                        SaveCity(city).reduce(it)
                     }
                 }
             }
-
             is WeatherAction.AddWeatherPoint -> {
                 componentScope.launch {
                     val weatherPoint = addWeatherPoint(action.city, action.degree)
                     _state.update {
-                        WeatherMutation.AddWeatherPoint(weatherPoint).reduce(it)
+                        AddWeatherPoint(weatherPoint).reduce(it)
                     }
                 }
             }
             is WeatherAction.CityField.ValueChanged -> {
                 _state.update {
-                    WeatherMutation.CityField.ValueChanged(action.value).reduce(it)
+                    ValueChanged(action.value).reduce(it)
                 }
 
                 cityJob?.cancel()
                 cityJob = componentScope.launch {
                     val lastVariants = getLastCityVariants(action.value)
                     _state.update {
-                        WeatherMutation.CityField.LastVariantsLoaded(lastVariants).reduce(it)
+                        LastVariantsLoaded(lastVariants).reduce(it)
                     }
 
                     val autocompleteVariants = getCityAutocompleteVariants(action.value)
                     _state.update {
-                        WeatherMutation.CityField.AutocompleteVariantsLoaded(autocompleteVariants).reduce(it)
+                        AutocompleteVariantsLoaded(autocompleteVariants).reduce(it)
                     }
                 }
             }
 
-            is WeatherAction.CityField.VariantPick -> {
+            is WeatherAction.CityField.LoadedCitySelected -> {
+                _state.update {
+                    VariantPick(action.selectedCity).reduce(it)
+                }
+            }
+            is WeatherAction.CityField.AutocompleteCitySelected -> {
                 componentScope.launch {
-                    val pickedCity = cityRepository.getCityById(action.variant.id) ?: saveCity(
-                        name = action.variant.name
-                    )
+                    val selectedCity = saveCity(action.name)
                     _state.update {
-                        WeatherMutation.CityField.VariantPick(pickedCity).reduce(it)
+                        VariantPick(selectedCity).reduce(it)
                     }
                 }
             }
-
             is WeatherAction.TemperatureFieldValueChanged -> {
                 _state.update {
-                    WeatherMutation.DegreeFieldValueChanged(value = action.value).reduce(it)
+                    DegreeFieldValueChanged(value = action.value).reduce(it)
                 }
             }
-
             is WeatherAction.DeleteWeatherPoint -> {
                 componentScope.launch {
                     deleteWeatherPointById(action.id)
                 }
             }
-
             WeatherAction.ReloadWeatherPointFields -> {
                 _state.update {
                     WeatherMutation.ReloadWeatherPointFields.reduce(it)
                 }
             }
+
         }
     }
 

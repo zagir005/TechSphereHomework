@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface WeatherDao {
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertWeatherInfo(weatherInfoEntity: WeatherInfoEntity): Long
 

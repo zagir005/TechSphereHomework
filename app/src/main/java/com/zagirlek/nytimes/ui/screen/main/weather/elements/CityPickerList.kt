@@ -31,10 +31,11 @@ import com.zagirlek.nytimes.ui.theme.NyTimesTheme
 fun CityPickerList(
     modifier: Modifier = Modifier,
     customCityName: String,
-    onCustomCityClick: (String) -> Unit,
     lastVariants: List<City>,
     autocompleteVariants: List<City>,
-    onCityClick: (City) -> Unit
+    onCustomCityClick: (String) -> Unit = { },
+    onLoadedCityClick: (City) -> Unit = { },
+    onAutocompleteCityClick: (City) -> Unit = { }
 ) {
     LazyColumn(
         modifier = modifier
@@ -70,7 +71,7 @@ fun CityPickerList(
                 CityListItem(
                     text = city.name,
                     onClick = {
-                        onCityClick(city)
+                        onLoadedCityClick(city)
                     }
                 )
             }
@@ -91,7 +92,7 @@ fun CityPickerList(
             items(autocompleteVariants) { city ->
                 CityListItem(
                     text = city.name,
-                    onClick = { onCityClick(city) }
+                    onClick = { onAutocompleteCityClick(city) }
                 )
             }
         }
@@ -142,7 +143,7 @@ private fun CityListDefaultPreview() {
             CityPickerList(
                 customCityName = "Mos",
                 onCustomCityClick = {},
-                onCityClick = {},
+                onLoadedCityClick = {},
                 autocompleteVariants = autocompleteVariants,
                 lastVariants = savedCities
             )
@@ -168,7 +169,7 @@ private fun CityListNightPreview() {
             CityPickerList(
                 customCityName = "Mos",
                 onCustomCityClick = {},
-                onCityClick = {},
+                onLoadedCityClick = {},
                 autocompleteVariants = autocompleteVariants,
                 lastVariants = savedCities
             )

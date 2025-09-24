@@ -48,8 +48,11 @@ fun WeatherScreenContent(
                 onCustomCitySelected = {
                     sendAction(WeatherAction.CityField.SaveCity(it))
                 },
-                onCitySelected = {
-                    sendAction(WeatherAction.CityField.VariantPick(it))
+                onAutocompleteCitySelected = {
+                    sendAction(WeatherAction.CityField.AutocompleteCitySelected(it.name))
+                },
+                onLoadedCitySelected = {
+                    sendAction(WeatherAction.CityField.LoadedCitySelected(it))
                 }
             )
 

@@ -37,7 +37,8 @@ fun CityAutocompleteTextField(
     autocompleteVariants: List<City> = emptyList(),
     errorMessage: String? = null,
     onCustomCitySelected: (String) -> Unit = { },
-    onCitySelected: (City) -> Unit = { }
+    onLoadedCitySelected: (City) -> Unit = { },
+    onAutocompleteCitySelected: (City) -> Unit = { },
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     var isFocused by remember { mutableStateOf(false) }
@@ -76,16 +77,20 @@ fun CityAutocompleteTextField(
                         .fillMaxWidth()
                         .heightIn(max = 200.dp),
                     customCityName = value,
+                    lastVariants = lastVariants,
+                    autocompleteVariants = autocompleteVariants,
                     onCustomCityClick = {
                         onCustomCitySelected(it)
                         isCityPickerVisible = false
                     },
-                    onCityClick = {
-                        onCitySelected(it)
+                    onLoadedCityClick = {
+                        onLoadedCitySelected(it)
                         isCityPickerVisible = false
                     },
-                    lastVariants = lastVariants,
-                    autocompleteVariants = autocompleteVariants
+                    onAutocompleteCityClick = {
+                        onAutocompleteCitySelected(it)
+                        isCityPickerVisible = false
+                    }
                 )
             }
         }

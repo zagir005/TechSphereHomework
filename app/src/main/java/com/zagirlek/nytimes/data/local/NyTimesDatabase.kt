@@ -9,7 +9,7 @@ import com.zagirlek.nytimes.data.local.entity.WeatherInfoEntity
 
 @Database(
     entities = [CityEntity::class, WeatherInfoEntity::class],
-    version = 2
+    version = 1
 )
 abstract class NyTimesDatabase: RoomDatabase() {
     abstract fun weatherDao(): WeatherDao
