@@ -71,7 +71,7 @@ fun CityAutocompleteTextField(
                     .fillMaxWidth()
                     .padding(top = 4.dp, bottom = 4.dp)
             ) {
-                CityList(
+                CityPickerList(
                     modifier = Modifier
                         .fillMaxWidth()
                         .heightIn(max = 200.dp),

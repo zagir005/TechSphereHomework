@@ -17,6 +17,9 @@ android {
         versionCode = 1
         versionName = "0.2"
 
+        buildConfigField(name = "BASE_URL", value = "\"https://api.weatherapi.com/v1/\"", type = "String")
+        buildConfigField(name = "API_KEY", value = "\"dd9eadf389194d2c828170710251809\"", type = "String")
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

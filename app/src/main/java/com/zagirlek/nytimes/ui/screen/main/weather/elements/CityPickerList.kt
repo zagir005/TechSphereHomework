@@ -28,7 +28,7 @@ import com.zagirlek.nytimes.domain.model.City
 import com.zagirlek.nytimes.ui.theme.NyTimesTheme
 
 @Composable
-fun CityList(
+fun CityPickerList(
     modifier: Modifier = Modifier,
     customCityName: String,
     onCustomCityClick: (String) -> Unit,
@@ -139,7 +139,7 @@ private fun CityListDefaultPreview() {
 
     NyTimesTheme {
         Surface{
-            CityList(
+            CityPickerList(
                 customCityName = "Mos",
                 onCustomCityClick = {},
                 onCityClick = {},
@@ -165,7 +165,7 @@ private fun CityListNightPreview() {
 
     NyTimesTheme {
         Surface{
-            CityList(
+            CityPickerList(
                 customCityName = "Mos",
                 onCustomCityClick = {},
                 onCityClick = {},
