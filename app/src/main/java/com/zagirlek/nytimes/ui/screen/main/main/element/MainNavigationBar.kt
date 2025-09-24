@@ -5,7 +5,6 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -36,8 +35,7 @@ fun MainNavigationBar(
 
     NavigationBar(
         modifier
-            .padding(4.dp)
-            .height(75.dp),
+            .padding(4.dp),
         containerColor = Color.Transparent
     ) {
         tabs.forEachIndexed { index, tab ->

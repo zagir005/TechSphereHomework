@@ -114,10 +114,7 @@ class DefaultWeatherComponent(
         }
     }
 
-    private suspend fun saveCity(name: String): City {
-        val id = cityRepository.saveCity(name)
-        return cityRepository.getCityById(id)!!
-    }
+    private suspend fun saveCity(name: String): City = cityRepository.saveOrGetCity(name)
 
     private suspend fun addWeatherPoint(city: City, degree: Int): WeatherPoint {
         val id = weatherRepository.addWeatherPoint(city, degree)
@@ -131,7 +128,7 @@ class DefaultWeatherComponent(
     }
 
     private suspend fun getLastCityVariants(filter: String): List<City> {
-        return cityRepository.findCity(filter)
+        return cityRepository.findCitiesByName(filter)
     }
 
     private suspend fun deleteWeatherPointById(id: Long){

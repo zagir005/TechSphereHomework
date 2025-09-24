@@ -9,22 +9,25 @@ import com.zagirlek.nytimes.domain.repository.CityRepository
 class CityRepositoryImpl(
     private val cityDao: CityDao
 ): CityRepository {
-    override suspend fun saveCity(name: String, id: Long): Long {
-        return cityDao.insertCity(
-            CityEntity(
-                name = name,
-                id = id
-            )
-        )
-    }
 
-    override suspend fun findCity(query: String): List<City> {
-        return cityDao.getCitiesByName(query).map {
+    override suspend fun saveCity(name: String): Long = cityDao.insertCity(
+            CityEntity(name = name)
+        )
+
+    override suspend fun findCitiesByName(name: String): List<City> = cityDao.getCitiesByName(name).map {
             it.toDomain()
         }
+
+    override suspend fun saveOrGetCity(name: String): City {
+        val id = saveCity(name)
+        return if (id == -1L)
+            getCityByName(name) ?: throw IllegalStateException("Город вроде существует, но не нашли")
+        else
+            getCityById(id) ?: throw IllegalStateException("Город вроде существует, но не нашли")
     }
 
-    override suspend fun getCityById(id: Long): City? {
-        return cityDao.getCityById(id)?.toDomain()
-    }
+    override suspend fun getCityByName(name: String): City? = cityDao.findCityByName(name = name)?.toDomain()
+
+
+    override suspend fun getCityById(id: Long): City? = cityDao.getCityById(id)?.toDomain()
 }

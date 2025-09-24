@@ -1,10 +1,15 @@
 package com.zagirlek.nytimes.data.local.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "city")
+@Entity(
+    tableName = "city",
+    indices = [Index(value = ["name"], unique = true)]
+)
 data class CityEntity(
-    val name: String,
+    @ColumnInfo(collate = ColumnInfo.NOCASE) val name: String,
     @PrimaryKey(autoGenerate = true) val id: Long = 0
 )

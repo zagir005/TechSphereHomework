@@ -92,9 +92,7 @@ fun CityAutocompleteTextField(
     }
 }
 
-@Preview(
-    showBackground = true
-)
+@Preview(showBackground = true)
 @Composable
 private fun DropdownTextFieldDefaultPreview() {
     NyTimesTheme {
