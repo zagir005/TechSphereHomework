@@ -9,5 +9,6 @@ data class WeatherState(
     val cityTextFieldState: CityTextFieldState = CityTextFieldState(),
     val temperatureTextFieldState: DegreeTextFieldState = DegreeTextFieldState(),
     val weatherPointsHistory: List<WeatherPoint> = listOf(),
+    val weatherPointsHistoryLoading: Boolean = true,
     val lastWeatherPoint: WeatherPoint? = null
 ): ViewState

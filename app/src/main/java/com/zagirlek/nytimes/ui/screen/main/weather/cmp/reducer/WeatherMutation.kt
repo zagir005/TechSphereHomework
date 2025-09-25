@@ -11,6 +11,7 @@ sealed class WeatherMutation: Mutation {
         data class LastVariantsLoaded(val lastVariants: List<City>): CityField()
         data class ValueChanged(val value: String): CityField()
         data class VariantPick(val variant: City): CityField()
+        data class AutocompleteVariantsError(val message: String): CityField()
     }
     data class WeatherPointHistoryLoaded(val list: List<WeatherPoint>): WeatherMutation()
     data class AddWeatherPoint(val weatherPoint: WeatherPoint): WeatherMutation()

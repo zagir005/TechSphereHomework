@@ -10,21 +10,13 @@ class CityRepositoryImpl(
     private val cityDao: CityDao
 ): CityRepository {
 
-    override suspend fun saveCity(name: String): Long = cityDao.insertCity(
+    override suspend fun addCity(name: String): Long = cityDao.insertCity(
             CityEntity(name = name)
         )
 
     override suspend fun findCitiesByName(name: String): List<City> = cityDao.getCitiesByName(name).map {
             it.toDomain()
         }
-
-    override suspend fun saveOrGetCity(name: String): City {
-        val id = saveCity(name)
-        return if (id == -1L)
-            getCityByName(name) ?: throw IllegalStateException("Город вроде существует, но не нашли")
-        else
-            getCityById(id) ?: throw IllegalStateException("Город вроде существует, но не нашли")
-    }
 
     override suspend fun getCityByName(name: String): City? = cityDao.findCityByName(name = name)?.toDomain()
 

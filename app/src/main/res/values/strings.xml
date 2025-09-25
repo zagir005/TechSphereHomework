@@ -25,4 +25,10 @@
     <string name="your_last_search">Недавно вы искали:</string>
     <string name="your_previous_queries_will_appear_here">Здесь появятся ваши предыдущие запросы</string>
     <string name="delete_weather_point_item">delete weather point item</string>
+    <string name="ok">Ок</string>
+    <string name="error">Ошибка</string>
+    <string name="city_save_error">Ошибка при сохранении города!</string>
+    <string name="city_select_error">Ошибка при выборе города!</string>
+    <string name="weather_point_add_error">Ошибка при сохранении оценки погоды</string>
+    <string name="city_search">Поиск по городам</string>
 </resources>

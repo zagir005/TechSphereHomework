@@ -12,24 +12,24 @@ import kotlinx.coroutines.flow.map
 class WeatherRepositoryImpl(
     private val weatherDao: WeatherDao
 ): WeatherRepository {
+
     override suspend fun addWeatherPoint(
         city: City,
-        degree: Int
+        temperature: Int
     ): Long {
         return weatherDao.insertWeatherInfo(
             WeatherInfoEntity(
                 cityId = city.id,
-                degree = degree
+                temperature = temperature
             )
         )
     }
 
-    override suspend fun getWeatherPointById(id: Long): WeatherPoint = weatherDao.getWeatherInfoById(id).toDomain()
+    override suspend fun getWeatherPointById(id: Long): WeatherPoint? = weatherDao.getWeatherInfoById(id)?.toDomain()
 
-    override fun getWeatherPoints(): Flow<List<WeatherPoint>> = weatherDao.getWeatherByOfAllCities().map {
+    override fun getWeatherPointsFlow(): Flow<List<WeatherPoint>> = weatherDao.getWeatherByOfAllCities().map {
             it.toDomain()
         }
-
 
     override suspend fun deleteWeatherPointById(id: Long) = weatherDao.deleteWeatherInfoById(id)
 }

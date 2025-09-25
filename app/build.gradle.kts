@@ -54,6 +54,8 @@ dependencies {
 
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.interceptor)
 
     ksp(libs.androidx.room.ksp)
     implementation(libs.androidx.room.runtime)

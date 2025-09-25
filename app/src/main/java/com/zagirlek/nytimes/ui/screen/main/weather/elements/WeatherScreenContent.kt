@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -25,7 +26,6 @@ import com.zagirlek.nytimes.ui.elements.NyTimesPreview
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.state.WeatherAction
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.state.WeatherState
 
-
 @Composable
 fun WeatherScreenContent(
     state: WeatherState,
@@ -41,15 +41,21 @@ fun WeatherScreenContent(
                 value = state.cityTextFieldState.value,
                 selectedCity = state.cityTextFieldState.selectedCity,
                 autocompleteVariants = state.cityTextFieldState.autocompleteVariants,
-                lastVariants = state.cityTextFieldState.lastVariants,
+                autocompleteVariantsLoading = state.cityTextFieldState.autocompleteVariantsLoading,
+                autocompleteVariantsErrorMessage = state.cityTextFieldState.autocompleteVariantsError,
+                recentVariants = state.cityTextFieldState.lastVariants,
+                recentVariantsLoading = state.cityTextFieldState.autocompleteVariantsLoading,
                 onValueChange = {
                     sendAction(WeatherAction.CityField.ValueChanged(it))
                 },
                 onCustomCitySelected = {
                     sendAction(WeatherAction.CityField.SaveCity(it))
                 },
-                onCitySelected = {
-                    sendAction(WeatherAction.CityField.VariantPick(it))
+                onAutocompleteCitySelected = {
+                    sendAction(WeatherAction.CityField.AutocompleteCitySelected(it.name))
+                },
+                onLoadedCitySelected = {
+                    sendAction(WeatherAction.CityField.RecentCitySelected(it))
                 }
             )
 
@@ -96,6 +102,13 @@ fun WeatherScreenContent(
             text = stringResource(R.string.your_last_search)
         )
 
+        if (state.weatherPointsHistoryLoading)
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentWidth()
+            )
+
         if (state.weatherPointsHistory.isEmpty())
             EmptyHistoryAttention()
         else
@@ -104,6 +117,8 @@ fun WeatherScreenContent(
             ){
                 sendAction(WeatherAction.DeleteWeatherPoint(it.id))
             }
+
+
     }
 }
 

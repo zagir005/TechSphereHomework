@@ -33,11 +33,15 @@ fun CityAutocompleteTextField(
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     selectedCity: City? = null,
-    lastVariants: List<City> = emptyList(),
+    recentVariants: List<City> = emptyList(),
+    recentVariantsLoading: Boolean = false,
     autocompleteVariants: List<City> = emptyList(),
+    autocompleteVariantsLoading: Boolean = false,
+    autocompleteVariantsErrorMessage: String? = null,
     errorMessage: String? = null,
     onCustomCitySelected: (String) -> Unit = { },
-    onCitySelected: (City) -> Unit = { }
+    onLoadedCitySelected: (City) -> Unit = { },
+    onAutocompleteCitySelected: (City) -> Unit = { },
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     var isFocused by remember { mutableStateOf(false) }
@@ -76,16 +80,23 @@ fun CityAutocompleteTextField(
                         .fillMaxWidth()
                         .heightIn(max = 200.dp),
                     customCityName = value,
+                    recentVariants = recentVariants,
+                    recentVariantsLoading = recentVariantsLoading,
+                    autocompleteVariants = autocompleteVariants,
+                    autocompleteVariantsLoading = autocompleteVariantsLoading,
+                    autocompleteVariantsErrorMessage = autocompleteVariantsErrorMessage,
                     onCustomCityClick = {
                         onCustomCitySelected(it)
                         isCityPickerVisible = false
                     },
-                    onCityClick = {
-                        onCitySelected(it)
+                    onLoadedCityClick = {
+                        onLoadedCitySelected(it)
                         isCityPickerVisible = false
                     },
-                    lastVariants = lastVariants,
-                    autocompleteVariants = autocompleteVariants
+                    onAutocompleteCityClick = {
+                        onAutocompleteCitySelected(it)
+                        isCityPickerVisible = false
+                    }
                 )
             }
         }
@@ -108,7 +119,7 @@ private fun DropdownTextFieldDefaultPreview() {
             CityAutocompleteTextField(
                 value = value,
                 onValueChange = { value = it },
-                lastVariants = savedCities.filter { it.name.contains(value) },
+                recentVariants = savedCities.filter { it.name.contains(value) },
                 autocompleteVariants = autocompleteVariants.filter { it.name.contains(value) }
             )
         }
@@ -134,7 +145,7 @@ private fun DropdownTextFieldNightPreview() {
             CityAutocompleteTextField(
                 value = value,
                 onValueChange = { value = it },
-                lastVariants = savedCities.filter { it.name.contains(value) },
+                recentVariants = savedCities.filter { it.name.contains(value) },
                 autocompleteVariants = autocompleteVariants.filter { it.name.contains(value) }
             )
         }
