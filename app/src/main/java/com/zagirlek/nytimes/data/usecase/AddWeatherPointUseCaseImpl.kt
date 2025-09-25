@@ -11,8 +11,13 @@ class AddWeatherPointUseCaseImpl(
     override suspend fun invoke(
         city: City,
         temperature: Int
-    ): WeatherPoint {
+    ): Result<WeatherPoint> = runCatching {
         val id = weatherRepository.addWeatherPoint(city = city, temperature = temperature)
-        return weatherRepository.getWeatherPointById(id)!!
+        if (id == -1L){
+            throw IllegalStateException("Не удалось добавить WeatherInfoEntity")
+        }
+
+        weatherRepository.getWeatherPointById(id)
+            ?: throw IllegalStateException("WeatherPoint с id=$id существует, но не найден")
     }
 }

@@ -8,10 +8,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -30,13 +33,19 @@ import com.zagirlek.nytimes.ui.theme.NyTimesTheme
 @Composable
 fun CityPickerList(
     modifier: Modifier = Modifier,
-    customCityName: String,
-    lastVariants: List<City>,
-    autocompleteVariants: List<City>,
+    customCityName: String = "",
+    recentVariants: List<City> = emptyList(),
+    recentVariantsLoading: Boolean = false,
+    autocompleteVariants: List<City> = emptyList(),
+    autocompleteVariantsLoading: Boolean = false,
+    autocompleteVariantsErrorMessage: String? = null,
     onCustomCityClick: (String) -> Unit = { },
     onLoadedCityClick: (City) -> Unit = { },
     onAutocompleteCityClick: (City) -> Unit = { }
 ) {
+    val isLoading = autocompleteVariantsLoading && recentVariantsLoading
+    val isEmpty = recentVariants.isEmpty() && autocompleteVariants.isEmpty()
+
     LazyColumn(
         modifier = modifier
     ) {
@@ -59,7 +68,8 @@ fun CityPickerList(
             }
         }
 
-        if (lastVariants.isNotEmpty()) {
+
+        if (recentVariants.isNotEmpty()) {
             item {
                 Text(
                     stringResource(R.string.saved_cities),
@@ -67,7 +77,7 @@ fun CityPickerList(
                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                 )
             }
-            items(lastVariants) { city ->
+            items(recentVariants) { city ->
                 CityListItem(
                     text = city.name,
                     onClick = {
@@ -76,28 +86,25 @@ fun CityPickerList(
                 )
             }
         }
+        item { HorizontalDivider() }
 
-        if (lastVariants.isNotEmpty() && autocompleteVariants.isNotEmpty()) {
-            item { HorizontalDivider() }
-        }
-
-        if (autocompleteVariants.isNotEmpty()) {
+        if (!isEmpty)
             item {
                 Text(
-                    text = stringResource(R.string.choose_city),
+                    text = stringResource(R.string.city_search),
                     style = MaterialTheme.typography.labelSmall,
                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                 )
             }
-            items(autocompleteVariants) { city ->
-                CityListItem(
-                    text = city.name,
-                    onClick = { onAutocompleteCityClick(city) }
-                )
-            }
-        }
 
-        if (lastVariants.isEmpty() && autocompleteVariants.isEmpty()) {
+        if(recentVariantsLoading && autocompleteVariantsLoading)
+            loadingItem()
+
+        if (recentVariantsLoading && !autocompleteVariantsLoading)
+            loadingItem()
+
+
+        if (isEmpty && !isLoading && autocompleteVariantsErrorMessage == null) {
             item {
                 CityListItem(
                     text = stringResource(R.string.not_found_anything),
@@ -105,11 +112,41 @@ fun CityPickerList(
                 )
             }
         }
+
+        if (autocompleteVariantsErrorMessage != null)
+            item {
+                CityListItem(
+                    text = autocompleteVariantsErrorMessage,
+                    onClick = {}
+                )
+            }
+
+        if (autocompleteVariantsLoading && !recentVariantsLoading)
+            loadingItem()
+
+        if (autocompleteVariants.isNotEmpty()) {
+            items(autocompleteVariants) { city ->
+                CityListItem(
+                    text = city.name,
+                    onClick = { onAutocompleteCityClick(city) }
+                )
+            }
+        }
+    }
+}
+
+private fun LazyListScope.loadingItem(modifier: Modifier = Modifier) {
+    item {
+        CircularProgressIndicator(
+            modifier = modifier
+                .fillMaxWidth()
+                .wrapContentWidth()
+        )
     }
 }
 
 @Composable
-fun CityListItem(
+private fun CityListItem(
     text: String,
     onClick: () -> Unit,
     leadingIcon: @Composable (() -> Unit)? = null
@@ -145,7 +182,7 @@ private fun CityListDefaultPreview() {
                 onCustomCityClick = {},
                 onLoadedCityClick = {},
                 autocompleteVariants = autocompleteVariants,
-                lastVariants = savedCities
+                recentVariants = savedCities
             )
         }
     }
@@ -171,7 +208,32 @@ private fun CityListNightPreview() {
                 onCustomCityClick = {},
                 onLoadedCityClick = {},
                 autocompleteVariants = autocompleteVariants,
-                lastVariants = savedCities
+                recentVariants = savedCities
+            )
+        }
+    }
+}
+
+
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
+@Composable
+private fun CityListNightLoadingPreview() {
+    val savedCities = listOf(City(0, "Moscow"), City(0, "Махачкала"))
+    val autocompleteVariants = listOf(
+        City(0, "Moscow"), City(0, "Makhachkala"),
+        City(0, "Moscow"), City(0, "Makhachkala")
+    )
+
+    NyTimesTheme {
+        Surface{
+            CityPickerList(
+                customCityName = "Mos",
+                onCustomCityClick = {},
+                onLoadedCityClick = {},
+                autocompleteVariantsLoading = true,
+                recentVariantsLoading = true,
             )
         }
     }

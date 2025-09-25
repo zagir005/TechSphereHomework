@@ -7,7 +7,7 @@ sealed class WeatherAction: Action{
     sealed class CityField{
         data class SaveCity(val cityName: String): WeatherAction()
         data class ValueChanged(val value: String): WeatherAction()
-        data class LoadedCitySelected(val selectedCity: City): WeatherAction()
+        data class RecentCitySelected(val selectedCity: City): WeatherAction()
         data class AutocompleteCitySelected(val name: String): WeatherAction()
     }
     data class AddWeatherPoint(val city: City, val degree: Int): WeatherAction()

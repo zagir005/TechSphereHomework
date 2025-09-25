@@ -10,18 +10,13 @@ class CityRepositoryImpl(
     private val cityDao: CityDao
 ): CityRepository {
 
-    override suspend fun saveCity(name: String): Long = cityDao.insertCity(
+    override suspend fun addCity(name: String): Long = cityDao.insertCity(
             CityEntity(name = name)
         )
 
     override suspend fun findCitiesByName(name: String): List<City> = cityDao.getCitiesByName(name).map {
             it.toDomain()
         }
-
-    override suspend fun getOrPutCity(name: String): City {
-        val id = saveCity(name)
-        return if (id == -1L) getCityByName(name)!! else getCityById(id)!!
-    }
 
     override suspend fun getCityByName(name: String): City? = cityDao.findCityByName(name = name)?.toDomain()
 

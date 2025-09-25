@@ -13,15 +13,14 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class AppDi(private val context: Context) {
-    private val db = Room.databaseBuilder(
-        context = context,
+class AppDi(applicationContext: Context) {
+    private val database = Room.databaseBuilder(
+        context = applicationContext,
         klass = NyTimesDatabase::class.java,
         name = "nyTimesDatabase"
     )
         .fallbackToDestructiveMigration(true)
         .build()
-
 
     private val client = OkHttpClient.Builder()
         .addInterceptor(APIKeyInterceptor())
@@ -29,16 +28,20 @@ class AppDi(private val context: Context) {
             level = HttpLoggingInterceptor.Level.BODY
         })
         .build()
-    private val autocompleteService = Retrofit.Builder()
+    private val retrofitClient = Retrofit.Builder()
         .client(client)
         .baseUrl(BuildConfig.BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
-        .create(AutocompleteService::class.java)
 
-    fun getWeatherDao(): WeatherDao = db.weatherDao()
+    private val service: AutocompleteService by lazy {
+        retrofitClient.create(AutocompleteService::class.java)
+    }
 
-    fun getCityDao(): CityDao = db.cityDao()
 
-    fun getAutocompleteService(): AutocompleteService = autocompleteService
+    fun getWeatherDao(): WeatherDao = database.weatherDao()
+
+    fun getCityDao(): CityDao = database.cityDao()
+
+    fun getAutocompleteService(): AutocompleteService = service
 }

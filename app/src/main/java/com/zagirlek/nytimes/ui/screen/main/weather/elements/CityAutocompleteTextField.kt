@@ -33,8 +33,11 @@ fun CityAutocompleteTextField(
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     selectedCity: City? = null,
-    lastVariants: List<City> = emptyList(),
+    recentVariants: List<City> = emptyList(),
+    recentVariantsLoading: Boolean = false,
     autocompleteVariants: List<City> = emptyList(),
+    autocompleteVariantsLoading: Boolean = false,
+    autocompleteVariantsErrorMessage: String? = null,
     errorMessage: String? = null,
     onCustomCitySelected: (String) -> Unit = { },
     onLoadedCitySelected: (City) -> Unit = { },
@@ -77,8 +80,11 @@ fun CityAutocompleteTextField(
                         .fillMaxWidth()
                         .heightIn(max = 200.dp),
                     customCityName = value,
-                    lastVariants = lastVariants,
+                    recentVariants = recentVariants,
+                    recentVariantsLoading = recentVariantsLoading,
                     autocompleteVariants = autocompleteVariants,
+                    autocompleteVariantsLoading = autocompleteVariantsLoading,
+                    autocompleteVariantsErrorMessage = autocompleteVariantsErrorMessage,
                     onCustomCityClick = {
                         onCustomCitySelected(it)
                         isCityPickerVisible = false
@@ -113,7 +119,7 @@ private fun DropdownTextFieldDefaultPreview() {
             CityAutocompleteTextField(
                 value = value,
                 onValueChange = { value = it },
-                lastVariants = savedCities.filter { it.name.contains(value) },
+                recentVariants = savedCities.filter { it.name.contains(value) },
                 autocompleteVariants = autocompleteVariants.filter { it.name.contains(value) }
             )
         }
@@ -139,7 +145,7 @@ private fun DropdownTextFieldNightPreview() {
             CityAutocompleteTextField(
                 value = value,
                 onValueChange = { value = it },
-                lastVariants = savedCities.filter { it.name.contains(value) },
+                recentVariants = savedCities.filter { it.name.contains(value) },
                 autocompleteVariants = autocompleteVariants.filter { it.name.contains(value) }
             )
         }

@@ -22,7 +22,7 @@ class MainModule(
             getRecentCityListUseCase = useCaseModule.getRecentCityListUseCase(),
             deleteWeatherPointUseCase = useCaseModule.deleteWeatherPointUseCase(),
             addWeatherPointUseCase = useCaseModule.addWeatherPointUseCase(),
-            getOrPutCityUseCase = useCaseModule.getOrSaveCityUseCase()
+            getOrPutCityUseCase = useCaseModule.getOrPutCityUseCase()
         )
 
     fun getNewsComponent(

@@ -38,13 +38,13 @@ class UseCaseModuleImpl(
             autocompleteRepository = repositoryModule.getCityAutocompleteRepository()
         )
 
-    override fun getOrSaveCityUseCase(): GetOrPutCityUseCase =
-        GetOrPutCityUseCaseImpl(
+    override fun getRecentCityListUseCase(): GetRecentCityListUseCase =
+        GetRecentCityListUseCaseImpl(
             cityRepository = repositoryModule.getCityRepository()
         )
 
-    override fun getRecentCityListUseCase(): GetRecentCityListUseCase =
-        GetRecentCityListUseCaseImpl(
+    override fun getOrPutCityUseCase(): GetOrPutCityUseCase =
+        GetOrPutCityUseCaseImpl(
             cityRepository = repositoryModule.getCityRepository()
         )
 }

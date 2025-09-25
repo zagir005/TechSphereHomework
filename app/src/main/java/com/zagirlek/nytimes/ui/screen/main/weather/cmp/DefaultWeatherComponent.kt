@@ -7,8 +7,7 @@ import com.arkivanov.decompose.value.update
 import com.arkivanov.essenty.instancekeeper.InstanceKeeper
 import com.arkivanov.essenty.instancekeeper.getOrCreate
 import com.zagirlek.nytimes.core.base.component.BaseComponent
-import com.zagirlek.nytimes.domain.model.City
-import com.zagirlek.nytimes.domain.model.WeatherPoint
+import com.zagirlek.nytimes.core.ext.canceledJob
 import com.zagirlek.nytimes.domain.usecase.AddWeatherPointUseCase
 import com.zagirlek.nytimes.domain.usecase.DeleteWeatherPointUseCase
 import com.zagirlek.nytimes.domain.usecase.GetCityAutocompleteUseCase
@@ -18,16 +17,21 @@ import com.zagirlek.nytimes.domain.usecase.GetWeatherPointsHistoryFlowUseCase
 import com.zagirlek.nytimes.ui.screen.main.weather.WeatherComponent
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherMutation
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherMutation.AddWeatherPoint
+import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherMutation.CityField.AutocompleteVariantsError
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherMutation.CityField.AutocompleteVariantsLoaded
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherMutation.CityField.LastVariantsLoaded
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherMutation.CityField.SaveCity
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherMutation.CityField.ValueChanged
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherMutation.CityField.VariantPick
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherMutation.DegreeFieldValueChanged
+import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherMutation.WeatherPointHistoryLoaded
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherReducer
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.state.WeatherAction
+import com.zagirlek.nytimes.ui.screen.main.weather.cmp.state.WeatherEffect
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.state.WeatherState
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 
 class DefaultWeatherComponent(
@@ -46,13 +50,16 @@ class DefaultWeatherComponent(
     private val _state get() = stateHolder.state
     override val state: Value<WeatherState> get() = stateHolder.state
 
-    private var cityJob: Job? = null
+    private val _effect: MutableSharedFlow<WeatherEffect> = MutableSharedFlow(extraBufferCapacity = 1, replay = 0)
+    override val effect: SharedFlow<WeatherEffect> get() = _effect
+
+    private var cityJob by canceledJob()
 
     init {
         componentScope.launch {
             getWeatherPointsHistoryFlowUseCase().collect { list ->
                 _state.update {
-                    WeatherMutation.WeatherPointHistoryLoaded(list).reduce(_state.value)
+                    WeatherPointHistoryLoaded(list).reduce(it)
                 }
             }
         }
@@ -62,18 +69,28 @@ class DefaultWeatherComponent(
         when (action) {
             is WeatherAction.CityField.SaveCity -> {
                 componentScope.launch {
-                    val city = saveCity(action.cityName)
-                    _state.update {
-                        SaveCity(city).reduce(it)
-                    }
+                    getOrPutCityUseCase(action.cityName)
+                        .onSuccess { city ->
+                            _state.update {
+                                SaveCity(city).reduce(it)
+                            }
+                        }
+                        .onFailure { error ->
+                            _effect.emit(WeatherEffect.ShowCitySaveErrorErrorDialog)
+                        }
                 }
             }
             is WeatherAction.AddWeatherPoint -> {
                 componentScope.launch {
-                    val weatherPoint = addWeatherPoint(action.city, action.degree)
-                    _state.update {
-                        AddWeatherPoint(weatherPoint).reduce(it)
-                    }
+                    addWeatherPointUseCase(action.city, action.degree)
+                        .onSuccess { weatherPoint ->
+                            _state.update {
+                                AddWeatherPoint(weatherPoint).reduce(it)
+                            }
+                        }
+                        .onFailure { error ->
+                            _effect.emit(WeatherEffect.ShowWeatherPointAddErrorDialog)
+                        }
                 }
             }
             is WeatherAction.CityField.ValueChanged -> {
@@ -81,31 +98,43 @@ class DefaultWeatherComponent(
                     ValueChanged(action.value).reduce(it)
                 }
 
-                cityJob?.cancel()
-                cityJob = componentScope.launch {
-                    val lastVariants = getRecentCityVariants(action.value)
-                    _state.update {
-                        LastVariantsLoaded(lastVariants).reduce(it)
-                    }
-
-                    val autocompleteVariants = getCityAutocompleteVariants(action.value)
-                    _state.update {
-                        AutocompleteVariantsLoaded(autocompleteVariants).reduce(it)
+                if (action.value.isNotBlank()){
+                    cityJob = componentScope.launch {
+                        val lastVariants = getRecentCityListUseCase(action.value)
+                        _state.update {
+                            LastVariantsLoaded(lastVariants).reduce(it)
+                        }
+                        delay(200)
+                        getCityAutocompleteUseCase(action.value)
+                            .onSuccess { cityList ->
+                                _state.update {
+                                    AutocompleteVariantsLoaded(cityList).reduce(it)
+                                }
+                            }
+                            .onFailure { error ->
+                                _state.update {
+                                    AutocompleteVariantsError("Проверьте интернет-соединение!").reduce(it)
+                                }
+                            }
                     }
                 }
             }
-
-            is WeatherAction.CityField.LoadedCitySelected -> {
+            is WeatherAction.CityField.RecentCitySelected -> {
                 _state.update {
                     VariantPick(action.selectedCity).reduce(it)
                 }
             }
             is WeatherAction.CityField.AutocompleteCitySelected -> {
                 componentScope.launch {
-                    val selectedCity = saveCity(action.name)
-                    _state.update {
-                        VariantPick(selectedCity).reduce(it)
-                    }
+                    getOrPutCityUseCase(action.name)
+                        .onSuccess { city ->
+                            _state.update {
+                                VariantPick(city).reduce(it)
+                            }
+                        }
+                        .onFailure { error ->
+                            _effect.emit(WeatherEffect.ShowCitySelectErrorDialog)
+                        }
                 }
             }
             is WeatherAction.TemperatureFieldValueChanged -> {
@@ -115,7 +144,7 @@ class DefaultWeatherComponent(
             }
             is WeatherAction.DeleteWeatherPoint -> {
                 componentScope.launch {
-                    deleteWeatherPointById(action.id)
+                    deleteWeatherPointUseCase(action.id)
                 }
             }
             WeatherAction.ReloadWeatherPointFields -> {
@@ -123,28 +152,8 @@ class DefaultWeatherComponent(
                     WeatherMutation.ReloadWeatherPointFields.reduce(it)
                 }
             }
-
         }
     }
-
-    private suspend fun saveCity(name: String): City =  getOrPutCityUseCase(name)
-
-    private suspend fun getCityAutocompleteVariants(filter: String): List<City> {
-        // TODO: Обработать onFailure кейс
-        getCityAutocompleteUseCase(filter)
-            .onSuccess { return it }
-            .onFailure { throw it }
-        return emptyList()
-    }
-
-    private suspend fun getRecentCityVariants(filter: String): List<City> {
-        return getRecentCityListUseCase(filter)
-    }
-
-    private suspend fun addWeatherPoint(city: City, temperature: Int): WeatherPoint =
-        addWeatherPointUseCase(city = city, temperature = temperature)
-
-    private suspend fun deleteWeatherPointById(id: Long) = deleteWeatherPointUseCase(id)
 
     private class StateHolder : InstanceKeeper.Instance {
         val state: MutableValue<WeatherState> = MutableValue(WeatherState())

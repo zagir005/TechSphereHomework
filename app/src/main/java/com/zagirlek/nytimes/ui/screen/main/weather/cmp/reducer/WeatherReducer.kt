@@ -9,8 +9,12 @@ class WeatherReducer: Reducer<WeatherState, WeatherMutation> {
             is WeatherMutation.CityField.ValueChanged -> state.copy(
                 cityTextFieldState = state.cityTextFieldState.copy(
                     value = mutation.value,
-                    errorMessage = null,
-                    selectedCity = null
+                    selectedCity = null,
+                    autocompleteVariantsError = null,
+                    autocompleteVariantsLoading = mutation.value.isNotBlank(),
+                    lastVariantsLoading = mutation.value.isNotBlank(),
+                    lastVariants = emptyList(),
+                    autocompleteVariants = emptyList()
                 )
             )
             is WeatherMutation.CityField.VariantPick -> state.copy(
@@ -27,12 +31,14 @@ class WeatherReducer: Reducer<WeatherState, WeatherMutation> {
             )
             is WeatherMutation.CityField.AutocompleteVariantsLoaded -> state.copy(
                 cityTextFieldState = state.cityTextFieldState.copy(
-                    autocompleteVariants = mutation.autocompleteVariants
+                    autocompleteVariants = mutation.autocompleteVariants,
+                    autocompleteVariantsLoading = false
                 )
             )
             is WeatherMutation.CityField.LastVariantsLoaded -> state.copy(
                 cityTextFieldState = state.cityTextFieldState.copy(
-                    lastVariants = mutation.lastVariants
+                    lastVariants = mutation.lastVariants,
+                    lastVariantsLoading = false
                 )
             )
             is WeatherMutation.DegreeFieldValueChanged -> state.copy(
@@ -48,7 +54,16 @@ class WeatherReducer: Reducer<WeatherState, WeatherMutation> {
             )
 
             is WeatherMutation.WeatherPointHistoryLoaded -> state.copy(
-                weatherPointsHistory = mutation.list
+                weatherPointsHistory = mutation.list,
+                weatherPointsHistoryLoading = false
+            )
+
+            is WeatherMutation.CityField.AutocompleteVariantsError -> state.copy(
+                cityTextFieldState = state.cityTextFieldState.copy(
+                    autocompleteVariantsError = mutation.message,
+                    autocompleteVariants = emptyList(),
+                    autocompleteVariantsLoading = false
+                )
             )
         }
     }

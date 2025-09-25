@@ -1,3 +1,3 @@
 package com.zagirlek.nytimes.core.ext
 
-fun String.withCelsius() = "$this°C"
+inline fun String.withCelsius(): String = "$this°C"

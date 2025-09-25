@@ -12,6 +12,7 @@ interface UseCaseModule {
     fun deleteWeatherPointUseCase(): DeleteWeatherPointUseCase
     fun getWeatherPointsHistoryFlowUseCase(): GetWeatherPointsHistoryFlowUseCase
     fun getCityAutocompleteUseCase(): GetCityAutocompleteUseCase
-    fun getOrSaveCityUseCase(): GetOrPutCityUseCase
     fun getRecentCityListUseCase(): GetRecentCityListUseCase
+
+    fun getOrPutCityUseCase(): GetOrPutCityUseCase
 }
