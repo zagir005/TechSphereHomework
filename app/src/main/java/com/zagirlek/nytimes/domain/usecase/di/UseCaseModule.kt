@@ -1,6 +1,7 @@
 package com.zagirlek.nytimes.domain.usecase.di
 
 import com.zagirlek.nytimes.domain.usecase.AddWeatherPointUseCase
+import com.zagirlek.nytimes.domain.usecase.AuthUseCase
 import com.zagirlek.nytimes.domain.usecase.DeleteWeatherPointUseCase
 import com.zagirlek.nytimes.domain.usecase.GetCityAutocompleteUseCase
 import com.zagirlek.nytimes.domain.usecase.GetOrPutCityUseCase
@@ -13,6 +14,6 @@ interface UseCaseModule {
     fun getWeatherPointsHistoryFlowUseCase(): GetWeatherPointsHistoryFlowUseCase
     fun getCityAutocompleteUseCase(): GetCityAutocompleteUseCase
     fun getRecentCityListUseCase(): GetRecentCityListUseCase
-
     fun getOrPutCityUseCase(): GetOrPutCityUseCase
+    fun authUseCase(): AuthUseCase
 }

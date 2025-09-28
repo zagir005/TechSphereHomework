@@ -2,12 +2,14 @@ package com.zagirlek.nytimes.data.usecase.di
 
 import com.zagirlek.nytimes.data.repository.di.RepositoryModule
 import com.zagirlek.nytimes.data.usecase.AddWeatherPointUseCaseImpl
+import com.zagirlek.nytimes.data.usecase.AuthUseCaseImpl
 import com.zagirlek.nytimes.data.usecase.DeleteWeatherPointUseCaseImpl
 import com.zagirlek.nytimes.data.usecase.GetCityAutocompleteUseCaseImpl
 import com.zagirlek.nytimes.data.usecase.GetOrPutCityUseCaseImpl
 import com.zagirlek.nytimes.data.usecase.GetRecentCityListUseCaseImpl
 import com.zagirlek.nytimes.data.usecase.GetWeatherPointsHistoryFlowUseCaseImpl
 import com.zagirlek.nytimes.domain.usecase.AddWeatherPointUseCase
+import com.zagirlek.nytimes.domain.usecase.AuthUseCase
 import com.zagirlek.nytimes.domain.usecase.DeleteWeatherPointUseCase
 import com.zagirlek.nytimes.domain.usecase.GetCityAutocompleteUseCase
 import com.zagirlek.nytimes.domain.usecase.GetOrPutCityUseCase
@@ -46,5 +48,10 @@ class UseCaseModuleImpl(
     override fun getOrPutCityUseCase(): GetOrPutCityUseCase =
         GetOrPutCityUseCaseImpl(
             cityRepository = repositoryModule.getCityRepository()
+        )
+
+    override fun authUseCase(): AuthUseCase =
+        AuthUseCaseImpl(
+            authRepository = repositoryModule.getAuthRepository()
         )
 }
