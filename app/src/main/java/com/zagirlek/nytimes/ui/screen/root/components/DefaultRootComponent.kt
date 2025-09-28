@@ -6,22 +6,22 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.replaceCurrent
 import com.arkivanov.decompose.value.Value
-import com.zagirlek.nytimes.domain.repository.AuthRepository
-import com.zagirlek.nytimes.ui.screen.login.LoginComponent
-import com.zagirlek.nytimes.ui.screen.login.cmp.DefaultLoginComponent
+import com.zagirlek.nytimes.ui.screen.auth.AuthScreen
+import com.zagirlek.nytimes.ui.screen.auth.di.AuthModule
 import com.zagirlek.nytimes.ui.screen.main.di.MainModule
 import com.zagirlek.nytimes.ui.screen.main.main.MainComponent
 import com.zagirlek.nytimes.ui.screen.main.main.cmp.DefaultMainComponent
 import com.zagirlek.nytimes.ui.screen.root.RootComponent
 import com.zagirlek.nytimes.ui.screen.splash.SplashComponent
-import com.zagirlek.nytimes.ui.screen.splash.cmp.DefaultSplashComponent
+import com.zagirlek.nytimes.ui.screen.splash.di.SplashModule
 import kotlinx.serialization.Serializable
 
 
 class DefaultRootComponent(
     private val componentContext: ComponentContext,
-    private val authRepository: AuthRepository,
-    private val mainModule: MainModule
+    private val authModule: AuthModule,
+    private val mainModule: MainModule,
+    private val splashModule: SplashModule
 ): ComponentContext by componentContext, RootComponent {
     private val navigation = StackNavigation<Config>()
 
@@ -36,24 +36,22 @@ class DefaultRootComponent(
     private fun child(config: Config, componentContext: ComponentContext): RootComponent.Child{
         return when(config){
             Config.Splash -> RootComponent.Child.Splash(splash(componentContext))
-            Config.Login -> RootComponent.Child.Login(login(componentContext))
+            Config.Auth -> RootComponent.Child.Login(auth(componentContext))
             Config.Main -> RootComponent.Child.Main(main(componentContext))
         }
     }
 
     private fun splash(componentContext: ComponentContext): SplashComponent =
-        DefaultSplashComponent(
+        splashModule.getSplashComponent(
             componentContext = componentContext,
-            onAuthRequired = { navigation.replaceCurrent(Config.Login) },
-            onAuthSuccess = { navigation.replaceCurrent(Config.Main) },
-            authRepository = authRepository
+            toAuth = { navigation.replaceCurrent(Config.Auth) },
+            toMain = { navigation.replaceCurrent(Config.Main) }
         )
 
-    private fun login(componentContext: ComponentContext): LoginComponent =
-        DefaultLoginComponent(
+    private fun auth(componentContext: ComponentContext): AuthScreen =
+        authModule.getAuthComponent(
             componentContext = componentContext,
-            authRepository = authRepository,
-            onAuth = { navigation.replaceCurrent(Config.Main) }
+            toMain = { navigation.replaceCurrent(Config.Main) }
         )
 
     private fun main(componentContext: ComponentContext): MainComponent =
@@ -68,7 +66,7 @@ class DefaultRootComponent(
         object Splash: Config()
 
         @Serializable
-        object Login: Config()
+        object Auth: Config()
 
         @Serializable
         object Main: Config()

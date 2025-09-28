@@ -1,4 +1,4 @@
-package com.zagirlek.nytimes.core.ext
+package com.zagirlek.nytimes.core.utils
 
 import kotlinx.coroutines.Job
 import kotlin.properties.Delegates

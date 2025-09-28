@@ -1,4 +1,4 @@
-package com.zagirlek.nytimes.ui.screen.login.cmp.state.textfield.textfielderror
+package com.zagirlek.nytimes.ui.screen.auth.elements.textfield.textfielderror
 
 sealed class LoginTextFieldError: TextFieldError {
     object OnlyCyrillic: LoginTextFieldError()

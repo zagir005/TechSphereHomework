@@ -1,6 +1,5 @@
-package com.zagirlek.nytimes.ui.screen.login
+package com.zagirlek.nytimes.ui.screen.auth.elements
 
-import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -26,31 +26,26 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.arkivanov.decompose.extensions.compose.subscribeAsState
-import com.arkivanov.decompose.value.MutableValue
-import com.arkivanov.decompose.value.Value
 import com.zagirlek.nytimes.R
 import com.zagirlek.nytimes.ui.elements.AppButton
 import com.zagirlek.nytimes.ui.elements.AppTextField
-import com.zagirlek.nytimes.ui.screen.login.cmp.state.LoginAction
-import com.zagirlek.nytimes.ui.screen.login.cmp.state.LoginState
-import com.zagirlek.nytimes.ui.screen.login.cmp.state.textfield.TextFieldState
-import com.zagirlek.nytimes.ui.screen.login.cmp.state.textfield.textfielderror.LoginTextFieldError
-import com.zagirlek.nytimes.ui.screen.login.cmp.state.textfield.textfielderror.PasswordTextFieldError
-import com.zagirlek.nytimes.ui.theme.NyTimesTheme
+import com.zagirlek.nytimes.ui.screen.auth.elements.textfield.textfielderror.LoginTextFieldError
+import com.zagirlek.nytimes.ui.screen.auth.elements.textfield.textfielderror.PasswordTextFieldError
+import com.zagirlek.nytimes.ui.screen.auth.model.AuthModel
 import com.zagirlek.nytimes.ui.theme.Typography
 import com.zagirlek.nytimes.ui.theme.robotoFlexFamily
 
 @Composable
-fun LoginScreen(
-    component: LoginComponent,
-    modifier: Modifier = Modifier,
+fun AuthContent(
+    model: AuthModel,
+    loginFieldValueChange: (String) -> Unit,
+    passwordFieldValueChange: (String) -> Unit,
+    onAuthButtonClick: () -> Unit,
+    onContinueWithoutAuthClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    val state by component.state.subscribeAsState()
-
     Scaffold { paddingValues ->
         Column(
             modifier = modifier
@@ -66,39 +61,39 @@ fun LoginScreen(
                     verticalArrangement = Arrangement.Center
                 ) {
                     LoginField(
-                        value = state.loginTextFieldState.value,
-                        error = state.loginTextFieldState.error,
+                        value = model.loginField.value,
+                        error = model.loginField.error,
+                        onValueChange = loginFieldValueChange,
                         modifier = Modifier.fillMaxWidth()
-                    ){
-                        component.action(LoginAction.LoginTextChanged(it))
-                    }
+                    )
 
                     PasswordField(
-                        value = state.passwordTextFieldState.value,
-                        error = state.passwordTextFieldState.error,
+                        value = model.passwordField.value,
+                        error = model.passwordField.error,
+                        onValueChange = passwordFieldValueChange,
                         modifier = Modifier.fillMaxWidth()
-                    ) {
-                        component.action(LoginAction.PasswordTextChanged(it))
-                    }
+                    )
 
-                    AppButton(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .wrapContentWidth(Alignment.End),
-                        onClick = {
-                            component.action(LoginAction.Submit)
-                        },
-                        enabled = state.buttonEnabled
-                    ) {
-                        Text(text = stringResource(R.string.enter).uppercase())
-                    }
+                    if (model.loading)
+                        CircularProgressIndicator(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .wrapContentWidth(Alignment.End)
+                                .padding(end = 20.dp)
+                        )
+                    else
+                        AppButton(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .wrapContentWidth(Alignment.End),
+                            onClick = onAuthButtonClick,
+                            enabled = model.isButtonEnabled
+                        ) {
+                            Text(text = stringResource(R.string.enter).uppercase())
+                        }
 
                     TextButton(
-                        onClick = {
-                            component.action(
-                                LoginAction.ContinueWithoutAuth
-                            )
-                        }
+                        onClick = onContinueWithoutAuthClick
                     ) {
                         Text(
                             text = stringResource(R.string.continue_without_auth),
@@ -110,7 +105,6 @@ fun LoginScreen(
             }
         }
     }
-
 }
 
 @Composable
@@ -194,61 +188,3 @@ private fun LoginHeader() {
         )
     }
 }
-
-
-private val previewComponent = object: LoginComponent {
-    override val state: Value<LoginState> = MutableValue(
-        LoginState(
-            loginTextFieldState = TextFieldState(
-                "Some text",
-                error = null
-            ),
-            passwordTextFieldState = TextFieldState(
-                "Some password",
-                error = null
-            ),
-            true
-        )
-    )
-
-    override fun action(action: LoginAction) {
-
-    }
-}
-
-@Preview(
-    name = "Default",
-    showSystemUi = true
-)
-@Composable
-private fun LoginUiDefaultPreview() {
-    NyTimesTheme {
-        Scaffold { paddingValues ->
-            LoginScreen(
-                component = previewComponent,
-                modifier = Modifier
-                    .padding(paddingValues)
-            )
-        }
-    }
-}
-
-@Preview(
-    name = "Default",
-    showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
-)
-@Composable
-private fun LoginUiNightPreview() {
-
-    NyTimesTheme {
-        Scaffold { paddingValues ->
-            LoginScreen(
-                component = previewComponent,
-                modifier = Modifier
-                    .padding(paddingValues)
-            )
-        }
-    }
-}
-

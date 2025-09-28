@@ -1,6 +1,6 @@
-package com.zagirlek.nytimes.ui.screen.login.cmp.state.textfield
+package com.zagirlek.nytimes.ui.screen.auth.elements.textfield
 
-import com.zagirlek.nytimes.ui.screen.login.cmp.state.textfield.textfielderror.TextFieldError
+import com.zagirlek.nytimes.ui.screen.auth.elements.textfield.textfielderror.TextFieldError
 
 data class TextFieldState<E: TextFieldError> (
     val value: String = "",

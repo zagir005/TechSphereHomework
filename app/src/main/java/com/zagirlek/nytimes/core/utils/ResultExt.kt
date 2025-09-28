@@ -1,4 +1,4 @@
-package com.zagirlek.nytimes.core.ext
+package com.zagirlek.nytimes.core.utils
 
 import kotlin.coroutines.cancellation.CancellationException
 

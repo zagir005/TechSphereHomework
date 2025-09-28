@@ -1,10 +1,10 @@
 package com.zagirlek.nytimes
 
-import com.zagirlek.nytimes.ui.screen.login.cmp.reducer.LoginMutation
-import com.zagirlek.nytimes.ui.screen.login.cmp.reducer.LoginReducer
-import com.zagirlek.nytimes.ui.screen.login.cmp.state.LoginState
-import com.zagirlek.nytimes.ui.screen.login.cmp.state.textfield.TextFieldState
-import com.zagirlek.nytimes.ui.screen.login.cmp.state.textfield.textfielderror.LoginTextFieldError
+import com.zagirlek.nytimes.ui.screen.auth.cmp.reducer.LoginMutation
+import com.zagirlek.nytimes.ui.screen.auth.cmp.reducer.LoginReducer
+import com.zagirlek.nytimes.ui.screen.auth.cmp.state.AuthState
+import com.zagirlek.nytimes.ui.screen.auth.cmp.state.textfield.TextFieldState
+import com.zagirlek.nytimes.ui.screen.auth.cmp.state.textfield.textfielderror.LoginTextFieldError
 import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue
 import kotlin.test.Test
@@ -16,7 +16,7 @@ class LoginReducerTest {
     @Test
     fun buttonEnabledCheck() {
         //Проверяем включается ли кнопка при валидном логине и пароле
-        val initialState = LoginState(
+        val initialState = AuthState(
             loginTextFieldState = TextFieldState(),
             passwordTextFieldState = TextFieldState(value = "Pass123")
         )
@@ -32,7 +32,7 @@ class LoginReducerTest {
     @Test
     fun onlyCyrillicErrorCheck() {
         //Проверяем выдачу ошибки OnlyCyrillic
-        val initialState = LoginState()
+        val initialState = AuthState()
         val action = LoginMutation.LoginTextChanged("Login123")
         val newState = reducer.reduce(initialState, action)
 
@@ -44,7 +44,7 @@ class LoginReducerTest {
     @Test
     fun wrongLoginErrorCheck() {
         //Проверяем выдачу ошибки WrongLogin
-        val initialState = LoginState()
+        val initialState = AuthState()
         val action = LoginMutation.LoginTextChanged("Другая_учетка")
         val newState = reducer.reduce(initialState, action)
 
@@ -56,7 +56,7 @@ class LoginReducerTest {
     @Test
     fun enabledButtonWithCorrectPassword() {
         // проверяем включение кнопки при вводе валидного пароля
-        val initialState = LoginState(
+        val initialState = AuthState(
             loginTextFieldState = TextFieldState(value = "Логин_Юзера")
         )
 

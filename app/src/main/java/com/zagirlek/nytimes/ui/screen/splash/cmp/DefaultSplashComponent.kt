@@ -6,7 +6,7 @@ import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.update
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import com.zagirlek.nytimes.domain.model.AuthToken
-import com.zagirlek.nytimes.domain.repository.AuthRepository
+import com.zagirlek.nytimes.domain.usecase.GetCurrentAuthTokenUseCase
 import com.zagirlek.nytimes.ui.screen.splash.SplashComponent
 import com.zagirlek.nytimes.ui.screen.splash.cmp.state.SplashAction
 import com.zagirlek.nytimes.ui.screen.splash.cmp.state.SplashState
@@ -18,7 +18,7 @@ class DefaultSplashComponent(
     componentContext: ComponentContext,
     private val onAuthRequired: () -> Unit,
     private val onAuthSuccess: () -> Unit,
-    private val authRepository: AuthRepository
+    private val getCurrentAuthTokenUseCase: GetCurrentAuthTokenUseCase
 ): ComponentContext by componentContext, SplashComponent {
 
     private val _state: MutableValue<SplashState> = MutableValue(initialValue = SplashState(isLoading = true))
@@ -28,7 +28,7 @@ class DefaultSplashComponent(
 
     init {
         scope.launch {
-            token = authRepository.getCurrToken()
+            token = getCurrentAuthTokenUseCase()
             _state.update {
                 it.copy(isLoading = false)
             }

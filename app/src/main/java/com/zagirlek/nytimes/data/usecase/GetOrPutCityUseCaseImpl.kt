@@ -1,6 +1,6 @@
 package com.zagirlek.nytimes.data.usecase
 
-import com.zagirlek.nytimes.core.ext.runCatchingCancellable
+import com.zagirlek.nytimes.core.utils.runCatchingCancellable
 import com.zagirlek.nytimes.domain.model.City
 import com.zagirlek.nytimes.domain.repository.CityRepository
 import com.zagirlek.nytimes.domain.usecase.GetOrPutCityUseCase

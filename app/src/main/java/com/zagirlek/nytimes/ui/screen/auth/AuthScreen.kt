@@ -1,0 +1,17 @@
+package com.zagirlek.nytimes.ui.screen.auth
+
+import com.zagirlek.nytimes.ui.screen.auth.model.AuthModel
+import com.zagirlek.nytimes.ui.screen.auth.model.AuthSideEffect
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+
+interface AuthScreen {
+    val model: StateFlow<AuthModel>
+    val sideEffect: SharedFlow<AuthSideEffect>
+
+    fun loginFieldValueChanged(value: String)
+    fun passwordFieldValueChanged(value: String)
+    fun onAuth()
+    fun continueWithoutAuth()
+
+}

@@ -31,4 +31,8 @@
     <string name="city_select_error">Ошибка при выборе города!</string>
     <string name="weather_point_add_error">Ошибка при сохранении оценки погоды</string>
     <string name="city_search">Поиск по городам</string>
+    <string name="check_network_connection">Проверьте интернет-соединение</string>
+    <string name="server_error_try_later">Ошибка сервера! Попробуйте позже, пожалуйста</string>
+    <string name="invalid_credentials_check_please">Неверные логин или пароль. Перепроверьте, пожалуйста</string>
+    <string name="weird_error_try_later">Странная ошибка. Попробуйте позже</string>
 </resources>

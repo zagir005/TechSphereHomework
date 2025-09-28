@@ -7,7 +7,7 @@ import com.arkivanov.decompose.value.update
 import com.arkivanov.essenty.instancekeeper.InstanceKeeper
 import com.arkivanov.essenty.instancekeeper.getOrCreate
 import com.zagirlek.nytimes.core.base.component.BaseComponent
-import com.zagirlek.nytimes.core.ext.canceledJob
+import com.zagirlek.nytimes.core.utils.canceledJob
 import com.zagirlek.nytimes.domain.usecase.AddWeatherPointUseCase
 import com.zagirlek.nytimes.domain.usecase.DeleteWeatherPointUseCase
 import com.zagirlek.nytimes.domain.usecase.GetCityAutocompleteUseCase
