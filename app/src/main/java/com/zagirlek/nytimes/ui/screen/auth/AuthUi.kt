@@ -1,3 +1,5 @@
+@file:JvmName("AuthScreenKt")
+
 package com.zagirlek.nytimes.ui.screen.auth
 
 import androidx.compose.runtime.Composable

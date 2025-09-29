@@ -17,8 +17,15 @@ android {
         versionCode = 1
         versionName = "0.2"
 
-        buildConfigField(name = "BASE_URL", value = "\"https://api.weatherapi.com/v1/\"", type = "String")
-        buildConfigField(name = "API_KEY", value = "\"dd9eadf389194d2c828170710251809\"", type = "String")
+        buildConfigField(name = "WEATHER_BASE_URL", value = "\"https://api.weatherapi.com/v1/\"", type = "String")
+        buildConfigField(name = "WEATHER_API_KEY", value = "\"dd9eadf389194d2c828170710251809\"", type = "String")
+
+        buildConfigField(name = "NEWS_BASE_URL", value = "\"https://newsdata.io/api/1/\"", type = "String")
+        buildConfigField(name = "NEWS_API_KEY", value = "\"pub_1d0ca004527e4b84902ec740d9ac732a\"", type = "String")
+        buildConfigField(name = "AVAILABLE_DOMAINS", value = "\"nytimes,bbc,forbes,theguardian,washingtonpost\"", type = "String")
+
+        buildConfigField(name = "EXTRACTOR_BASE_URL", value = "\"https://api.articlextractor.com/v1/\"", type = "String")
+        buildConfigField(name = "NEWS_API_KEY", value = "\"BBm76KtyDK4rCVo1M4v4f2jh0eZ2LUV1SHuBrmy4\"", type = "String")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -59,6 +66,7 @@ dependencies {
     implementation(libs.retrofit.converter.gson)
     implementation(libs.okhttp)
     implementation(libs.okhttp.interceptor)
+    implementation(libs.androidx.core.i18n)
 
     ksp(libs.androidx.room.ksp)
     implementation(libs.androidx.room.runtime)

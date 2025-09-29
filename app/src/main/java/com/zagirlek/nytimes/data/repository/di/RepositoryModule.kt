@@ -3,7 +3,7 @@ package com.zagirlek.nytimes.data.repository.di
 import com.zagirlek.nytimes.core.networkchecker.NetworkConnectionChecker
 import com.zagirlek.nytimes.data.local.dao.CityDao
 import com.zagirlek.nytimes.data.local.dao.WeatherDao
-import com.zagirlek.nytimes.data.network.service.AutocompleteService
+import com.zagirlek.nytimes.data.network.weather.service.AutocompleteService
 import com.zagirlek.nytimes.data.repository.CityAutocompleteRepositoryImpl
 import com.zagirlek.nytimes.data.repository.CityRepositoryImpl
 import com.zagirlek.nytimes.data.repository.MockAuthRepositoryImpl

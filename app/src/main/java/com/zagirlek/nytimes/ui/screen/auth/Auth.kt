@@ -13,5 +13,4 @@ interface AuthScreen {
     fun passwordFieldValueChanged(value: String)
     fun onAuth()
     fun continueWithoutAuth()
-
 }

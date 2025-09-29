@@ -35,4 +35,21 @@
     <string name="server_error_try_later">Ошибка сервера! Попробуйте позже, пожалуйста</string>
     <string name="invalid_credentials_check_please">Неверные логин или пароль. Перепроверьте, пожалуйста</string>
     <string name="weird_error_try_later">Странная ошибка. Попробуйте позже</string>
+    <string name="business">Бизнес</string>
+    <string name="crime">Преступность</string>
+    <string name="domestic">Домашние новости</string>
+    <string name="education">Образование</string>
+    <string name="entertainment">Развлечения</string>
+    <string name="environment">Экология</string>
+    <string name="food">Еда</string>
+    <string name="health">Здоровье</string>
+    <string name="lifestyle">Стиль жизни</string>
+    <string name="politics">Политика</string>
+    <string name="science">Наука</string>
+    <string name="sports">Спорт</string>
+    <string name="technology">Технологии</string>
+    <string name="top">Главные новости</string>
+    <string name="tourism">Туризм</string>
+    <string name="world">Мир</string>
+    <string name="other">Другое</string>
 </resources>
