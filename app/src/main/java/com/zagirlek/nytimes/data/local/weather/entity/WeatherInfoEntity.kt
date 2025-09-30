@@ -1,4 +1,4 @@
-package com.zagirlek.nytimes.data.local.entity
+package com.zagirlek.nytimes.data.local.weather.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

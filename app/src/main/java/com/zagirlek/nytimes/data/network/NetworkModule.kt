@@ -2,12 +2,15 @@ package com.zagirlek.nytimes.data.network
 
 import com.zagirlek.nytimes.BuildConfig
 import com.zagirlek.nytimes.core.interceptor.APIKeyInterceptor
+import com.zagirlek.nytimes.data.network.extractor.service.ExtractorService
+import com.zagirlek.nytimes.data.network.news.service.NewsService
 import com.zagirlek.nytimes.data.network.weather.service.AutocompleteService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 
 object NetworkModule {
     private fun createOkHttpClient(vararg interceptors: Interceptor): OkHttpClient {
@@ -38,17 +41,19 @@ object NetworkModule {
             .create(AutocompleteService::class.java)
     }
 
-    val newsApi: Retrofit by lazy {
+    val newsApi: NewsService by lazy {
         createRetrofit(
             baseUrl = BuildConfig.NEWS_BASE_URL,
             client = createOkHttpClient(APIKeyInterceptor(apiKey = BuildConfig.NEWS_API_KEY))
         )
+            .create()
     }
 
-    val newsExtractorApi: Retrofit by lazy {
+    val newsExtractorApi: ExtractorService by lazy {
         createRetrofit(
             baseUrl = BuildConfig.EXTRACTOR_BASE_URL,
             client = createOkHttpClient(APIKeyInterceptor(apiKey = BuildConfig.EXTRACTOR_BASE_URL, keyParameterName = "api_token"))
         )
+            .create()
     }
 }

@@ -1,12 +1,12 @@
-package com.zagirlek.nytimes.data.local.dao
+package com.zagirlek.nytimes.data.local.weather.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.zagirlek.nytimes.data.local.entity.WeatherInfoEntity
-import com.zagirlek.nytimes.data.local.entity.WeatherWithCity
+import com.zagirlek.nytimes.data.local.weather.entity.WeatherInfoEntity
+import com.zagirlek.nytimes.data.local.weather.entity.WeatherWithCity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

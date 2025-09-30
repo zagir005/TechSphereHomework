@@ -17,7 +17,8 @@ class NyTimesApp: Application() {
             weatherDao = appDi.getWeatherDao(),
             cityDao = appDi.getCityDao(),
             autocompleteService = appDi.getAutocompleteService(),
-            connectionChecker = appDi.getNetworkConnectionChecker()
+            connectionChecker = appDi.networkConnectionChecker,
+            newsManager = appDi.newsManager
         )
     }
 
@@ -26,7 +27,7 @@ class NyTimesApp: Application() {
     }
 
     private val storeFactory: StoreFactory by lazy {
-        appDi.getStoreFactory()
+        appDi.storeFactory
     }
 
     val rootModule: RootModule by lazy {

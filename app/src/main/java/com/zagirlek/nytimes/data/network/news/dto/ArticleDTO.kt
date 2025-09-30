@@ -1,7 +1,7 @@
 package com.zagirlek.nytimes.data.network.news.dto
 
 import com.google.gson.annotations.SerializedName
-import com.zagirlek.nytimes.domain.model.NewsCategory
+import com.zagirlek.nytimes.data.model.NewsCategoryData
 
 data class ArticleDTO(
     @SerializedName("article_id") val articleId: String,
@@ -14,5 +14,5 @@ data class ArticleDTO(
     @SerializedName("image_url") val imageUrl: String,
     @SerializedName("creator") val creator: List<String>,
     @SerializedName("pubDate") val pubDate: String,
-    @SerializedName("category") val category: List<NewsCategory>
+    @SerializedName("category") val category: List<NewsCategoryData>
 )

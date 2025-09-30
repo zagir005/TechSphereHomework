@@ -30,56 +30,56 @@ class UseCaseModuleImpl(
 ): UseCaseModule {
     override fun addWeatherPointUseCase(): AddWeatherPointUseCase =
         AddWeatherPointUseCaseImpl(
-            weatherRepository = repositoryModule.getWeatherRepository()
+            weatherRepository = repositoryModule.weatherRepository
         )
 
     override fun deleteWeatherPointUseCase(): DeleteWeatherPointUseCase =
         DeleteWeatherPointUseCaseImpl(
-            weatherRepository = repositoryModule.getWeatherRepository()
+            weatherRepository = repositoryModule.weatherRepository
         )
 
     override fun getWeatherPointsHistoryFlowUseCase(): GetWeatherPointsHistoryFlowUseCase =
         GetWeatherPointsHistoryFlowUseCaseImpl(
-            weatherRepository = repositoryModule.getWeatherRepository()
+            weatherRepository = repositoryModule.weatherRepository
         )
 
     override fun getCityAutocompleteUseCase(): GetCityAutocompleteUseCase =
         GetCityAutocompleteUseCaseImpl(
-            autocompleteRepository = repositoryModule.getCityAutocompleteRepository()
+            autocompleteRepository = repositoryModule.cityAutocompleteRepository
         )
 
     override fun getRecentCityListUseCase(): GetRecentCityListUseCase =
         GetRecentCityListUseCaseImpl(
-            cityRepository = repositoryModule.getCityRepository()
+            cityRepository = repositoryModule.cityRepository
         )
 
     override fun getOrPutCityUseCase(): GetOrPutCityUseCase =
         GetOrPutCityUseCaseImpl(
-            cityRepository = repositoryModule.getCityRepository()
+            cityRepository = repositoryModule.cityRepository
         )
 
     override fun authUseCase(): AuthUseCase =
         AuthUseCaseImpl(
-            authRepository = repositoryModule.getAuthRepository()
+            authRepository = repositoryModule.authRepository
         )
 
     override fun authWithoutLoginUseCase(): AuthWithoutLoginUseCase =
         AuthWithoutLoginUseCaseImpl(
-            authRepository = repositoryModule.getAuthRepository()
+            authRepository = repositoryModule.authRepository
         )
 
     override fun getCurrentAuthTokenUseCase(): GetCurrentAuthTokenUseCase =
         GetCurrentAuthTokenUseCaseImpl(
-            authRepository = repositoryModule.getAuthRepository()
+            authRepository = repositoryModule.authRepository
         )
 
     override fun getLatestNewsUseCase(): GetLatestNewsUseCase =
         GetLatestNewsUseCaseImpl(
-            newsRepository = repositoryModule.getNewsRepository()
+            newsRepository = repositoryModule.newsRepository
         )
 
     override fun getArticleByIdUseCase(): GetArticleByIdUseCase =
         GetArticleByIdUseCaseImpl(
-            newsRepository = repositoryModule.getNewsRepository()
+            newsRepository = repositoryModule.newsRepository
         )
 }
