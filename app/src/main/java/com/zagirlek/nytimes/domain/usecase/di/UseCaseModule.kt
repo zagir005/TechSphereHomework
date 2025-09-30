@@ -7,7 +7,6 @@ import com.zagirlek.nytimes.domain.usecase.DeleteWeatherPointUseCase
 import com.zagirlek.nytimes.domain.usecase.GetArticleByIdUseCase
 import com.zagirlek.nytimes.domain.usecase.GetCityAutocompleteUseCase
 import com.zagirlek.nytimes.domain.usecase.GetCurrentAuthTokenUseCase
-import com.zagirlek.nytimes.domain.usecase.GetLatestNewsUseCase
 import com.zagirlek.nytimes.domain.usecase.GetOrPutCityUseCase
 import com.zagirlek.nytimes.domain.usecase.GetRecentCityListUseCase
 import com.zagirlek.nytimes.domain.usecase.GetWeatherPointsHistoryFlowUseCase
@@ -22,6 +21,5 @@ interface UseCaseModule {
     fun authUseCase(): AuthUseCase
     fun authWithoutLoginUseCase(): AuthWithoutLoginUseCase
     fun getCurrentAuthTokenUseCase(): GetCurrentAuthTokenUseCase
-    fun getLatestNewsUseCase(): GetLatestNewsUseCase
     fun getArticleByIdUseCase(): GetArticleByIdUseCase
 }

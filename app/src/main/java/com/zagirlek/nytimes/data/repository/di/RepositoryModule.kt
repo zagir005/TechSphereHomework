@@ -1,8 +1,7 @@
 package com.zagirlek.nytimes.data.repository.di
 
 import com.zagirlek.nytimes.core.networkchecker.NetworkConnectionChecker
-import com.zagirlek.nytimes.data.local.weather.dao.CityDao
-import com.zagirlek.nytimes.data.local.weather.dao.WeatherDao
+import com.zagirlek.nytimes.data.local.NyTimesDatabase
 import com.zagirlek.nytimes.data.network.weather.service.AutocompleteService
 import com.zagirlek.nytimes.data.newsmanager.NewsManager
 import com.zagirlek.nytimes.data.repository.CityAutocompleteRepositoryImpl
@@ -17,8 +16,7 @@ import com.zagirlek.nytimes.domain.repository.NewsRepository
 import com.zagirlek.nytimes.domain.repository.WeatherRepository
 
 class RepositoryModule(
-    private val weatherDao: WeatherDao,
-    private val cityDao: CityDao,
+    private val database: NyTimesDatabase,
     private val autocompleteService: AutocompleteService,
     private val newsManager: NewsManager,
     connectionChecker: NetworkConnectionChecker
@@ -35,17 +33,18 @@ class RepositoryModule(
     }
     val cityRepository: CityRepository by lazy {
         CityRepositoryImpl(
-            cityDao = cityDao
+            cityDao = database.cityDao()
         )
     }
     val weatherRepository: WeatherRepository by lazy {
         WeatherRepositoryImpl(
-            weatherDao = weatherDao
+            weatherDao = database.weatherDao()
         )
     }
     val newsRepository: NewsRepository by lazy {
         NewsRepositoryImpl(
-            newsManager = newsManager
+            newsManager = newsManager,
+            database = database
         )
     }
 }

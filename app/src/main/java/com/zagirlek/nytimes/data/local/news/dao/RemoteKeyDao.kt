@@ -5,9 +5,9 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.TypeConverters
+import com.zagirlek.nytimes.core.model.NewsFilter
 import com.zagirlek.nytimes.data.local.news.converters.ArticleConverter
 import com.zagirlek.nytimes.data.local.news.entity.RemoteKeyEntity
-import com.zagirlek.nytimes.domain.model.NewsFilter
 
 @Dao
 @TypeConverters(ArticleConverter::class)

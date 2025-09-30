@@ -6,9 +6,9 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.TypeConverters
+import com.zagirlek.nytimes.core.model.NewsCategory
 import com.zagirlek.nytimes.data.local.news.converters.ArticleConverter
 import com.zagirlek.nytimes.data.local.news.entity.ArticleLiteEntity
-import com.zagirlek.nytimes.data.model.NewsCategoryData
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -40,7 +40,7 @@ interface ArticleLiteDao {
         ORDER BY pubDate DESC
     """)
     fun getArticlesPagingSource(
-        category: NewsCategoryData? = null,
+        category: NewsCategory? = null,
         titleQuery: String = "",
         isFavorite: Boolean? = null,
         isRead: Boolean? = null
@@ -56,7 +56,7 @@ interface ArticleLiteDao {
         ORDER BY pubDate DESC
     """)
     fun getArticlesFlow(
-        category: NewsCategoryData? = null,
+        category: NewsCategory? = null,
         titleQuery: String = "",
         isFavorite: Boolean? = null,
         isRead: Boolean? = null
@@ -68,7 +68,7 @@ interface ArticleLiteDao {
 
     // Получение категорий из избранных статей
     @Query("SELECT DISTINCT category FROM articles WHERE isFavorite = 1 ORDER BY category ASC")
-    fun getFavoriteCategoriesFlow(): Flow<List<NewsCategoryData>>
+    fun getFavoriteCategoriesFlow(): Flow<List<NewsCategory>>
 
     // Получение избранных статей по конкретной категории
     @Query("""
@@ -76,6 +76,6 @@ interface ArticleLiteDao {
     WHERE isFavorite = 1 AND category = :category 
     ORDER BY pubDate DESC
 """)
-    fun getFavoriteArticlesByCategoryFlow(category: NewsCategoryData): Flow<List<ArticleLiteEntity>>
+    fun getFavoriteArticlesByCategoryFlow(category: NewsCategory): Flow<List<ArticleLiteEntity>>
 
 }

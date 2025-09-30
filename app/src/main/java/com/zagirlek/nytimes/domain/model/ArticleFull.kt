@@ -1,5 +1,6 @@
 package com.zagirlek.nytimes.domain.model
 
+import com.zagirlek.nytimes.core.model.NewsCategory
 import java.time.LocalDateTime
 
 data class ArticleFull(
@@ -8,7 +9,7 @@ data class ArticleFull(
     val title: String,
     val description: String,
     val fullText: String,
-    val category: List<NewsCategory>,
+    val category: NewsCategory,
     val sourceName: String,
     val sourceIconUrl: String,
     val creator: List<String>,

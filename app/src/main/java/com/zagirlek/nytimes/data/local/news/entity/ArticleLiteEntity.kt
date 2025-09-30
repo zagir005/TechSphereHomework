@@ -2,7 +2,7 @@ package com.zagirlek.nytimes.data.local.news.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.zagirlek.nytimes.domain.model.NewsCategory
+import com.zagirlek.nytimes.core.model.NewsCategory
 
 @Entity(
     tableName = "articles"

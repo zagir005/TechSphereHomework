@@ -1,4 +1,4 @@
-package com.zagirlek.nytimes.domain.model
+package com.zagirlek.nytimes.core.model
 
 data class NewsFilter(
     val category: NewsCategory? = null,

@@ -1,16 +1,15 @@
 package com.zagirlek.nytimes.data.local.news.converters
 
 import androidx.room.TypeConverter
-import com.zagirlek.nytimes.data.model.NewsCategoryData
-import com.zagirlek.nytimes.domain.model.NewsCategory
-import com.zagirlek.nytimes.domain.model.NewsFilter
+import com.zagirlek.nytimes.core.model.NewsCategory
+import com.zagirlek.nytimes.core.model.NewsFilter
 
 class ArticleConverter{
     @TypeConverter
-    fun toCategory(value: String): NewsCategoryData = enumValueOf(name = value)
+    fun toCategory(value: String): NewsCategory = enumValueOf(name = value)
 
     @TypeConverter
-    fun fromCategory(value: NewsCategoryData): String = value.name
+    fun fromCategory(value: NewsCategory): String = value.name
 
     @TypeConverter
     fun fromNewsFilter(value: NewsFilter?): String {

@@ -14,11 +14,10 @@ class NyTimesApp: Application() {
     }
     private val repositoryModule: RepositoryModule by lazy {
         RepositoryModule(
-            weatherDao = appDi.getWeatherDao(),
-            cityDao = appDi.getCityDao(),
             autocompleteService = appDi.getAutocompleteService(),
             connectionChecker = appDi.networkConnectionChecker,
-            newsManager = appDi.newsManager
+            newsManager = appDi.newsManager,
+            database = appDi.getDatabase()
         )
     }
 

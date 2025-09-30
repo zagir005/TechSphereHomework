@@ -7,8 +7,6 @@ import com.arkivanov.mvikotlin.main.store.DefaultStoreFactory
 import com.zagirlek.nytimes.core.networkchecker.NetworkConnectionChecker
 import com.zagirlek.nytimes.core.networkchecker.NetworkConnectionCheckerImpl
 import com.zagirlek.nytimes.data.local.NyTimesDatabase
-import com.zagirlek.nytimes.data.local.weather.dao.CityDao
-import com.zagirlek.nytimes.data.local.weather.dao.WeatherDao
 import com.zagirlek.nytimes.data.network.NetworkModule
 import com.zagirlek.nytimes.data.network.weather.service.AutocompleteService
 import com.zagirlek.nytimes.data.newsmanager.NewsManager
@@ -38,8 +36,7 @@ class AppDi(applicationContext: Context) {
         )
     }
 
-    fun getWeatherDao(): WeatherDao = database.weatherDao()
-    fun getCityDao(): CityDao = database.cityDao()
+    fun getDatabase(): NyTimesDatabase = database
     fun getAutocompleteService(): AutocompleteService = autocompleteService
 
 }

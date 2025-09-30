@@ -8,7 +8,6 @@ import com.zagirlek.nytimes.data.usecase.DeleteWeatherPointUseCaseImpl
 import com.zagirlek.nytimes.data.usecase.GetArticleByIdUseCaseImpl
 import com.zagirlek.nytimes.data.usecase.GetCityAutocompleteUseCaseImpl
 import com.zagirlek.nytimes.data.usecase.GetCurrentAuthTokenUseCaseImpl
-import com.zagirlek.nytimes.data.usecase.GetLatestNewsUseCaseImpl
 import com.zagirlek.nytimes.data.usecase.GetOrPutCityUseCaseImpl
 import com.zagirlek.nytimes.data.usecase.GetRecentCityListUseCaseImpl
 import com.zagirlek.nytimes.data.usecase.GetWeatherPointsHistoryFlowUseCaseImpl
@@ -19,7 +18,6 @@ import com.zagirlek.nytimes.domain.usecase.DeleteWeatherPointUseCase
 import com.zagirlek.nytimes.domain.usecase.GetArticleByIdUseCase
 import com.zagirlek.nytimes.domain.usecase.GetCityAutocompleteUseCase
 import com.zagirlek.nytimes.domain.usecase.GetCurrentAuthTokenUseCase
-import com.zagirlek.nytimes.domain.usecase.GetLatestNewsUseCase
 import com.zagirlek.nytimes.domain.usecase.GetOrPutCityUseCase
 import com.zagirlek.nytimes.domain.usecase.GetRecentCityListUseCase
 import com.zagirlek.nytimes.domain.usecase.GetWeatherPointsHistoryFlowUseCase
@@ -73,10 +71,7 @@ class UseCaseModuleImpl(
             authRepository = repositoryModule.authRepository
         )
 
-    override fun getLatestNewsUseCase(): GetLatestNewsUseCase =
-        GetLatestNewsUseCaseImpl(
-            newsRepository = repositoryModule.newsRepository
-        )
+
 
     override fun getArticleByIdUseCase(): GetArticleByIdUseCase =
         GetArticleByIdUseCaseImpl(

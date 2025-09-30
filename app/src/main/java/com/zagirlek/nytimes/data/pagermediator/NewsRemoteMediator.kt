@@ -5,13 +5,14 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
+import com.zagirlek.nytimes.core.model.NewsFilter
 import com.zagirlek.nytimes.data.local.NyTimesDatabase
 import com.zagirlek.nytimes.data.local.news.dao.ArticleLiteDao
 import com.zagirlek.nytimes.data.local.news.dao.RemoteKeyDao
 import com.zagirlek.nytimes.data.local.news.entity.ArticleLiteEntity
 import com.zagirlek.nytimes.data.local.news.entity.RemoteKeyEntity
+import com.zagirlek.nytimes.data.mapper.toEntity
 import com.zagirlek.nytimes.data.newsmanager.NewsManager
-import com.zagirlek.nytimes.domain.model.NewsFilter
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -21,9 +22,8 @@ class NewsRemoteMediator(
     private val database: NyTimesDatabase,
     private val newsManager: NewsManager
 ) : RemoteMediator<Int, ArticleLiteEntity>() {
-
     private val remoteKeyDao: RemoteKeyDao = database.remoteKeyDao()
-    private val articleDao: ArticleLiteDao = database.articleLiteDao()
+    private val articleDao: ArticleLiteDao = database.articleDao()
 
     override suspend fun initialize(): InitializeAction {
         return InitializeAction.LAUNCH_INITIAL_REFRESH
@@ -34,10 +34,7 @@ class NewsRemoteMediator(
         state: PagingState<Int, ArticleLiteEntity>
     ): MediatorResult {
         val pageKey = when (loadType) {
-            LoadType.REFRESH -> {
-                // Для курсорной пагинации стартуем с пустой строки или из фильтра, если он задан явно
-                filters.page.ifEmpty { "" }
-            }
+            LoadType.REFRESH -> ""
             LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
             LoadType.APPEND -> {
                 val key = remoteKeyDao.remoteKeysByFilters(filters)?.nextPageKey
@@ -48,7 +45,7 @@ class NewsRemoteMediator(
 
         val response = try {
             newsManager.getLatestNews(
-                category = filters.category?.let { listOf(it) } ?: emptyList(),
+                category = filters.category,
                 page = pageKey,
                 titleQuery = filters.titleQuery
             )
@@ -60,11 +57,10 @@ class NewsRemoteMediator(
 
         return try {
             val nextPageKey = response.nextPage.ifEmpty { null }
-            val prevPageKey: String? = null // API не возвращает prev
+            val prevPageKey: String? = null
 
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
-                    // Кэш статей не трогаем, только сбросим remote key под эти фильтры
                     remoteKeyDao.deleteByFilters(filters)
                 }
 
@@ -78,7 +74,7 @@ class NewsRemoteMediator(
                 )
 
                 articleDao.insertArticles(
-                    response.articleLiteList.map { it.toArticleLiteEntity() }
+                    response.newsList.map { it.toEntity() }
                 )
             }
 
