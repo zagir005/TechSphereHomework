@@ -8,8 +8,8 @@ interface NewsManager {
 
     suspend fun getLatestNews(
         category: NewsCategory? = null,
-        page: String = "",
-        titleQuery: String = "",
+        page: String? = null,
+        titleQuery: String? = null,
     ): NewsPageDTO
 
     suspend fun getFullArticleById(

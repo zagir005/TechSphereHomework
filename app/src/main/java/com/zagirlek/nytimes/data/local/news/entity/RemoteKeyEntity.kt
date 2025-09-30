@@ -6,14 +6,11 @@ import androidx.room.TypeConverters
 import com.zagirlek.nytimes.core.model.NewsFilter
 import com.zagirlek.nytimes.data.local.news.converters.ArticleConverter
 
-@Entity(
-    tableName = "remote_keys"
-)
+
+@Entity(tableName = "remote_keys")
 @TypeConverters(ArticleConverter::class)
 data class RemoteKeyEntity(
     @PrimaryKey
     val filters: NewsFilter,
-    val pageKey: String,
-    val nextPageKey: String?,
-    val previousPageKey: String?
+    val nextPageKey: String?
 )

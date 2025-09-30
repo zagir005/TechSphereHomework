@@ -16,7 +16,9 @@ class RootModule(
         getRecentCityListUseCase = useCaseModule.getRecentCityListUseCase(),
         deleteWeatherPointUseCase = useCaseModule.deleteWeatherPointUseCase(),
         addWeatherPointUseCase = useCaseModule.addWeatherPointUseCase(),
-        getOrPutCityUseCase = useCaseModule.getOrPutCityUseCase()
+        getOrPutCityUseCase = useCaseModule.getOrPutCityUseCase(),
+        getPagingNewsUseCase = useCaseModule.getPagingNewsUseCase()
+
     )
 
     fun getSplashModule(): SplashModule = SplashModule(

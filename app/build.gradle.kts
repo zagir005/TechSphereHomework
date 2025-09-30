@@ -25,7 +25,7 @@ android {
         buildConfigField(name = "AVAILABLE_DOMAINS", value = "\"nytimes,bbc,forbes,theguardian,washingtonpost\"", type = "String")
 
         buildConfigField(name = "EXTRACTOR_BASE_URL", value = "\"https://api.articlextractor.com/v1/\"", type = "String")
-        buildConfigField(name = "NEWS_API_KEY", value = "\"BBm76KtyDK4rCVo1M4v4f2jh0eZ2LUV1SHuBrmy4\"", type = "String")
+        buildConfigField(name = "EXTRACTOR_API_KEY", value = "\"BBm76KtyDK4rCVo1M4v4f2jh0eZ2LUV1SHuBrmy4\"", type = "String")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -72,6 +72,9 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.room.paging)
+
+    implementation(libs.paging.common)
+    implementation(libs.paging.compose)
 
     implementation(libs.androidx.ui.animation)
     implementation(libs.androidx.core.splash)

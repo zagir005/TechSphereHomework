@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.zagirlek.nytimes.ui.screen.main.main.element.MainNavigationBar
 import com.zagirlek.nytimes.ui.screen.main.main.element.Tab
+import com.zagirlek.nytimes.ui.screen.main.news.NewsScreen
 import com.zagirlek.nytimes.ui.screen.main.weather.WeatherScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,10 +55,13 @@ fun MainUi(
         ){
             when(val child = pages.items[pages.selectedIndex].instance!!){
                 is MainComponent.Child.Weather -> {
-                    WeatherScreen(child.component)
+                    WeatherScreen(
+                        component = child.component)
                 }
                 is MainComponent.Child.News -> {
-
+                    NewsScreen(
+                        component = child.component
+                    )
                 }
                 is MainComponent.Child.Favorites -> {
 

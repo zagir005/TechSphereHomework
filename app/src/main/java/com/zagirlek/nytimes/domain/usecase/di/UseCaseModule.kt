@@ -8,6 +8,7 @@ import com.zagirlek.nytimes.domain.usecase.GetArticleByIdUseCase
 import com.zagirlek.nytimes.domain.usecase.GetCityAutocompleteUseCase
 import com.zagirlek.nytimes.domain.usecase.GetCurrentAuthTokenUseCase
 import com.zagirlek.nytimes.domain.usecase.GetOrPutCityUseCase
+import com.zagirlek.nytimes.domain.usecase.GetPagingNewsUseCase
 import com.zagirlek.nytimes.domain.usecase.GetRecentCityListUseCase
 import com.zagirlek.nytimes.domain.usecase.GetWeatherPointsHistoryFlowUseCase
 
@@ -22,4 +23,5 @@ interface UseCaseModule {
     fun authWithoutLoginUseCase(): AuthWithoutLoginUseCase
     fun getCurrentAuthTokenUseCase(): GetCurrentAuthTokenUseCase
     fun getArticleByIdUseCase(): GetArticleByIdUseCase
+    fun getPagingNewsUseCase(): GetPagingNewsUseCase
 }

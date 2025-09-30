@@ -52,7 +52,7 @@ object NetworkModule {
     val newsExtractorApi: ExtractorService by lazy {
         createRetrofit(
             baseUrl = BuildConfig.EXTRACTOR_BASE_URL,
-            client = createOkHttpClient(APIKeyInterceptor(apiKey = BuildConfig.EXTRACTOR_BASE_URL, keyParameterName = "api_token"))
+            client = createOkHttpClient(APIKeyInterceptor(apiKey = BuildConfig.EXTRACTOR_API_KEY, keyParameterName = "api_token"))
         )
             .create()
     }

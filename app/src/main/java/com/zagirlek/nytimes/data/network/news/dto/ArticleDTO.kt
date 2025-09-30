@@ -11,8 +11,8 @@ data class ArticleDTO(
     @SerializedName("source_id") val sourceId: String,
     @SerializedName("source_name") val sourceName: String,
     @SerializedName("source_icon") val sourceIconUrl: String,
-    @SerializedName("image_url") val imageUrl: String,
-    @SerializedName("creator") val creator: List<String>,
+    @SerializedName("image_url") val imageUrl: String?,
+    @SerializedName("creator") val creator: List<String?>?,
     @SerializedName("pubDate") val pubDate: String,
     @SerializedName("category") val category: List<NewsCategory>
 )

@@ -28,9 +28,9 @@ class NewsRepositoryImpl(
     private val articleDao = database.articleDao()
 
     override suspend fun getLatestNews(
-        category: NewsCategory,
-        page: String,
-        titleQuery: String
+        category: NewsCategory?,
+        page: String?,
+        titleQuery: String?
     ): Result<NewsPageDTO> = runCatchingCancellable {
         newsManager.getLatestNews(
             category = category,
@@ -49,7 +49,6 @@ class NewsRepositoryImpl(
         return Pager(
             config = PagingConfig(
                 pageSize = 20,
-                prefetchDistance = 2,
                 enablePlaceholders = false,
                 initialLoadSize = 40
             ),

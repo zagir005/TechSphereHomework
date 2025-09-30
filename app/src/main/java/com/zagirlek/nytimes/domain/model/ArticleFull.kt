@@ -12,7 +12,7 @@ data class ArticleFull(
     val category: NewsCategory,
     val sourceName: String,
     val sourceIconUrl: String,
-    val creator: List<String>,
+    val creator: String,
     val imageUrl: String,
     val pubDate: LocalDateTime
 )

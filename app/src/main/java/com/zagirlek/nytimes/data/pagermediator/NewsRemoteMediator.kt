@@ -22,6 +22,7 @@ class NewsRemoteMediator(
     private val database: NyTimesDatabase,
     private val newsManager: NewsManager
 ) : RemoteMediator<Int, ArticleLiteEntity>() {
+
     private val remoteKeyDao: RemoteKeyDao = database.remoteKeyDao()
     private val articleDao: ArticleLiteDao = database.articleDao()
 
@@ -34,11 +35,11 @@ class NewsRemoteMediator(
         state: PagingState<Int, ArticleLiteEntity>
     ): MediatorResult {
         val pageKey = when (loadType) {
-            LoadType.REFRESH -> ""
+            LoadType.REFRESH -> null
             LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
             LoadType.APPEND -> {
                 val key = remoteKeyDao.remoteKeysByFilters(filters)?.nextPageKey
-                    ?: return MediatorResult.Success(endOfPaginationReached = true)
+                if (key == null) return MediatorResult.Success(endOfPaginationReached = true)
                 key
             }
         }
@@ -55,29 +56,23 @@ class NewsRemoteMediator(
             return MediatorResult.Error(e)
         }
 
-        return try {
-            val nextPageKey = response.nextPage.ifEmpty { null }
-            val prevPageKey: String? = null
+        val nextPageKey = response.nextPage.ifEmpty { null }
 
+        return try {
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
-                    remoteKeyDao.deleteByFilters(filters)
+                    articleDao.deleteNonFavoriteAndUnreadArticles()
                 }
+
+                articleDao.insertArticles(response.newsList.map { it.toEntity() })
 
                 remoteKeyDao.insertOrReplace(
                     RemoteKeyEntity(
                         filters = filters,
-                        pageKey = pageKey,
-                        nextPageKey = nextPageKey,
-                        previousPageKey = prevPageKey
+                        nextPageKey = nextPageKey
                     )
                 )
-
-                articleDao.insertArticles(
-                    response.newsList.map { it.toEntity() }
-                )
             }
-
             MediatorResult.Success(endOfPaginationReached = nextPageKey == null)
         } catch (e: IOException) {
             MediatorResult.Error(e)

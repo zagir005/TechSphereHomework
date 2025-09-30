@@ -11,7 +11,7 @@ data class ArticleLite(
     val category: NewsCategory,
     val sourceName: String,
     val sourceIconUrl: String,
-    val creator: List<String>,
+    val creator: String,
     val imageUrl: String,
     val pubDate: LocalDateTime,
     val isFavorite: Boolean,

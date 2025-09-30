@@ -16,11 +16,11 @@ class NewsManagerImpl(
 
     override suspend fun getLatestNews(
         category: NewsCategory?,
-        page: String,
-        titleQuery: String
+        page: String?,
+        titleQuery: String?
     ): NewsPageDTO =
         newsService.latest(
-            category = category?.let { listOf(it) },
+            category = category?.let { listOf(it.name.lowercase()) },
             domain = BuildConfig.AVAILABLE_DOMAINS,
             page = page,
             titleQuery = titleQuery

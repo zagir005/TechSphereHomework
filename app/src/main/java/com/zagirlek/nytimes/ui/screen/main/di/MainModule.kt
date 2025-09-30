@@ -5,6 +5,7 @@ import com.zagirlek.nytimes.domain.usecase.AddWeatherPointUseCase
 import com.zagirlek.nytimes.domain.usecase.DeleteWeatherPointUseCase
 import com.zagirlek.nytimes.domain.usecase.GetCityAutocompleteUseCase
 import com.zagirlek.nytimes.domain.usecase.GetOrPutCityUseCase
+import com.zagirlek.nytimes.domain.usecase.GetPagingNewsUseCase
 import com.zagirlek.nytimes.domain.usecase.GetRecentCityListUseCase
 import com.zagirlek.nytimes.domain.usecase.GetWeatherPointsHistoryFlowUseCase
 import com.zagirlek.nytimes.ui.screen.main.favorites.FavoritesComponent
@@ -20,7 +21,8 @@ class MainModule(
     private val getRecentCityListUseCase: GetRecentCityListUseCase,
     private val deleteWeatherPointUseCase: DeleteWeatherPointUseCase,
     private val addWeatherPointUseCase: AddWeatherPointUseCase,
-    private val getOrPutCityUseCase: GetOrPutCityUseCase
+    private val getOrPutCityUseCase: GetOrPutCityUseCase,
+    private val getPagingNewsUseCase: GetPagingNewsUseCase
 ) {
     fun getWeatherComponent(
         componentContext: ComponentContext
@@ -38,7 +40,10 @@ class MainModule(
     fun getNewsComponent(
         componentContext: ComponentContext
     ): NewsComponent =
-        DefaultNewsComponent(componentContext)
+        DefaultNewsComponent(
+            componentContext = componentContext,
+            getPagingNewsUseCase = getPagingNewsUseCase
+        )
 
     fun getFavoritesComponent(
         componentContext: ComponentContext

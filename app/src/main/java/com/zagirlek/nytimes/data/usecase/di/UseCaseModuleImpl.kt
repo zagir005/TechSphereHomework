@@ -9,6 +9,7 @@ import com.zagirlek.nytimes.data.usecase.GetArticleByIdUseCaseImpl
 import com.zagirlek.nytimes.data.usecase.GetCityAutocompleteUseCaseImpl
 import com.zagirlek.nytimes.data.usecase.GetCurrentAuthTokenUseCaseImpl
 import com.zagirlek.nytimes.data.usecase.GetOrPutCityUseCaseImpl
+import com.zagirlek.nytimes.data.usecase.GetPagingNewsUseCaseImpl
 import com.zagirlek.nytimes.data.usecase.GetRecentCityListUseCaseImpl
 import com.zagirlek.nytimes.data.usecase.GetWeatherPointsHistoryFlowUseCaseImpl
 import com.zagirlek.nytimes.domain.usecase.AddWeatherPointUseCase
@@ -19,6 +20,7 @@ import com.zagirlek.nytimes.domain.usecase.GetArticleByIdUseCase
 import com.zagirlek.nytimes.domain.usecase.GetCityAutocompleteUseCase
 import com.zagirlek.nytimes.domain.usecase.GetCurrentAuthTokenUseCase
 import com.zagirlek.nytimes.domain.usecase.GetOrPutCityUseCase
+import com.zagirlek.nytimes.domain.usecase.GetPagingNewsUseCase
 import com.zagirlek.nytimes.domain.usecase.GetRecentCityListUseCase
 import com.zagirlek.nytimes.domain.usecase.GetWeatherPointsHistoryFlowUseCase
 import com.zagirlek.nytimes.domain.usecase.di.UseCaseModule
@@ -72,9 +74,13 @@ class UseCaseModuleImpl(
         )
 
 
-
     override fun getArticleByIdUseCase(): GetArticleByIdUseCase =
         GetArticleByIdUseCaseImpl(
+            newsRepository = repositoryModule.newsRepository
+        )
+
+    override fun getPagingNewsUseCase(): GetPagingNewsUseCase =
+        GetPagingNewsUseCaseImpl(
             newsRepository = repositoryModule.newsRepository
         )
 }

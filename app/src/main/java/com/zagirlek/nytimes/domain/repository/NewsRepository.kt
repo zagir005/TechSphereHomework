@@ -11,9 +11,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface NewsRepository {
     suspend fun getLatestNews(
-        category: NewsCategory,
-        page: String = "",
-        titleQuery: String = "",
+        category: NewsCategory? = null,
+        page: String? = null,
+        titleQuery: String? = null,
     ): Result<NewsPageDTO>
 
     suspend fun getFullArticleById(
@@ -21,7 +21,7 @@ interface NewsRepository {
     ): Result<ArticleFull>
 
     fun getPagedNews(
-        filter: NewsFilter
+        filter: NewsFilter = NewsFilter()
     ): Flow<PagingData<ArticleLite>>
 
     fun observeFavoriteGroupedByCategory(): Flow<List<ArticlesByCategory>>

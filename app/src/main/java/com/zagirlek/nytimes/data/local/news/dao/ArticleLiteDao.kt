@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.TypeConverters
 import com.zagirlek.nytimes.core.model.NewsCategory
 import com.zagirlek.nytimes.data.local.news.converters.ArticleConverter
@@ -34,14 +35,14 @@ interface ArticleLiteDao {
     @Query("""
         SELECT * FROM articles 
         WHERE (:category IS NULL OR category = :category)
-        AND (:titleQuery = '' OR title LIKE '%' || :titleQuery || '%')
-        AND (:isFavorite IS NULL OR isFavorite = :isFavorite)
-        AND (:isRead IS NULL OR isRead = :isRead)
+        AND (:titleQuery IS NULL OR title LIKE '%' || :titleQuery || '%')
+        AND (:isFavorite IS NULL OR isfavorite = :isFavorite)
+        AND (:isRead IS NULL OR isread= :isRead)
         ORDER BY pubDate DESC
     """)
     fun getArticlesPagingSource(
         category: NewsCategory? = null,
-        titleQuery: String = "",
+        titleQuery: String? = null,
         isFavorite: Boolean? = null,
         isRead: Boolean? = null
     ): PagingSource<Int, ArticleLiteEntity>
@@ -62,6 +63,21 @@ interface ArticleLiteDao {
         isRead: Boolean? = null
     ): Flow<List<ArticleLiteEntity>>
 
+    @Query("""
+        SELECT * FROM articles 
+        WHERE (:category IS NULL OR category = :category)
+        AND (:titleQuery = '' OR title LIKE '%' || :titleQuery || '%')
+        AND (:isFavorite IS NULL OR isFavorite = :isFavorite)
+        AND (:isRead IS NULL OR isRead = :isRead)
+        ORDER BY pubDate DESC
+    """)
+    fun getArticles(
+        category: NewsCategory? = null,
+        titleQuery: String = "",
+        isFavorite: Boolean? = null,
+        isRead: Boolean? = null
+    ): List<ArticleLiteEntity>
+
     // Получение статьи по ID
     @Query("SELECT * FROM articles WHERE articleId = :articleId LIMIT 1")
     suspend fun getArticleById(articleId: String): ArticleLiteEntity?
@@ -78,4 +94,8 @@ interface ArticleLiteDao {
 """)
     fun getFavoriteArticlesByCategoryFlow(category: NewsCategory): Flow<List<ArticleLiteEntity>>
 
+
+    @Transaction
+    @Query("DELETE FROM articles WHERE isFavorite = 0 AND isRead = 0")
+    suspend fun deleteNonFavoriteAndUnreadArticles()
 }
