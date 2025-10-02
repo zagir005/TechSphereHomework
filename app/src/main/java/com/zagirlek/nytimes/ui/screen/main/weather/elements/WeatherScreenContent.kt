@@ -142,6 +142,10 @@ fun EmptyHistoryAttention(modifier: Modifier = Modifier) {
 @Preview(
     showSystemUi = true
 )
+@Preview(
+    showSystemUi = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
 @Composable
 private fun WeatherUiDayPreview() {
     NyTimesPreview {
@@ -153,44 +157,14 @@ private fun WeatherUiDayPreview() {
 }
 
 @Preview(
+    showSystemUi = true
+)
+@Preview(
     showSystemUi = true,
     uiMode = Configuration.UI_MODE_NIGHT_YES
-)
-@Composable
-private fun WeatherUiNightPreview() {
-    NyTimesPreview {
-        WeatherScreenContent(
-            state = WeatherState(),
-            sendAction = {}
-        )
-    }
-}
-
-@Preview(
-    showSystemUi = true
 )
 @Composable
 private fun WeatherUiLastWeatherPointDefaultPreview() {
-    NyTimesPreview {
-        WeatherScreenContent(
-            state = WeatherState(
-                lastWeatherPoint = WeatherPoint(
-                    city = City(0, "Москва"),
-                    temperature = 0,
-                    id = 0
-                )
-            ),
-            sendAction = {}
-        )
-    }
-}
-
-@Preview(
-    showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
-)
-@Composable
-private fun WeatherUiLastWeatherPointNightPreview() {
     NyTimesPreview {
         WeatherScreenContent(
             state = WeatherState(

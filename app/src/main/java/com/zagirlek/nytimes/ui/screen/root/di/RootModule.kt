@@ -11,14 +11,16 @@ class RootModule(
     private val storeFactory: StoreFactory
 ) {
     fun getMainModule(): MainModule = MainModule(
+        storeFactory = storeFactory,
         getCityAutocompleteUseCase = useCaseModule.getCityAutocompleteUseCase(),
         getWeatherPointsHistoryFlowUseCase = useCaseModule.getWeatherPointsHistoryFlowUseCase(),
         getRecentCityListUseCase = useCaseModule.getRecentCityListUseCase(),
         deleteWeatherPointUseCase = useCaseModule.deleteWeatherPointUseCase(),
         addWeatherPointUseCase = useCaseModule.addWeatherPointUseCase(),
         getOrPutCityUseCase = useCaseModule.getOrPutCityUseCase(),
-        getPagingNewsUseCase = useCaseModule.getPagingNewsUseCase()
-
+        getPagingNewsUseCase = useCaseModule.getPagingNewsUseCase(),
+        updateArticleStatusUseCase = useCaseModule.updateArticleStatusUseCase(),
+        getArticleStatusFlowUseCase = useCaseModule.getArticleLocalInfoFlowUseCase()
     )
 
     fun getSplashModule(): SplashModule = SplashModule(

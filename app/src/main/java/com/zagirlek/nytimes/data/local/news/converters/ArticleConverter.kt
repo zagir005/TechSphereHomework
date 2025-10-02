@@ -15,7 +15,7 @@ class ArticleConverter{
     fun fromNewsFilter(value: NewsFilter?): String {
         return value?.let {
             val category = it.category?.name ?: ""
-            val titleQuery = it.titleQuery
+            val titleQuery = it.titleQuery ?: ""
             "$category/$titleQuery"
         } ?: ""
     }
@@ -24,10 +24,13 @@ class ArticleConverter{
     fun toNewsFilter(value: String?): NewsFilter? {
         if (value.isNullOrBlank()) return null
         val parts = value.split("/")
+        val rawCategory = parts.getOrNull(0)
+        val parsedCategory = if (!rawCategory.isNullOrBlank()) NewsCategory.valueOf(rawCategory) else null
+        val rawQuery = parts.getOrNull(1)
+        val parsedQuery = rawQuery?.takeIf { it.isNotBlank() }
         return NewsFilter(
-            category = parts.getOrNull(0)
-                ?.let { if (it.isNotBlank()) NewsCategory.valueOf(it) else null },
-            titleQuery = parts.getOrNull(1) ?: ""
+            category = parsedCategory,
+            titleQuery = parsedQuery
         )
     }
 }

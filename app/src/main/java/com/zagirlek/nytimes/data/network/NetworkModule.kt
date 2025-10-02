@@ -44,7 +44,14 @@ object NetworkModule {
     val newsApi: NewsService by lazy {
         createRetrofit(
             baseUrl = BuildConfig.NEWS_BASE_URL,
-            client = createOkHttpClient(APIKeyInterceptor(apiKey = BuildConfig.NEWS_API_KEY))
+            client = createOkHttpClient(
+                APIKeyInterceptor(
+                    apiKey = listOf(
+                        BuildConfig.NEWS_API_KEY_1,
+                        BuildConfig.NEWS_API_KEY,
+                    ).random()
+                )
+            )
         )
             .create()
     }

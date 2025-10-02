@@ -1,3 +1,3 @@
 package com.zagirlek.nytimes.core.error
 
-class NetworkError: Throwable("Проблемы с сетью")
+class NetworkError(val msg: String = "Проблемы с сетью"): Throwable(message = msg)

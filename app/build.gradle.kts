@@ -21,7 +21,9 @@ android {
         buildConfigField(name = "WEATHER_API_KEY", value = "\"dd9eadf389194d2c828170710251809\"", type = "String")
 
         buildConfigField(name = "NEWS_BASE_URL", value = "\"https://newsdata.io/api/1/\"", type = "String")
-        buildConfigField(name = "NEWS_API_KEY", value = "\"pub_1d0ca004527e4b84902ec740d9ac732a\"", type = "String")
+        buildConfigField(name = "NEWS_API_KEY", value = "\"pub_1bcf9d91fc5240eda6af74c00b7e628d\"", type = "String")
+        buildConfigField(name = "NEWS_API_KEY_1", value = "\"pub_e7fb55d0abb84d219bd323216254f33c\"", type = "String")
+        buildConfigField(name = "NEWS_API_KEY_2", value = "\"pub_412b85944c0540c6b7e4f65e4fc2af4e\"", type = "String")
         buildConfigField(name = "AVAILABLE_DOMAINS", value = "\"nytimes,bbc,forbes,theguardian,washingtonpost\"", type = "String")
 
         buildConfigField(name = "EXTRACTOR_BASE_URL", value = "\"https://api.articlextractor.com/v1/\"", type = "String")
@@ -75,6 +77,9 @@ dependencies {
 
     implementation(libs.paging.common)
     implementation(libs.paging.compose)
+
+    implementation(libs.coil.compose)
+    implementation(libs.coil.okhttp)
 
     implementation(libs.androidx.ui.animation)
     implementation(libs.androidx.core.splash)

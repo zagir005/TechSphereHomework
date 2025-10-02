@@ -1,5 +1,3 @@
-@file:JvmName("AuthScreenKt")
-
 package com.zagirlek.nytimes.ui.screen.auth
 
 import androidx.compose.runtime.Composable
@@ -17,7 +15,7 @@ import com.zagirlek.nytimes.ui.screen.auth.elements.authdialog.AuthErrorDialogSt
 import com.zagirlek.nytimes.ui.screen.auth.model.AuthSideEffect
 
 @Composable
-fun AuthUi(
+fun AuthScreenUi(
     component: AuthScreen,
     modifier: Modifier = Modifier,
 ) {

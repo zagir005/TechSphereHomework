@@ -15,7 +15,7 @@ import com.zagirlek.nytimes.data.newsmanager.NewsManager
 import com.zagirlek.nytimes.data.pagermediator.NewsRemoteMediator
 import com.zagirlek.nytimes.domain.model.ArticleFull
 import com.zagirlek.nytimes.domain.model.ArticleLite
-import com.zagirlek.nytimes.domain.model.ArticlesByCategory
+import com.zagirlek.nytimes.domain.model.ArticleStatus
 import com.zagirlek.nytimes.domain.repository.NewsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -26,6 +26,7 @@ class NewsRepositoryImpl(
 ): NewsRepository {
 
     private val articleDao = database.articleDao()
+    private val articleStatusDao = database.articleStatusDao()
 
     override suspend fun getLatestNews(
         category: NewsCategory?,
@@ -35,7 +36,7 @@ class NewsRepositoryImpl(
         newsManager.getLatestNews(
             category = category,
             page = page,
-            titleQuery = titleQuery
+            titleQuery = titleQuery?.ifBlank { null }
         )
     }
 
@@ -48,9 +49,9 @@ class NewsRepositoryImpl(
     override fun getPagedNews(filter: NewsFilter): Flow<PagingData<ArticleLite>> {
         return Pager(
             config = PagingConfig(
-                pageSize = 20,
+                pageSize = 5,
                 enablePlaceholders = false,
-                initialLoadSize = 40
+                initialLoadSize = 15
             ),
             remoteMediator = NewsRemoteMediator(
                 filters = filter,
@@ -60,9 +61,7 @@ class NewsRepositoryImpl(
             pagingSourceFactory = {
                 articleDao.getArticlesPagingSource(
                     category = filter.category,
-                    titleQuery = filter.titleQuery,
-                    isFavorite = null,
-                    isRead = null
+                    titleQuery = filter.titleQuery
                 )
             }
         ).flow.map {
@@ -72,20 +71,25 @@ class NewsRepositoryImpl(
         }
     }
 
-    override fun observeFavoriteGroupedByCategory(): Flow<List<ArticlesByCategory>> {
-        return articleDao
-            .getArticlesFlow(
-                category = null,
-                titleQuery = "",
-                isFavorite = true,
-                isRead = null
-            )
-            .map { list ->
-                list.groupBy { it.category }
-                    .toSortedMap(compareBy { it.name })
-                    .map { (category, articles) ->
-                        ArticlesByCategory(category = category, articles = articles.sortedByDescending { it.pubDate })
-                    }
-            }
+    override suspend fun updateArticleStatus(
+        articleId: String,
+        isFavorite: Boolean,
+        isRead: Boolean
+    ) {
+        articleStatusDao.updateArticleStatus(
+            articleId = articleId,
+            isRead = isRead,
+            isFavorite = isFavorite
+        )
     }
+
+
+    override fun getArticleListStatusFlow(): Flow<List<ArticleStatus>> =
+        articleStatusDao.getArticleStatusFlow().map {
+            it.map { articleInfo ->
+                articleInfo.toDomain()
+            }
+        }
+
+
 }

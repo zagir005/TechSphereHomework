@@ -1,3 +1,6 @@
 package com.zagirlek.nytimes.core.error
 
-class ServerError: Throwable("Ошибка с сервера")
+import retrofit2.HttpException
+
+class ServerError(val msg: String = "Ошибка с сервера"): Throwable(message = msg)
+

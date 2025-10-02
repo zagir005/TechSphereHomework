@@ -43,7 +43,7 @@ enum class NewsCategory(val resId: Int) {
     @SerializedName("technology")
     TECHNOLOGY(R.string.technology),
 
-    @SerializedName("business")
+    @SerializedName("top")
     TOP(R.string.top),
 
     @SerializedName("tourism")

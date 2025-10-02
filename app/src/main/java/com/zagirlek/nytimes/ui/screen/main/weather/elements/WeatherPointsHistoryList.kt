@@ -90,7 +90,7 @@ private fun WeatherPointListItem(
         }
     ) {
         Surface(
-            color = MaterialTheme.colorScheme.surfaceVariant,
+            color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f),
             shape = RoundedCornerShape(8.dp)
         ) {
             WeatherPointInfo(

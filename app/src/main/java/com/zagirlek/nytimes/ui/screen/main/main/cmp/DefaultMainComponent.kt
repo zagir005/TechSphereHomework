@@ -11,7 +11,7 @@ import com.zagirlek.nytimes.ui.screen.main.di.MainModule
 import com.zagirlek.nytimes.ui.screen.main.favorites.FavoritesComponent
 import com.zagirlek.nytimes.ui.screen.main.main.MainComponent
 import com.zagirlek.nytimes.ui.screen.main.main.MainComponent.Child
-import com.zagirlek.nytimes.ui.screen.main.news.NewsComponent
+import com.zagirlek.nytimes.ui.screen.main.news.NewsScreen
 import com.zagirlek.nytimes.ui.screen.main.weather.WeatherComponent
 import kotlinx.serialization.Serializable
 
@@ -53,7 +53,7 @@ class DefaultMainComponent(
     private fun favorites(componentContext: ComponentContext): FavoritesComponent =
         mainModule.getFavoritesComponent(componentContext = componentContext)
 
-    private fun news(componentContext: ComponentContext): NewsComponent =
+    private fun news(componentContext: ComponentContext): NewsScreen =
         mainModule.getNewsComponent(componentContext = componentContext)
 
     private fun weather(componentContext: ComponentContext): WeatherComponent =

@@ -17,6 +17,7 @@ interface RemoteKeyDao {
     @Query("SELECT * FROM remote_keys WHERE filters = :filters")
     suspend fun remoteKeysByFilters(filters: NewsFilter): RemoteKeyEntity?
 
+
     @Transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertOrReplace(remoteKey: RemoteKeyEntity)

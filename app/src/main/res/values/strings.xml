@@ -52,4 +52,8 @@
     <string name="tourism">Туризм</string>
     <string name="world">Мир</string>
     <string name="other">Другое</string>
+    <string name="all">Все</string>
+    <string name="readstatus">readStatus</string>
+    <string name="search">Поиск</string>
+    <string name="article_dont_have_description">У новости нету описания..</string>
 </resources>

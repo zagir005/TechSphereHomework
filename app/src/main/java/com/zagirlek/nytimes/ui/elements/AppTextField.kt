@@ -24,8 +24,8 @@ import com.zagirlek.nytimes.ui.theme.NyTimesTheme
 
 @Composable
 fun AppTextField(
-    modifier: Modifier = Modifier,
     value: String,
+    modifier: Modifier = Modifier,
     onValueChange: (String) -> Unit = {},
     label: String = "",
     errorMessage: String? = null,
@@ -115,8 +115,8 @@ private fun ExampleTextUnderlineTextFieldPreview() {
     NyTimesTheme {
         Surface(Modifier.padding(20.dp)) {
             AppTextField(
-                modifier = Modifier,
                 "Example text",
+                modifier = Modifier,
                 label = "Write here",
                 trailingIcon = {
                     Icon(
@@ -186,8 +186,8 @@ private fun ExampleTextFieldNightPreview() {
     NyTimesTheme {
         Surface(Modifier.padding(20.dp)) {
             AppTextField(
-                modifier = Modifier,
                 "Example text",
+                modifier = Modifier,
                 label = "Write here",
                 trailingIcon = {
                     Icon(

@@ -6,7 +6,7 @@ import com.zagirlek.nytimes.core.model.NewsFilter
 import com.zagirlek.nytimes.data.network.news.dto.NewsPageDTO
 import com.zagirlek.nytimes.domain.model.ArticleFull
 import com.zagirlek.nytimes.domain.model.ArticleLite
-import com.zagirlek.nytimes.domain.model.ArticlesByCategory
+import com.zagirlek.nytimes.domain.model.ArticleStatus
 import kotlinx.coroutines.flow.Flow
 
 interface NewsRepository {
@@ -15,14 +15,16 @@ interface NewsRepository {
         page: String? = null,
         titleQuery: String? = null,
     ): Result<NewsPageDTO>
-
     suspend fun getFullArticleById(
         articleId: String
     ): Result<ArticleFull>
-
     fun getPagedNews(
         filter: NewsFilter = NewsFilter()
     ): Flow<PagingData<ArticleLite>>
-
-    fun observeFavoriteGroupedByCategory(): Flow<List<ArticlesByCategory>>
+    suspend fun updateArticleStatus(
+        articleId: String,
+        isFavorite: Boolean,
+        isRead: Boolean
+    )
+    fun getArticleListStatusFlow(): Flow<List<ArticleStatus>>
 }
