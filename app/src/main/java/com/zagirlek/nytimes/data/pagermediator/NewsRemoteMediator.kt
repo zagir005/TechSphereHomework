@@ -6,12 +6,10 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.zagirlek.nytimes.core.model.NewsCategory
-import com.zagirlek.nytimes.core.model.NewsFilter
 import com.zagirlek.nytimes.data.local.NyTimesDatabase
 import com.zagirlek.nytimes.data.local.news.dao.ArticleLiteDao
 import com.zagirlek.nytimes.data.local.news.dao.RemoteKeyDao
 import com.zagirlek.nytimes.data.local.news.entity.ArticleLiteWithStatusEntity
-import com.zagirlek.nytimes.data.local.news.entity.RemoteKeyEntity
 import com.zagirlek.nytimes.data.mapper.toEntity
 import com.zagirlek.nytimes.data.network.news.RemoteNewsSource
 
@@ -25,43 +23,36 @@ class NewsRemoteMediator(
 
     private val remoteKeyDao: RemoteKeyDao = database.remoteKeyDao()
     private val articleLiteDao: ArticleLiteDao = database.articleLiteDao()
-    private val filters = NewsFilter(
-        category = category,
-        titleQuery = titleQuery
-    )
+
+    private var currKey: String? = null
 
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, ArticleLiteWithStatusEntity>
     ): MediatorResult {
         val pageKey = when (loadType) {
-            LoadType.REFRESH -> null
+            LoadType.REFRESH -> currKey
             LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
             LoadType.APPEND -> {
-                val key = remoteKeyDao.remoteKeysByFilters(filters)?.nextPageKey
-                if (key == null) return MediatorResult.Success(endOfPaginationReached = true)
-                key
+                if (currKey == null) return MediatorResult.Success(endOfPaginationReached = true)
+                currKey
             }
         }
 
         remoteNewsSource.getLatestNews(
-            category = filters.category,
+            category = category,
             page = pageKey,
-            titleQuery = filters.titleQuery
+            titleQuery = titleQuery
         ).onSuccess { response ->
             val nextPageKey = response.nextPage
 
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
                     articleLiteDao.deleteAll()
+                    currKey = null
                 }
                 articleLiteDao.insertArticles(response.newsList.map { it.toEntity() })
-                remoteKeyDao.insertOrReplace(
-                    RemoteKeyEntity(
-                        filters = filters,
-                        nextPageKey = nextPageKey
-                    )
-                )
+                currKey = nextPageKey
             }
             return MediatorResult.Success(endOfPaginationReached = nextPageKey == null)
         }.onFailure {

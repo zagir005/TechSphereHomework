@@ -1,10 +1,9 @@
 package com.zagirlek.nytimes.domain.repository
 
-import com.zagirlek.nytimes.domain.model.ArticleFull
 import com.zagirlek.nytimes.domain.model.ArticleFullWithStatus
 
 interface ArticleRepository {
-    suspend fun getFullArticleById(
+    suspend fun getOrLoadFullArticleById(
         articleId: String
     ): Result<ArticleFullWithStatus>
 }

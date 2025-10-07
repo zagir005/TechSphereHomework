@@ -2,10 +2,17 @@ package com.zagirlek.nytimes.data.local.news.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.zagirlek.nytimes.core.model.NewsCategory
 
-@Entity(tableName = "article_lite")
+@Entity(
+    tableName = "article_lite",
+    indices = [
+        Index("category"),
+        Index("title")
+    ]
+)
 data class ArticleLiteEntity(
     @PrimaryKey @ColumnInfo(name = "articleid") val articleId: String,
     @ColumnInfo(name = "link") val link: String,

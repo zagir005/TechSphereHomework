@@ -8,5 +8,5 @@ class GetArticleFullByIdUseCaseImpl(
     private val articleRepository: ArticleRepository
 ): GetArticleFullByIdUseCase {
     override suspend fun invoke(articleId: String): Result<ArticleFullWithStatus> =
-        articleRepository.getFullArticleById(articleId = articleId)
+        articleRepository.getOrLoadFullArticleById(articleId = articleId)
 }

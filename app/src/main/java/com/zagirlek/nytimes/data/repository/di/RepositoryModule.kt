@@ -61,7 +61,8 @@ class RepositoryModule(
 
     val articleStatusRepository: ArticleStatusRepository by lazy {
         ArticleStatusRepositoryImpl(
-            articleStatusDao = database.articleStatusDao()
+            articleStatusDao = database.articleStatusDao(),
+            articleRepository = articleRepository
         )
     }
 }

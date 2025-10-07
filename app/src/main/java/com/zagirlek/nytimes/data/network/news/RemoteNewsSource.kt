@@ -22,7 +22,7 @@ class RemoteNewsSource(
             )
         else
             newsService.latest(
-                category = category?.let { listOf(category.name) },
+                category = category?.let { listOf(category.serializedName) },
                 page = page,
                 titleQuery = titleQuery,
                 id = id

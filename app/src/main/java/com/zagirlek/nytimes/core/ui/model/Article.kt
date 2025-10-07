@@ -3,16 +3,16 @@ package com.zagirlek.nytimes.core.ui.model
 import com.zagirlek.nytimes.core.model.NewsCategory
 
 data class Article(
-    val articleId: String,
-    val title: String,
-    val category: NewsCategory?,
-    val imageUrl: String?,
-    val creator: String,
-    val readTime: String,
-    val pubDate: String,
-    val description: String?,
-    val isRead: Boolean,
-    val isFavorite: Boolean
+    val articleId: String = "",
+    val title: String = "",
+    val category: NewsCategory? = null,
+    val imageUrl: String? = null,
+    val creator: String = "",
+    val readTime: String = "",
+    val pubDate: String = "",
+    val description: String? = null,
+    val isRead: Boolean = false,
+    val isFavorite: Boolean = false
 ){
     companion object{
         fun getExampleArticle() = Article(

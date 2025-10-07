@@ -22,7 +22,7 @@ class ArticleRepositoryImpl(
     private val remoteNewsSource: RemoteNewsSource,
     private val remoteExtractorNewsSource: RemoteNewsExtractorSource
 ): ArticleRepository {
-    override suspend fun getFullArticleById(articleId: String): Result<ArticleFullWithStatus> = runCatchingCancellable {
+    override suspend fun getOrLoadFullArticleById(articleId: String): Result<ArticleFullWithStatus> = runCatchingCancellable {
         val fullArticle = articleFullDao.getById(articleId = articleId)
         val articleStatus = articleStatusDao.getArticleStatusById(articleId = articleId)
 

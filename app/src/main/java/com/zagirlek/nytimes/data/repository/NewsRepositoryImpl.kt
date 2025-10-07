@@ -35,9 +35,17 @@ class NewsRepositoryImpl(
             remoteNewsSource = remoteNewsSource
         )
         return Pager(
-            config = PagingConfig(pageSize = 5, enablePlaceholders = false),
+            config = PagingConfig(
+                pageSize = 5,
+                enablePlaceholders = false
+            ),
             remoteMediator = mediator,
-            pagingSourceFactory = { articleLiteDao.getArticlesWithStatusPaging(titleQuery, category) }
+            pagingSourceFactory = {
+                articleLiteDao.getArticlesWithStatusPaging(
+                    titleQuery,
+                    category
+                )
+            }
         )
             .flow
             .map { pagingData ->
@@ -52,7 +60,7 @@ class NewsRepositoryImpl(
         titleQuery: String?
     ): Flow<PagingData<ArticleFullWithStatus>> {
         return Pager(
-            config = PagingConfig(pageSize = 5, enablePlaceholders = false),
+            config = PagingConfig(pageSize = 5, enablePlaceholders = true),
             pagingSourceFactory = { articleFullDao.getFavoriteArticlesPaging(titleQuery, category) }
         )
             .flow

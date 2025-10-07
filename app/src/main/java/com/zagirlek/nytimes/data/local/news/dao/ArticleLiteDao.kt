@@ -24,12 +24,12 @@ interface ArticleLiteDao {
 
     @Query("""
         SELECT l.*, s.isfavorite, s.isread
-        FROM article_lite AS l
-        LEFT JOIN article_status_info AS s
-            ON l.articleid = s.articleid
-        WHERE (:titleQuery IS NULL OR l.title LIKE '%' || :titleQuery || '%')
-        AND (:category IS NULL OR l.category = :category)
-        ORDER BY l.pubdate DESC
+    FROM article_lite AS l
+    LEFT JOIN article_status_info AS s
+        ON l.articleid = s.articleid
+    WHERE (:titleQuery IS NULL OR l.title LIKE '%' || :titleQuery || '%' COLLATE NOCASE)
+      AND (:category IS NULL OR l.category = :category)
+    ORDER BY l.pubdate DESC
     """)
     fun getArticlesWithStatusPaging(
         titleQuery: String?,

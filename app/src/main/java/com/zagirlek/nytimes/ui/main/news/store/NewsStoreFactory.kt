@@ -1,7 +1,6 @@
 package com.zagirlek.nytimes.ui.main.news.store
 
 import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import androidx.paging.map
 import com.arkivanov.mvikotlin.core.store.Reducer
 import com.arkivanov.mvikotlin.core.store.SimpleBootstrapper
@@ -103,7 +102,6 @@ class NewsStoreFactory(
 
         private fun loadNews(searchQuery: String? = null, category: NewsCategory? = null): Flow<PagingData<Article>>{
             return getPagingNewsUseCase(titleQuery = searchQuery, category = category)
-                .cachedIn(scope)
                 .map { pagingData ->
                     pagingData.map { article ->
                         article.toArticleItem()

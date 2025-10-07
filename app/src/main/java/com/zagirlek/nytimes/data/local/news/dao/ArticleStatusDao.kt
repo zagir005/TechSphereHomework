@@ -1,19 +1,35 @@
 package com.zagirlek.nytimes.data.local.news.dao
 
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Upsert
+import androidx.room.Transaction
 import com.zagirlek.nytimes.data.local.news.entity.ArticleStatusEntity
 import kotlinx.coroutines.flow.Flow
 
 
 @Dao
 interface ArticleStatusDao {
-    @Upsert
-    suspend fun upsertArticle(article: ArticleStatusEntity)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertIfAbsent(entity: ArticleStatusEntity)
 
-    suspend fun updateArticleStatus(articleId: String, isRead: Boolean, isFavorite: Boolean) {
-        upsertArticle(ArticleStatusEntity(articleId = articleId, isRead = isRead, isFavorite = isFavorite))
+    @Query("UPDATE article_status_info SET isfavorite = NOT isfavorite WHERE articleid = :articleId")
+    suspend fun doToggleFavorite(articleId: String): Int
+
+    @Query("UPDATE article_status_info SET isread = NOT isread WHERE articleid = :articleId")
+    suspend fun doToggleRead(articleId: String): Int
+
+    @Transaction
+    suspend fun toggleFavoriteStatusAtomic(articleId: String) {
+        insertIfAbsent(ArticleStatusEntity(articleId = articleId))
+        doToggleFavorite(articleId)
+    }
+
+    @Transaction
+    suspend fun toggleReadStatusAtomic(articleId: String) {
+        insertIfAbsent(ArticleStatusEntity(articleId = articleId))
+        doToggleRead(articleId)
     }
 
     @Query("SELECT * FROM article_status_info")
