@@ -1,10 +1,8 @@
 package com.zagirlek.nytimes.data.repository
 
-import com.zagirlek.nytimes.core.error.InvalidCredentialsError
-import com.zagirlek.nytimes.core.error.NetworkError
-import com.zagirlek.nytimes.core.error.ServerError
-import com.zagirlek.nytimes.core.utils.runCatchingCancellable
+import com.zagirlek.nytimes.core.error.AuthError
 import com.zagirlek.nytimes.core.networkchecker.NetworkConnectionChecker
+import com.zagirlek.nytimes.core.utils.runCatchingCancellable
 import com.zagirlek.nytimes.domain.model.AuthToken
 import com.zagirlek.nytimes.domain.repository.AuthRepository
 import kotlinx.coroutines.delay
@@ -24,13 +22,13 @@ class MockAuthRepositoryImpl(
     ): Result<AuthToken> = runCatchingCancellable{
         delay(1000)
         if (!networkConnectionChecker.checkConnection())
-            throw NetworkError()
+            throw AuthError.NoNetworkConnection
         else if (Random.nextBoolean())
-            throw ServerError()
+            throw AuthError.ServerError
         else if (login == "Логин_Юзера" && password == "Пароль123")
             AuthToken.DEFAULT_TOKEN
         else
-            throw InvalidCredentialsError()
+            throw AuthError.InvalidCredentials
     }
 
     override suspend fun getTokenWithoutLogin(): AuthToken {

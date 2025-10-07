@@ -2,7 +2,9 @@ package com.zagirlek.nytimes.data.network
 
 import com.zagirlek.nytimes.BuildConfig
 import com.zagirlek.nytimes.core.interceptor.APIKeyInterceptor
+import com.zagirlek.nytimes.data.network.extractor.RemoteNewsExtractorSource
 import com.zagirlek.nytimes.data.network.extractor.service.ExtractorService
+import com.zagirlek.nytimes.data.network.news.RemoteNewsSource
 import com.zagirlek.nytimes.data.network.news.service.NewsService
 import com.zagirlek.nytimes.data.network.weather.service.AutocompleteService
 import okhttp3.Interceptor
@@ -25,7 +27,7 @@ object NetworkModule {
         return builder.build()
     }
 
-    private fun createRetrofit(baseUrl: String, client: OkHttpClient): Retrofit {
+    private fun buildRetrofit(baseUrl: String, client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(client)
@@ -33,34 +35,47 @@ object NetworkModule {
             .build()
     }
 
-    val autocompleteApi: AutocompleteService by lazy {
-        createRetrofit(
+    val autocompleteService: AutocompleteService by lazy {
+        buildRetrofit(
             baseUrl = BuildConfig.WEATHER_BASE_URL,
             client = createOkHttpClient(APIKeyInterceptor(apiKey = BuildConfig.WEATHER_API_KEY, keyParameterName = "key"))
-        )
-            .create(AutocompleteService::class.java)
+        ).create(AutocompleteService::class.java)
     }
 
-    val newsApi: NewsService by lazy {
-        createRetrofit(
+    private val newsService: NewsService by lazy {
+        buildRetrofit(
             baseUrl = BuildConfig.NEWS_BASE_URL,
             client = createOkHttpClient(
                 APIKeyInterceptor(
                     apiKey = listOf(
-                        BuildConfig.NEWS_API_KEY_1,
                         BuildConfig.NEWS_API_KEY,
+                        BuildConfig.NEWS_API_KEY_1,
+                        BuildConfig.NEWS_API_KEY_2,
                     ).random()
                 )
             )
-        )
-            .create()
+        ).create()
     }
 
-    val newsExtractorApi: ExtractorService by lazy {
-        createRetrofit(
+    private val newsExtractorService: ExtractorService by lazy {
+        buildRetrofit(
             baseUrl = BuildConfig.EXTRACTOR_BASE_URL,
-            client = createOkHttpClient(APIKeyInterceptor(apiKey = BuildConfig.EXTRACTOR_API_KEY, keyParameterName = "api_token"))
+            client = createOkHttpClient(
+                APIKeyInterceptor(
+                    apiKey = BuildConfig.EXTRACTOR_API_KEY,
+                    keyParameterName = "api_token"
+                )
+            )
+        ).create()
+    }
+
+    val remoteNewsSource: RemoteNewsSource by lazy {
+        RemoteNewsSource(
+            newsService
         )
-            .create()
+    }
+
+    val remoteNewsExtractorSource: RemoteNewsExtractorSource by lazy {
+        RemoteNewsExtractorSource(newsExtractorService)
     }
 }

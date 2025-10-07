@@ -2,13 +2,16 @@ package com.zagirlek.nytimes.data.repository.di
 
 import com.zagirlek.nytimes.core.networkchecker.NetworkConnectionChecker
 import com.zagirlek.nytimes.data.local.NyTimesDatabase
-import com.zagirlek.nytimes.data.network.weather.service.AutocompleteService
-import com.zagirlek.nytimes.data.newsmanager.NewsManager
+import com.zagirlek.nytimes.data.network.NetworkModule
+import com.zagirlek.nytimes.data.repository.ArticleRepositoryImpl
+import com.zagirlek.nytimes.data.repository.ArticleStatusRepositoryImpl
 import com.zagirlek.nytimes.data.repository.CityAutocompleteRepositoryImpl
 import com.zagirlek.nytimes.data.repository.CityRepositoryImpl
 import com.zagirlek.nytimes.data.repository.MockAuthRepositoryImpl
 import com.zagirlek.nytimes.data.repository.NewsRepositoryImpl
 import com.zagirlek.nytimes.data.repository.WeatherRepositoryImpl
+import com.zagirlek.nytimes.domain.repository.ArticleRepository
+import com.zagirlek.nytimes.domain.repository.ArticleStatusRepository
 import com.zagirlek.nytimes.domain.repository.AuthRepository
 import com.zagirlek.nytimes.domain.repository.CityAutocompleteRepository
 import com.zagirlek.nytimes.domain.repository.CityRepository
@@ -17,8 +20,7 @@ import com.zagirlek.nytimes.domain.repository.WeatherRepository
 
 class RepositoryModule(
     private val database: NyTimesDatabase,
-    private val autocompleteService: AutocompleteService,
-    private val newsManager: NewsManager,
+    private val networkModule: NetworkModule,
     connectionChecker: NetworkConnectionChecker
 ) {
     val authRepository: AuthRepository by lazy {
@@ -28,7 +30,7 @@ class RepositoryModule(
     }
     val cityAutocompleteRepository: CityAutocompleteRepository by lazy {
         CityAutocompleteRepositoryImpl(
-            autocompleteService = autocompleteService
+            autocompleteService = networkModule.autocompleteService
         )
     }
     val cityRepository: CityRepository by lazy {
@@ -43,8 +45,23 @@ class RepositoryModule(
     }
     val newsRepository: NewsRepository by lazy {
         NewsRepositoryImpl(
-            newsManager = newsManager,
-            database = database
+            database = database,
+            remoteNewsSource = networkModule.remoteNewsSource
+        )
+    }
+    val articleRepository: ArticleRepository by lazy {
+        ArticleRepositoryImpl(
+            articleFullDao = database.articleFullDao(),
+            articleStatusDao = database.articleStatusDao(),
+            articleLiteDao = database.articleLiteDao(),
+            remoteNewsSource = NetworkModule.remoteNewsSource,
+            remoteExtractorNewsSource = NetworkModule.remoteNewsExtractorSource
+        )
+    }
+
+    val articleStatusRepository: ArticleStatusRepository by lazy {
+        ArticleStatusRepositoryImpl(
+            articleStatusDao = database.articleStatusDao()
         )
     }
 }

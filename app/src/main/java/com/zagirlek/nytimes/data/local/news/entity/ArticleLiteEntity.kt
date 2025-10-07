@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.zagirlek.nytimes.core.model.NewsCategory
 
-@Entity(tableName = "articles")
+@Entity(tableName = "article_lite")
 data class ArticleLiteEntity(
     @PrimaryKey @ColumnInfo(name = "articleid") val articleId: String,
     @ColumnInfo(name = "link") val link: String,

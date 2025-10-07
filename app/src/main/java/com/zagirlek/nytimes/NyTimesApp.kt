@@ -6,7 +6,7 @@ import com.zagirlek.nytimes.data.repository.di.RepositoryModule
 import com.zagirlek.nytimes.data.usecase.di.UseCaseModuleImpl
 import com.zagirlek.nytimes.di.AppDi
 import com.zagirlek.nytimes.domain.usecase.di.UseCaseModule
-import com.zagirlek.nytimes.ui.screen.root.di.RootModule
+import com.zagirlek.nytimes.ui.root.di.RootModule
 
 class NyTimesApp: Application() {
     private val appDi: AppDi by lazy {
@@ -14,10 +14,9 @@ class NyTimesApp: Application() {
     }
     private val repositoryModule: RepositoryModule by lazy {
         RepositoryModule(
-            autocompleteService = appDi.getAutocompleteService(),
-            connectionChecker = appDi.networkConnectionChecker,
-            newsManager = appDi.newsManager,
-            database = appDi.getDatabase()
+            database = appDi.getDatabase(),
+            networkModule = appDi.networkModule,
+            connectionChecker = appDi.networkConnectionChecker
         )
     }
 

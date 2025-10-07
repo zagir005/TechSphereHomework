@@ -1,33 +1,35 @@
 package com.zagirlek.nytimes.data.usecase.di
 
 import com.zagirlek.nytimes.data.repository.di.RepositoryModule
-import com.zagirlek.nytimes.data.usecase.AddWeatherPointUseCaseImpl
-import com.zagirlek.nytimes.data.usecase.AuthUseCaseImpl
-import com.zagirlek.nytimes.data.usecase.AuthWithoutLoginUseCaseImpl
-import com.zagirlek.nytimes.data.usecase.DeleteWeatherPointUseCaseImpl
-import com.zagirlek.nytimes.data.usecase.GetArticleByIdUseCaseImpl
-import com.zagirlek.nytimes.data.usecase.GetArticleStatusFlowUseCaseImpl
-import com.zagirlek.nytimes.data.usecase.GetCityAutocompleteUseCaseImpl
-import com.zagirlek.nytimes.data.usecase.GetCurrentAuthTokenUseCaseImpl
-import com.zagirlek.nytimes.data.usecase.GetOrPutCityUseCaseImpl
-import com.zagirlek.nytimes.data.usecase.GetPagingNewsUseCaseImpl
-import com.zagirlek.nytimes.data.usecase.GetRecentCityListUseCaseImpl
-import com.zagirlek.nytimes.data.usecase.GetWeatherPointsHistoryFlowUseCaseImpl
-import com.zagirlek.nytimes.data.usecase.UpdateArticleStatusUseCaseImpl
-import com.zagirlek.nytimes.domain.usecase.AddWeatherPointUseCase
-import com.zagirlek.nytimes.domain.usecase.AuthUseCase
-import com.zagirlek.nytimes.domain.usecase.AuthWithoutLoginUseCase
-import com.zagirlek.nytimes.domain.usecase.DeleteWeatherPointUseCase
-import com.zagirlek.nytimes.domain.usecase.GetArticleByIdUseCase
-import com.zagirlek.nytimes.domain.usecase.GetArticleStatusFlowUseCase
-import com.zagirlek.nytimes.domain.usecase.GetCityAutocompleteUseCase
-import com.zagirlek.nytimes.domain.usecase.GetCurrentAuthTokenUseCase
-import com.zagirlek.nytimes.domain.usecase.GetOrPutCityUseCase
-import com.zagirlek.nytimes.domain.usecase.GetPagingNewsUseCase
-import com.zagirlek.nytimes.domain.usecase.GetRecentCityListUseCase
-import com.zagirlek.nytimes.domain.usecase.GetWeatherPointsHistoryFlowUseCase
-import com.zagirlek.nytimes.domain.usecase.UpdateArticleStatusUseCase
+import com.zagirlek.nytimes.data.usecase.auth.AuthUseCaseImpl
+import com.zagirlek.nytimes.data.usecase.auth.AuthWithoutLoginUseCaseImpl
+import com.zagirlek.nytimes.data.usecase.auth.GetCurrentAuthTokenUseCaseImpl
+import com.zagirlek.nytimes.data.usecase.news.GetArticleFullByIdUseCaseImpl
+import com.zagirlek.nytimes.data.usecase.news.GetPagingFavoriteNewsUseCaseImpl
+import com.zagirlek.nytimes.data.usecase.news.GetPagingNewsUseCaseImpl
+import com.zagirlek.nytimes.data.usecase.news.ToggleArticleFavoriteStatusUseCaseImpl
+import com.zagirlek.nytimes.data.usecase.news.ToggleArticleReadStatusUseCaseImpl
+import com.zagirlek.nytimes.data.usecase.weather.AddWeatherPointUseCaseImpl
+import com.zagirlek.nytimes.data.usecase.weather.DeleteWeatherPointUseCaseImpl
+import com.zagirlek.nytimes.data.usecase.weather.GetCityAutocompleteUseCaseImpl
+import com.zagirlek.nytimes.data.usecase.weather.GetOrPutCityUseCaseImpl
+import com.zagirlek.nytimes.data.usecase.weather.GetRecentCityListUseCaseImpl
+import com.zagirlek.nytimes.data.usecase.weather.GetWeatherPointsHistoryFlowUseCaseImpl
+import com.zagirlek.nytimes.domain.usecase.auth.AuthUseCase
+import com.zagirlek.nytimes.domain.usecase.auth.AuthWithoutLoginUseCase
+import com.zagirlek.nytimes.domain.usecase.auth.GetCurrentAuthTokenUseCase
 import com.zagirlek.nytimes.domain.usecase.di.UseCaseModule
+import com.zagirlek.nytimes.domain.usecase.news.GetArticleFullByIdUseCase
+import com.zagirlek.nytimes.domain.usecase.news.GetPagingFavoriteNewsUseCase
+import com.zagirlek.nytimes.domain.usecase.news.GetPagingNewsUseCase
+import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleFavoriteStatusUseCase
+import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleReadStatusUseCase
+import com.zagirlek.nytimes.domain.usecase.weather.AddWeatherPointUseCase
+import com.zagirlek.nytimes.domain.usecase.weather.DeleteWeatherPointUseCase
+import com.zagirlek.nytimes.domain.usecase.weather.GetCityAutocompleteUseCase
+import com.zagirlek.nytimes.domain.usecase.weather.GetOrPutCityUseCase
+import com.zagirlek.nytimes.domain.usecase.weather.GetRecentCityListUseCase
+import com.zagirlek.nytimes.domain.usecase.weather.GetWeatherPointsHistoryFlowUseCase
 
 class UseCaseModuleImpl(
     private val repositoryModule: RepositoryModule
@@ -77,25 +79,29 @@ class UseCaseModuleImpl(
             authRepository = repositoryModule.authRepository
         )
 
-    override fun getArticleByIdUseCase(): GetArticleByIdUseCase =
-        GetArticleByIdUseCaseImpl(
-            newsRepository = repositoryModule.newsRepository
-        )
-
     override fun getPagingNewsUseCase(): GetPagingNewsUseCase =
         GetPagingNewsUseCaseImpl(
             newsRepository = repositoryModule.newsRepository
         )
 
-    override fun updateArticleStatusUseCase(): UpdateArticleStatusUseCase =
-        UpdateArticleStatusUseCaseImpl(
+    override fun getArticleFullByIdUseCase(): GetArticleFullByIdUseCase =
+        GetArticleFullByIdUseCaseImpl(
+            articleRepository = repositoryModule.articleRepository
+        )
+
+    override fun getPagingFavoriteNewsUseCase(): GetPagingFavoriteNewsUseCase =
+        GetPagingFavoriteNewsUseCaseImpl(
             newsRepository = repositoryModule.newsRepository
         )
 
-
-    override fun getArticleLocalInfoFlowUseCase(): GetArticleStatusFlowUseCase  =
-        GetArticleStatusFlowUseCaseImpl(
-            newsRepository = repositoryModule.newsRepository
+    override fun toggleArticleFavoriteStatusUseCase(): ToggleArticleFavoriteStatusUseCase =
+        ToggleArticleFavoriteStatusUseCaseImpl(
+            articleStatusRepository = repositoryModule.articleStatusRepository
         )
 
+
+    override fun toggleArticleReadStatusUseCase(): ToggleArticleReadStatusUseCase =
+        ToggleArticleReadStatusUseCaseImpl(
+            articleStatusRepository = repositoryModule.articleStatusRepository
+        )
 }

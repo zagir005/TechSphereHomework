@@ -25,4 +25,7 @@ interface ArticleStatusDao {
 
     @Query("SELECT * FROM article_status_info WHERE isread = 1 OR isfavorite = 1")
     fun getAllNonDefaultArticleLocalStatus(): List<ArticleStatusEntity>
+
+    @Query("SELECT * FROM article_status_info WHERE articleid = :articleId LIMIT 1")
+    suspend fun getArticleStatusById(articleId: String): ArticleStatusEntity?
 }

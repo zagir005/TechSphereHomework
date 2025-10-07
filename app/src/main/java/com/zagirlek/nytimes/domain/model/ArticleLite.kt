@@ -13,5 +13,5 @@ data class ArticleLite(
     val sourceIconUrl: String?,
     val creator: String?,
     val imageUrl: String?,
-    val pubDate: LocalDateTime
+    val pubDate: LocalDateTime,
 )

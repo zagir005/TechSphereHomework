@@ -6,90 +6,60 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.zagirlek.nytimes.core.model.NewsCategory
-import com.zagirlek.nytimes.core.model.NewsFilter
-import com.zagirlek.nytimes.core.utils.runCatchingCancellable
 import com.zagirlek.nytimes.data.local.NyTimesDatabase
 import com.zagirlek.nytimes.data.mapper.toDomain
-import com.zagirlek.nytimes.data.network.news.dto.NewsPageDTO
-import com.zagirlek.nytimes.data.newsmanager.NewsManager
+import com.zagirlek.nytimes.data.network.news.RemoteNewsSource
 import com.zagirlek.nytimes.data.pagermediator.NewsRemoteMediator
-import com.zagirlek.nytimes.domain.model.ArticleFull
-import com.zagirlek.nytimes.domain.model.ArticleLite
-import com.zagirlek.nytimes.domain.model.ArticleStatus
+import com.zagirlek.nytimes.domain.model.ArticleFullWithStatus
+import com.zagirlek.nytimes.domain.model.ArticleLiteWithStatus
 import com.zagirlek.nytimes.domain.repository.NewsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
+@OptIn(ExperimentalPagingApi::class)
 class NewsRepositoryImpl(
     private val database: NyTimesDatabase,
-    private val newsManager: NewsManager
+    private val remoteNewsSource: RemoteNewsSource
 ): NewsRepository {
+    private val articleLiteDao = database.articleLiteDao()
+    private val articleFullDao = database.articleFullDao()
 
-    private val articleDao = database.articleDao()
-    private val articleStatusDao = database.articleStatusDao()
-
-    override suspend fun getLatestNews(
+    override fun getNewsPager(
         category: NewsCategory?,
-        page: String?,
         titleQuery: String?
-    ): Result<NewsPageDTO> = runCatchingCancellable {
-        newsManager.getLatestNews(
+    ): Flow<PagingData<ArticleLiteWithStatus>> {
+        val mediator = NewsRemoteMediator(
             category = category,
-            page = page,
-            titleQuery = titleQuery?.ifBlank { null }
+            titleQuery = titleQuery,
+            database = database,
+            remoteNewsSource = remoteNewsSource
         )
-    }
-
-    override suspend fun getFullArticleById(articleId: String): Result<ArticleFull> =
-        runCatchingCancellable {
-            newsManager.getFullArticleById(articleId = articleId)
-        }
-
-    @OptIn(ExperimentalPagingApi::class)
-    override fun getPagedNews(filter: NewsFilter): Flow<PagingData<ArticleLite>> {
         return Pager(
-            config = PagingConfig(
-                pageSize = 5,
-                enablePlaceholders = false,
-                initialLoadSize = 15
-            ),
-            remoteMediator = NewsRemoteMediator(
-                filters = filter,
-                database = database,
-                newsManager = newsManager
-            ),
-            pagingSourceFactory = {
-                articleDao.getArticlesPagingSource(
-                    category = filter.category,
-                    titleQuery = filter.titleQuery
-                )
-            }
-        ).flow.map {
-            it.map { article ->
-                article.toDomain()
-            }
-        }
-    }
-
-    override suspend fun updateArticleStatus(
-        articleId: String,
-        isFavorite: Boolean,
-        isRead: Boolean
-    ) {
-        articleStatusDao.updateArticleStatus(
-            articleId = articleId,
-            isRead = isRead,
-            isFavorite = isFavorite
+            config = PagingConfig(pageSize = 5, enablePlaceholders = false),
+            remoteMediator = mediator,
+            pagingSourceFactory = { articleLiteDao.getArticlesWithStatusPaging(titleQuery, category) }
         )
+            .flow
+            .map { pagingData ->
+                pagingData.map { articleLiteDao ->
+                    articleLiteDao.toDomain()
+                }
+            }
     }
 
-
-    override fun getArticleListStatusFlow(): Flow<List<ArticleStatus>> =
-        articleStatusDao.getArticleStatusFlow().map {
-            it.map { articleInfo ->
-                articleInfo.toDomain()
+    override fun getFavoriteNewsPager(
+        category: NewsCategory?,
+        titleQuery: String?
+    ): Flow<PagingData<ArticleFullWithStatus>> {
+        return Pager(
+            config = PagingConfig(pageSize = 5, enablePlaceholders = false),
+            pagingSourceFactory = { articleFullDao.getFavoriteArticlesPaging(titleQuery, category) }
+        )
+            .flow
+            .map { pagingData ->
+                pagingData.map { articleFullDao ->
+                    articleFullDao.toDomain()
+                }
             }
-        }
-
-
+    }
 }

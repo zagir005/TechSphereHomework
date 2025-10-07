@@ -5,33 +5,34 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.zagirlek.nytimes.core.error.NetworkError
-import com.zagirlek.nytimes.core.error.ServerError
+import com.zagirlek.nytimes.core.model.NewsCategory
 import com.zagirlek.nytimes.core.model.NewsFilter
 import com.zagirlek.nytimes.data.local.NyTimesDatabase
 import com.zagirlek.nytimes.data.local.news.dao.ArticleLiteDao
-import com.zagirlek.nytimes.data.local.news.dao.ArticleStatusDao
 import com.zagirlek.nytimes.data.local.news.dao.RemoteKeyDao
-import com.zagirlek.nytimes.data.local.news.entity.ArticleLiteEntity
+import com.zagirlek.nytimes.data.local.news.entity.ArticleLiteWithStatusEntity
 import com.zagirlek.nytimes.data.local.news.entity.RemoteKeyEntity
 import com.zagirlek.nytimes.data.mapper.toEntity
-import com.zagirlek.nytimes.data.newsmanager.NewsManager
-import okio.IOException
+import com.zagirlek.nytimes.data.network.news.RemoteNewsSource
 
 @OptIn(ExperimentalPagingApi::class)
 class NewsRemoteMediator(
-    private val filters: NewsFilter,
+    private val category: NewsCategory?,
+    private val titleQuery: String?,
     private val database: NyTimesDatabase,
-    private val newsManager: NewsManager
-) : RemoteMediator<Int, ArticleLiteEntity>() {
+    private val remoteNewsSource: RemoteNewsSource
+) : RemoteMediator<Int, ArticleLiteWithStatusEntity>() {
 
     private val remoteKeyDao: RemoteKeyDao = database.remoteKeyDao()
-    private val articleDao: ArticleLiteDao = database.articleDao()
-    private val articleStatusDao: ArticleStatusDao = database.articleStatusDao()
+    private val articleLiteDao: ArticleLiteDao = database.articleLiteDao()
+    private val filters = NewsFilter(
+        category = category,
+        titleQuery = titleQuery
+    )
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, ArticleLiteEntity>
+        state: PagingState<Int, ArticleLiteWithStatusEntity>
     ): MediatorResult {
         val pageKey = when (loadType) {
             LoadType.REFRESH -> null
@@ -43,21 +44,18 @@ class NewsRemoteMediator(
             }
         }
 
-        return try {
-            val response = newsManager.getLatestNews(
-                category = filters.category,
-                page = pageKey,
-                titleQuery = filters.titleQuery
-            )
+        remoteNewsSource.getLatestNews(
+            category = filters.category,
+            page = pageKey,
+            titleQuery = filters.titleQuery
+        ).onSuccess { response ->
             val nextPageKey = response.nextPage
+
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
-                    val ids = articleStatusDao.getAllNonDefaultArticleLocalStatus().map { it.articleId }
-                    articleDao.deleteAllExcept(ids)
+                    articleLiteDao.deleteAll()
                 }
-
-                articleDao.insertArticles(response.newsList.map { it.toEntity() })
-
+                articleLiteDao.insertArticles(response.newsList.map { it.toEntity() })
                 remoteKeyDao.insertOrReplace(
                     RemoteKeyEntity(
                         filters = filters,
@@ -65,13 +63,10 @@ class NewsRemoteMediator(
                     )
                 )
             }
-            MediatorResult.Success(endOfPaginationReached = nextPageKey == null)
-        } catch(e: IOException) {
-            MediatorResult.Error(NetworkError())
-        }catch (e: ServerError){
-            MediatorResult.Error(e)
-        } catch (e: Exception){
-            MediatorResult.Error(e)
+            return MediatorResult.Success(endOfPaginationReached = nextPageKey == null)
+        }.onFailure {
+            return MediatorResult.Error(it)
         }
+        throw IllegalStateException()
     }
 }
