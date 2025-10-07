@@ -4,6 +4,7 @@ import com.zagirlek.nytimes.data.repository.di.RepositoryModule
 import com.zagirlek.nytimes.data.usecase.auth.AuthUseCaseImpl
 import com.zagirlek.nytimes.data.usecase.auth.AuthWithoutLoginUseCaseImpl
 import com.zagirlek.nytimes.data.usecase.auth.GetCurrentAuthTokenUseCaseImpl
+import com.zagirlek.nytimes.data.usecase.news.GetArticleFullByIdFlowUseCaseImpl
 import com.zagirlek.nytimes.data.usecase.news.GetArticleFullByIdUseCaseImpl
 import com.zagirlek.nytimes.data.usecase.news.GetPagingFavoriteNewsUseCaseImpl
 import com.zagirlek.nytimes.data.usecase.news.GetPagingNewsUseCaseImpl
@@ -19,6 +20,7 @@ import com.zagirlek.nytimes.domain.usecase.auth.AuthUseCase
 import com.zagirlek.nytimes.domain.usecase.auth.AuthWithoutLoginUseCase
 import com.zagirlek.nytimes.domain.usecase.auth.GetCurrentAuthTokenUseCase
 import com.zagirlek.nytimes.domain.usecase.di.UseCaseModule
+import com.zagirlek.nytimes.domain.usecase.news.GetArticleFullByIdFlowUseCase
 import com.zagirlek.nytimes.domain.usecase.news.GetArticleFullByIdUseCase
 import com.zagirlek.nytimes.domain.usecase.news.GetPagingFavoriteNewsUseCase
 import com.zagirlek.nytimes.domain.usecase.news.GetPagingNewsUseCase
@@ -103,5 +105,10 @@ class UseCaseModuleImpl(
     override fun toggleArticleReadStatusUseCase(): ToggleArticleReadStatusUseCase =
         ToggleArticleReadStatusUseCaseImpl(
             articleStatusRepository = repositoryModule.articleStatusRepository
+        )
+
+    override fun getArticleFullByIdFlowUseCase(): GetArticleFullByIdFlowUseCase =
+        GetArticleFullByIdFlowUseCaseImpl(
+            articleRepository = repositoryModule.articleRepository
         )
 }

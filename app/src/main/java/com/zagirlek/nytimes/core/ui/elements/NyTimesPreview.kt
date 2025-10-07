@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.zagirlek.nytimes.ui.theme.NyTimesTheme
+import com.zagirlek.nytimes.core.ui.theme.NyTimesTheme
 
 @Composable
 fun NyTimesPreview(content: @Composable () -> Unit) {

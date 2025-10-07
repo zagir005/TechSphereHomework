@@ -28,6 +28,9 @@ android {
 
         buildConfigField(name = "EXTRACTOR_BASE_URL", value = "\"https://api.articlextractor.com/v1/\"", type = "String")
         buildConfigField(name = "EXTRACTOR_API_KEY", value = "\"BBm76KtyDK4rCVo1M4v4f2jh0eZ2LUV1SHuBrmy4\"", type = "String")
+        buildConfigField(name = "EXTRACTOR_API_KEY_1", value = "\"8F15YKkE2jOzXwk0YxYPYYxrYp9CqaH56r2yuR41\"", type = "String")
+        buildConfigField(name = "EXTRACTOR_API_KEY_2", value = "\"hHTr6AVMaruVdfk7iNmpZKmKqoHBj8ZnpvJvJhXm\"", type = "String")
+        buildConfigField(name = "EXTRACTOR_API_KEY_3", value = "\"667018glHoOpF6HxrzbKJP6x273uhGn7SrFYAbKH\"", type = "String")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

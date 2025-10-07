@@ -62,7 +62,12 @@ object NetworkModule {
             baseUrl = BuildConfig.EXTRACTOR_BASE_URL,
             client = createOkHttpClient(
                 APIKeyInterceptor(
-                    apiKey = BuildConfig.EXTRACTOR_API_KEY,
+                    apiKey = listOf(
+//                        BuildConfig.EXTRACTOR_API_KEY,
+//                        BuildConfig.EXTRACTOR_API_KEY_1,
+//                        BuildConfig.EXTRACTOR_API_KEY_2,
+                        BuildConfig.EXTRACTOR_API_KEY_3
+                    ).random(),
                     keyParameterName = "api_token"
                 )
             )

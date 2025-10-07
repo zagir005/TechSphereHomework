@@ -19,7 +19,7 @@ import com.zagirlek.nytimes.core.utils.withCelsius
 import com.zagirlek.nytimes.domain.model.City
 import com.zagirlek.nytimes.domain.model.WeatherPoint
 import com.zagirlek.nytimes.core.ui.elements.AppChip
-import com.zagirlek.nytimes.ui.theme.NyTimesTheme
+import com.zagirlek.nytimes.core.ui.theme.NyTimesTheme
 
 @Composable
 fun WeatherPointInfo(

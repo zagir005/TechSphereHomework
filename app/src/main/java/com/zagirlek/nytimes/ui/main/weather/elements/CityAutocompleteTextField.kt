@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.zagirlek.nytimes.R
 import com.zagirlek.nytimes.domain.model.City
 import com.zagirlek.nytimes.core.ui.elements.AppTextField
-import com.zagirlek.nytimes.ui.theme.NyTimesTheme
+import com.zagirlek.nytimes.core.ui.theme.NyTimesTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

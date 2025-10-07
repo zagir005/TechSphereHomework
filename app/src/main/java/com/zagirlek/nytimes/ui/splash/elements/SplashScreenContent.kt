@@ -30,7 +30,7 @@ import com.zagirlek.nytimes.BuildConfig
 import com.zagirlek.nytimes.R
 import com.zagirlek.nytimes.ui.screen.splash.cmp.state.SplashAction
 import com.zagirlek.nytimes.ui.screen.splash.cmp.state.SplashState
-import com.zagirlek.nytimes.ui.theme.NyTimesTheme
+import com.zagirlek.nytimes.core.ui.theme.NyTimesTheme
 import com.zagirlek.nytimes.ui.theme.robotoFlexFamily
 import kotlinx.coroutines.delay
 

@@ -21,7 +21,7 @@ fun AppChip(
     Surface(
         modifier = modifier,
         shape = RoundedCornerShape(6.dp),
-        border = BorderStroke(2.dp, MaterialTheme.colorScheme.surfaceVariant),
+        border = BorderStroke(2.dp, MaterialTheme.colorScheme.onSurfaceVariant),
         color = Color.Transparent
     ) {
         Text(

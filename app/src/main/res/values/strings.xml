@@ -56,4 +56,11 @@
     <string name="readstatus">readStatus</string>
     <string name="search">Поиск</string>
     <string name="article_dont_have_description">У новости нету описания..</string>
+    <string name="toggle_favorite_status">Переключить статус избранного</string>
+    <string name="toggle_read_status">Переключить статус прочитанного</string>
+    <string name="rate_limit_reached">Достигнут лимит запросов</string>
+    <string name="article_not_found">Статья не найдена</string>
+    <string name="server_error">Ошибка сервера</string>
+    <string name="unknown_error">Неизвестная ошибка</string>
+    <string name="usage_limit_reached">Достигнут лимит запросов в минуту</string>
 </resources>

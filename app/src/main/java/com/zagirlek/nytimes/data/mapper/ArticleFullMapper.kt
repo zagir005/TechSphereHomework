@@ -1,5 +1,6 @@
 package com.zagirlek.nytimes.data.mapper
 
+import com.zagirlek.nytimes.core.model.NewsCategory
 import com.zagirlek.nytimes.core.utils.toEpochMillis
 import com.zagirlek.nytimes.core.utils.toLocalDateTime
 import com.zagirlek.nytimes.data.local.news.entity.ArticleFullEntity
@@ -30,7 +31,7 @@ fun ArticleFull.toArticleWithStatus(
     title = title,
     fullText = fullText,
     description = description,
-    category = category,
+    category = category ?: NewsCategory.OTHER,
     sourceName = sourceName,
     sourceIconUrl = sourceIconUrl,
     creator = creator,
@@ -47,7 +48,7 @@ fun ArticleFullWithStatusEntity.toDomain(): ArticleFullWithStatus = with(article
         title = title,
         fullText = fullText,
         description = description,
-        category = category,
+        category = category ?: NewsCategory.OTHER,
         sourceName = sourceName,
         sourceIconUrl = sourceIconUrl,
         creator = creator,

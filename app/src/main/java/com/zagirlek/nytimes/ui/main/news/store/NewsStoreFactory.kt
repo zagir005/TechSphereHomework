@@ -7,6 +7,9 @@ import com.arkivanov.mvikotlin.core.store.SimpleBootstrapper
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
+import com.zagirlek.nytimes.R
+import com.zagirlek.nytimes.core.error.ExtractorApiError
+import com.zagirlek.nytimes.core.error.toExtractorApiError
 import com.zagirlek.nytimes.core.model.NewsCategory
 import com.zagirlek.nytimes.core.ui.model.Article
 import com.zagirlek.nytimes.domain.usecase.news.GetPagingNewsUseCase
@@ -15,6 +18,7 @@ import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleReadStatusUseCase
 import com.zagirlek.nytimes.ui.main.news.model.toArticleItem
 import com.zagirlek.nytimes.ui.main.news.store.NewsStore.Intent
 import com.zagirlek.nytimes.ui.main.news.store.NewsStore.Label
+import com.zagirlek.nytimes.ui.main.news.store.NewsStore.Label.ShowError
 import com.zagirlek.nytimes.ui.main.news.store.NewsStore.State
 import com.zagirlek.nytimes.ui.main.news.store.NewsStoreFactory.Action.LoadNews
 import com.zagirlek.nytimes.ui.main.news.store.NewsStoreFactory.Msg.CategoryValue
@@ -27,7 +31,7 @@ class NewsStoreFactory(
     private val storeFactory: StoreFactory,
     private val getPagingNewsUseCase: GetPagingNewsUseCase,
     private val toggleFavoriteStatusUseCase: ToggleArticleFavoriteStatusUseCase,
-    private val toggleReadStatusUseCase: ToggleArticleReadStatusUseCase
+    private val toggleReadStatusUseCase: ToggleArticleReadStatusUseCase,
 ) {
 
     fun create(): NewsStore =
@@ -46,7 +50,10 @@ class NewsStoreFactory(
     }
 
     private sealed class Action{
-        data class LoadNews(val searchQuery: String? = null, val category: NewsCategory? = null): Action()
+        data class LoadNews(
+            val searchQuery: String? = null,
+            val category: NewsCategory? = null
+        ): Action()
     }
 
     private inner class Executor: CoroutineExecutor<Intent, Action, State, Msg, Label>() {
@@ -63,7 +70,6 @@ class NewsStoreFactory(
 
         override fun executeIntent(intent: Intent){
             when(intent){
-                is Intent.ArticleDetails -> {}
                 is Intent.SearchFieldChange -> {
                     dispatch(
                         SearchFieldValue(intent.text)
@@ -97,6 +103,18 @@ class NewsStoreFactory(
                         toggleReadStatusUseCase(intent.articleId)
                     }
                 }
+
+                is Intent.ShowError -> publish(
+                    ShowError(
+                        when(intent.cause.toExtractorApiError()){
+                            ExtractorApiError.RateLimitReached -> R.string.usage_limit_reached
+                            ExtractorApiError.ResourceNotFound -> R.string.article_not_found
+                            ExtractorApiError.ServerError -> R.string.server_error
+                            is ExtractorApiError.UnknownError -> R.string.unknown_error
+                            ExtractorApiError.UsageLimitReached -> R.string.rate_limit_reached
+                        }
+                    )
+                )
             }
         }
 

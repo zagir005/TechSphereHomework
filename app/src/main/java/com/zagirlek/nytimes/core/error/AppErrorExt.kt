@@ -28,8 +28,8 @@ fun Throwable.toNewsApiError() =
         else -> UnknownError(cause = this)
     }
 
-fun Throwable.toExtractorApiError() =
+fun Throwable.toExtractorApiError(): ExtractorApiError =
     when(this){
         is HttpException -> toExtractorApiError()
-        else -> UnknownError(cause = this)
+        else -> ExtractorApiError.UnknownError(cause = this)
     }

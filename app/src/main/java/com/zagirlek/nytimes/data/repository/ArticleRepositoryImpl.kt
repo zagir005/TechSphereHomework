@@ -1,5 +1,6 @@
 package com.zagirlek.nytimes.data.repository
 
+import com.zagirlek.nytimes.core.error.toExtractorApiError
 import com.zagirlek.nytimes.core.utils.runCatchingCancellable
 import com.zagirlek.nytimes.data.local.news.dao.ArticleFullDao
 import com.zagirlek.nytimes.data.local.news.dao.ArticleLiteDao
@@ -14,6 +15,9 @@ import com.zagirlek.nytimes.data.network.news.RemoteNewsSource
 import com.zagirlek.nytimes.domain.model.ArticleFullWithStatus
 import com.zagirlek.nytimes.domain.model.ArticleLite
 import com.zagirlek.nytimes.domain.repository.ArticleRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 
 class ArticleRepositoryImpl(
     private val articleFullDao: ArticleFullDao,
@@ -54,5 +58,22 @@ class ArticleRepositoryImpl(
                 isRead = articleStatus?.isRead
             )
         }
+    }
+
+    override suspend fun getOrLoadFullArticleByIdFlow(articleId: String): Flow<Result<ArticleFullWithStatus>> {
+        try {
+            getOrLoadFullArticleById(articleId)
+        } catch (e: Exception) {
+            return flowOf(Result.failure(e.toExtractorApiError()))
+        }
+
+        return articleFullDao
+            .getArticleFullWithStatusByIdFlow(articleId)
+            .map { entity ->
+                if (entity != null)
+                    Result.success(entity.toDomain())
+                else
+                    Result.failure(NoSuchElementException("Article not found"))
+            }
     }
 }

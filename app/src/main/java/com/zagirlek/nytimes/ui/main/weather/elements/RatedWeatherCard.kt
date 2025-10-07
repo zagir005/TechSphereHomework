@@ -14,9 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.zagirlek.nytimes.core.ui.theme.NyTimesTheme
 import com.zagirlek.nytimes.domain.model.City
 import com.zagirlek.nytimes.domain.model.WeatherPoint
-import com.zagirlek.nytimes.ui.theme.NyTimesTheme
 
 @Composable
 fun RatedWeatherCard(
@@ -24,7 +24,7 @@ fun RatedWeatherCard(
     modifier: Modifier = Modifier,
 ) {
     Surface(
-        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f),
+        color = MaterialTheme.colorScheme.surfaceVariant,
         shape = RoundedCornerShape(8.dp),
         modifier = modifier
     ){

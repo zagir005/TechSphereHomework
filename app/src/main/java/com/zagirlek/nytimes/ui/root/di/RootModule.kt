@@ -20,7 +20,9 @@ class RootModule(
         getOrPutCityUseCase = useCaseModule.getOrPutCityUseCase(),
         getPagingNewsUseCase = useCaseModule.getPagingNewsUseCase(),
         toggleArticleFavoriteStatusUseCase = useCaseModule.toggleArticleFavoriteStatusUseCase(),
-        toggleArticleReadStatusUseCase = useCaseModule.toggleArticleReadStatusUseCase()
+        toggleArticleReadStatusUseCase = useCaseModule.toggleArticleReadStatusUseCase(),
+        getArticleFullByIdUseCase = useCaseModule.getArticleFullByIdUseCase(),
+        getArticleFullByIdFlowUseCase = useCaseModule.getArticleFullByIdFlowUseCase()
     )
 
     fun getSplashModule(): SplashModule = SplashModule(

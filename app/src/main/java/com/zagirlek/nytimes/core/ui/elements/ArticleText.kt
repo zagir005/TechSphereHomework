@@ -1,4 +1,4 @@
-package com.zagirlek.nytimes.ui.main.news.elements
+package com.zagirlek.nytimes.core.ui.elements
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
@@ -19,16 +19,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.zagirlek.nytimes.R
-import com.zagirlek.nytimes.core.ui.elements.NyTimesPreview
 
 @Composable
 fun ArticleText(
     title: String,
     text: String,
     imageUrl: String,
-    descriptionMaxLines: Int = Int.MAX_VALUE,
     author: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    textMaxLines: Int = Int.MAX_VALUE,
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -36,7 +35,7 @@ fun ArticleText(
         Row {
             Text(
                 text = author,
-                color = MaterialTheme.colorScheme.surfaceVariant,
+                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.weight(1f)
@@ -44,7 +43,7 @@ fun ArticleText(
             Spacer(modifier.width(22.dp))
             Text(
                 text = "Время чтения: 5 мин",
-                color = MaterialTheme.colorScheme.surfaceVariant
+                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f)
             )
         }
 
@@ -66,7 +65,7 @@ fun ArticleText(
         Text(
             text = text,
             style = MaterialTheme.typography.bodyMedium,
-            maxLines = descriptionMaxLines
+            maxLines = textMaxLines
         )
     }
 }
@@ -85,8 +84,8 @@ private fun ArticleTextPreview() {
             title = "Заголовок статьи",
             text = "Lorem ipsum ".repeat(30),
             imageUrl = "",
-            3,
             author = "Zagirfdsakfjdskafjsda;ffsdafksd;ajf",
+            textMaxLines = 3,
         )
     }
 }

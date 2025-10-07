@@ -4,6 +4,7 @@ package com.zagirlek.nytimes.domain.usecase.di
 import com.zagirlek.nytimes.domain.usecase.auth.AuthUseCase
 import com.zagirlek.nytimes.domain.usecase.auth.AuthWithoutLoginUseCase
 import com.zagirlek.nytimes.domain.usecase.auth.GetCurrentAuthTokenUseCase
+import com.zagirlek.nytimes.domain.usecase.news.GetArticleFullByIdFlowUseCase
 import com.zagirlek.nytimes.domain.usecase.news.GetArticleFullByIdUseCase
 import com.zagirlek.nytimes.domain.usecase.news.GetPagingFavoriteNewsUseCase
 import com.zagirlek.nytimes.domain.usecase.news.GetPagingNewsUseCase
@@ -34,5 +35,5 @@ interface UseCaseModule {
 
     fun toggleArticleFavoriteStatusUseCase(): ToggleArticleFavoriteStatusUseCase
     fun toggleArticleReadStatusUseCase(): ToggleArticleReadStatusUseCase
-
+    fun getArticleFullByIdFlowUseCase(): GetArticleFullByIdFlowUseCase
 }

@@ -21,6 +21,6 @@ fun ArticleLiteWithStatus.toArticleItem(): Article = Article(
 fun NewsStore.State.toModel(): NewsModel = NewsModel(
     newsPages = newsFlow,
     selectedCategory = selectedCategory,
-    searchFieldValue = searchField
+    searchFieldValue = searchField,
 )
 
