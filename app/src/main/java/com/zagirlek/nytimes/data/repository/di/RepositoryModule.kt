@@ -1,39 +1,68 @@
 package com.zagirlek.nytimes.data.repository.di
 
-import com.zagirlek.nytimes.data.local.dao.CityDao
-import com.zagirlek.nytimes.data.local.dao.WeatherDao
-import com.zagirlek.nytimes.data.network.service.AutocompleteService
+import com.zagirlek.nytimes.core.networkchecker.NetworkConnectionChecker
+import com.zagirlek.nytimes.data.local.NyTimesDatabase
+import com.zagirlek.nytimes.data.network.NetworkModule
+import com.zagirlek.nytimes.data.repository.ArticleRepositoryImpl
+import com.zagirlek.nytimes.data.repository.ArticleStatusRepositoryImpl
 import com.zagirlek.nytimes.data.repository.CityAutocompleteRepositoryImpl
 import com.zagirlek.nytimes.data.repository.CityRepositoryImpl
 import com.zagirlek.nytimes.data.repository.MockAuthRepositoryImpl
+import com.zagirlek.nytimes.data.repository.NewsRepositoryImpl
 import com.zagirlek.nytimes.data.repository.WeatherRepositoryImpl
+import com.zagirlek.nytimes.domain.repository.ArticleRepository
+import com.zagirlek.nytimes.domain.repository.ArticleStatusRepository
 import com.zagirlek.nytimes.domain.repository.AuthRepository
 import com.zagirlek.nytimes.domain.repository.CityAutocompleteRepository
 import com.zagirlek.nytimes.domain.repository.CityRepository
+import com.zagirlek.nytimes.domain.repository.NewsRepository
 import com.zagirlek.nytimes.domain.repository.WeatherRepository
 
 class RepositoryModule(
-    private val weatherDao: WeatherDao,
-    private val cityDao: CityDao,
-    private val autocompleteService: AutocompleteService
+    private val database: NyTimesDatabase,
+    private val networkModule: NetworkModule,
+    connectionChecker: NetworkConnectionChecker
 ) {
-    private val authRepository: AuthRepository = MockAuthRepositoryImpl()
-    private val cityAutocompleteRepository: CityAutocompleteRepository =
-        CityAutocompleteRepositoryImpl(
-            autocompleteService = autocompleteService
+    val authRepository: AuthRepository by lazy {
+        MockAuthRepositoryImpl(
+            networkConnectionChecker = connectionChecker
         )
-    private val cityRepository: CityRepository = CityRepositoryImpl(
-        cityDao = cityDao
-    )
-    private val weatherRepository: WeatherRepository = WeatherRepositoryImpl(
-        weatherDao = weatherDao
-    )
+    }
+    val cityAutocompleteRepository: CityAutocompleteRepository by lazy {
+        CityAutocompleteRepositoryImpl(
+            autocompleteService = networkModule.autocompleteService
+        )
+    }
+    val cityRepository: CityRepository by lazy {
+        CityRepositoryImpl(
+            cityDao = database.cityDao()
+        )
+    }
+    val weatherRepository: WeatherRepository by lazy {
+        WeatherRepositoryImpl(
+            weatherDao = database.weatherDao()
+        )
+    }
+    val newsRepository: NewsRepository by lazy {
+        NewsRepositoryImpl(
+            database = database,
+            remoteNewsSource = networkModule.remoteNewsSource
+        )
+    }
+    val articleRepository: ArticleRepository by lazy {
+        ArticleRepositoryImpl(
+            articleFullDao = database.articleFullDao(),
+            articleStatusDao = database.articleStatusDao(),
+            articleLiteDao = database.articleLiteDao(),
+            remoteNewsSource = NetworkModule.remoteNewsSource,
+            remoteExtractorNewsSource = NetworkModule.remoteNewsExtractorSource
+        )
+    }
 
-    fun getAuthRepository(): AuthRepository = authRepository
-
-    fun getCityAutocompleteRepository(): CityAutocompleteRepository = cityAutocompleteRepository
-
-    fun getCityRepository(): CityRepository = cityRepository
-
-    fun getWeatherRepository(): WeatherRepository = weatherRepository
+    val articleStatusRepository: ArticleStatusRepository by lazy {
+        ArticleStatusRepositoryImpl(
+            articleStatusDao = database.articleStatusDao(),
+            articleRepository = articleRepository
+        )
+    }
 }

@@ -1,50 +1,114 @@
 package com.zagirlek.nytimes.data.usecase.di
 
 import com.zagirlek.nytimes.data.repository.di.RepositoryModule
-import com.zagirlek.nytimes.data.usecase.AddWeatherPointUseCaseImpl
-import com.zagirlek.nytimes.data.usecase.DeleteWeatherPointUseCaseImpl
-import com.zagirlek.nytimes.data.usecase.GetCityAutocompleteUseCaseImpl
-import com.zagirlek.nytimes.data.usecase.GetOrPutCityUseCaseImpl
-import com.zagirlek.nytimes.data.usecase.GetRecentCityListUseCaseImpl
-import com.zagirlek.nytimes.data.usecase.GetWeatherPointsHistoryFlowUseCaseImpl
-import com.zagirlek.nytimes.domain.usecase.AddWeatherPointUseCase
-import com.zagirlek.nytimes.domain.usecase.DeleteWeatherPointUseCase
-import com.zagirlek.nytimes.domain.usecase.GetCityAutocompleteUseCase
-import com.zagirlek.nytimes.domain.usecase.GetOrPutCityUseCase
-import com.zagirlek.nytimes.domain.usecase.GetRecentCityListUseCase
-import com.zagirlek.nytimes.domain.usecase.GetWeatherPointsHistoryFlowUseCase
+import com.zagirlek.nytimes.data.usecase.auth.AuthUseCaseImpl
+import com.zagirlek.nytimes.data.usecase.auth.AuthWithoutLoginUseCaseImpl
+import com.zagirlek.nytimes.data.usecase.auth.GetCurrentAuthTokenUseCaseImpl
+import com.zagirlek.nytimes.data.usecase.news.GetArticleFullByIdFlowUseCaseImpl
+import com.zagirlek.nytimes.data.usecase.news.GetArticleFullByIdUseCaseImpl
+import com.zagirlek.nytimes.data.usecase.news.GetPagingFavoriteNewsUseCaseImpl
+import com.zagirlek.nytimes.data.usecase.news.GetPagingNewsUseCaseImpl
+import com.zagirlek.nytimes.data.usecase.news.ToggleArticleFavoriteStatusUseCaseImpl
+import com.zagirlek.nytimes.data.usecase.news.ToggleArticleReadStatusUseCaseImpl
+import com.zagirlek.nytimes.data.usecase.weather.AddWeatherPointUseCaseImpl
+import com.zagirlek.nytimes.data.usecase.weather.DeleteWeatherPointUseCaseImpl
+import com.zagirlek.nytimes.data.usecase.weather.GetCityAutocompleteUseCaseImpl
+import com.zagirlek.nytimes.data.usecase.weather.GetOrPutCityUseCaseImpl
+import com.zagirlek.nytimes.data.usecase.weather.GetRecentCityListUseCaseImpl
+import com.zagirlek.nytimes.data.usecase.weather.GetWeatherPointsHistoryFlowUseCaseImpl
+import com.zagirlek.nytimes.domain.usecase.auth.AuthUseCase
+import com.zagirlek.nytimes.domain.usecase.auth.AuthWithoutLoginUseCase
+import com.zagirlek.nytimes.domain.usecase.auth.GetCurrentAuthTokenUseCase
 import com.zagirlek.nytimes.domain.usecase.di.UseCaseModule
+import com.zagirlek.nytimes.domain.usecase.news.GetArticleFullByIdFlowUseCase
+import com.zagirlek.nytimes.domain.usecase.news.GetArticleFullByIdUseCase
+import com.zagirlek.nytimes.domain.usecase.news.GetPagingFavoriteNewsUseCase
+import com.zagirlek.nytimes.domain.usecase.news.GetPagingNewsUseCase
+import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleFavoriteStatusUseCase
+import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleReadStatusUseCase
+import com.zagirlek.nytimes.domain.usecase.weather.AddWeatherPointUseCase
+import com.zagirlek.nytimes.domain.usecase.weather.DeleteWeatherPointUseCase
+import com.zagirlek.nytimes.domain.usecase.weather.GetCityAutocompleteUseCase
+import com.zagirlek.nytimes.domain.usecase.weather.GetOrPutCityUseCase
+import com.zagirlek.nytimes.domain.usecase.weather.GetRecentCityListUseCase
+import com.zagirlek.nytimes.domain.usecase.weather.GetWeatherPointsHistoryFlowUseCase
 
 class UseCaseModuleImpl(
     private val repositoryModule: RepositoryModule
 ): UseCaseModule {
     override fun addWeatherPointUseCase(): AddWeatherPointUseCase =
         AddWeatherPointUseCaseImpl(
-            weatherRepository = repositoryModule.getWeatherRepository()
+            weatherRepository = repositoryModule.weatherRepository
         )
 
     override fun deleteWeatherPointUseCase(): DeleteWeatherPointUseCase =
         DeleteWeatherPointUseCaseImpl(
-            weatherRepository = repositoryModule.getWeatherRepository()
+            weatherRepository = repositoryModule.weatherRepository
         )
 
     override fun getWeatherPointsHistoryFlowUseCase(): GetWeatherPointsHistoryFlowUseCase =
         GetWeatherPointsHistoryFlowUseCaseImpl(
-            weatherRepository = repositoryModule.getWeatherRepository()
+            weatherRepository = repositoryModule.weatherRepository
         )
 
     override fun getCityAutocompleteUseCase(): GetCityAutocompleteUseCase =
         GetCityAutocompleteUseCaseImpl(
-            autocompleteRepository = repositoryModule.getCityAutocompleteRepository()
+            autocompleteRepository = repositoryModule.cityAutocompleteRepository
         )
 
     override fun getRecentCityListUseCase(): GetRecentCityListUseCase =
         GetRecentCityListUseCaseImpl(
-            cityRepository = repositoryModule.getCityRepository()
+            cityRepository = repositoryModule.cityRepository
         )
 
     override fun getOrPutCityUseCase(): GetOrPutCityUseCase =
         GetOrPutCityUseCaseImpl(
-            cityRepository = repositoryModule.getCityRepository()
+            cityRepository = repositoryModule.cityRepository
+        )
+
+    override fun authUseCase(): AuthUseCase =
+        AuthUseCaseImpl(
+            authRepository = repositoryModule.authRepository
+        )
+
+    override fun authWithoutLoginUseCase(): AuthWithoutLoginUseCase =
+        AuthWithoutLoginUseCaseImpl(
+            authRepository = repositoryModule.authRepository
+        )
+
+    override fun getCurrentAuthTokenUseCase(): GetCurrentAuthTokenUseCase =
+        GetCurrentAuthTokenUseCaseImpl(
+            authRepository = repositoryModule.authRepository
+        )
+
+    override fun getPagingNewsUseCase(): GetPagingNewsUseCase =
+        GetPagingNewsUseCaseImpl(
+            newsRepository = repositoryModule.newsRepository
+        )
+
+    override fun getArticleFullByIdUseCase(): GetArticleFullByIdUseCase =
+        GetArticleFullByIdUseCaseImpl(
+            articleRepository = repositoryModule.articleRepository
+        )
+
+    override fun getPagingFavoriteNewsUseCase(): GetPagingFavoriteNewsUseCase =
+        GetPagingFavoriteNewsUseCaseImpl(
+            newsRepository = repositoryModule.newsRepository
+        )
+
+    override fun toggleArticleFavoriteStatusUseCase(): ToggleArticleFavoriteStatusUseCase =
+        ToggleArticleFavoriteStatusUseCaseImpl(
+            articleStatusRepository = repositoryModule.articleStatusRepository
+        )
+
+
+    override fun toggleArticleReadStatusUseCase(): ToggleArticleReadStatusUseCase =
+        ToggleArticleReadStatusUseCaseImpl(
+            articleStatusRepository = repositoryModule.articleStatusRepository
+        )
+
+    override fun getArticleFullByIdFlowUseCase(): GetArticleFullByIdFlowUseCase =
+        GetArticleFullByIdFlowUseCaseImpl(
+            articleRepository = repositoryModule.articleRepository
         )
 }

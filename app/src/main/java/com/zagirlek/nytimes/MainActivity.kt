@@ -5,10 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.arkivanov.decompose.defaultComponentContext
-import com.zagirlek.nytimes.ui.screen.main.di.MainModule
 import com.zagirlek.nytimes.ui.screen.root.RootUi
 import com.zagirlek.nytimes.ui.screen.root.components.DefaultRootComponent
-import com.zagirlek.nytimes.ui.theme.NyTimesTheme
+import com.zagirlek.nytimes.core.ui.theme.NyTimesTheme
 
 class MainActivity : ComponentActivity() {
 
@@ -22,8 +21,9 @@ class MainActivity : ComponentActivity() {
 
         val defaultRootComponent = DefaultRootComponent(
             componentContext = defaultComponentContext(),
-            authRepository = app.repositoryModule.getAuthRepository(),
-            mainModule = MainModule(app.useCaseModule)
+            authModule = app.rootModule.getAuthModule(),
+            mainModule = app.rootModule.getMainModule(),
+            splashModule = app.rootModule.getSplashModule()
         )
 
         setContent {

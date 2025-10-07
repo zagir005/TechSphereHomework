@@ -1,7 +1,7 @@
 package com.zagirlek.nytimes.data.mapper
 
-import com.zagirlek.nytimes.data.local.entity.CityEntity
-import com.zagirlek.nytimes.data.network.dto.CityDTO
+import com.zagirlek.nytimes.data.local.weather.entity.CityEntity
+import com.zagirlek.nytimes.data.network.weather.dto.CityDTO
 import com.zagirlek.nytimes.domain.model.City
 
 fun CityEntity.toDomain(): City = City(

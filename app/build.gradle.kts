@@ -17,8 +17,20 @@ android {
         versionCode = 1
         versionName = "0.2"
 
-        buildConfigField(name = "BASE_URL", value = "\"https://api.weatherapi.com/v1/\"", type = "String")
-        buildConfigField(name = "API_KEY", value = "\"dd9eadf389194d2c828170710251809\"", type = "String")
+        buildConfigField(name = "WEATHER_BASE_URL", value = "\"https://api.weatherapi.com/v1/\"", type = "String")
+        buildConfigField(name = "WEATHER_API_KEY", value = "\"dd9eadf389194d2c828170710251809\"", type = "String")
+
+        buildConfigField(name = "NEWS_BASE_URL", value = "\"https://newsdata.io/api/1/\"", type = "String")
+        buildConfigField(name = "NEWS_API_KEY", value = "\"pub_1bcf9d91fc5240eda6af74c00b7e628d\"", type = "String")
+        buildConfigField(name = "NEWS_API_KEY_1", value = "\"pub_e7fb55d0abb84d219bd323216254f33c\"", type = "String")
+        buildConfigField(name = "NEWS_API_KEY_2", value = "\"pub_412b85944c0540c6b7e4f65e4fc2af4e\"", type = "String")
+        buildConfigField(name = "AVAILABLE_DOMAINS", value = "\"nytimes,bbc,forbes,theguardian,washingtonpost\"", type = "String")
+
+        buildConfigField(name = "EXTRACTOR_BASE_URL", value = "\"https://api.articlextractor.com/v1/\"", type = "String")
+        buildConfigField(name = "EXTRACTOR_API_KEY", value = "\"BBm76KtyDK4rCVo1M4v4f2jh0eZ2LUV1SHuBrmy4\"", type = "String")
+        buildConfigField(name = "EXTRACTOR_API_KEY_1", value = "\"8F15YKkE2jOzXwk0YxYPYYxrYp9CqaH56r2yuR41\"", type = "String")
+        buildConfigField(name = "EXTRACTOR_API_KEY_2", value = "\"hHTr6AVMaruVdfk7iNmpZKmKqoHBj8ZnpvJvJhXm\"", type = "String")
+        buildConfigField(name = "EXTRACTOR_API_KEY_3", value = "\"667018glHoOpF6HxrzbKJP6x273uhGn7SrFYAbKH\"", type = "String")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -49,6 +61,9 @@ dependencies {
     implementation(libs.decompose)
     implementation(libs.decompose.extension)
     implementation(libs.essenty.coroutines)
+    implementation(libs.mvikotlin)
+    implementation(libs.mvikotlin.main)
+    implementation(libs.mvikotlin.coroutines)
 
     implementation(libs.kotlin.serialization.json)
 
@@ -56,11 +71,20 @@ dependencies {
     implementation(libs.retrofit.converter.gson)
     implementation(libs.okhttp)
     implementation(libs.okhttp.interceptor)
+    implementation(libs.androidx.core.i18n)
 
     ksp(libs.androidx.room.ksp)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.room.paging)
+
+    implementation(libs.paging.common)
+    implementation(libs.paging.compose)
+
+    implementation(libs.coil.compose)
+    implementation(libs.coil.okhttp)
+
+    implementation(libs.shimmer)
 
     implementation(libs.androidx.ui.animation)
     implementation(libs.androidx.core.splash)
