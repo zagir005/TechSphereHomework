@@ -21,8 +21,8 @@ class RootModule(
         getPagingNewsUseCase = useCaseModule.getPagingNewsUseCase(),
         toggleArticleFavoriteStatusUseCase = useCaseModule.toggleArticleFavoriteStatusUseCase(),
         toggleArticleReadStatusUseCase = useCaseModule.toggleArticleReadStatusUseCase(),
-        getArticleFullByIdUseCase = useCaseModule.getArticleFullByIdUseCase(),
-        getArticleFullByIdFlowUseCase = useCaseModule.getArticleFullByIdFlowUseCase()
+        getArticleFullByIdFlowUseCase = useCaseModule.getArticleFullByIdFlowUseCase(),
+        getPagingFavoriteNewsUseCase = useCaseModule.getPagingFavoriteNewsUseCase()
     )
 
     fun getSplashModule(): SplashModule = SplashModule(

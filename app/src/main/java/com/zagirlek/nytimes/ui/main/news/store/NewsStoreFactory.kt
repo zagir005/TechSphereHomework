@@ -1,7 +1,6 @@
 package com.zagirlek.nytimes.ui.main.news.store
 
 import androidx.paging.PagingData
-import androidx.paging.map
 import com.arkivanov.mvikotlin.core.store.Reducer
 import com.arkivanov.mvikotlin.core.store.SimpleBootstrapper
 import com.arkivanov.mvikotlin.core.store.Store
@@ -12,10 +11,8 @@ import com.zagirlek.nytimes.core.error.ExtractorApiError
 import com.zagirlek.nytimes.core.error.toExtractorApiError
 import com.zagirlek.nytimes.core.model.NewsCategory
 import com.zagirlek.nytimes.core.ui.model.Article
-import com.zagirlek.nytimes.domain.usecase.news.GetPagingNewsUseCase
 import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleFavoriteStatusUseCase
 import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleReadStatusUseCase
-import com.zagirlek.nytimes.ui.main.news.model.toArticleItem
 import com.zagirlek.nytimes.ui.main.news.store.NewsStore.Intent
 import com.zagirlek.nytimes.ui.main.news.store.NewsStore.Label
 import com.zagirlek.nytimes.ui.main.news.store.NewsStore.Label.ShowError
@@ -24,12 +21,12 @@ import com.zagirlek.nytimes.ui.main.news.store.NewsStoreFactory.Action.LoadNews
 import com.zagirlek.nytimes.ui.main.news.store.NewsStoreFactory.Msg.CategoryValue
 import com.zagirlek.nytimes.ui.main.news.store.NewsStoreFactory.Msg.SearchFieldValue
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class NewsStoreFactory(
     private val storeFactory: StoreFactory,
-    private val getPagingNewsUseCase: GetPagingNewsUseCase,
+    private val loadPagingNews: (category: NewsCategory?,
+                                 titleQuery: String?) -> Flow<PagingData<Article>>,
     private val toggleFavoriteStatusUseCase: ToggleArticleFavoriteStatusUseCase,
     private val toggleReadStatusUseCase: ToggleArticleReadStatusUseCase,
 ) {
@@ -62,7 +59,7 @@ class NewsStoreFactory(
                 is LoadNews -> {
                     dispatch(
                         Msg.LoadNews(
-                            news = loadNews(searchQuery = action.searchQuery, category = action.category)
+                            news = loadPagingNews(action.category, action.searchQuery)
                         )
                     )
                 }
@@ -116,15 +113,6 @@ class NewsStoreFactory(
                     )
                 )
             }
-        }
-
-        private fun loadNews(searchQuery: String? = null, category: NewsCategory? = null): Flow<PagingData<Article>>{
-            return getPagingNewsUseCase(titleQuery = searchQuery, category = category)
-                .map { pagingData ->
-                    pagingData.map { article ->
-                        article.toArticleItem()
-                    }
-                }
         }
     }
 

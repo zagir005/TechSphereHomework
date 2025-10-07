@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 fun interface GetPagingNewsUseCase {
     operator fun invoke(
-        category: NewsCategory? ,
+        category: NewsCategory?,
         titleQuery: String?
     ): Flow<PagingData<ArticleLiteWithStatus>>
 }

@@ -69,7 +69,8 @@ fun MainUi(
                 }
                 is MainComponent.Child.News -> {
                     NewsScreenUi(
-                        component = child.component
+                        component = child.component,
+                        favoriteListMode = false
                     ){
                         scope.launch {
                             snackbarHostState.showSnackbar(message = it)
@@ -78,7 +79,8 @@ fun MainUi(
                 }
                 is MainComponent.Child.Favorites -> {
                     NewsScreenUi(
-                        component = child.component
+                        component = child.component,
+                        favoriteListMode = true
                     ){
                         scope.launch {
                             snackbarHostState.showSnackbar(message = it)

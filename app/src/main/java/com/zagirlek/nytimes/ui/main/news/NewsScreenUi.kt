@@ -17,11 +17,14 @@ import com.zagirlek.nytimes.ui.main.articledetails.ArticleDetailsBottomSheet
 import com.zagirlek.nytimes.ui.main.news.elements.NewsScreenContent
 import com.zagirlek.nytimes.ui.main.news.model.NewsSideEffect
 
+
+//favoriteListMode это костыль, делал в спешке, простите
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewsScreenUi(
     component: NewsScreen,
-    showSnackbar: (String) -> Unit
+    favoriteListMode: Boolean,
+    showSnackbar: (String) -> Unit,
 ) {
     val context = LocalContext.current
     val model by component.model.collectAsState()
@@ -52,6 +55,7 @@ fun NewsScreenUi(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 4.dp),
+        favoriteListMode = favoriteListMode,
         searchValueChanged = { component.searchByTitle(it) },
         showError = showSnackbar,
         selectedCategoryChanged = { component.filterByCategory(it) },

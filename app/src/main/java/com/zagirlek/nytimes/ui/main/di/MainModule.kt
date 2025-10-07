@@ -3,7 +3,7 @@ package com.zagirlek.nytimes.ui.main.di
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.zagirlek.nytimes.domain.usecase.news.GetArticleFullByIdFlowUseCase
-import com.zagirlek.nytimes.domain.usecase.news.GetArticleFullByIdUseCase
+import com.zagirlek.nytimes.domain.usecase.news.GetPagingFavoriteNewsUseCase
 import com.zagirlek.nytimes.domain.usecase.news.GetPagingNewsUseCase
 import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleFavoriteStatusUseCase
 import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleReadStatusUseCase
@@ -29,7 +29,7 @@ class MainModule(
     private val getPagingNewsUseCase: GetPagingNewsUseCase,
     private val toggleArticleFavoriteStatusUseCase: ToggleArticleFavoriteStatusUseCase,
     private val toggleArticleReadStatusUseCase: ToggleArticleReadStatusUseCase,
-    private val getArticleFullByIdUseCase: GetArticleFullByIdUseCase,
+    private val getPagingFavoriteNewsUseCase: GetPagingFavoriteNewsUseCase,
     private val getArticleFullByIdFlowUseCase: GetArticleFullByIdFlowUseCase
 ) {
     fun getWeatherComponent(
@@ -46,14 +46,17 @@ class MainModule(
         )
 
     fun getNewsComponent(
-        componentContext: ComponentContext
+        componentContext: ComponentContext,
+        favoriteListMode: Boolean
     ): NewsScreen =
         NewsScreenComponent (
             componentContext = componentContext,
             storeFactory = storeFactory,
+            favoriteListMode = favoriteListMode,
             getPagingNewsUseCase = getPagingNewsUseCase,
             toggleFavoriteStatusUseCase = toggleArticleFavoriteStatusUseCase,
             toggleReadStatusUseCase = toggleArticleReadStatusUseCase,
-            getArticleFullByIdFlowUseCase = getArticleFullByIdFlowUseCase
+            getArticleFullByIdFlowUseCase = getArticleFullByIdFlowUseCase,
+            getPagingFavoriteNewsUseCase = getPagingFavoriteNewsUseCase
         )
 }

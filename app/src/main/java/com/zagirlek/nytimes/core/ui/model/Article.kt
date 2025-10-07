@@ -15,9 +15,9 @@ data class Article(
     val isFavorite: Boolean = false
 ){
     companion object{
-        fun getExampleArticle() = Article(
+        fun getExampleArticle(title: String = "Lorem ipsum") = Article(
             articleId = "",
-            title = "Lorem ipsum",
+            title = title,
             category = NewsCategory.OTHER,
             imageUrl = null,
             creator = "Zagir",

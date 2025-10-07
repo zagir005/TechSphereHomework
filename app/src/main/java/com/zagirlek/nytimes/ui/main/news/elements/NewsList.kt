@@ -34,7 +34,6 @@ fun NewsList (
             .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-
         when(articlesList.loadState.refresh){
             is LoadState.Error -> {
                 item {

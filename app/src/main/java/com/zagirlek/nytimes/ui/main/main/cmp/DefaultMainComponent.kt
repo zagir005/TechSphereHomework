@@ -49,10 +49,16 @@ class DefaultMainComponent(
     }
 
     private fun favorites(componentContext: ComponentContext): NewsScreen =
-        mainModule.getNewsComponent(componentContext = componentContext)
+        mainModule.getNewsComponent(
+            componentContext = componentContext,
+            favoriteListMode = true
+        )
 
     private fun news(componentContext: ComponentContext): NewsScreen =
-        mainModule.getNewsComponent(componentContext = componentContext)
+        mainModule.getNewsComponent(
+            componentContext = componentContext,
+            favoriteListMode = false
+        )
 
     private fun weather(componentContext: ComponentContext): WeatherComponent =
         mainModule.getWeatherComponent(componentContext = componentContext)

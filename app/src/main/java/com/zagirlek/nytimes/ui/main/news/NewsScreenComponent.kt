@@ -1,5 +1,6 @@
 package com.zagirlek.nytimes.ui.main.news
 
+import androidx.paging.map
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.slot.ChildSlot
 import com.arkivanov.decompose.router.slot.SlotNavigation
@@ -15,6 +16,7 @@ import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
 import com.zagirlek.nytimes.core.model.NewsCategory
 import com.zagirlek.nytimes.core.utils.getStore
 import com.zagirlek.nytimes.domain.usecase.news.GetArticleFullByIdFlowUseCase
+import com.zagirlek.nytimes.domain.usecase.news.GetPagingFavoriteNewsUseCase
 import com.zagirlek.nytimes.domain.usecase.news.GetPagingNewsUseCase
 import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleFavoriteStatusUseCase
 import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleReadStatusUseCase
@@ -22,6 +24,7 @@ import com.zagirlek.nytimes.ui.main.articledetails.ArticleDetailsComponent
 import com.zagirlek.nytimes.ui.main.articledetails.cmp.DefaultArticleDetailsComponent
 import com.zagirlek.nytimes.ui.main.news.model.NewsModel
 import com.zagirlek.nytimes.ui.main.news.model.NewsSideEffect
+import com.zagirlek.nytimes.ui.main.news.model.toArticleItem
 import com.zagirlek.nytimes.ui.main.news.model.toModel
 import com.zagirlek.nytimes.ui.main.news.store.NewsStore
 import com.zagirlek.nytimes.ui.main.news.store.NewsStoreFactory
@@ -39,8 +42,10 @@ import kotlinx.serialization.Serializable
 
 class NewsScreenComponent(
     componentContext: ComponentContext,
+    private val favoriteListMode: Boolean,
     private val storeFactory: StoreFactory,
     private val getPagingNewsUseCase: GetPagingNewsUseCase,
+    private val getPagingFavoriteNewsUseCase: GetPagingFavoriteNewsUseCase,
     private val toggleFavoriteStatusUseCase: ToggleArticleFavoriteStatusUseCase,
     private val toggleReadStatusUseCase: ToggleArticleReadStatusUseCase,
     private val getArticleFullByIdFlowUseCase: GetArticleFullByIdFlowUseCase
@@ -54,7 +59,22 @@ class NewsScreenComponent(
     private val storeInstance = instanceKeeper.getStore {
         NewsStoreFactory(
             storeFactory = storeFactory,
-            getPagingNewsUseCase = getPagingNewsUseCase,
+            loadPagingNews = { category, query ->
+                if (favoriteListMode)
+                    getPagingFavoriteNewsUseCase(category, query)
+                        .map {
+                            it.map {
+                                article -> article.toArticleItem()
+                            }
+                        }
+                else
+                    getPagingNewsUseCase(category,query)
+                        .map {
+                            it.map {
+                                article -> article.toArticleItem()
+                            }
+                        }
+            },
             toggleReadStatusUseCase = toggleReadStatusUseCase,
             toggleFavoriteStatusUseCase = toggleFavoriteStatusUseCase
         ).create()

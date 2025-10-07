@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.zagirlek.nytimes.R
+import com.zagirlek.nytimes.core.error.toNewsApiError
 import com.zagirlek.nytimes.core.model.NewsCategory
 import com.zagirlek.nytimes.core.ui.elements.AppTextField
 import com.zagirlek.nytimes.core.ui.model.Article
@@ -29,6 +30,7 @@ import com.zagirlek.nytimes.ui.main.news.model.NewsModel
 fun NewsScreenContent(
     model: NewsModel,
     modifier: Modifier = Modifier,
+    favoriteListMode: Boolean,
     showError: (String) -> Unit,
     searchValueChanged: (String?) -> Unit = {},
     selectedCategoryChanged: (NewsCategory?) -> Unit = {},
@@ -37,6 +39,16 @@ fun NewsScreenContent(
     onFavoriteToggle: (articleId: String) -> Unit = {}
 ) {
     val newsList = model.newsPages.collectAsLazyPagingItems()
+
+    val refreshError = newsList.loadState.refresh as? LoadState.Error
+    val appendError = newsList.loadState.refresh as? LoadState.Error
+
+    refreshError?.let {
+        showError(refreshError.error.toNewsApiError().message ?: "Неизвестная ошибка")
+    }
+    appendError?.let {
+        showError(appendError.error.toNewsApiError().message ?: "Неизвестная ошибка")
+    }
 
     PullToRefreshBox(
         isRefreshing = newsList.loadState.refresh is LoadState.Loading,
@@ -76,16 +88,26 @@ fun NewsScreenContent(
             NewsList(
                 articlesList = newsList,
                 modifier = Modifier.fillMaxHeight()
-            ){ article, modifier ->
-                ArticleCard(
-                    article = article,
-                    onClick = {
-                        onArticleClick(article)
-                    },
-                    modifier = modifier,
-                    onFavoriteToggle = { onFavoriteToggle(it.articleId) },
-                    onReadToggle = { onReadToggle(it.articleId) }
-                )
+            ) { article, modifier ->
+                if (favoriteListMode)
+                    FavoriteArticleCard(
+                        article = article,
+                        onClick = {
+                            onArticleClick(article)
+                        },
+                        modifier = modifier,
+                        onFavoriteToggle = { onFavoriteToggle(it.articleId) },
+                    )
+                else
+                    ArticleCard(
+                        article = article,
+                        onClick = {
+                            onArticleClick(article)
+                        },
+                        modifier = modifier,
+                        onFavoriteToggle = { onFavoriteToggle(it.articleId) },
+                        onReadToggle = { onReadToggle(it.articleId) }
+                    )
             }
         }
     }
