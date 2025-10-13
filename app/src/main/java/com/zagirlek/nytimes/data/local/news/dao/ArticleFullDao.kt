@@ -3,6 +3,7 @@ package com.zagirlek.nytimes.data.local.news.dao
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.zagirlek.nytimes.core.model.NewsCategory
 import com.zagirlek.nytimes.data.local.news.entity.ArticleFullEntity
@@ -11,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ArticleFullDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(article: ArticleFullEntity)
 
     @Query("SELECT * FROM article_full WHERE articleid = :articleId LIMIT 1")

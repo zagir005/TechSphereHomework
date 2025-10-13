@@ -10,5 +10,5 @@ interface ArticleRepository {
 
     suspend fun getOrLoadFullArticleByIdFlow(
         articleId: String
-    ): Flow<Result<ArticleFullWithStatus?>>
+    ): Flow<Result<ArticleFullWithStatus>>
 }

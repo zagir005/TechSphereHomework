@@ -1,4 +1,4 @@
-package com.zagirlek.nytimes.ui.main.news
+package com.zagirlek.nytimes.ui.main.news.latest
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,17 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
-import com.zagirlek.nytimes.ui.main.articledetails.ArticleDetailsBottomSheet
-import com.zagirlek.nytimes.ui.main.news.elements.NewsScreenContent
-import com.zagirlek.nytimes.ui.main.news.model.NewsSideEffect
+import com.zagirlek.nytimes.ui.main.news.articledetails.ArticleDetailsBottomSheet
+import com.zagirlek.nytimes.ui.main.news.latest.elements.NewsScreenContent
+import com.zagirlek.nytimes.ui.main.news.latest.model.NewsSideEffect
 
-
-//favoriteListMode это костыль, делал в спешке, простите
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewsScreenUi(
-    component: NewsScreen,
-    favoriteListMode: Boolean,
+fun LatestNewsScreenUi(
+    component: LatestNewsScreen,
     showSnackbar: (String) -> Unit,
 ) {
     val context = LocalContext.current
@@ -55,7 +52,6 @@ fun NewsScreenUi(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 4.dp),
-        favoriteListMode = favoriteListMode,
         searchValueChanged = { component.searchByTitle(it) },
         showError = showSnackbar,
         selectedCategoryChanged = { component.filterByCategory(it) },

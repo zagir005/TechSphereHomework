@@ -8,6 +8,6 @@ import kotlinx.coroutines.flow.Flow
 class GetArticleFullByIdFlowUseCaseImpl(
     private val articleRepository: ArticleRepository
 ): GetArticleFullByIdFlowUseCase {
-    override suspend fun invoke(articleId: String): Flow<Result<ArticleFullWithStatus?>> =
+    override suspend fun invoke(articleId: String): Flow<Result<ArticleFullWithStatus>> =
         articleRepository.getOrLoadFullArticleByIdFlow(articleId)
 }

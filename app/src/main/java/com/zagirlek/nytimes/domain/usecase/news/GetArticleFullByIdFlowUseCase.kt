@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 fun interface GetArticleFullByIdFlowUseCase {
     suspend operator fun invoke(
         articleId: String
-    ): Flow<Result<ArticleFullWithStatus?>>
+    ): Flow<Result<ArticleFullWithStatus>>
 }

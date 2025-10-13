@@ -1,11 +1,10 @@
 package com.zagirlek.nytimes.data.repository
 
-import com.zagirlek.nytimes.core.error.toExtractorApiError
-import com.zagirlek.nytimes.core.utils.runCatchingCancellable
+import com.zagirlek.nytimes.core.error.AppError
+import com.zagirlek.nytimes.core.networkchecker.NetworkConnectionChecker
 import com.zagirlek.nytimes.data.local.news.dao.ArticleFullDao
 import com.zagirlek.nytimes.data.local.news.dao.ArticleLiteDao
 import com.zagirlek.nytimes.data.local.news.dao.ArticleStatusDao
-import com.zagirlek.nytimes.data.mapper.firstToDomain
 import com.zagirlek.nytimes.data.mapper.toArticleFull
 import com.zagirlek.nytimes.data.mapper.toArticleWithStatus
 import com.zagirlek.nytimes.data.mapper.toDomain
@@ -20,52 +19,59 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 
 class ArticleRepositoryImpl(
+    private val networkConnectionChecker: NetworkConnectionChecker,
     private val articleFullDao: ArticleFullDao,
     private val articleStatusDao: ArticleStatusDao,
     private val articleLiteDao: ArticleLiteDao,
     private val remoteNewsSource: RemoteNewsSource,
-    private val remoteExtractorNewsSource: RemoteNewsExtractorSource
+    private val remoteExtractorNewsSource: RemoteNewsExtractorSource,
 ): ArticleRepository {
-    override suspend fun getOrLoadFullArticleById(articleId: String): Result<ArticleFullWithStatus> = runCatchingCancellable {
+    override suspend fun getOrLoadFullArticleById(articleId: String): Result<ArticleFullWithStatus> {
         val fullArticle = articleFullDao.getById(articleId = articleId)
         val articleStatus = articleStatusDao.getArticleStatusById(articleId = articleId)
 
-        if (fullArticle != null){
-            fullArticle
-                .toDomain()
-                .toArticleWithStatus(
-                    isFavorite = articleStatus?.isFavorite,
-                    isRead = articleStatus?.isRead
-                )
-        }else {
+        return if (fullArticle != null){
+            Result.success(
+                fullArticle
+                    .toDomain()
+                    .toArticleWithStatus(
+                        isFavorite = articleStatus?.isFavorite,
+                        isRead = articleStatus?.isRead
+                    )
+            )
+        } else {
             val articleLite: ArticleLite =
                 articleLiteDao.getById(articleId)?.toDomain() ?: remoteNewsSource
                     .getLatestNews(id = articleId)
-                    .getOrThrow()
-                    .firstToDomain()
+                    .getOrElse { return Result.failure(it)}
+                    .newsList.first().toDomain()
 
             val extractedText = remoteExtractorNewsSource
                 .extractArticleText(articleLite.link)
-                .getOrThrow()
+                .getOrElse { return Result.failure(it)}
                 .text
 
             val fullArticle = articleLite.toArticleFull(extractedText)
 
             articleFullDao.insert(article = fullArticle.toEntity())
 
-            fullArticle.toArticleWithStatus(
-                isFavorite = articleStatus?.isFavorite,
-                isRead = articleStatus?.isRead
+            Result.success(
+                fullArticle.toArticleWithStatus(
+                    isFavorite = articleStatus?.isFavorite,
+                    isRead = articleStatus?.isRead
+                )
             )
         }
     }
 
     override suspend fun getOrLoadFullArticleByIdFlow(articleId: String): Flow<Result<ArticleFullWithStatus>> {
-        try {
-            getOrLoadFullArticleById(articleId)
-        } catch (e: Exception) {
-            return flowOf(Result.failure(e.toExtractorApiError()))
-        }
+        if (!networkConnectionChecker.checkConnection())
+            return flowOf(value = Result.failure(AppError.NoNetworkConnection))
+
+        getOrLoadFullArticleById(articleId)
+            .onFailure {
+                return flowOf(Result.failure(it))
+            }
 
         return articleFullDao
             .getArticleFullWithStatusByIdFlow(articleId)

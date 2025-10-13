@@ -60,7 +60,7 @@ class NewsRepositoryImpl(
         titleQuery: String?
     ): Flow<PagingData<ArticleFullWithStatus>> {
         return Pager(
-            config = PagingConfig(pageSize = 5, enablePlaceholders = true),
+            config = PagingConfig(pageSize = 5, enablePlaceholders = false),
             pagingSourceFactory = { articleFullDao.getFavoriteArticlesPaging(titleQuery, category) }
         )
             .flow

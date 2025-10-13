@@ -1,4 +1,4 @@
-package com.zagirlek.nytimes.ui.main.news.elements
+package com.zagirlek.nytimes.ui.main.news.latest.elements
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -23,14 +24,13 @@ import com.zagirlek.nytimes.core.model.NewsCategory
 import com.zagirlek.nytimes.core.ui.elements.AppTextField
 import com.zagirlek.nytimes.core.ui.model.Article
 import com.zagirlek.nytimes.ui.elements.NewsCategorySelector
-import com.zagirlek.nytimes.ui.main.news.model.NewsModel
+import com.zagirlek.nytimes.ui.main.news.latest.model.NewsModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewsScreenContent(
     model: NewsModel,
     modifier: Modifier = Modifier,
-    favoriteListMode: Boolean,
     showError: (String) -> Unit,
     searchValueChanged: (String?) -> Unit = {},
     selectedCategoryChanged: (NewsCategory?) -> Unit = {},
@@ -39,7 +39,7 @@ fun NewsScreenContent(
     onFavoriteToggle: (articleId: String) -> Unit = {}
 ) {
     val newsList = model.newsPages.collectAsLazyPagingItems()
-
+    val lazyListState = rememberLazyListState()
     val refreshError = newsList.loadState.refresh as? LoadState.Error
     val appendError = newsList.loadState.refresh as? LoadState.Error
 
@@ -87,27 +87,18 @@ fun NewsScreenContent(
 
             NewsList(
                 articlesList = newsList,
+                listState = lazyListState,
                 modifier = Modifier.fillMaxHeight()
             ) { article, modifier ->
-                if (favoriteListMode)
-                    FavoriteArticleCard(
-                        article = article,
-                        onClick = {
-                            onArticleClick(article)
-                        },
-                        modifier = modifier,
-                        onFavoriteToggle = { onFavoriteToggle(it.articleId) },
-                    )
-                else
-                    ArticleCard(
-                        article = article,
-                        onClick = {
-                            onArticleClick(article)
-                        },
-                        modifier = modifier,
-                        onFavoriteToggle = { onFavoriteToggle(it.articleId) },
-                        onReadToggle = { onReadToggle(it.articleId) }
-                    )
+                ArticleCard(
+                    article = article,
+                    onClick = {
+                        onArticleClick(article)
+                    },
+                    modifier = modifier,
+                    onFavoriteToggle = { onFavoriteToggle(it.articleId) },
+                    onReadToggle = { onReadToggle(it.articleId) }
+                )
             }
         }
     }

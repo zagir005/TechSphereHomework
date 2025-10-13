@@ -1,4 +1,4 @@
-package com.zagirlek.nytimes.ui.main.news.model
+package com.zagirlek.nytimes.ui.main.news.latest.model
 
 import androidx.paging.PagingData
 import com.zagirlek.nytimes.core.model.NewsCategory

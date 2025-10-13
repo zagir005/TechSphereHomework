@@ -1,4 +1,4 @@
-package com.zagirlek.nytimes.ui.main.news.elements
+package com.zagirlek.nytimes.ui.main.news.latest.elements
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column

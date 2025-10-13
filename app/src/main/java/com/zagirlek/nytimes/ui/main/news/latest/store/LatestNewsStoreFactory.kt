@@ -1,29 +1,26 @@
-package com.zagirlek.nytimes.ui.main.news.store
+package com.zagirlek.nytimes.ui.main.news.latest.store
 
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.arkivanov.mvikotlin.core.store.Reducer
 import com.arkivanov.mvikotlin.core.store.SimpleBootstrapper
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import com.zagirlek.nytimes.R
-import com.zagirlek.nytimes.core.error.ExtractorApiError
-import com.zagirlek.nytimes.core.error.toExtractorApiError
 import com.zagirlek.nytimes.core.model.NewsCategory
 import com.zagirlek.nytimes.core.ui.model.Article
 import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleFavoriteStatusUseCase
 import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleReadStatusUseCase
-import com.zagirlek.nytimes.ui.main.news.store.NewsStore.Intent
-import com.zagirlek.nytimes.ui.main.news.store.NewsStore.Label
-import com.zagirlek.nytimes.ui.main.news.store.NewsStore.Label.ShowError
-import com.zagirlek.nytimes.ui.main.news.store.NewsStore.State
-import com.zagirlek.nytimes.ui.main.news.store.NewsStoreFactory.Action.LoadNews
-import com.zagirlek.nytimes.ui.main.news.store.NewsStoreFactory.Msg.CategoryValue
-import com.zagirlek.nytimes.ui.main.news.store.NewsStoreFactory.Msg.SearchFieldValue
+import com.zagirlek.nytimes.ui.main.news.latest.store.LatestNewsStore.Intent
+import com.zagirlek.nytimes.ui.main.news.latest.store.LatestNewsStore.Label
+import com.zagirlek.nytimes.ui.main.news.latest.store.LatestNewsStore.State
+import com.zagirlek.nytimes.ui.main.news.latest.store.LatestNewsStoreFactory.Action.LoadNews
+import com.zagirlek.nytimes.ui.main.news.latest.store.LatestNewsStoreFactory.Msg.CategoryValue
+import com.zagirlek.nytimes.ui.main.news.latest.store.LatestNewsStoreFactory.Msg.SearchFieldValue
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-class NewsStoreFactory(
+class LatestNewsStoreFactory(
     private val storeFactory: StoreFactory,
     private val loadPagingNews: (category: NewsCategory?,
                                  titleQuery: String?) -> Flow<PagingData<Article>>,
@@ -31,8 +28,8 @@ class NewsStoreFactory(
     private val toggleReadStatusUseCase: ToggleArticleReadStatusUseCase,
 ) {
 
-    fun create(): NewsStore =
-        object : NewsStore, Store<Intent, State, Label> by storeFactory.create(
+    fun create(): LatestNewsStore =
+        object : LatestNewsStore, Store<Intent, State, Label> by storeFactory.create(
             name = "newsStore",
             initialState = State(),
             bootstrapper = SimpleBootstrapper(LoadNews()),
@@ -59,7 +56,7 @@ class NewsStoreFactory(
                 is LoadNews -> {
                     dispatch(
                         Msg.LoadNews(
-                            news = loadPagingNews(action.category, action.searchQuery)
+                            news = loadPagingNews(action.category, action.searchQuery).cachedIn(scope)
                         )
                     )
                 }
@@ -100,18 +97,9 @@ class NewsStoreFactory(
                         toggleReadStatusUseCase(intent.articleId)
                     }
                 }
+                is Intent.ShowArticleDetails -> {
 
-                is Intent.ShowError -> publish(
-                    ShowError(
-                        when(intent.cause.toExtractorApiError()){
-                            ExtractorApiError.RateLimitReached -> R.string.usage_limit_reached
-                            ExtractorApiError.ResourceNotFound -> R.string.article_not_found
-                            ExtractorApiError.ServerError -> R.string.server_error
-                            is ExtractorApiError.UnknownError -> R.string.unknown_error
-                            ExtractorApiError.UsageLimitReached -> R.string.rate_limit_reached
-                        }
-                    )
-                )
+                }
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.zagirlek.nytimes.ui.main.news.elements
+package com.zagirlek.nytimes.ui.main.news.latest.elements
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -26,12 +27,14 @@ import com.zagirlek.nytimes.core.ui.model.Article
 @Composable
 fun NewsList (
     articlesList: LazyPagingItems<Article>,
+    listState: LazyListState,
     modifier: Modifier = Modifier,
     articleCard: @Composable (article: Article, modifier: Modifier) -> Unit,
 ) {
     LazyColumn(
         modifier = modifier
             .fillMaxWidth(),
+        state = listState,
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         when(articlesList.loadState.refresh){

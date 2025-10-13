@@ -1,6 +1,8 @@
 package com.zagirlek.nytimes.data.network.news
 
+import com.zagirlek.nytimes.core.error.toNewsApiError
 import com.zagirlek.nytimes.core.model.NewsCategory
+import com.zagirlek.nytimes.core.utils.mapError
 import com.zagirlek.nytimes.core.utils.runCatchingCancellable
 import com.zagirlek.nytimes.data.network.news.dto.NewsPageDTO
 import com.zagirlek.nytimes.data.network.news.service.NewsService
@@ -27,6 +29,7 @@ class RemoteNewsSource(
                 titleQuery = titleQuery,
                 id = id
             )
+    }.mapError {
+        it.toNewsApiError()
     }
-
 }

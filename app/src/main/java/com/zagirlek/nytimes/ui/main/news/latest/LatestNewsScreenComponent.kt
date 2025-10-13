@@ -1,4 +1,4 @@
-package com.zagirlek.nytimes.ui.main.news
+package com.zagirlek.nytimes.ui.main.news.latest
 
 import androidx.paging.map
 import com.arkivanov.decompose.ComponentContext
@@ -15,41 +15,36 @@ import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
 import com.zagirlek.nytimes.core.model.NewsCategory
 import com.zagirlek.nytimes.core.utils.getStore
-import com.zagirlek.nytimes.domain.usecase.news.GetArticleFullByIdFlowUseCase
-import com.zagirlek.nytimes.domain.usecase.news.GetPagingFavoriteNewsUseCase
 import com.zagirlek.nytimes.domain.usecase.news.GetPagingNewsUseCase
 import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleFavoriteStatusUseCase
 import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleReadStatusUseCase
-import com.zagirlek.nytimes.ui.main.articledetails.ArticleDetailsComponent
-import com.zagirlek.nytimes.ui.main.articledetails.cmp.DefaultArticleDetailsComponent
-import com.zagirlek.nytimes.ui.main.news.model.NewsModel
-import com.zagirlek.nytimes.ui.main.news.model.NewsSideEffect
-import com.zagirlek.nytimes.ui.main.news.model.toArticleItem
-import com.zagirlek.nytimes.ui.main.news.model.toModel
-import com.zagirlek.nytimes.ui.main.news.store.NewsStore
-import com.zagirlek.nytimes.ui.main.news.store.NewsStoreFactory
+import com.zagirlek.nytimes.ui.main.news.articledetails.ArticleDetailsComponent
+import com.zagirlek.nytimes.ui.main.news.articledetails.cmp.ArticleDetailsComponentFactory
+import com.zagirlek.nytimes.ui.main.news.latest.model.NewsModel
+import com.zagirlek.nytimes.ui.main.news.latest.model.NewsSideEffect
+import com.zagirlek.nytimes.ui.main.news.latest.model.toArticleItem
+import com.zagirlek.nytimes.ui.main.news.latest.model.toModel
+import com.zagirlek.nytimes.ui.main.news.latest.store.LatestNewsStore
+import com.zagirlek.nytimes.ui.main.news.latest.store.LatestNewsStoreFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.serialization.Serializable
 
-class NewsScreenComponent(
+class LatestNewsScreenComponent(
     componentContext: ComponentContext,
-    private val favoriteListMode: Boolean,
     private val storeFactory: StoreFactory,
+    private val articleDetailsComponentFactory: ArticleDetailsComponentFactory,
     private val getPagingNewsUseCase: GetPagingNewsUseCase,
-    private val getPagingFavoriteNewsUseCase: GetPagingFavoriteNewsUseCase,
     private val toggleFavoriteStatusUseCase: ToggleArticleFavoriteStatusUseCase,
     private val toggleReadStatusUseCase: ToggleArticleReadStatusUseCase,
-    private val getArticleFullByIdFlowUseCase: GetArticleFullByIdFlowUseCase
-): ComponentContext by componentContext, NewsScreen {
+): ComponentContext by componentContext, LatestNewsScreen {
     private val componentScope = coroutineScope(
         context = SupervisorJob() + Dispatchers.Main.immediate
     ).also {
@@ -57,23 +52,15 @@ class NewsScreenComponent(
     }
 
     private val storeInstance = instanceKeeper.getStore {
-        NewsStoreFactory(
+        LatestNewsStoreFactory(
             storeFactory = storeFactory,
             loadPagingNews = { category, query ->
-                if (favoriteListMode)
-                    getPagingFavoriteNewsUseCase(category, query)
-                        .map {
-                            it.map {
+                getPagingNewsUseCase(category,query)
+                    .map {
+                        it.map {
                                 article -> article.toArticleItem()
-                            }
                         }
-                else
-                    getPagingNewsUseCase(category,query)
-                        .map {
-                            it.map {
-                                article -> article.toArticleItem()
-                            }
-                        }
+                    }
             },
             toggleReadStatusUseCase = toggleReadStatusUseCase,
             toggleFavoriteStatusUseCase = toggleFavoriteStatusUseCase
@@ -84,10 +71,9 @@ class NewsScreenComponent(
         .labels
         .map {
             when(it){
-                is NewsStore.Label.ShowError -> NewsSideEffect.ShowSnackbar(it.msgRes)
+                is LatestNewsStore.Label.ShowError -> NewsSideEffect.ShowSnackbar(it.msgRes)
             }
         }
-        .filterNotNull()
         .shareIn(
             scope = componentScope,
             started = SharingStarted.WhileSubscribed(),
@@ -111,38 +97,31 @@ class NewsScreenComponent(
             serializer = ArticleDetailsModalSheetConfig.serializer(),
             handleBackButton = true,
         ) { config, childComponentContext ->
-        DefaultArticleDetailsComponent(
-            componentContext = componentContext,
-            articleId = config.articleId,
-            onErrorClose = {
-                storeInstance.accept(NewsStore.Intent.ShowError(it))
-                hideArticleDetails()
-            },
-            getArticleFullByIdFlowUseCase = getArticleFullByIdFlowUseCase,
-            toggleReadStatusUseCase = toggleReadStatusUseCase,
-            toggleFavoriteStatusUseCase = toggleFavoriteStatusUseCase
+        articleDetailsComponentFactory.create(
+            context = childComponentContext,
+            articleId = config.articleId
         )
     }
 
     override fun toggleArticleReadStatus(articleId: String) =
         storeInstance.accept(
-            intent = NewsStore.Intent.ToggleArticleReadStatus(
+            intent = LatestNewsStore.Intent.ToggleArticleReadStatus(
                 articleId = articleId,
             )
         )
 
     override fun toggleArticleFavoriteStatus(articleId: String) =
         storeInstance.accept(
-            intent = NewsStore.Intent.ToggleArticleFavoriteStatus(
+            intent = LatestNewsStore.Intent.ToggleArticleFavoriteStatus(
                 articleId = articleId,
             )
         )
 
     override fun searchByTitle(query: String?) =
-        storeInstance.accept(NewsStore.Intent.SearchFieldChange(query))
+        storeInstance.accept(LatestNewsStore.Intent.SearchFieldChange(query))
 
     override fun filterByCategory(category: NewsCategory?) =
-        storeInstance.accept(NewsStore.Intent.SelectCategory(category))
+        storeInstance.accept(LatestNewsStore.Intent.SelectCategory(category))
 
     override fun showArticleDetails(articleId: String) {
         dialogNavigation.activate(

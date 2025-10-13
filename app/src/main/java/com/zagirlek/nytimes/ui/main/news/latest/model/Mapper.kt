@@ -1,10 +1,10 @@
-package com.zagirlek.nytimes.ui.main.news.model
+package com.zagirlek.nytimes.ui.main.news.latest.model
 
 import com.zagirlek.nytimes.core.ui.model.Article
 import com.zagirlek.nytimes.core.utils.timeAgoOrDate
 import com.zagirlek.nytimes.domain.model.ArticleFullWithStatus
 import com.zagirlek.nytimes.domain.model.ArticleLiteWithStatus
-import com.zagirlek.nytimes.ui.main.news.store.NewsStore
+import com.zagirlek.nytimes.ui.main.news.latest.store.LatestNewsStore
 
 fun ArticleLiteWithStatus.toArticleItem(): Article = Article(
     articleId = articleId,
@@ -31,7 +31,7 @@ fun ArticleFullWithStatus.toArticleItem(): Article = Article(
     isFavorite = isFavorite,
 )
 
-fun NewsStore.State.toModel(): NewsModel = NewsModel(
+fun LatestNewsStore.State.toModel(): NewsModel = NewsModel(
     newsPages = newsFlow,
     selectedCategory = selectedCategory,
     searchFieldValue = searchField,

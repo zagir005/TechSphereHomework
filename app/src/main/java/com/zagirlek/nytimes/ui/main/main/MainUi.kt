@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.zagirlek.nytimes.ui.main.main.element.MainNavigationBar
 import com.zagirlek.nytimes.ui.main.main.element.Tab
-import com.zagirlek.nytimes.ui.main.news.NewsScreenUi
+import com.zagirlek.nytimes.ui.main.news.latest.LatestNewsScreenUi
 import com.zagirlek.nytimes.ui.main.weather.WeatherScreen
 import kotlinx.coroutines.launch
 
@@ -68,9 +68,8 @@ fun MainUi(
                         component = child.component)
                 }
                 is MainComponent.Child.News -> {
-                    NewsScreenUi(
-                        component = child.component,
-                        favoriteListMode = false
+                    LatestNewsScreenUi(
+                        component = child.component
                     ){
                         scope.launch {
                             snackbarHostState.showSnackbar(message = it)
@@ -78,14 +77,7 @@ fun MainUi(
                     }
                 }
                 is MainComponent.Child.Favorites -> {
-                    NewsScreenUi(
-                        component = child.component,
-                        favoriteListMode = true
-                    ){
-                        scope.launch {
-                            snackbarHostState.showSnackbar(message = it)
-                        }
-                    }
+
                 }
             }
         }

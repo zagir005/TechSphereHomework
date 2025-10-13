@@ -1,17 +1,17 @@
-package com.zagirlek.nytimes.ui.main.news.store
+package com.zagirlek.nytimes.ui.main.news.latest.store
 
 import androidx.paging.PagingData
 import com.arkivanov.mvikotlin.core.store.Store
 import com.zagirlek.nytimes.core.model.NewsCategory
 import com.zagirlek.nytimes.core.ui.model.Article
-import com.zagirlek.nytimes.ui.main.news.store.NewsStore.Intent
-import com.zagirlek.nytimes.ui.main.news.store.NewsStore.Label
-import com.zagirlek.nytimes.ui.main.news.store.NewsStore.State
+import com.zagirlek.nytimes.ui.main.news.latest.store.LatestNewsStore.Intent
+import com.zagirlek.nytimes.ui.main.news.latest.store.LatestNewsStore.Label
+import com.zagirlek.nytimes.ui.main.news.latest.store.LatestNewsStore.State
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
 
-interface NewsStore: Store<Intent, State, Label> {
+interface LatestNewsStore: Store<Intent, State, Label> {
     data class State (
         val newsFlow: Flow<PagingData<Article>> = emptyFlow(),
         val selectedCategory: NewsCategory? = null,
@@ -23,8 +23,7 @@ interface NewsStore: Store<Intent, State, Label> {
         data class SearchFieldChange(val text: String?): Intent()
         data class ToggleArticleReadStatus(val articleId: String): Intent()
         data class ToggleArticleFavoriteStatus(val articleId: String): Intent()
-        //честно говоря это костыль
-        data class ShowError(val cause: Throwable): Intent()
+        data class ShowArticleDetails(val articleId: String): Intent()
     }
 
     sealed class Label {

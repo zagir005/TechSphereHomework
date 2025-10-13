@@ -22,7 +22,6 @@ class RootModule(
         toggleArticleFavoriteStatusUseCase = useCaseModule.toggleArticleFavoriteStatusUseCase(),
         toggleArticleReadStatusUseCase = useCaseModule.toggleArticleReadStatusUseCase(),
         getArticleFullByIdFlowUseCase = useCaseModule.getArticleFullByIdFlowUseCase(),
-        getPagingFavoriteNewsUseCase = useCaseModule.getPagingFavoriteNewsUseCase()
     )
 
     fun getSplashModule(): SplashModule = SplashModule(
