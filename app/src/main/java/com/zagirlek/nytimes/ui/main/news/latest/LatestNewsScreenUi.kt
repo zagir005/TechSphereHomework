@@ -14,7 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.zagirlek.nytimes.ui.main.news.articledetails.ArticleDetailsBottomSheet
-import com.zagirlek.nytimes.ui.main.news.latest.elements.NewsScreenContent
+import com.zagirlek.nytimes.ui.main.news.latest.elements.LatestNewsScreenContent
 import com.zagirlek.nytimes.ui.main.news.latest.model.NewsSideEffect
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -46,8 +46,7 @@ fun LatestNewsScreenUi(
         }
     }
 
-
-    NewsScreenContent(
+    LatestNewsScreenContent(
         model = model,
         modifier = Modifier
             .fillMaxWidth()

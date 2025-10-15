@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.zagirlek.nytimes.ui.main.main.element.MainNavigationBar
 import com.zagirlek.nytimes.ui.main.main.element.Tab
+import com.zagirlek.nytimes.ui.main.news.favorite.FavoriteNewsScreenUi
 import com.zagirlek.nytimes.ui.main.news.latest.LatestNewsScreenUi
 import com.zagirlek.nytimes.ui.main.weather.WeatherScreen
 import kotlinx.coroutines.launch
@@ -64,8 +65,7 @@ fun MainUi(
         ){
             when(val child = pages.items[pages.selectedIndex].instance!!){
                 is MainComponent.Child.Weather -> {
-                    WeatherScreen(
-                        component = child.component)
+                    WeatherScreen(component = child.component)
                 }
                 is MainComponent.Child.News -> {
                     LatestNewsScreenUi(
@@ -77,7 +77,9 @@ fun MainUi(
                     }
                 }
                 is MainComponent.Child.Favorites -> {
-
+                    FavoriteNewsScreenUi(
+                        component = child.component
+                    )
                 }
             }
         }

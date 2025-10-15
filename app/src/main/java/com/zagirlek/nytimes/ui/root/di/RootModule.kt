@@ -18,10 +18,11 @@ class RootModule(
         deleteWeatherPointUseCase = useCaseModule.deleteWeatherPointUseCase(),
         addWeatherPointUseCase = useCaseModule.addWeatherPointUseCase(),
         getOrPutCityUseCase = useCaseModule.getOrPutCityUseCase(),
-        getPagingNewsUseCase = useCaseModule.getPagingNewsUseCase(),
+        latestNewsPagingUseCase = useCaseModule.getLatestNewsPagingUseCase(),
+        favoriteNewsFlowUseCase = useCaseModule.getFavoriteNewsFlowUseCase(),
         toggleArticleFavoriteStatusUseCase = useCaseModule.toggleArticleFavoriteStatusUseCase(),
         toggleArticleReadStatusUseCase = useCaseModule.toggleArticleReadStatusUseCase(),
-        getArticleFullByIdFlowUseCase = useCaseModule.getArticleFullByIdFlowUseCase(),
+        getArticleFullFlowUseCase = useCaseModule.getArticleFullByIdFlowUseCase(),
     )
 
     fun getSplashModule(): SplashModule = SplashModule(

@@ -32,7 +32,7 @@ import com.zagirlek.nytimes.core.ui.elements.ArticleStatus
 import com.zagirlek.nytimes.core.ui.elements.ArticleText
 import com.zagirlek.nytimes.core.ui.elements.CategoryDateInfo
 import com.zagirlek.nytimes.core.ui.elements.NyTimesPreview
-import com.zagirlek.nytimes.core.ui.model.Article
+import com.zagirlek.nytimes.ui.main.news.model.Article
 
 @Composable
 fun ArticleCard(

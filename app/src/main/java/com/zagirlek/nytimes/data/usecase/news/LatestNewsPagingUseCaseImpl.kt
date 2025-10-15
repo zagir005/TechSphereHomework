@@ -2,19 +2,19 @@ package com.zagirlek.nytimes.data.usecase.news
 
 import androidx.paging.PagingData
 import com.zagirlek.nytimes.core.model.NewsCategory
-import com.zagirlek.nytimes.domain.model.ArticleFullWithStatus
+import com.zagirlek.nytimes.domain.model.ArticleLiteWithStatus
 import com.zagirlek.nytimes.domain.repository.NewsRepository
-import com.zagirlek.nytimes.domain.usecase.news.GetPagingFavoriteNewsUseCase
+import com.zagirlek.nytimes.domain.usecase.news.LatestNewsPagingUseCase
 import kotlinx.coroutines.flow.Flow
 
-class GetPagingFavoriteNewsUseCaseImpl(
+class LatestNewsPagingUseCaseImpl(
     private val newsRepository: NewsRepository
-): GetPagingFavoriteNewsUseCase {
+): LatestNewsPagingUseCase {
     override fun invoke(
         category: NewsCategory?,
         titleQuery: String?
-    ): Flow<PagingData<ArticleFullWithStatus>> =
-        newsRepository.getFavoriteNewsPager(
+    ): Flow<PagingData<ArticleLiteWithStatus>> =
+        newsRepository.getNewsPager(
             category = category,
             titleQuery = titleQuery
         )

@@ -6,7 +6,7 @@ import com.arkivanov.essenty.lifecycle.doOnDestroy
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
 import com.zagirlek.nytimes.core.utils.getStore
-import com.zagirlek.nytimes.domain.usecase.news.GetArticleFullByIdFlowUseCase
+import com.zagirlek.nytimes.domain.usecase.news.GetArticleFullFlowUseCase
 import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleFavoriteStatusUseCase
 import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleReadStatusUseCase
 import com.zagirlek.nytimes.ui.main.news.articledetails.ArticleDetailsComponent
@@ -22,7 +22,7 @@ class DefaultArticleDetailsComponent(
     componentContext: ComponentContext,
     private val storeFactory: StoreFactory,
     private val articleId: String,
-    private val getArticleFullByIdFlowUseCase: GetArticleFullByIdFlowUseCase,
+    private val getArticleFullFlowUseCase: GetArticleFullFlowUseCase,
     private val toggleFavoriteStatusUseCase: ToggleArticleFavoriteStatusUseCase,
     private val toggleReadStatusUseCase: ToggleArticleReadStatusUseCase,
 ): ArticleDetailsComponent, ComponentContext by componentContext {
@@ -35,7 +35,7 @@ class DefaultArticleDetailsComponent(
             articleId = articleId,
             toggleFavoriteUseCase = toggleFavoriteStatusUseCase,
             toggleReadUseCase = toggleReadStatusUseCase,
-            getArticleFullByIdFlowUseCase = getArticleFullByIdFlowUseCase
+            getArticleFullFlowUseCase = getArticleFullFlowUseCase
         ).create()
     }
     override val article: StateFlow<ArticleDetailsStore.State> = storeInstance

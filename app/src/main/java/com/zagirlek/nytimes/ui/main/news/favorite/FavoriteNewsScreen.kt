@@ -4,14 +4,11 @@ import com.arkivanov.decompose.router.slot.ChildSlot
 import com.arkivanov.decompose.value.Value
 import com.zagirlek.nytimes.core.model.NewsCategory
 import com.zagirlek.nytimes.ui.main.news.articledetails.ArticleDetailsComponent
-import com.zagirlek.nytimes.ui.main.news.latest.model.NewsModel
-import com.zagirlek.nytimes.ui.main.news.latest.model.NewsSideEffect
-import kotlinx.coroutines.flow.SharedFlow
+import com.zagirlek.nytimes.ui.main.news.favorite.model.FavoriteNewsModel
 import kotlinx.coroutines.flow.StateFlow
 
-interface FavoriteScreen {
-    val model: StateFlow<NewsModel>
-    val sideEffect: SharedFlow<NewsSideEffect>
+interface FavoriteNewsScreen {
+    val model: StateFlow<FavoriteNewsModel>
     val dialog: Value<ChildSlot<*, ArticleDetailsComponent>>
     fun toggleArticleFavoriteStatus(articleId: String)
     fun searchByTitle(query: String?)

@@ -22,10 +22,10 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
 import com.valentinilk.shimmer.shimmer
-import com.zagirlek.nytimes.core.ui.model.Article
+import com.zagirlek.nytimes.ui.main.news.model.Article
 
 @Composable
-fun NewsList (
+fun PagingNewsList (
     articlesList: LazyPagingItems<Article>,
     listState: LazyListState,
     modifier: Modifier = Modifier,
@@ -73,7 +73,7 @@ fun NewsList (
 
 
 @Composable
-fun NewsListLoadingIndicator() {
+private fun NewsListLoadingIndicator() {
     Row(
         modifier = Modifier
             .fillMaxWidth()

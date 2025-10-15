@@ -1,6 +1,5 @@
-package com.zagirlek.nytimes.ui.main.news.latest
+package com.zagirlek.nytimes.ui.main.news.latest.cmp
 
-import androidx.paging.map
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.slot.ChildSlot
 import com.arkivanov.decompose.router.slot.SlotNavigation
@@ -15,14 +14,14 @@ import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
 import com.zagirlek.nytimes.core.model.NewsCategory
 import com.zagirlek.nytimes.core.utils.getStore
-import com.zagirlek.nytimes.domain.usecase.news.GetPagingNewsUseCase
+import com.zagirlek.nytimes.domain.usecase.news.LatestNewsPagingUseCase
 import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleFavoriteStatusUseCase
 import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleReadStatusUseCase
 import com.zagirlek.nytimes.ui.main.news.articledetails.ArticleDetailsComponent
 import com.zagirlek.nytimes.ui.main.news.articledetails.cmp.ArticleDetailsComponentFactory
-import com.zagirlek.nytimes.ui.main.news.latest.model.NewsModel
+import com.zagirlek.nytimes.ui.main.news.latest.LatestNewsScreen
+import com.zagirlek.nytimes.ui.main.news.latest.model.LatestNewsModel
 import com.zagirlek.nytimes.ui.main.news.latest.model.NewsSideEffect
-import com.zagirlek.nytimes.ui.main.news.latest.model.toArticleItem
 import com.zagirlek.nytimes.ui.main.news.latest.model.toModel
 import com.zagirlek.nytimes.ui.main.news.latest.store.LatestNewsStore
 import com.zagirlek.nytimes.ui.main.news.latest.store.LatestNewsStoreFactory
@@ -35,13 +34,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.serialization.Serializable
 
 class LatestNewsScreenComponent(
     componentContext: ComponentContext,
     private val storeFactory: StoreFactory,
     private val articleDetailsComponentFactory: ArticleDetailsComponentFactory,
-    private val getPagingNewsUseCase: GetPagingNewsUseCase,
+    private val latestNewsPagingUseCase: LatestNewsPagingUseCase,
     private val toggleFavoriteStatusUseCase: ToggleArticleFavoriteStatusUseCase,
     private val toggleReadStatusUseCase: ToggleArticleReadStatusUseCase,
 ): ComponentContext by componentContext, LatestNewsScreen {
@@ -54,14 +52,7 @@ class LatestNewsScreenComponent(
     private val storeInstance = instanceKeeper.getStore {
         LatestNewsStoreFactory(
             storeFactory = storeFactory,
-            loadPagingNews = { category, query ->
-                getPagingNewsUseCase(category,query)
-                    .map {
-                        it.map {
-                                article -> article.toArticleItem()
-                        }
-                    }
-            },
+            latestNewsPagingUseCase = latestNewsPagingUseCase,
             toggleReadStatusUseCase = toggleReadStatusUseCase,
             toggleFavoriteStatusUseCase = toggleFavoriteStatusUseCase
         ).create()
@@ -80,7 +71,7 @@ class LatestNewsScreenComponent(
             replay = 0
         )
 
-    override val model: StateFlow<NewsModel> = storeInstance
+    override val model: StateFlow<LatestNewsModel> = storeInstance
         .stateFlow(lifecycle)
         .map {
             it.toModel()
@@ -88,13 +79,13 @@ class LatestNewsScreenComponent(
         .stateIn(
             scope = componentScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = NewsModel()
+            initialValue = LatestNewsModel()
         )
 
-    private val dialogNavigation = SlotNavigation<ArticleDetailsModalSheetConfig>()
+    private val dialogNavigation = SlotNavigation<ArticleDetailsComponent.ArticleDetailsConfig>()
     override val dialog: Value<ChildSlot<*, ArticleDetailsComponent>> = childSlot(
             source = dialogNavigation,
-            serializer = ArticleDetailsModalSheetConfig.serializer(),
+            serializer = ArticleDetailsComponent.ArticleDetailsConfig.serializer(),
             handleBackButton = true,
         ) { config, childComponentContext ->
         articleDetailsComponentFactory.create(
@@ -125,16 +116,11 @@ class LatestNewsScreenComponent(
 
     override fun showArticleDetails(articleId: String) {
         dialogNavigation.activate(
-            ArticleDetailsModalSheetConfig(articleId)
+            ArticleDetailsComponent.ArticleDetailsConfig(articleId)
         )
     }
 
     override fun hideArticleDetails() {
         dialogNavigation.dismiss()
     }
-
-    @Serializable
-    private data class ArticleDetailsModalSheetConfig(
-        val articleId: String
-    )
 }

@@ -22,14 +22,14 @@ import com.zagirlek.nytimes.R
 import com.zagirlek.nytimes.core.error.toNewsApiError
 import com.zagirlek.nytimes.core.model.NewsCategory
 import com.zagirlek.nytimes.core.ui.elements.AppTextField
-import com.zagirlek.nytimes.core.ui.model.Article
 import com.zagirlek.nytimes.ui.elements.NewsCategorySelector
-import com.zagirlek.nytimes.ui.main.news.latest.model.NewsModel
+import com.zagirlek.nytimes.ui.main.news.latest.model.LatestNewsModel
+import com.zagirlek.nytimes.ui.main.news.model.Article
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewsScreenContent(
-    model: NewsModel,
+fun LatestNewsScreenContent(
+    model: LatestNewsModel,
     modifier: Modifier = Modifier,
     showError: (String) -> Unit,
     searchValueChanged: (String?) -> Unit = {},
@@ -85,7 +85,7 @@ fun NewsScreenContent(
 
             Spacer(modifier = Modifier.height(2.dp))
 
-            NewsList(
+            PagingNewsList(
                 articlesList = newsList,
                 listState = lazyListState,
                 modifier = Modifier.fillMaxHeight()

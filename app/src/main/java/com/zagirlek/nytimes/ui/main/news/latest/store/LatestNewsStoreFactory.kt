@@ -8,26 +8,26 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import com.zagirlek.nytimes.core.model.NewsCategory
-import com.zagirlek.nytimes.core.ui.model.Article
+import com.zagirlek.nytimes.domain.usecase.news.LatestNewsPagingUseCase
 import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleFavoriteStatusUseCase
 import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleReadStatusUseCase
+import com.zagirlek.nytimes.ui.main.news.latest.model.toArticleFlow
 import com.zagirlek.nytimes.ui.main.news.latest.store.LatestNewsStore.Intent
 import com.zagirlek.nytimes.ui.main.news.latest.store.LatestNewsStore.Label
 import com.zagirlek.nytimes.ui.main.news.latest.store.LatestNewsStore.State
 import com.zagirlek.nytimes.ui.main.news.latest.store.LatestNewsStoreFactory.Action.LoadNews
 import com.zagirlek.nytimes.ui.main.news.latest.store.LatestNewsStoreFactory.Msg.CategoryValue
 import com.zagirlek.nytimes.ui.main.news.latest.store.LatestNewsStoreFactory.Msg.SearchFieldValue
+import com.zagirlek.nytimes.ui.main.news.model.Article
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class LatestNewsStoreFactory(
     private val storeFactory: StoreFactory,
-    private val loadPagingNews: (category: NewsCategory?,
-                                 titleQuery: String?) -> Flow<PagingData<Article>>,
+    private val latestNewsPagingUseCase: LatestNewsPagingUseCase,
     private val toggleFavoriteStatusUseCase: ToggleArticleFavoriteStatusUseCase,
     private val toggleReadStatusUseCase: ToggleArticleReadStatusUseCase,
 ) {
-
     fun create(): LatestNewsStore =
         object : LatestNewsStore, Store<Intent, State, Label> by storeFactory.create(
             name = "newsStore",
@@ -56,7 +56,12 @@ class LatestNewsStoreFactory(
                 is LoadNews -> {
                     dispatch(
                         Msg.LoadNews(
-                            news = loadPagingNews(action.category, action.searchQuery).cachedIn(scope)
+                            news = latestNewsPagingUseCase(
+                                category = action.category,
+                                titleQuery = action.searchQuery
+                            )
+                                .cachedIn(scope)
+                                .toArticleFlow()
                         )
                     )
                 }
@@ -96,9 +101,6 @@ class LatestNewsStoreFactory(
                     scope.launch {
                         toggleReadStatusUseCase(intent.articleId)
                     }
-                }
-                is Intent.ShowArticleDetails -> {
-
                 }
             }
         }

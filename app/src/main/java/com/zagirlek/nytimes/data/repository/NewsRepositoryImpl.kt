@@ -55,19 +55,14 @@ class NewsRepositoryImpl(
             }
     }
 
-    override fun getFavoriteNewsPager(
+    override fun getFavoriteNewsFlow(
         category: NewsCategory?,
         titleQuery: String?
-    ): Flow<PagingData<ArticleFullWithStatus>> {
-        return Pager(
-            config = PagingConfig(pageSize = 5, enablePlaceholders = false),
-            pagingSourceFactory = { articleFullDao.getFavoriteArticlesPaging(titleQuery, category) }
-        )
-            .flow
-            .map { pagingData ->
-                pagingData.map { articleFullDao ->
-                    articleFullDao.toDomain()
+    ): Flow<List<ArticleFullWithStatus>> =
+        articleFullDao.getFavoriteArticlesFlow(titleQuery, category)
+            .map { list ->
+                list.map { article ->
+                    article.toDomain()
                 }
             }
-    }
 }

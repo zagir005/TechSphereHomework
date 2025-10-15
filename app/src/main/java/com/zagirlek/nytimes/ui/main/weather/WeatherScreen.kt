@@ -12,10 +12,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.zagirlek.nytimes.R
+import com.zagirlek.nytimes.ui.main.weather.cmp.state.WeatherEffect
 import com.zagirlek.nytimes.ui.main.weather.elements.WeatherScreenContent
 import com.zagirlek.nytimes.ui.main.weather.elements.weatherdialog.WeatherScreenDialog
 import com.zagirlek.nytimes.ui.main.weather.elements.weatherdialog.WeatherScreenDialogState
-import com.zagirlek.nytimes.ui.screen.main.weather.cmp.state.WeatherEffect
 
 @Composable
 fun WeatherScreen(

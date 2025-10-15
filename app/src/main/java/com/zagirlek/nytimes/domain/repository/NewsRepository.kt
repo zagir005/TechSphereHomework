@@ -12,8 +12,8 @@ interface NewsRepository {
         titleQuery: String? = null
     ): Flow<PagingData<ArticleLiteWithStatus>>
 
-    fun getFavoriteNewsPager(
+    fun getFavoriteNewsFlow(
         category: NewsCategory? = null,
         titleQuery: String? = null
-    ): Flow<PagingData<ArticleFullWithStatus>>
+    ): Flow<List<ArticleFullWithStatus>>
 }

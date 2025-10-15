@@ -11,7 +11,7 @@ import com.zagirlek.nytimes.core.error.AppError
 import com.zagirlek.nytimes.core.error.ExtractorApiError
 import com.zagirlek.nytimes.core.error.NewsApiError
 import com.zagirlek.nytimes.domain.model.ArticleFullWithStatus
-import com.zagirlek.nytimes.domain.usecase.news.GetArticleFullByIdFlowUseCase
+import com.zagirlek.nytimes.domain.usecase.news.GetArticleFullFlowUseCase
 import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleFavoriteStatusUseCase
 import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleReadStatusUseCase
 import com.zagirlek.nytimes.ui.main.news.articledetails.store.ArticleDetailsStore.Intent
@@ -25,7 +25,7 @@ class ArticleDetailsStoreFactory(
     private val articleId: String,
     private val toggleFavoriteUseCase: ToggleArticleFavoriteStatusUseCase,
     private val toggleReadUseCase: ToggleArticleReadStatusUseCase,
-    private val getArticleFullByIdFlowUseCase: GetArticleFullByIdFlowUseCase
+    private val getArticleFullFlowUseCase: GetArticleFullFlowUseCase
 ) {
     fun create(): ArticleDetailsStore = object : ArticleDetailsStore, Store<Intent, State, Nothing> by storeFactory.create(
         name = "article_details",
@@ -67,7 +67,7 @@ class ArticleDetailsStoreFactory(
         }
         private fun loadArticle(articleId: String) = scope.launch {
             withContext(Dispatchers.Main) { dispatch(Msg.Loading) }
-            getArticleFullByIdFlowUseCase(articleId)
+            getArticleFullFlowUseCase(articleId)
                 .collect { result ->
                     result
                         .onSuccess {

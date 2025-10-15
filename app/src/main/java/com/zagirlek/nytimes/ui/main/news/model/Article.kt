@@ -1,4 +1,4 @@
-package com.zagirlek.nytimes.core.ui.model
+package com.zagirlek.nytimes.ui.main.news.model
 
 import com.zagirlek.nytimes.core.model.NewsCategory
 

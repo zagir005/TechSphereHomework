@@ -1,10 +1,13 @@
 package com.zagirlek.nytimes.ui.main.news.latest.model
 
-import com.zagirlek.nytimes.core.ui.model.Article
+import androidx.paging.PagingData
+import androidx.paging.map
 import com.zagirlek.nytimes.core.utils.timeAgoOrDate
-import com.zagirlek.nytimes.domain.model.ArticleFullWithStatus
 import com.zagirlek.nytimes.domain.model.ArticleLiteWithStatus
 import com.zagirlek.nytimes.ui.main.news.latest.store.LatestNewsStore
+import com.zagirlek.nytimes.ui.main.news.model.Article
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 fun ArticleLiteWithStatus.toArticleItem(): Article = Article(
     articleId = articleId,
@@ -18,20 +21,13 @@ fun ArticleLiteWithStatus.toArticleItem(): Article = Article(
     isRead = isRead,
     isFavorite = isFavorite,
 )
-fun ArticleFullWithStatus.toArticleItem(): Article = Article(
-    articleId = articleId,
-    title = title,
-    category = category,
-    imageUrl = imageUrl,
-    creator = creator?.ifBlank { sourceName } ?: sourceName,
-    pubDate = pubDate.timeAgoOrDate(),
-    readTime = "5 мин",
-    description = description,
-    isRead = isRead,
-    isFavorite = isFavorite,
-)
+fun Flow<PagingData<ArticleLiteWithStatus>>.toArticleFlow() = map { list ->
+    list.map {
+        it.toArticleItem()
+    }
+}
 
-fun LatestNewsStore.State.toModel(): NewsModel = NewsModel(
+fun LatestNewsStore.State.toModel(): LatestNewsModel = LatestNewsModel(
     newsPages = newsFlow,
     selectedCategory = selectedCategory,
     searchFieldValue = searchField,

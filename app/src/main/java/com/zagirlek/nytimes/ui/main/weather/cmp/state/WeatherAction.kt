@@ -1,4 +1,4 @@
-package com.zagirlek.nytimes.ui.screen.main.weather.cmp.state
+package com.zagirlek.nytimes.ui.main.weather.cmp.state
 
 import com.zagirlek.nytimes.core.base.component.Action
 import com.zagirlek.nytimes.domain.model.City

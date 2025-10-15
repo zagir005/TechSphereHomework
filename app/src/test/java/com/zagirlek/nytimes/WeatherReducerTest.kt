@@ -4,7 +4,7 @@ import com.zagirlek.nytimes.domain.model.City
 import com.zagirlek.nytimes.domain.model.WeatherPoint
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherMutation
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherReducer
-import com.zagirlek.nytimes.ui.screen.main.weather.cmp.state.WeatherState
+import com.zagirlek.nytimes.ui.main.weather.cmp.state.WeatherState
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull

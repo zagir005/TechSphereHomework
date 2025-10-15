@@ -1,9 +1,10 @@
 package com.zagirlek.nytimes.domain.usecase.news
 
 import com.zagirlek.nytimes.domain.model.ArticleFullWithStatus
+import kotlinx.coroutines.flow.Flow
 
-fun interface GetArticleFullByIdUseCase {
+fun interface GetArticleFullFlowUseCase {
     suspend operator fun invoke(
         articleId: String
-    ): Result<ArticleFullWithStatus>
+    ): Flow<Result<ArticleFullWithStatus>>
 }
