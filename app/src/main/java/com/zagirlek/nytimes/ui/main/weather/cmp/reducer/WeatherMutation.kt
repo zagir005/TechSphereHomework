@@ -1,6 +1,7 @@
-package com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer
+package com.zagirlek.nytimes.ui.main.weather.cmp.reducer
 
-import com.zagirlek.nytimes.core.base.reducer.Mutation
+
+import com.zagirlek.common.basemvi.reducer.Mutation
 import com.zagirlek.nytimes.domain.model.City
 import com.zagirlek.nytimes.domain.model.WeatherPoint
 

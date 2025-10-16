@@ -1,8 +1,8 @@
 package com.zagirlek.nytimes.data.repository
 
-import com.zagirlek.nytimes.core.error.AuthError
-import com.zagirlek.nytimes.core.networkchecker.NetworkConnectionChecker
-import com.zagirlek.nytimes.core.utils.runCatchingCancellable
+import com.zagirlek.android.networkchecker.NetworkConnectionChecker
+import com.zagirlek.common.error.AuthError
+import com.zagirlek.common.utils.runCatchingCancellable
 import com.zagirlek.nytimes.domain.model.AuthToken
 import com.zagirlek.nytimes.domain.repository.AuthRepository
 import kotlinx.coroutines.delay

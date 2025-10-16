@@ -1,8 +1,11 @@
 package com.zagirlek.nytimes.data.repository.di
 
-import com.zagirlek.nytimes.core.networkchecker.NetworkConnectionChecker
-import com.zagirlek.nytimes.data.local.NyTimesDatabase
-import com.zagirlek.nytimes.data.network.NetworkModule
+import com.zagirlek.android.networkchecker.NetworkConnectionChecker
+import com.zagirlek.local.news.dao.ArticleFullDao
+import com.zagirlek.local.news.dao.ArticleLiteDao
+import com.zagirlek.local.news.dao.ArticleStatusDao
+import com.zagirlek.local.weather.dao.CityDao
+import com.zagirlek.local.weather.dao.WeatherDao
 import com.zagirlek.nytimes.data.repository.ArticleRepositoryImpl
 import com.zagirlek.nytimes.data.repository.ArticleStatusRepositoryImpl
 import com.zagirlek.nytimes.data.repository.CityAutocompleteRepositoryImpl
@@ -17,11 +20,20 @@ import com.zagirlek.nytimes.domain.repository.CityAutocompleteRepository
 import com.zagirlek.nytimes.domain.repository.CityRepository
 import com.zagirlek.nytimes.domain.repository.NewsRepository
 import com.zagirlek.nytimes.domain.repository.WeatherRepository
+import com.zagirlek.remote.autocomplete.service.AutocompleteService
+import com.zagirlek.remote.extractor.RemoteNewsExtractorSource
+import com.zagirlek.remote.news.RemoteNewsSource
 
 class RepositoryModule(
-    private val database: NyTimesDatabase,
-    private val networkModule: NetworkModule,
-    connectionChecker: NetworkConnectionChecker
+    private val autocompleteService: AutocompleteService,
+    private val remoteNewsSource: RemoteNewsSource,
+    private val remoteNewsExtractorSource: RemoteNewsExtractorSource,
+    private val weatherDao: WeatherDao,
+    private val cityDao: CityDao,
+    private val articleFullDao: ArticleFullDao,
+    private val articleLiteDao: ArticleLiteDao,
+    private val articleStatusDao: ArticleStatusDao,
+    private val connectionChecker: NetworkConnectionChecker
 ) {
     val authRepository: AuthRepository by lazy {
         MockAuthRepositoryImpl(
@@ -30,39 +42,39 @@ class RepositoryModule(
     }
     val cityAutocompleteRepository: CityAutocompleteRepository by lazy {
         CityAutocompleteRepositoryImpl(
-            autocompleteService = networkModule.autocompleteService
+            autocompleteService = autocompleteService
         )
     }
     val cityRepository: CityRepository by lazy {
         CityRepositoryImpl(
-            cityDao = database.cityDao()
+            cityDao = cityDao
         )
     }
     val weatherRepository: WeatherRepository by lazy {
         WeatherRepositoryImpl(
-            weatherDao = database.weatherDao()
+            weatherDao = weatherDao
         )
     }
     val newsRepository: NewsRepository by lazy {
         NewsRepositoryImpl(
-            database = database,
-            remoteNewsSource = networkModule.remoteNewsSource
+            articleLiteDao = articleLiteDao,
+            remoteNewsSource = remoteNewsSource
         )
     }
     val articleRepository: ArticleRepository by lazy {
         ArticleRepositoryImpl(
-            articleFullDao = database.articleFullDao(),
-            articleStatusDao = database.articleStatusDao(),
-            articleLiteDao = database.articleLiteDao(),
-            remoteNewsSource = NetworkModule.remoteNewsSource,
-            remoteExtractorNewsSource = NetworkModule.remoteNewsExtractorSource,
+            articleFullDao = articleFullDao,
+            articleStatusDao = articleStatusDao,
+            articleLiteDao = articleLiteDao,
+            remoteNewsSource = remoteNewsSource,
+            remoteExtractorNewsSource = remoteNewsExtractorSource,
             networkConnectionChecker = connectionChecker
         )
     }
 
     val articleStatusRepository: ArticleStatusRepository by lazy {
         ArticleStatusRepositoryImpl(
-            articleStatusDao = database.articleStatusDao(),
+            articleStatusDao = articleStatusDao,
             articleRepository = articleRepository
         )
     }

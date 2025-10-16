@@ -1,7 +1,7 @@
 package com.zagirlek.nytimes.data.repository
 
-import com.zagirlek.nytimes.data.local.weather.dao.WeatherDao
-import com.zagirlek.nytimes.data.local.weather.entity.WeatherInfoEntity
+import com.zagirlek.local.weather.dao.WeatherDao
+import com.zagirlek.local.weather.entity.WeatherInfoEntity
 import com.zagirlek.nytimes.data.mapper.toDomain
 import com.zagirlek.nytimes.domain.model.City
 import com.zagirlek.nytimes.domain.model.WeatherPoint

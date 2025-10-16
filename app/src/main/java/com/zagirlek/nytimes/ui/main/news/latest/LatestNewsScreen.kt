@@ -2,7 +2,7 @@ package com.zagirlek.nytimes.ui.main.news.latest
 
 import com.arkivanov.decompose.router.slot.ChildSlot
 import com.arkivanov.decompose.value.Value
-import com.zagirlek.nytimes.core.model.NewsCategory
+import com.zagirlek.common.model.NewsCategory
 import com.zagirlek.nytimes.ui.main.news.articledetails.ArticleDetailsComponent
 import com.zagirlek.nytimes.ui.main.news.latest.model.LatestNewsModel
 import com.zagirlek.nytimes.ui.main.news.latest.model.NewsSideEffect

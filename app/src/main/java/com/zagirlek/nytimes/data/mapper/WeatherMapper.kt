@@ -1,10 +1,11 @@
 package com.zagirlek.nytimes.data.mapper
 
-import com.zagirlek.nytimes.data.local.weather.entity.WeatherWithCity
+import com.zagirlek.local.weather.entity.WeatherWithCity
 import com.zagirlek.nytimes.domain.model.WeatherPoint
 
+
 fun WeatherWithCity.toDomain(): WeatherPoint = WeatherPoint(
-    city = cityEntity.toDomain(),
+    city = this.cityEntity.toDomain(),
     temperature = weather.temperature,
     id = weather.id
 )

@@ -1,13 +1,12 @@
-package com.zagirlek.nytimes.ui.screen.splash
+package com.zagirlek.nytimes.ui.splash
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
-import com.zagirlek.nytimes.ui.screen.splash.elements.SplashScreenContent
+import com.zagirlek.nytimes.ui.splash.elements.SplashScreenContent
 
 
 @Composable

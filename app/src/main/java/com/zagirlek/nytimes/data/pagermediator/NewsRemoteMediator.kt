@@ -4,21 +4,19 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
-import com.zagirlek.nytimes.core.model.NewsCategory
-import com.zagirlek.nytimes.data.local.NyTimesDatabase
-import com.zagirlek.nytimes.data.local.news.dao.ArticleLiteDao
-import com.zagirlek.nytimes.data.local.news.entity.ArticleLiteWithStatusEntity
+import com.zagirlek.common.model.NewsCategory
+import com.zagirlek.local.news.dao.ArticleLiteDao
+import com.zagirlek.local.news.entity.ArticleLiteWithStatusEntity
 import com.zagirlek.nytimes.data.mapper.toEntity
-import com.zagirlek.nytimes.data.network.news.RemoteNewsSource
+import com.zagirlek.remote.news.RemoteNewsSource
 
 @OptIn(ExperimentalPagingApi::class)
 class NewsRemoteMediator(
-    database: NyTimesDatabase,
+    private val articleLiteDao: ArticleLiteDao,
     private val category: NewsCategory?,
     private val titleQuery: String?,
     private val remoteNewsSource: RemoteNewsSource
 ) : RemoteMediator<Int, ArticleLiteWithStatusEntity>() {
-    private val articleLiteDao: ArticleLiteDao = database.articleLiteDao()
     private var currKey: String? = null
 
     override suspend fun load(

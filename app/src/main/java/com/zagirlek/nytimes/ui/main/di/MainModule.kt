@@ -20,8 +20,8 @@ import com.zagirlek.nytimes.ui.main.news.favorite.FavoriteNewsScreen
 import com.zagirlek.nytimes.ui.main.news.favorite.cmp.FavoriteNewsScreenComponent
 import com.zagirlek.nytimes.ui.main.news.latest.LatestNewsScreen
 import com.zagirlek.nytimes.ui.main.news.latest.cmp.LatestNewsScreenComponent
-import com.zagirlek.nytimes.ui.main.weather.WeatherComponent
-import com.zagirlek.nytimes.ui.main.weather.cmp.DefaultWeatherComponent
+import com.zagirlek.nytimes.ui.main.weather.WeatherScreen
+import com.zagirlek.nytimes.ui.main.weather.cmp.DefaultWeatherScreen
 
 class MainModule(
     private val storeFactory: StoreFactory,
@@ -51,8 +51,8 @@ class MainModule(
     }
     fun getWeatherComponent(
         componentContext: ComponentContext
-    ): WeatherComponent =
-        DefaultWeatherComponent(
+    ): WeatherScreen =
+        DefaultWeatherScreen(
             componentContext = componentContext,
             getCityAutocompleteUseCase = getCityAutocompleteUseCase,
             getWeatherPointsHistoryFlowUseCase = getWeatherPointsHistoryFlowUseCase,

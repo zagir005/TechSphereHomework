@@ -20,11 +20,11 @@ import androidx.compose.ui.unit.dp
 import com.zagirlek.nytimes.R
 import com.zagirlek.nytimes.domain.model.City
 import com.zagirlek.nytimes.domain.model.WeatherPoint
-import com.zagirlek.nytimes.core.ui.elements.AppButton
-import com.zagirlek.nytimes.core.ui.elements.AppTextField
-import com.zagirlek.nytimes.core.ui.elements.NyTimesPreview
 import com.zagirlek.nytimes.ui.main.weather.cmp.state.WeatherAction
 import com.zagirlek.nytimes.ui.main.weather.cmp.state.WeatherState
+import com.zagirlek.ui.elements.AppButton
+import com.zagirlek.ui.elements.AppTextField
+import com.zagirlek.ui.elements.NyTimesPreview
 
 @Composable
 fun WeatherScreenContent(

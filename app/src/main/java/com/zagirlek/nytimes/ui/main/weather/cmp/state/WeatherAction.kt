@@ -1,9 +1,9 @@
 package com.zagirlek.nytimes.ui.main.weather.cmp.state
 
-import com.zagirlek.nytimes.core.base.component.Action
+import com.zagirlek.common.basemvi.component.Action
 import com.zagirlek.nytimes.domain.model.City
 
-sealed class WeatherAction: Action{
+sealed class WeatherAction: Action {
     sealed class CityField{
         data class SaveCity(val cityName: String): WeatherAction()
         data class ValueChanged(val value: String): WeatherAction()

@@ -28,7 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.zagirlek.nytimes.R
 import com.zagirlek.nytimes.domain.model.City
-import com.zagirlek.nytimes.core.ui.theme.NyTimesTheme
+import com.zagirlek.ui.theme.NyTimesTheme
 
 @Composable
 fun CityPickerList(
@@ -166,6 +166,10 @@ private fun CityListItem(
     }
 }
 
+
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
 @Preview
 @Composable
 private fun CityListDefaultPreview() {
@@ -190,34 +194,12 @@ private fun CityListDefaultPreview() {
 
 
 
-@Preview(
-    uiMode = Configuration.UI_MODE_NIGHT_YES
-)
-@Composable
-private fun CityListNightPreview() {
-    val savedCities = listOf(City(0, "Moscow"), City(0, "Махачкала"))
-    val autocompleteVariants = listOf(
-        City(0, "Moscow"), City(0, "Makhachkala"),
-        City(0, "Moscow"), City(0, "Makhachkala")
-    )
-
-    NyTimesTheme {
-        Surface{
-            CityPickerList(
-                customCityName = "Mos",
-                onCustomCityClick = {},
-                onLoadedCityClick = {},
-                autocompleteVariants = autocompleteVariants,
-                recentVariants = savedCities
-            )
-        }
-    }
-}
 
 
 @Preview(
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
+@Preview()
 @Composable
 private fun CityListNightLoadingPreview() {
     val savedCities = listOf(City(0, "Moscow"), City(0, "Махачкала"))

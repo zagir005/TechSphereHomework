@@ -1,10 +1,10 @@
-package com.zagirlek.nytimes.ui.screen.root
+package com.zagirlek.nytimes.ui.root
 
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.value.Value
 import com.zagirlek.nytimes.ui.auth.AuthScreen
 import com.zagirlek.nytimes.ui.main.main.MainComponent
-import com.zagirlek.nytimes.ui.screen.splash.SplashComponent
+import com.zagirlek.nytimes.ui.splash.SplashComponent
 
 interface RootComponent {
     val stack: Value<ChildStack<*, Child>>

@@ -16,6 +16,7 @@ import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.zagirlek.nytimes.ui.main.news.articledetails.ArticleDetailsBottomSheet
 import com.zagirlek.nytimes.ui.main.news.latest.elements.LatestNewsScreenContent
 import com.zagirlek.nytimes.ui.main.news.latest.model.NewsSideEffect
+import com.zagirlek.ui.elements.toCategory
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,7 +54,7 @@ fun LatestNewsScreenUi(
             .padding(horizontal = 4.dp),
         searchValueChanged = { component.searchByTitle(it) },
         showError = showSnackbar,
-        selectedCategoryChanged = { component.filterByCategory(it) },
+        selectedCategoryChanged = { component.filterByCategory(it?.toCategory()) },
         onArticleClick = { component.showArticleDetails(it.articleId) },
         onReadToggle = { component.toggleArticleReadStatus(it) },
         onFavoriteToggle = { component.toggleArticleFavoriteStatus(it) }

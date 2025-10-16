@@ -23,8 +23,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.zagirlek.nytimes.R
 import com.zagirlek.nytimes.domain.model.City
-import com.zagirlek.nytimes.core.ui.elements.AppTextField
-import com.zagirlek.nytimes.core.ui.theme.NyTimesTheme
+import com.zagirlek.ui.elements.AppTextField
+import com.zagirlek.ui.theme.NyTimesTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -103,35 +103,13 @@ fun CityAutocompleteTextField(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-private fun DropdownTextFieldDefaultPreview() {
-    NyTimesTheme {
-        Surface {
-            var value by remember { mutableStateOf("") }
-
-            val savedCities = listOf(City(0, "Moscow"), City(0, "Махачкала"))
-            val autocompleteVariants = listOf(
-                City(0, "Moscow"), City(0, "Makhachkala"),
-                City(0, "Moscow"), City(0, "Makhachkala")
-            )
-
-            CityAutocompleteTextField(
-                value = value,
-                onValueChange = { value = it },
-                recentVariants = savedCities.filter { it.name.contains(value) },
-                autocompleteVariants = autocompleteVariants.filter { it.name.contains(value) }
-            )
-        }
-    }
-}
-
 @Preview(
     showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
+@Preview(showBackground = true)
 @Composable
-private fun DropdownTextFieldNightPreview() {
+private fun DropdownTextFieldDefaultPreview() {
     NyTimesTheme {
         Surface {
             var value by remember { mutableStateOf("") }

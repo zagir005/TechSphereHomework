@@ -12,8 +12,8 @@ import com.arkivanov.essenty.lifecycle.doOnDestroy
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
-import com.zagirlek.nytimes.core.model.NewsCategory
-import com.zagirlek.nytimes.core.utils.getStore
+import com.zagirlek.common.model.NewsCategory
+import com.zagirlek.common.utils.getStore
 import com.zagirlek.nytimes.domain.usecase.news.LatestNewsPagingUseCase
 import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleFavoriteStatusUseCase
 import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleReadStatusUseCase

@@ -1,4 +1,4 @@
-package com.zagirlek.nytimes.ui.screen.splash.elements
+package com.zagirlek.nytimes.ui.splash.elements
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -24,7 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.zagirlek.nytimes.core.ui.theme.NyTimesTheme
+import com.zagirlek.ui.theme.NyTimesTheme
 import kotlinx.coroutines.delay
 import kotlin.math.min
 

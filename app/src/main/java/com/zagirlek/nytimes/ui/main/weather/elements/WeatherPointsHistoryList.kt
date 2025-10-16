@@ -1,5 +1,6 @@
 package com.zagirlek.nytimes.ui.main.weather.elements
 
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,9 +16,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxDefaults
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,9 +29,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.zagirlek.nytimes.R
-import com.zagirlek.nytimes.core.ui.elements.NyTimesPreview
 import com.zagirlek.nytimes.domain.model.City
 import com.zagirlek.nytimes.domain.model.WeatherPoint
+import com.zagirlek.ui.elements.NyTimesPreview
 
 @Composable
 fun WeatherPointsHistoryList(
@@ -62,13 +65,15 @@ private fun WeatherPointListItem(
     modifier: Modifier = Modifier,
 ) {
     val swipeToDismissBoxState = rememberSwipeToDismissBoxState(
-        confirmValueChange = {
-            if (it == SwipeToDismissBoxValue.EndToStart){
-                onDelete(weatherPoint)
-                true
-            } else false
+            SwipeToDismissBoxValue.Settled,
+            SwipeToDismissBoxDefaults.positionalThreshold
+        )
+
+    LaunchedEffect(swipeToDismissBoxState.currentValue) {
+        if (swipeToDismissBoxState.currentValue == SwipeToDismissBoxValue.EndToStart) {
+            onDelete(weatherPoint)
         }
-    )
+    }
 
     SwipeToDismissBox(
         state = swipeToDismissBoxState,
@@ -102,6 +107,9 @@ private fun WeatherPointListItem(
 }
 
 @Preview
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
 @Composable
 private fun WeatherPointsHistoryListDefaultPreview() {
     NyTimesPreview {

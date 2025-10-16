@@ -19,12 +19,11 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.zagirlek.nytimes.R
-import com.zagirlek.nytimes.core.error.toNewsApiError
-import com.zagirlek.nytimes.core.model.NewsCategory
-import com.zagirlek.nytimes.core.ui.elements.AppTextField
-import com.zagirlek.nytimes.ui.elements.NewsCategorySelector
 import com.zagirlek.nytimes.ui.main.news.latest.model.LatestNewsModel
 import com.zagirlek.nytimes.ui.main.news.model.Article
+import com.zagirlek.ui.elements.AppTextField
+import com.zagirlek.ui.elements.NewsCategorySelector
+import com.zagirlek.ui.elements.NewsCategoryUi
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,7 +32,7 @@ fun LatestNewsScreenContent(
     modifier: Modifier = Modifier,
     showError: (String) -> Unit,
     searchValueChanged: (String?) -> Unit = {},
-    selectedCategoryChanged: (NewsCategory?) -> Unit = {},
+    selectedCategoryChanged: (NewsCategoryUi?) -> Unit = {},
     onArticleClick: (Article) -> Unit = {},
     onReadToggle: (articleId: String) -> Unit = {},
     onFavoriteToggle: (articleId: String) -> Unit = {}
@@ -43,11 +42,12 @@ fun LatestNewsScreenContent(
     val refreshError = newsList.loadState.refresh as? LoadState.Error
     val appendError = newsList.loadState.refresh as? LoadState.Error
 
+    // TODO: повозиться с обработкой ошибок
     refreshError?.let {
-        showError(refreshError.error.toNewsApiError().message ?: "Неизвестная ошибка")
+        showError(refreshError.error.message ?: "Неизвестная ошибка")
     }
     appendError?.let {
-        showError(appendError.error.toNewsApiError().message ?: "Неизвестная ошибка")
+        showError(appendError.error.message ?: "Неизвестная ошибка")
     }
 
     PullToRefreshBox(
@@ -79,7 +79,6 @@ fun LatestNewsScreenContent(
                 selectedCategory = model.selectedCategory,
                 onSelectedCategoryChange = {
                     selectedCategoryChanged(it)
-
                 }
             )
 

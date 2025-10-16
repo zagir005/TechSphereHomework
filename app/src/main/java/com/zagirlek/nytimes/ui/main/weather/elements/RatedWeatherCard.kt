@@ -14,9 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.zagirlek.nytimes.core.ui.theme.NyTimesTheme
 import com.zagirlek.nytimes.domain.model.City
 import com.zagirlek.nytimes.domain.model.WeatherPoint
+import com.zagirlek.ui.theme.NyTimesTheme
 
 @Composable
 fun RatedWeatherCard(
@@ -67,30 +67,14 @@ fun describeTemperature(city: String, temperature: Int): String {
 
 
 
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
 @Preview
 @Composable
 private fun RatedWeatherCardDefaultPreview() {
     NyTimesTheme {
         Surface{
-            RatedWeatherCard(
-                WeatherPoint(
-                    City(id = 0, name = "Москва"),
-                    temperature = 10,
-                    id = 0
-                )
-            )
-        }
-    }
-}
-
-
-@Preview(
-    uiMode = Configuration.UI_MODE_NIGHT_YES
-)
-@Composable
-private fun RatedWeatherCardNightPreview() {
-    NyTimesTheme {
-        Surface {
             RatedWeatherCard(
                 WeatherPoint(
                     City(id = 0, name = "Москва"),

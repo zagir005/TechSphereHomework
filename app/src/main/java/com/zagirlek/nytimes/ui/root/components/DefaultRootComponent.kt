@@ -1,4 +1,4 @@
-package com.zagirlek.nytimes.ui.screen.root.components
+package com.zagirlek.nytimes.ui.root.components
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
@@ -11,8 +11,8 @@ import com.zagirlek.nytimes.ui.auth.di.AuthModule
 import com.zagirlek.nytimes.ui.main.di.MainModule
 import com.zagirlek.nytimes.ui.main.main.MainComponent
 import com.zagirlek.nytimes.ui.main.main.cmp.DefaultMainComponent
-import com.zagirlek.nytimes.ui.screen.root.RootComponent
-import com.zagirlek.nytimes.ui.screen.splash.SplashComponent
+import com.zagirlek.nytimes.ui.root.RootComponent
+import com.zagirlek.nytimes.ui.splash.SplashComponent
 import com.zagirlek.nytimes.ui.splash.di.SplashModule
 import kotlinx.serialization.Serializable
 

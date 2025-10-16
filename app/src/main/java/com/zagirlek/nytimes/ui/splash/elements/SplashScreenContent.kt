@@ -1,4 +1,4 @@
-package com.zagirlek.nytimes.ui.screen.splash.elements
+package com.zagirlek.nytimes.ui.splash.elements
 
 import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
@@ -28,10 +28,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.zagirlek.nytimes.BuildConfig
 import com.zagirlek.nytimes.R
-import com.zagirlek.nytimes.ui.screen.splash.cmp.state.SplashAction
-import com.zagirlek.nytimes.ui.screen.splash.cmp.state.SplashState
-import com.zagirlek.nytimes.core.ui.theme.NyTimesTheme
-import com.zagirlek.nytimes.ui.theme.robotoFlexFamily
+import com.zagirlek.nytimes.ui.splash.cmp.state.SplashAction
+import com.zagirlek.nytimes.ui.splash.cmp.state.SplashState
+import com.zagirlek.ui.theme.NyTimesTheme
+import com.zagirlek.ui.theme.robotoFlexFamily
 import kotlinx.coroutines.delay
 
 @Composable
@@ -106,26 +106,12 @@ fun SplashScreenContent(
 @Preview(
     showSystemUi = true
 )
-@Composable
-private fun SplashUiDefaultPreview() {
-    NyTimesTheme {
-        Scaffold{ paddingValues ->
-            SplashScreenContent(
-                state = SplashState(isLoading = true),
-                action = { },
-                modifier = Modifier.padding(paddingValues)
-            )
-        }
-    }
-}
-
-
 @Preview(
     showSystemUi = true,
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
-private fun SplashUiNightPreview() {
+private fun SplashUiDefaultPreview() {
     NyTimesTheme {
         Scaffold{ paddingValues ->
             SplashScreenContent(

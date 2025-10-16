@@ -1,6 +1,6 @@
 package com.zagirlek.nytimes.data.usecase.weather
 
-import com.zagirlek.nytimes.core.utils.runCatchingCancellable
+import com.zagirlek.common.utils.runCatchingCancellable
 import com.zagirlek.nytimes.domain.model.City
 import com.zagirlek.nytimes.domain.repository.CityRepository
 import com.zagirlek.nytimes.domain.usecase.weather.GetOrPutCityUseCase

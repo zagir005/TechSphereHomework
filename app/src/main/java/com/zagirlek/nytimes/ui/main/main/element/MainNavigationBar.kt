@@ -22,7 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.zagirlek.nytimes.R
-import com.zagirlek.nytimes.core.ui.theme.NyTimesTheme
+import com.zagirlek.ui.theme.NyTimesTheme
 
 @Composable
 fun MainNavigationBar(
@@ -99,26 +99,10 @@ sealed class Tab(val nameResource: Int, val iconResource: Int){
     )
 }
 
+
 @Preview(
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
-@Composable
-private fun MainBottomNavigationNightPreview() {
-    val bottomBarItems = listOf(Tab.Weather, Tab.News, Tab.Favorites)
-    NyTimesTheme{
-        Box(
-            modifier = Modifier.padding(30.dp).background(Color.Black)
-        ) {
-            MainNavigationBar(
-                tabs = bottomBarItems,
-                selected = 0,
-            ){ selectedIndex ->
-
-            }
-        }
-    }
-}
-
 @Preview
 @Composable
 private fun MainBottomNavigationDefaultPreview() {

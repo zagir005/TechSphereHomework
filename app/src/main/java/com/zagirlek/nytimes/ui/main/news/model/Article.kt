@@ -1,6 +1,6 @@
 package com.zagirlek.nytimes.ui.main.news.model
 
-import com.zagirlek.nytimes.core.model.NewsCategory
+import com.zagirlek.common.model.NewsCategory
 
 data class Article(
     val articleId: String = "",

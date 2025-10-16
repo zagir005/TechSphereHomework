@@ -1,19 +1,19 @@
 package com.zagirlek.nytimes.data.repository
 
-import com.zagirlek.nytimes.core.error.AppError
-import com.zagirlek.nytimes.core.networkchecker.NetworkConnectionChecker
-import com.zagirlek.nytimes.data.local.news.dao.ArticleFullDao
-import com.zagirlek.nytimes.data.local.news.dao.ArticleLiteDao
-import com.zagirlek.nytimes.data.local.news.dao.ArticleStatusDao
+import com.zagirlek.android.networkchecker.NetworkConnectionChecker
+import com.zagirlek.common.error.AppError
+import com.zagirlek.local.news.dao.ArticleFullDao
+import com.zagirlek.local.news.dao.ArticleLiteDao
+import com.zagirlek.local.news.dao.ArticleStatusDao
 import com.zagirlek.nytimes.data.mapper.toArticleFull
 import com.zagirlek.nytimes.data.mapper.toArticleWithStatus
 import com.zagirlek.nytimes.data.mapper.toDomain
 import com.zagirlek.nytimes.data.mapper.toEntity
-import com.zagirlek.nytimes.data.network.extractor.RemoteNewsExtractorSource
-import com.zagirlek.nytimes.data.network.news.RemoteNewsSource
 import com.zagirlek.nytimes.domain.model.ArticleFullWithStatus
 import com.zagirlek.nytimes.domain.model.ArticleLite
 import com.zagirlek.nytimes.domain.repository.ArticleRepository
+import com.zagirlek.remote.extractor.RemoteNewsExtractorSource
+import com.zagirlek.remote.news.RemoteNewsSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map

@@ -1,4 +1,4 @@
-package com.zagirlek.nytimes.ui.screen.splash.cmp.state
+package com.zagirlek.nytimes.ui.splash.cmp.state
 
 sealed class SplashAction {
     object SplashFinished: SplashAction()

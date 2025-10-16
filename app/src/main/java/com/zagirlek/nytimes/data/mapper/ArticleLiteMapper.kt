@@ -1,9 +1,9 @@
 package com.zagirlek.nytimes.data.mapper
 
-import com.zagirlek.nytimes.core.model.NewsCategory
-import com.zagirlek.nytimes.core.utils.toLocalDateTime
-import com.zagirlek.nytimes.data.local.news.entity.ArticleLiteEntity
-import com.zagirlek.nytimes.data.local.news.entity.ArticleLiteWithStatusEntity
+import com.zagirlek.common.model.NewsCategory
+import com.zagirlek.common.utils.toLocalDateTime
+import com.zagirlek.local.news.entity.ArticleLiteEntity
+import com.zagirlek.local.news.entity.ArticleLiteWithStatusEntity
 import com.zagirlek.nytimes.domain.model.ArticleFull
 import com.zagirlek.nytimes.domain.model.ArticleLite
 import com.zagirlek.nytimes.domain.model.ArticleLiteWithStatus

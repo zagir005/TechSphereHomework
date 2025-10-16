@@ -4,7 +4,7 @@ import com.arkivanov.decompose.router.pages.ChildPages
 import com.arkivanov.decompose.value.Value
 import com.zagirlek.nytimes.ui.main.news.favorite.FavoriteNewsScreen
 import com.zagirlek.nytimes.ui.main.news.latest.LatestNewsScreen
-import com.zagirlek.nytimes.ui.main.weather.WeatherComponent
+import com.zagirlek.nytimes.ui.main.weather.WeatherScreen
 
 interface MainComponent {
     val pages: Value<ChildPages<*, Child>>
@@ -12,7 +12,7 @@ interface MainComponent {
     fun selectPage(index: Int)
 
     sealed class Child(){
-        data class Weather(val component: WeatherComponent): Child()
+        data class Weather(val component: WeatherScreen): Child()
         data class News(val component: LatestNewsScreen): Child()
         data class Favorites(val component: FavoriteNewsScreen): Child()
     }

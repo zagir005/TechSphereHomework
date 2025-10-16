@@ -1,6 +1,6 @@
 package com.zagirlek.nytimes.domain.model
 
-import com.zagirlek.nytimes.core.model.NewsCategory
+import com.zagirlek.common.model.NewsCategory
 import java.time.LocalDateTime
 
 data class ArticleFullWithStatus(

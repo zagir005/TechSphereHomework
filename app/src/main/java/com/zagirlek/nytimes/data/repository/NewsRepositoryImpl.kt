@@ -5,23 +5,21 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
-import com.zagirlek.nytimes.core.model.NewsCategory
-import com.zagirlek.nytimes.data.local.NyTimesDatabase
+import com.zagirlek.common.model.NewsCategory
+import com.zagirlek.local.news.dao.ArticleLiteDao
 import com.zagirlek.nytimes.data.mapper.toDomain
-import com.zagirlek.nytimes.data.network.news.RemoteNewsSource
 import com.zagirlek.nytimes.data.pagermediator.NewsRemoteMediator
 import com.zagirlek.nytimes.domain.model.ArticleLiteWithStatus
 import com.zagirlek.nytimes.domain.repository.NewsRepository
+import com.zagirlek.remote.news.RemoteNewsSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 @OptIn(ExperimentalPagingApi::class)
 class NewsRepositoryImpl(
-    private val database: NyTimesDatabase,
+    private val articleLiteDao: ArticleLiteDao,
     private val remoteNewsSource: RemoteNewsSource
 ): NewsRepository {
-    private val articleLiteDao = database.articleLiteDao()
-
     override fun getNewsPager(
         category: NewsCategory?,
         titleQuery: String?
@@ -29,7 +27,7 @@ class NewsRepositoryImpl(
         val mediator = NewsRemoteMediator(
             category = category,
             titleQuery = titleQuery,
-            database = database,
+            articleLiteDao = articleLiteDao,
             remoteNewsSource = remoteNewsSource
         )
         return Pager(

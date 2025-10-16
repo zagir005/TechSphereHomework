@@ -10,12 +10,18 @@ import com.zagirlek.nytimes.ui.root.di.RootModule
 
 class NyTimesApp: Application() {
     private val appDi: AppDi by lazy {
-        AppDi(this)
+        AppDi(applicationContext = this)
     }
     private val repositoryModule: RepositoryModule by lazy {
         RepositoryModule(
-            database = appDi.getDatabase(),
-            networkModule = appDi.networkModule,
+            autocompleteService = appDi.coreRemoteModule.provideAutocompleteService,
+            remoteNewsSource = appDi.coreRemoteModule.provideRemoteNewsSource,
+            remoteNewsExtractorSource = appDi.coreRemoteModule.provideRemoteNewsExtractorSource,
+            weatherDao = appDi.coreLocalModule.weatherDao(),
+            cityDao = appDi.coreLocalModule.cityDao(),
+            articleFullDao = appDi.coreLocalModule.articleFullDao(),
+            articleLiteDao = appDi.coreLocalModule.articleLiteDao(),
+            articleStatusDao = appDi.coreLocalModule.articleStatusDao(),
             connectionChecker = appDi.networkConnectionChecker
         )
     }

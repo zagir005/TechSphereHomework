@@ -19,10 +19,12 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxDefaults
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,10 +37,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.zagirlek.nytimes.R
-import com.zagirlek.nytimes.core.model.NewsCategory
-import com.zagirlek.nytimes.core.ui.elements.AppChip
-import com.zagirlek.nytimes.core.ui.elements.NyTimesPreview
 import com.zagirlek.nytimes.ui.main.news.favorite.model.FavoriteArticle
+import com.zagirlek.ui.elements.AppChip
+import com.zagirlek.ui.elements.NewsCategoryUi
+import com.zagirlek.ui.elements.NyTimesPreview
 
 @Composable
 fun FavoriteArticleCard(
@@ -47,15 +49,16 @@ fun FavoriteArticleCard(
     onClick: (FavoriteArticle) -> Unit = {},
     onFavoriteToggle: (FavoriteArticle) -> Unit = {},
 ) {
-
     val swipeToDismissBoxState = rememberSwipeToDismissBoxState(
-        confirmValueChange = {
-            if (it == SwipeToDismissBoxValue.EndToStart){
-                onFavoriteToggle(article)
-                true
-            } else false
-        }
+        SwipeToDismissBoxValue.Settled,
+        SwipeToDismissBoxDefaults.positionalThreshold
     )
+
+    LaunchedEffect(swipeToDismissBoxState.currentValue) {
+        if (swipeToDismissBoxState.currentValue == SwipeToDismissBoxValue.EndToStart) {
+            onFavoriteToggle(article)
+        }
+    }
 
     SwipeToDismissBox(
         state = swipeToDismissBoxState,
@@ -110,7 +113,11 @@ fun FavoriteArticleCard(
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     AppChip(
-                        text = stringResource(article.category?.resId ?: NewsCategory.OTHER.resId)
+                        text = stringResource(
+                            NewsCategoryUi.valueOf(
+                                article.category.name
+                            ).resId
+                        )
                     )
                 }
 
@@ -145,7 +152,7 @@ private fun FavoriteArticleCardPreview() {
                 articleId = "",
                 title = "Lorem ipsum",
                 imageUrl = "",
-                category = NewsCategory.OTHER,
+                category = NewsCategoryUi.OTHER,
                 isFavorite = true
             )
         )

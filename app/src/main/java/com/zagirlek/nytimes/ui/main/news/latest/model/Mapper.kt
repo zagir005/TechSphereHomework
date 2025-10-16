@@ -2,10 +2,11 @@ package com.zagirlek.nytimes.ui.main.news.latest.model
 
 import androidx.paging.PagingData
 import androidx.paging.map
-import com.zagirlek.nytimes.core.utils.timeAgoOrDate
+import com.zagirlek.common.utils.timeAgoOrDate
 import com.zagirlek.nytimes.domain.model.ArticleLiteWithStatus
 import com.zagirlek.nytimes.ui.main.news.latest.store.LatestNewsStore
 import com.zagirlek.nytimes.ui.main.news.model.Article
+import com.zagirlek.ui.elements.toUiCategory
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -29,7 +30,7 @@ fun Flow<PagingData<ArticleLiteWithStatus>>.toArticleFlow() = map { list ->
 
 fun LatestNewsStore.State.toModel(): LatestNewsModel = LatestNewsModel(
     newsPages = newsFlow,
-    selectedCategory = selectedCategory,
+    selectedCategory = selectedCategory?.toUiCategory(),
     searchFieldValue = searchField,
 )
 

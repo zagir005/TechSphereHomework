@@ -1,6 +1,6 @@
-package com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer
+package com.zagirlek.nytimes.ui.main.weather.cmp.reducer
 
-import com.zagirlek.nytimes.core.base.reducer.Reducer
+import com.zagirlek.common.basemvi.reducer.Reducer
 import com.zagirlek.nytimes.ui.main.weather.cmp.state.WeatherState
 
 class WeatherReducer: Reducer<WeatherState, WeatherMutation> {

@@ -19,5 +19,15 @@ dependencyResolutionManagement {
     }
 }
 
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 rootProject.name = "Nytimes"
 include(":app")
+include(":core")
+include(":data")
+include(":domain")
+include(":core:common")
+include(":core:android")
+include(":core:ui")
+include(":core:local")
+include(":core:remote")

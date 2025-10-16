@@ -16,10 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.zagirlek.nytimes.R
-import com.zagirlek.nytimes.core.model.NewsCategory
-import com.zagirlek.nytimes.core.ui.elements.AppTextField
-import com.zagirlek.nytimes.ui.elements.NewsCategorySelector
 import com.zagirlek.nytimes.ui.main.news.favorite.model.FavoriteNewsModel
+import com.zagirlek.ui.elements.AppTextField
+import com.zagirlek.ui.elements.NewsCategorySelector
+import com.zagirlek.ui.elements.NewsCategoryUi
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -27,12 +27,10 @@ fun FavoriteNewsScreenContent(
     model: FavoriteNewsModel,
     modifier: Modifier = Modifier,
     searchValueChanged: (String?) -> Unit = {},
-    selectedCategoryChanged: (NewsCategory?) -> Unit = {},
+    selectedCategoryChanged: (NewsCategoryUi?) -> Unit = {},
     onArticleClick: (articleId: String) -> Unit = {},
     onFavoriteToggle: (articleId: String) -> Unit = {}
 ) {
-
-
     Column(
         modifier = modifier
             .fillMaxHeight()
@@ -57,7 +55,6 @@ fun FavoriteNewsScreenContent(
             selectedCategory = model.selectedCategory,
             onSelectedCategoryChange = {
                 selectedCategoryChanged(it)
-
             }
         )
 

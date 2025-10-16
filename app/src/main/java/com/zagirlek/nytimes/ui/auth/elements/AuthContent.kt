@@ -31,11 +31,11 @@ import androidx.compose.ui.unit.sp
 import com.zagirlek.nytimes.R
 import com.zagirlek.nytimes.ui.auth.elements.textfield.textfielderror.LoginTextFieldError
 import com.zagirlek.nytimes.ui.auth.elements.textfield.textfielderror.PasswordTextFieldError
-import com.zagirlek.nytimes.core.ui.elements.AppButton
-import com.zagirlek.nytimes.core.ui.elements.AppTextField
 import com.zagirlek.nytimes.ui.auth.model.AuthModel
-import com.zagirlek.nytimes.ui.theme.Typography
-import com.zagirlek.nytimes.ui.theme.robotoFlexFamily
+import com.zagirlek.ui.elements.AppButton
+import com.zagirlek.ui.elements.AppTextField
+import com.zagirlek.ui.theme.Typography
+import com.zagirlek.ui.theme.robotoFlexFamily
 
 @Composable
 fun AuthContent(

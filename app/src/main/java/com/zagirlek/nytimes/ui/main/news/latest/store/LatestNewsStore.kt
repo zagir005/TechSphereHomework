@@ -2,7 +2,7 @@ package com.zagirlek.nytimes.ui.main.news.latest.store
 
 import androidx.paging.PagingData
 import com.arkivanov.mvikotlin.core.store.Store
-import com.zagirlek.nytimes.core.model.NewsCategory
+import com.zagirlek.common.model.NewsCategory
 import com.zagirlek.nytimes.ui.main.news.latest.store.LatestNewsStore.Intent
 import com.zagirlek.nytimes.ui.main.news.latest.store.LatestNewsStore.Label
 import com.zagirlek.nytimes.ui.main.news.latest.store.LatestNewsStore.State

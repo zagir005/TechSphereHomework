@@ -1,10 +1,10 @@
-package com.zagirlek.nytimes.ui.screen.root
+package com.zagirlek.nytimes.ui.root
 
 import androidx.compose.runtime.Composable
 import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.zagirlek.nytimes.ui.auth.AuthScreenUi
 import com.zagirlek.nytimes.ui.main.main.MainUi
-import com.zagirlek.nytimes.ui.screen.splash.SplashScreen
+import com.zagirlek.nytimes.ui.splash.SplashScreen
 
 @Composable
 fun RootUi(rootComponent: RootComponent) {

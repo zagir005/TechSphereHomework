@@ -1,7 +1,7 @@
 package com.zagirlek.nytimes.domain.usecase.news
 
 import androidx.paging.PagingData
-import com.zagirlek.nytimes.core.model.NewsCategory
+import com.zagirlek.common.model.NewsCategory
 import com.zagirlek.nytimes.domain.model.ArticleLiteWithStatus
 import kotlinx.coroutines.flow.Flow
 

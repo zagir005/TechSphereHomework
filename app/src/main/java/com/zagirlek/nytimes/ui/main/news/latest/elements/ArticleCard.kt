@@ -27,12 +27,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.zagirlek.nytimes.R
-import com.zagirlek.nytimes.core.model.NewsCategory
-import com.zagirlek.nytimes.core.ui.elements.ArticleStatus
-import com.zagirlek.nytimes.core.ui.elements.ArticleText
-import com.zagirlek.nytimes.core.ui.elements.CategoryDateInfo
-import com.zagirlek.nytimes.core.ui.elements.NyTimesPreview
 import com.zagirlek.nytimes.ui.main.news.model.Article
+import com.zagirlek.ui.elements.ArticleStatus
+import com.zagirlek.ui.elements.ArticleText
+import com.zagirlek.ui.elements.CategoryDateInfo
+import com.zagirlek.ui.elements.NewsCategoryUi
+import com.zagirlek.ui.elements.NyTimesPreview
 
 @Composable
 fun ArticleCard(
@@ -108,7 +108,7 @@ fun ArticleCard(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 CategoryDateInfo(
-                    category = article.category ?: NewsCategory.OTHER,
+                    category = NewsCategoryUi.valueOf(article.category?.name ?: NewsCategoryUi.OTHER.name),
                     date = article.pubDate
                 )
 

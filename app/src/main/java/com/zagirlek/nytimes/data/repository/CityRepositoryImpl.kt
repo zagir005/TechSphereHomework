@@ -1,7 +1,7 @@
 package com.zagirlek.nytimes.data.repository
 
-import com.zagirlek.nytimes.data.local.weather.dao.CityDao
-import com.zagirlek.nytimes.data.local.weather.entity.CityEntity
+import com.zagirlek.local.weather.dao.CityDao
+import com.zagirlek.local.weather.entity.CityEntity
 import com.zagirlek.nytimes.data.mapper.toDomain
 import com.zagirlek.nytimes.domain.model.City
 import com.zagirlek.nytimes.domain.repository.CityRepository
@@ -11,7 +11,7 @@ class CityRepositoryImpl(
 ): CityRepository {
 
     override suspend fun addCity(name: String): Long = cityDao.insertCity(
-            CityEntity(name = name)
+        CityEntity(name = name)
         )
 
     override suspend fun findCitiesByName(name: String): List<City> = cityDao.getCitiesByName(name).map {

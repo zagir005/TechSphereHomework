@@ -7,9 +7,9 @@ import com.arkivanov.decompose.value.update
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import com.zagirlek.nytimes.domain.model.AuthToken
 import com.zagirlek.nytimes.domain.usecase.auth.GetCurrentAuthTokenUseCase
-import com.zagirlek.nytimes.ui.screen.splash.SplashComponent
-import com.zagirlek.nytimes.ui.screen.splash.cmp.state.SplashAction
-import com.zagirlek.nytimes.ui.screen.splash.cmp.state.SplashState
+import com.zagirlek.nytimes.ui.splash.SplashComponent
+import com.zagirlek.nytimes.ui.splash.cmp.state.SplashAction
+import com.zagirlek.nytimes.ui.splash.cmp.state.SplashState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch

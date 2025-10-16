@@ -12,7 +12,7 @@ import com.zagirlek.nytimes.ui.main.main.MainComponent
 import com.zagirlek.nytimes.ui.main.main.MainComponent.Child
 import com.zagirlek.nytimes.ui.main.news.favorite.FavoriteNewsScreen
 import com.zagirlek.nytimes.ui.main.news.latest.LatestNewsScreen
-import com.zagirlek.nytimes.ui.main.weather.WeatherComponent
+import com.zagirlek.nytimes.ui.main.weather.WeatherScreen
 import kotlinx.serialization.Serializable
 
 class DefaultMainComponent(
@@ -59,7 +59,7 @@ class DefaultMainComponent(
             componentContext = componentContext,
         )
 
-    private fun weather(componentContext: ComponentContext): WeatherComponent =
+    private fun weather(componentContext: ComponentContext): WeatherScreen =
         mainModule.getWeatherComponent(componentContext = componentContext)
 
     @Serializable

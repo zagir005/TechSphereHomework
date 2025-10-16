@@ -1,10 +1,10 @@
 package com.zagirlek.nytimes.data.mapper
 
-import com.zagirlek.nytimes.core.model.NewsCategory
-import com.zagirlek.nytimes.core.utils.toEpochMillis
-import com.zagirlek.nytimes.core.utils.toLocalDateTime
-import com.zagirlek.nytimes.data.local.news.entity.ArticleFullEntity
-import com.zagirlek.nytimes.data.local.news.entity.ArticleFullWithStatusEntity
+import com.zagirlek.common.model.NewsCategory
+import com.zagirlek.common.utils.toEpochMillis
+import com.zagirlek.common.utils.toLocalDateTime
+import com.zagirlek.local.news.entity.ArticleFullEntity
+import com.zagirlek.local.news.entity.ArticleFullWithStatusEntity
 import com.zagirlek.nytimes.domain.model.ArticleFull
 import com.zagirlek.nytimes.domain.model.ArticleFullWithStatus
 

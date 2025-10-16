@@ -7,9 +7,9 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import com.zagirlek.nytimes.R
-import com.zagirlek.nytimes.core.error.AppError
-import com.zagirlek.nytimes.core.error.ExtractorApiError
-import com.zagirlek.nytimes.core.error.NewsApiError
+import com.zagirlek.common.error.AppError
+import com.zagirlek.common.error.ExtractorApiError
+import com.zagirlek.common.error.NewsApiError
 import com.zagirlek.nytimes.domain.model.ArticleFullWithStatus
 import com.zagirlek.nytimes.domain.usecase.news.GetArticleFullFlowUseCase
 import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleFavoriteStatusUseCase
