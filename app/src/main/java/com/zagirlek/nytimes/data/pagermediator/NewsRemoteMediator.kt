@@ -42,7 +42,7 @@ class NewsRemoteMediator(
             val nextPageKey = response.nextPage
 
             if (loadType == LoadType.REFRESH) {
-                articleLiteDao.deleteAll()
+                articleLiteDao.deleteAllExceptWithStatus()
                 currKey = null
             }
             articleLiteDao.insertArticles(response.newsList.map { it.toEntity() })

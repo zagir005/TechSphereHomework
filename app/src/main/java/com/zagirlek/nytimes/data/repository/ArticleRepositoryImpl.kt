@@ -65,12 +65,14 @@ class ArticleRepositoryImpl(
     }
 
     override suspend fun getOrLoadFullArticleByIdFlow(articleId: String): Flow<Result<ArticleFullWithStatus>> {
-        if (!networkConnectionChecker.checkConnection())
-            return flowOf(value = Result.failure(AppError.NoNetworkConnection))
-
         getOrLoadFullArticleById(articleId)
             .onFailure {
-                return flowOf(Result.failure(it))
+                return flowOf(value =
+                    if (!networkConnectionChecker.checkConnection())
+                        Result.failure(AppError.NoNetworkConnection)
+                    else
+                        Result.failure(it)
+                )
             }
 
         return articleFullDao

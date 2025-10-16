@@ -10,6 +10,7 @@ import com.zagirlek.nytimes.core.model.NewsCategory
 import com.zagirlek.nytimes.data.local.news.converters.ArticleConverter
 import com.zagirlek.nytimes.data.local.news.entity.ArticleLiteEntity
 import com.zagirlek.nytimes.data.local.news.entity.ArticleLiteWithStatusEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 @TypeConverters(
@@ -36,9 +37,30 @@ interface ArticleLiteDao {
         category: NewsCategory?
     ): PagingSource<Int, ArticleLiteWithStatusEntity>
 
+    @Query("""
+    SELECT f.*, s.isfavorite, s.isread
+    FROM article_lite AS f
+    INNER JOIN article_status_info AS s
+        ON f.articleid = s.articleid
+    WHERE s.isfavorite = 1
+      AND (:titleQuery IS NULL OR f.title LIKE '%' || :titleQuery || '%' COLLATE NOCASE)
+      AND (:category IS NULL OR f.category = :category)
+    ORDER BY f.pubdate DESC
+    """)
+    fun getFavoriteArticlesFlow(
+        titleQuery: String?,
+        category: NewsCategory?
+    ): Flow<List<ArticleLiteWithStatusEntity>>
+
     @Query("SELECT * FROM article_lite WHERE articleid = :articleId LIMIT 1")
     suspend fun getById(articleId: String): ArticleLiteEntity?
 
-    @Query("DELETE FROM article_lite")
-    suspend fun deleteAll()
+    @Query("""
+    DELETE FROM article_lite
+        WHERE articleid NOT IN (
+            SELECT articleid FROM article_status_info
+            WHERE isFavorite = 1 OR isRead = 1
+        )
+    """)
+    suspend fun deleteAllExceptWithStatus()
 }

@@ -66,4 +66,5 @@
     <string name="no_network_connection_cant_load">Невозможно загрузить статью. Проверьте интернет соединение</string>
     <string name="too_many_requests_try_later">Слишком много запросов к серверу. Попробуйте позже</string>
     <string name="repeat">Повторить</string>
+    <string name="article_not_saved_check_network_connection">Не удалось сохранить новость. Проверьте интернет соединение</string>
 </resources>

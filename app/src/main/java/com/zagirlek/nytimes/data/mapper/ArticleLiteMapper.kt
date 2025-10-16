@@ -1,5 +1,6 @@
 package com.zagirlek.nytimes.data.mapper
 
+import com.zagirlek.nytimes.core.model.NewsCategory
 import com.zagirlek.nytimes.core.utils.toLocalDateTime
 import com.zagirlek.nytimes.data.local.news.entity.ArticleLiteEntity
 import com.zagirlek.nytimes.data.local.news.entity.ArticleLiteWithStatusEntity
@@ -31,7 +32,7 @@ fun ArticleLite.toArticleWithStatus(
     link = link,
     title = title,
     description = description,
-    category = category,
+    category = category ?: NewsCategory.OTHER,
     sourceName = sourceName,
     sourceIconUrl = sourceIconUrl,
     creator = creator,
@@ -47,7 +48,7 @@ fun ArticleLiteWithStatusEntity.toDomain(): ArticleLiteWithStatus = with(article
         link = link,
         title = title,
         description = description,
-        category = category,
+        category = category ?: NewsCategory.OTHER,
         sourceName = sourceName,
         sourceIconUrl = sourceIconUrl,
         creator = creator,

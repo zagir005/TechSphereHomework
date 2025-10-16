@@ -7,6 +7,7 @@ import com.arkivanov.mvikotlin.core.store.SimpleBootstrapper
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
+import com.zagirlek.nytimes.R
 import com.zagirlek.nytimes.core.model.NewsCategory
 import com.zagirlek.nytimes.domain.usecase.news.LatestNewsPagingUseCase
 import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleFavoriteStatusUseCase
@@ -95,6 +96,11 @@ class LatestNewsStoreFactory(
                 is Intent.ToggleArticleFavoriteStatus -> {
                     scope.launch {
                         toggleFavoriteStatusUseCase(intent.articleId)
+                            .onFailure {
+                                publish(Label.ShowError(
+                                    R.string.article_not_saved_check_network_connection
+                                ))
+                            }
                     }
                 }
                 is Intent.ToggleArticleReadStatus -> {

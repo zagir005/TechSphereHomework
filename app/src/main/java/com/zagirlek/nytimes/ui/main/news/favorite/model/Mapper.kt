@@ -1,13 +1,13 @@
 package com.zagirlek.nytimes.ui.main.news.favorite.model
 
-import com.zagirlek.nytimes.domain.model.ArticleFullWithStatus
+import com.zagirlek.nytimes.domain.model.ArticleLiteWithStatus
 import com.zagirlek.nytimes.ui.main.news.favorite.store.FavoriteNewsStore
 
-fun List<ArticleFullWithStatus>.toFavoriteArticle(): List<FavoriteArticle> = map {
+fun List<ArticleLiteWithStatus>.toFavoriteArticle(): List<FavoriteArticle> = map {
     it.toFavoriteArticle()
 }
 
-fun ArticleFullWithStatus.toFavoriteArticle(): FavoriteArticle = FavoriteArticle(
+fun ArticleLiteWithStatus.toFavoriteArticle(): FavoriteArticle = FavoriteArticle(
     articleId = articleId,
     title = title,
     imageUrl = imageUrl,

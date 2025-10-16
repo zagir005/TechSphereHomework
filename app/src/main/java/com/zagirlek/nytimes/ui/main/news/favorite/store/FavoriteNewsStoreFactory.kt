@@ -6,7 +6,7 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import com.zagirlek.nytimes.core.model.NewsCategory
-import com.zagirlek.nytimes.domain.model.ArticleFullWithStatus
+import com.zagirlek.nytimes.domain.model.ArticleLiteWithStatus
 import com.zagirlek.nytimes.domain.usecase.news.FavoriteNewsFlowUseCase
 import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleFavoriteStatusUseCase
 import com.zagirlek.nytimes.ui.main.news.favorite.store.FavoriteNewsStore.Intent
@@ -31,7 +31,7 @@ class FavoriteNewsStoreFactory(
         ) {}
 
     private sealed interface Msg {
-        data class LoadNews(val news: List<ArticleFullWithStatus>): Msg
+        data class LoadNews(val news: List<ArticleLiteWithStatus>): Msg
         data class SearchFieldValue(val value: String?): Msg
         data class CategoryValue(val category: NewsCategory?): Msg
     }

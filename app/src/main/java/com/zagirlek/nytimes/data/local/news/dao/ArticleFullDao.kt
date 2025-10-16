@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.zagirlek.nytimes.core.model.NewsCategory
 import com.zagirlek.nytimes.data.local.news.entity.ArticleFullEntity
 import com.zagirlek.nytimes.data.local.news.entity.ArticleFullWithStatusEntity
 import kotlinx.coroutines.flow.Flow
@@ -28,19 +27,4 @@ interface ArticleFullDao {
     fun getArticleFullWithStatusByIdFlow(
         articleId: String
     ): Flow<ArticleFullWithStatusEntity?>
-
-    @Query("""
-    SELECT f.*, s.isfavorite, s.isread
-    FROM article_full AS f
-    INNER JOIN article_status_info AS s
-        ON f.articleid = s.articleid
-    WHERE s.isfavorite = 1
-      AND (:titleQuery IS NULL OR f.title LIKE '%' || :titleQuery || '%' COLLATE NOCASE)
-      AND (:category IS NULL OR f.category = :category)
-    ORDER BY f.pubdate DESC
-    """)
-    fun getFavoriteArticlesFlow(
-        titleQuery: String?,
-        category: NewsCategory?
-    ): Flow<List<ArticleFullWithStatusEntity>>
 }

@@ -15,5 +15,5 @@ interface NewsRepository {
     fun getFavoriteNewsFlow(
         category: NewsCategory? = null,
         titleQuery: String? = null
-    ): Flow<List<ArticleFullWithStatus>>
+    ): Flow<List<ArticleLiteWithStatus>>
 }
