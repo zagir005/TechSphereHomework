@@ -5,7 +5,6 @@ import com.zagirlek.nytimes.core.utils.toEpochMillis
 import com.zagirlek.nytimes.core.utils.toLocalDateTime
 import com.zagirlek.nytimes.data.local.news.entity.ArticleLiteEntity
 import com.zagirlek.nytimes.data.network.news.dto.ArticleDTO
-import com.zagirlek.nytimes.data.network.news.dto.NewsPageDTO
 import com.zagirlek.nytimes.domain.model.ArticleLite
 
 
@@ -35,5 +34,4 @@ fun ArticleDTO.toDomain(): ArticleLite = ArticleLite(
     pubDate = pubDate.toLocalDateTime(),
 )
 
-fun NewsPageDTO.firstToDomain(): ArticleLite = newsList.first().toDomain()
 

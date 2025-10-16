@@ -1,7 +1,7 @@
 package com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer
 
 import com.zagirlek.nytimes.core.base.reducer.Reducer
-import com.zagirlek.nytimes.ui.screen.main.weather.cmp.state.WeatherState
+import com.zagirlek.nytimes.ui.main.weather.cmp.state.WeatherState
 
 class WeatherReducer: Reducer<WeatherState, WeatherMutation> {
     override fun reduce(state: WeatherState, mutation: WeatherMutation): WeatherState {

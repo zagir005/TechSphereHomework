@@ -11,3 +11,9 @@ inline fun <T, R> T.runCatchingCancellable(block: T.() -> R): Result<R> {
         Result.failure(e)
     }
 }
+
+inline fun <T> Result<T>.mapError(transform: (Throwable) -> Throwable): Result<T> =
+    fold(
+        onSuccess = { Result.success(it) },
+        onFailure = { Result.failure(transform(it)) }
+    )

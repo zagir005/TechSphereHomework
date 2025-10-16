@@ -15,6 +15,9 @@ import com.zagirlek.nytimes.domain.usecase.weather.GetOrPutCityUseCase
 import com.zagirlek.nytimes.domain.usecase.weather.GetRecentCityListUseCase
 import com.zagirlek.nytimes.domain.usecase.weather.GetWeatherPointsHistoryFlowUseCase
 import com.zagirlek.nytimes.ui.main.weather.WeatherComponent
+import com.zagirlek.nytimes.ui.main.weather.cmp.state.WeatherAction
+import com.zagirlek.nytimes.ui.main.weather.cmp.state.WeatherEffect
+import com.zagirlek.nytimes.ui.main.weather.cmp.state.WeatherState
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherMutation
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherMutation.AddWeatherPoint
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherMutation.CityField.AutocompleteVariantsError
@@ -26,9 +29,6 @@ import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherMutation.C
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherMutation.DegreeFieldValueChanged
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherMutation.WeatherPointHistoryLoaded
 import com.zagirlek.nytimes.ui.screen.main.weather.cmp.reducer.WeatherReducer
-import com.zagirlek.nytimes.ui.screen.main.weather.cmp.state.WeatherAction
-import com.zagirlek.nytimes.ui.screen.main.weather.cmp.state.WeatherEffect
-import com.zagirlek.nytimes.ui.screen.main.weather.cmp.state.WeatherState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow

@@ -10,7 +10,8 @@ import com.arkivanov.decompose.value.Value
 import com.zagirlek.nytimes.ui.main.di.MainModule
 import com.zagirlek.nytimes.ui.main.main.MainComponent
 import com.zagirlek.nytimes.ui.main.main.MainComponent.Child
-import com.zagirlek.nytimes.ui.main.news.NewsScreen
+import com.zagirlek.nytimes.ui.main.news.favorite.FavoriteNewsScreen
+import com.zagirlek.nytimes.ui.main.news.latest.LatestNewsScreen
 import com.zagirlek.nytimes.ui.main.weather.WeatherComponent
 import kotlinx.serialization.Serializable
 
@@ -48,16 +49,14 @@ class DefaultMainComponent(
         }
     }
 
-    private fun favorites(componentContext: ComponentContext): NewsScreen =
-        mainModule.getNewsComponent(
+    private fun favorites(componentContext: ComponentContext): FavoriteNewsScreen =
+        mainModule.getFavoriteNewsComponent(
             componentContext = componentContext,
-            favoriteListMode = true
         )
 
-    private fun news(componentContext: ComponentContext): NewsScreen =
-        mainModule.getNewsComponent(
+    private fun news(componentContext: ComponentContext): LatestNewsScreen =
+        mainModule.getLatestNewsComponent(
             componentContext = componentContext,
-            favoriteListMode = false
         )
 
     private fun weather(componentContext: ComponentContext): WeatherComponent =

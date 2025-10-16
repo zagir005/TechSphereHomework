@@ -2,10 +2,17 @@ package com.zagirlek.nytimes.data.local.news.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.zagirlek.nytimes.core.model.NewsCategory
 
-@Entity(tableName = "article_full")
+@Entity(
+    tableName = "article_full",
+    indices = [
+        Index("category"),
+        Index("title")
+    ]
+)
 data class ArticleFullEntity(
     @PrimaryKey @ColumnInfo(name = "articleid") val articleId: String,
     @ColumnInfo(name = "link") val link: String,
@@ -17,5 +24,5 @@ data class ArticleFullEntity(
     @ColumnInfo(name = "category") val category: NewsCategory?,
     @ColumnInfo(name = "creator") val creator: String?,
     @ColumnInfo(name = "imageurl") val imageUrl: String?,
-    @ColumnInfo(name = "pubdate") val pubDate: Long
+    @ColumnInfo(name = "pubdate") val pubDate: Long,
 )

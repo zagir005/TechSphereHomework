@@ -10,7 +10,6 @@ import com.zagirlek.nytimes.data.local.NyTimesDatabase
 import com.zagirlek.nytimes.data.mapper.toDomain
 import com.zagirlek.nytimes.data.network.news.RemoteNewsSource
 import com.zagirlek.nytimes.data.pagermediator.NewsRemoteMediator
-import com.zagirlek.nytimes.domain.model.ArticleFullWithStatus
 import com.zagirlek.nytimes.domain.model.ArticleLiteWithStatus
 import com.zagirlek.nytimes.domain.repository.NewsRepository
 import kotlinx.coroutines.flow.Flow
@@ -22,7 +21,6 @@ class NewsRepositoryImpl(
     private val remoteNewsSource: RemoteNewsSource
 ): NewsRepository {
     private val articleLiteDao = database.articleLiteDao()
-    private val articleFullDao = database.articleFullDao()
 
     override fun getNewsPager(
         category: NewsCategory?,
@@ -55,18 +53,14 @@ class NewsRepositoryImpl(
             }
     }
 
-    override fun getFavoriteNewsPager(
+    override fun getFavoriteNewsFlow(
         category: NewsCategory?,
         titleQuery: String?
-    ): Flow<PagingData<ArticleFullWithStatus>> {
-        return Pager(
-            config = PagingConfig(pageSize = 5, enablePlaceholders = true),
-            pagingSourceFactory = { articleFullDao.getFavoriteArticlesPaging(titleQuery, category) }
-        )
-            .flow
-            .map { pagingData ->
-                pagingData.map { articleFullDao ->
-                    articleFullDao.toDomain()
+    ): Flow<List<ArticleLiteWithStatus>> {
+        return articleLiteDao.getFavoriteArticlesFlow(titleQuery, category)
+            .map { list ->
+                list.map { article ->
+                    article.toDomain()
                 }
             }
     }

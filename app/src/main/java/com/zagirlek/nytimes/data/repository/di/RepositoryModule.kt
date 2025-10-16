@@ -55,7 +55,8 @@ class RepositoryModule(
             articleStatusDao = database.articleStatusDao(),
             articleLiteDao = database.articleLiteDao(),
             remoteNewsSource = NetworkModule.remoteNewsSource,
-            remoteExtractorNewsSource = NetworkModule.remoteNewsExtractorSource
+            remoteExtractorNewsSource = NetworkModule.remoteNewsExtractorSource,
+            networkConnectionChecker = connectionChecker
         )
     }
 

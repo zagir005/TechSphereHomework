@@ -23,8 +23,8 @@ import com.zagirlek.nytimes.domain.model.WeatherPoint
 import com.zagirlek.nytimes.core.ui.elements.AppButton
 import com.zagirlek.nytimes.core.ui.elements.AppTextField
 import com.zagirlek.nytimes.core.ui.elements.NyTimesPreview
-import com.zagirlek.nytimes.ui.screen.main.weather.cmp.state.WeatherAction
-import com.zagirlek.nytimes.ui.screen.main.weather.cmp.state.WeatherState
+import com.zagirlek.nytimes.ui.main.weather.cmp.state.WeatherAction
+import com.zagirlek.nytimes.ui.main.weather.cmp.state.WeatherState
 
 @Composable
 fun WeatherScreenContent(

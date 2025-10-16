@@ -1,4 +1,4 @@
-package com.zagirlek.nytimes.ui.screen.main.weather.cmp.state
+package com.zagirlek.nytimes.ui.main.weather.cmp.state
 
 sealed class WeatherEffect {
     data object ShowCitySaveErrorErrorDialog: WeatherEffect()

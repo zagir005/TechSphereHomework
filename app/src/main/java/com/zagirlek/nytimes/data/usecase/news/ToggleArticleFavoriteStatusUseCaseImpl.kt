@@ -6,7 +6,6 @@ import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleFavoriteStatusUseCa
 class ToggleArticleFavoriteStatusUseCaseImpl(
     private val articleStatusRepository: ArticleStatusRepository
 ): ToggleArticleFavoriteStatusUseCase {
-    override suspend fun invoke(articleId: String) {
+    override suspend fun invoke(articleId: String) =
         articleStatusRepository.toggleFavoriteStatus(articleId)
-    }
 }

@@ -8,7 +8,7 @@ data class ArticleLiteWithStatus(
     val link: String,
     val title: String,
     val description: String?,
-    val category: NewsCategory?,
+    val category: NewsCategory,
     val sourceName: String,
     val sourceIconUrl: String?,
     val creator: String?,

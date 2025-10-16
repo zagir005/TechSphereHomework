@@ -1,4 +1,4 @@
-package com.zagirlek.nytimes.ui.screen.main.weather.cmp.state.textfield
+package com.zagirlek.nytimes.ui.main.weather.cmp.state.textfield
 
 import com.zagirlek.nytimes.domain.model.City
 
