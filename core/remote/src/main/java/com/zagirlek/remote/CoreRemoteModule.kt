@@ -78,14 +78,14 @@ class CoreRemoteModule(
         ).create()
 
 
-    val provideRemoteNewsSource: RemoteNewsSource by lazy {
+    val remoteNewsSource: RemoteNewsSource by lazy {
         RemoteNewsSourceImpl(
             newsService = createNewsService(),
             newsDomains = newsDomains
         )
     }
 
-    val provideRemoteNewsExtractorSource: RemoteNewsExtractorSource by lazy {
+    val remoteNewsExtractorSource: RemoteNewsExtractorSource by lazy {
         RemoteNewsExtractorSourceImpl(createNewsExtractorService())
     }
 

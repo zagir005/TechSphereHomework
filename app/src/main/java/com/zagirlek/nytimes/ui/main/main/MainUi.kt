@@ -17,10 +17,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
+import com.zagirlek.favorite.FavoriteNewsScreenUi
+import com.zagirlek.latest.LatestNewsScreenUi
 import com.zagirlek.nytimes.ui.main.main.element.MainNavigationBar
 import com.zagirlek.nytimes.ui.main.main.element.Tab
-import com.zagirlek.nytimes.ui.main.news.favorite.FavoriteNewsScreenUi
-import com.zagirlek.nytimes.ui.main.news.latest.LatestNewsScreenUi
 import com.zagirlek.weather.WeatherScreenUi
 import kotlinx.coroutines.launch
 

@@ -7,11 +7,11 @@ import com.arkivanov.decompose.router.pages.PagesNavigation
 import com.arkivanov.decompose.router.pages.childPages
 import com.arkivanov.decompose.router.pages.select
 import com.arkivanov.decompose.value.Value
+import com.zagirlek.favorite.FavoriteNewsScreen
+import com.zagirlek.latest.LatestNewsScreen
 import com.zagirlek.nytimes.ui.main.di.MainModule
 import com.zagirlek.nytimes.ui.main.main.MainComponent
 import com.zagirlek.nytimes.ui.main.main.MainComponent.Child
-import com.zagirlek.nytimes.ui.main.news.favorite.FavoriteNewsScreen
-import com.zagirlek.nytimes.ui.main.news.latest.LatestNewsScreen
 import com.zagirlek.weather.WeatherScreen
 import kotlinx.serialization.Serializable
 

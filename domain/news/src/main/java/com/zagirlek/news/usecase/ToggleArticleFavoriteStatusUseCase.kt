@@ -1,7 +1,10 @@
 package com.zagirlek.news.usecase
 
-fun interface ToggleArticleFavoriteStatusUseCase {
-    suspend operator fun invoke(
-        articleId: String
-    ): Result<Unit>
+import com.zagirlek.news.repository.ArticleStatusRepository
+
+class ToggleArticleFavoriteStatusUseCase(
+    private val articleStatusRepository: ArticleStatusRepository
+) {
+    suspend operator fun invoke(articleId: String) =
+        articleStatusRepository.toggleFavoriteStatus(articleId)
 }

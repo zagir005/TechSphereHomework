@@ -66,6 +66,7 @@ dependencies {
 
     implementation(projects.data.auth)
     implementation(projects.data.weather)
+    implementation(projects.data.news)
 
     implementation(projects.domain.auth)
     implementation(projects.domain.weather)
@@ -74,6 +75,9 @@ dependencies {
     implementation(projects.feature.auth)
     implementation(projects.feature.splash)
     implementation(projects.feature.weather)
+    implementation(projects.feature.news.articledetails)
+    implementation(projects.feature.news.latest)
+    implementation(projects.feature.news.favorite)
 
     implementation(libs.decompose)
     implementation(libs.decompose.extension)
