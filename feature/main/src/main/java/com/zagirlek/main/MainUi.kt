@@ -1,4 +1,4 @@
-package com.zagirlek.nytimes.ui.main.main
+package com.zagirlek.main
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
@@ -19,8 +19,8 @@ import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.zagirlek.favorite.FavoriteNewsScreenUi
 import com.zagirlek.latest.LatestNewsScreenUi
-import com.zagirlek.nytimes.ui.main.main.element.MainNavigationBar
-import com.zagirlek.nytimes.ui.main.main.element.Tab
+import com.zagirlek.main.element.MainNavigationBar
+import com.zagirlek.main.element.Tab
 import com.zagirlek.weather.WeatherScreenUi
 import kotlinx.coroutines.launch
 

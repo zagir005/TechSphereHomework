@@ -3,8 +3,8 @@ package com.zagirlek.nytimes.root
 import androidx.compose.runtime.Composable
 import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.zagirlek.auth.AuthScreenUi
+import com.zagirlek.main.MainUi
 import com.zagirlek.nytimes.BuildConfig
-import com.zagirlek.nytimes.ui.main.main.MainUi
 import com.zagirlek.splash.SplashScreen
 
 @Composable

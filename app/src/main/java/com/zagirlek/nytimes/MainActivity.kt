@@ -26,7 +26,6 @@ class MainActivity : ComponentActivity() {
             authFeatureModule = app.featureModule.getAuthModule()
         )
 
-
         setContent {
             NyTimesTheme {
                 RootUi(defaultRootComponent)

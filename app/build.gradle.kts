@@ -74,6 +74,7 @@ dependencies {
 
     implementation(projects.feature.auth)
     implementation(projects.feature.splash)
+    implementation(projects.feature.main)
     implementation(projects.feature.weather)
     implementation(projects.feature.news.articledetails)
     implementation(projects.feature.news.latest)

@@ -3,7 +3,7 @@ package com.zagirlek.nytimes.root
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.value.Value
 import com.zagirlek.auth.AuthScreen
-import com.zagirlek.nytimes.ui.main.main.MainComponent
+import com.zagirlek.main.MainComponent
 import com.zagirlek.splash.SplashComponent
 
 interface RootComponent {

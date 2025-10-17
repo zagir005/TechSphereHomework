@@ -1,4 +1,4 @@
-package com.zagirlek.nytimes.ui.main.main.cmp
+package com.zagirlek.main.cmp
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.pages.ChildPages
@@ -8,20 +8,23 @@ import com.arkivanov.decompose.router.pages.childPages
 import com.arkivanov.decompose.router.pages.select
 import com.arkivanov.decompose.value.Value
 import com.zagirlek.favorite.FavoriteNewsScreen
+import com.zagirlek.favorite.di.FavoriteNewsFeatureModule
 import com.zagirlek.latest.LatestNewsScreen
-import com.zagirlek.nytimes.ui.main.di.MainModule
-import com.zagirlek.nytimes.ui.main.main.MainComponent
-import com.zagirlek.nytimes.ui.main.main.MainComponent.Child
+import com.zagirlek.latest.di.LatestNewsFeatureModule
+import com.zagirlek.main.MainComponent
 import com.zagirlek.weather.WeatherScreen
+import com.zagirlek.weather.di.WeatherFeatureModule
 import kotlinx.serialization.Serializable
 
-class DefaultMainComponent(
+internal class DefaultMainComponent(
     private val componentContext: ComponentContext,
-    private val mainModule: MainModule
+    private val weatherFeatureModule: WeatherFeatureModule,
+    private val latestNewsFeatureModule: LatestNewsFeatureModule,
+    private val favoriteNewsFeatureModule: FavoriteNewsFeatureModule
 ): ComponentContext by componentContext, MainComponent {
     private val navigation = PagesNavigation<Config>()
 
-    override val pages: Value<ChildPages<Config, Child>> = childPages(
+    override val pages: Value<ChildPages<Config, MainComponent.Child>> = childPages(
         source = navigation,
         serializer = Config.serializer(),
         initialPages = {
@@ -41,26 +44,23 @@ class DefaultMainComponent(
          navigation.select(index)
     }
 
-    private fun child(config: Config, component: ComponentContext): Child{
+    private fun child(config: Config, component: ComponentContext): MainComponent.Child {
         return when(config){
-            Config.Favorites -> Child.Favorites(component = favorites(componentContext = component))
-            Config.News -> Child.News(component = news(componentContext = component))
-            Config.Weather -> Child.Weather(component = weather(componentContext = component))
+            Config.Favorites -> MainComponent.Child.Favorites(component = favorites(componentContext = component))
+            Config.News -> MainComponent.Child.News(component = latest(componentContext = component))
+            Config.Weather -> MainComponent.Child.Weather(component = weather(componentContext = component))
         }
     }
-
-    private fun favorites(componentContext: ComponentContext): FavoriteNewsScreen =
-        mainModule.getFavoriteNewsComponent(
-            componentContext = componentContext,
-        )
-
-    private fun news(componentContext: ComponentContext): LatestNewsScreen =
-        mainModule.getLatestNewsComponent(
-            componentContext = componentContext,
-        )
-
     private fun weather(componentContext: ComponentContext): WeatherScreen =
-        mainModule.getWeatherComponent(componentContext = componentContext)
+        weatherFeatureModule.getWeatherComponent(componentContext = componentContext)
+    private fun latest(componentContext: ComponentContext): LatestNewsScreen =
+        latestNewsFeatureModule.getLatestNewsComponent(
+            componentContext = componentContext,
+        )
+    private fun favorites(componentContext: ComponentContext): FavoriteNewsScreen =
+        favoriteNewsFeatureModule.getFavoriteNewsComponent(
+            componentContext = componentContext,
+        )
 
     @Serializable
     sealed class Config{

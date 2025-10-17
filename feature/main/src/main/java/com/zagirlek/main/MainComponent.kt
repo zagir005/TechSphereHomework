@@ -1,4 +1,4 @@
-package com.zagirlek.nytimes.ui.main.main
+package com.zagirlek.main
 
 import com.arkivanov.decompose.router.pages.ChildPages
 import com.arkivanov.decompose.value.Value

@@ -8,20 +8,18 @@ import com.arkivanov.decompose.router.stack.replaceCurrent
 import com.arkivanov.decompose.value.Value
 import com.zagirlek.auth.AuthScreen
 import com.zagirlek.auth.di.AuthFeatureModule
+import com.zagirlek.main.MainComponent
+import com.zagirlek.main.di.MainFeatureModule
 import com.zagirlek.nytimes.root.RootComponent
-import com.zagirlek.nytimes.ui.main.di.MainModule
-import com.zagirlek.nytimes.ui.main.main.MainComponent
-import com.zagirlek.nytimes.ui.main.main.cmp.DefaultMainComponent
 import com.zagirlek.splash.SplashComponent
 import com.zagirlek.splash.di.SplashFeatureModule
 import kotlinx.serialization.Serializable
-
 
 class DefaultRootComponent(
     private val componentContext: ComponentContext,
     private val splashFeatureModule: SplashFeatureModule,
     private val authFeatureModule: AuthFeatureModule,
-    private val mainModule: MainModule,
+    private val mainModule: MainFeatureModule,
 ): ComponentContext by componentContext, RootComponent {
     private val navigation = StackNavigation<Config>()
 
@@ -55,10 +53,7 @@ class DefaultRootComponent(
         )
 
     private fun main(componentContext: ComponentContext): MainComponent =
-        DefaultMainComponent(
-            componentContext = componentContext,
-            mainModule = mainModule
-        )
+        mainModule.getMainComponent(componentContext = componentContext)
 
     @Serializable
     private sealed class Config{
