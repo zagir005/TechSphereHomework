@@ -1,7 +1,7 @@
 package com.zagirlek.nytimes.data.usecase.weather
 
-import com.zagirlek.nytimes.domain.repository.WeatherRepository
-import com.zagirlek.nytimes.domain.usecase.weather.DeleteWeatherPointUseCase
+import com.zagirlek.weather.repository.WeatherRepository
+import com.zagirlek.weather.usecase.DeleteWeatherPointUseCase
 
 class DeleteWeatherPointUseCaseImpl(
     private val weatherRepository: WeatherRepository

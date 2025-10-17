@@ -13,8 +13,8 @@ import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
 import com.zagirlek.common.model.NewsCategory
 import com.zagirlek.common.utils.getStore
-import com.zagirlek.nytimes.domain.usecase.news.FavoriteNewsFlowUseCase
-import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleFavoriteStatusUseCase
+import com.zagirlek.news.usecase.FavoriteNewsFlowUseCase
+import com.zagirlek.news.usecase.ToggleArticleFavoriteStatusUseCase
 import com.zagirlek.nytimes.ui.main.news.articledetails.ArticleDetailsComponent
 import com.zagirlek.nytimes.ui.main.news.articledetails.cmp.ArticleDetailsComponentFactory
 import com.zagirlek.nytimes.ui.main.news.favorite.FavoriteNewsScreen

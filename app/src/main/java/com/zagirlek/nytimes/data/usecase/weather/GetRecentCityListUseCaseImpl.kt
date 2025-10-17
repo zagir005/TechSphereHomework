@@ -1,8 +1,8 @@
 package com.zagirlek.nytimes.data.usecase.weather
 
-import com.zagirlek.nytimes.domain.model.City
-import com.zagirlek.nytimes.domain.repository.CityRepository
-import com.zagirlek.nytimes.domain.usecase.weather.GetRecentCityListUseCase
+import com.zagirlek.weather.model.City
+import com.zagirlek.weather.repository.CityRepository
+import com.zagirlek.weather.usecase.GetRecentCityListUseCase
 
 class GetRecentCityListUseCaseImpl(
     private val cityRepository: CityRepository

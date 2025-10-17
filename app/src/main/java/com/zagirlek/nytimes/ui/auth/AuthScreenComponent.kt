@@ -6,9 +6,9 @@ import com.arkivanov.essenty.lifecycle.doOnDestroy
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
+import com.zagirlek.auth.usecase.AuthUseCase
+import com.zagirlek.auth.usecase.AuthWithoutLoginUseCase
 import com.zagirlek.common.utils.getStore
-import com.zagirlek.nytimes.domain.usecase.auth.AuthUseCase
-import com.zagirlek.nytimes.domain.usecase.auth.AuthWithoutLoginUseCase
 import com.zagirlek.nytimes.ui.auth.model.AuthModel
 import com.zagirlek.nytimes.ui.auth.model.AuthSideEffect
 import com.zagirlek.nytimes.ui.auth.model.toModel

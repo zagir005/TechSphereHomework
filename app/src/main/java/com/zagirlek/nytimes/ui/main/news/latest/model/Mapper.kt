@@ -3,7 +3,7 @@ package com.zagirlek.nytimes.ui.main.news.latest.model
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.zagirlek.common.utils.timeAgoOrDate
-import com.zagirlek.nytimes.domain.model.ArticleLiteWithStatus
+import com.zagirlek.news.model.ArticleLiteWithStatus
 import com.zagirlek.nytimes.ui.main.news.latest.store.LatestNewsStore
 import com.zagirlek.nytimes.ui.main.news.model.Article
 import com.zagirlek.ui.elements.toUiCategory

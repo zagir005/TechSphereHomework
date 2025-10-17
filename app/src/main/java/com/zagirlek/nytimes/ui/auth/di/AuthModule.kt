@@ -2,8 +2,8 @@ package com.zagirlek.nytimes.ui.auth.di
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.mvikotlin.core.store.StoreFactory
-import com.zagirlek.nytimes.domain.usecase.auth.AuthUseCase
-import com.zagirlek.nytimes.domain.usecase.auth.AuthWithoutLoginUseCase
+import com.zagirlek.auth.usecase.AuthUseCase
+import com.zagirlek.auth.usecase.AuthWithoutLoginUseCase
 import com.zagirlek.nytimes.ui.auth.AuthScreenComponent
 
 class AuthModule(

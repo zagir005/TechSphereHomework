@@ -4,7 +4,7 @@ import com.zagirlek.common.model.NewsCategory
 import com.zagirlek.common.utils.toEpochMillis
 import com.zagirlek.common.utils.toLocalDateTime
 import com.zagirlek.local.news.entity.ArticleLiteEntity
-import com.zagirlek.nytimes.domain.model.ArticleLite
+import com.zagirlek.news.model.ArticleLite
 import com.zagirlek.remote.news.dto.ArticleDTO
 
 

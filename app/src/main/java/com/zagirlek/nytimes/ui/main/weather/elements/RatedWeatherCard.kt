@@ -14,9 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.zagirlek.nytimes.domain.model.City
-import com.zagirlek.nytimes.domain.model.WeatherPoint
 import com.zagirlek.ui.theme.NyTimesTheme
+import com.zagirlek.weather.model.City
+import com.zagirlek.weather.model.WeatherPoint
 
 @Composable
 fun RatedWeatherCard(

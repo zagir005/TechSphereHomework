@@ -1,7 +1,7 @@
 package com.zagirlek.nytimes.data.mapper
 
 import com.zagirlek.local.news.entity.ArticleStatusEntity
-import com.zagirlek.nytimes.domain.model.ArticleStatus
+import com.zagirlek.news.model.ArticleStatus
 
 fun ArticleStatusEntity.toDomain(): ArticleStatus = ArticleStatus(
     articleId = articleId,

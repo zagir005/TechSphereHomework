@@ -3,8 +3,8 @@ package com.zagirlek.nytimes.data.repository
 import com.zagirlek.local.weather.dao.CityDao
 import com.zagirlek.local.weather.entity.CityEntity
 import com.zagirlek.nytimes.data.mapper.toDomain
-import com.zagirlek.nytimes.domain.model.City
-import com.zagirlek.nytimes.domain.repository.CityRepository
+import com.zagirlek.weather.model.City
+import com.zagirlek.weather.repository.CityRepository
 
 class CityRepositoryImpl(
     private val cityDao: CityDao

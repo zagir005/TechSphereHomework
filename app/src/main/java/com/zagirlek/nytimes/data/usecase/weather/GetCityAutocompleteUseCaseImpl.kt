@@ -1,8 +1,8 @@
 package com.zagirlek.nytimes.data.usecase.weather
 
-import com.zagirlek.nytimes.domain.model.City
-import com.zagirlek.nytimes.domain.repository.CityAutocompleteRepository
-import com.zagirlek.nytimes.domain.usecase.weather.GetCityAutocompleteUseCase
+import com.zagirlek.weather.model.City
+import com.zagirlek.weather.repository.CityAutocompleteRepository
+import com.zagirlek.weather.usecase.GetCityAutocompleteUseCase
 
 class GetCityAutocompleteUseCaseImpl(
     private val autocompleteRepository: CityAutocompleteRepository

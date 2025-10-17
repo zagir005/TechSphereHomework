@@ -4,9 +4,9 @@ import com.zagirlek.common.model.NewsCategory
 import com.zagirlek.common.utils.toLocalDateTime
 import com.zagirlek.local.news.entity.ArticleLiteEntity
 import com.zagirlek.local.news.entity.ArticleLiteWithStatusEntity
-import com.zagirlek.nytimes.domain.model.ArticleFull
-import com.zagirlek.nytimes.domain.model.ArticleLite
-import com.zagirlek.nytimes.domain.model.ArticleLiteWithStatus
+import com.zagirlek.news.model.ArticleFull
+import com.zagirlek.news.model.ArticleLite
+import com.zagirlek.news.model.ArticleLiteWithStatus
 
 fun ArticleLite.toArticleFull(
     fullText: String

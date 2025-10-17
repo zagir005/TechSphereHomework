@@ -2,17 +2,11 @@ package com.zagirlek.nytimes.ui.main.di
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.mvikotlin.core.store.StoreFactory
-import com.zagirlek.nytimes.domain.usecase.news.FavoriteNewsFlowUseCase
-import com.zagirlek.nytimes.domain.usecase.news.GetArticleFullFlowUseCase
-import com.zagirlek.nytimes.domain.usecase.news.LatestNewsPagingUseCase
-import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleFavoriteStatusUseCase
-import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleReadStatusUseCase
-import com.zagirlek.nytimes.domain.usecase.weather.AddWeatherPointUseCase
-import com.zagirlek.nytimes.domain.usecase.weather.DeleteWeatherPointUseCase
-import com.zagirlek.nytimes.domain.usecase.weather.GetCityAutocompleteUseCase
-import com.zagirlek.nytimes.domain.usecase.weather.GetOrPutCityUseCase
-import com.zagirlek.nytimes.domain.usecase.weather.GetRecentCityListUseCase
-import com.zagirlek.nytimes.domain.usecase.weather.GetWeatherPointsHistoryFlowUseCase
+import com.zagirlek.news.usecase.FavoriteNewsFlowUseCase
+import com.zagirlek.news.usecase.GetArticleFullFlowUseCase
+import com.zagirlek.news.usecase.LatestNewsPagingUseCase
+import com.zagirlek.news.usecase.ToggleArticleFavoriteStatusUseCase
+import com.zagirlek.news.usecase.ToggleArticleReadStatusUseCase
 import com.zagirlek.nytimes.ui.main.news.articledetails.ArticleDetailsComponent
 import com.zagirlek.nytimes.ui.main.news.articledetails.cmp.ArticleDetailsComponentFactory
 import com.zagirlek.nytimes.ui.main.news.articledetails.cmp.DefaultArticleDetailsComponent
@@ -22,6 +16,12 @@ import com.zagirlek.nytimes.ui.main.news.latest.LatestNewsScreen
 import com.zagirlek.nytimes.ui.main.news.latest.cmp.LatestNewsScreenComponent
 import com.zagirlek.nytimes.ui.main.weather.WeatherScreen
 import com.zagirlek.nytimes.ui.main.weather.cmp.DefaultWeatherScreen
+import com.zagirlek.weather.usecase.AddWeatherPointUseCase
+import com.zagirlek.weather.usecase.DeleteWeatherPointUseCase
+import com.zagirlek.weather.usecase.GetCityAutocompleteUseCase
+import com.zagirlek.weather.usecase.GetOrPutCityUseCase
+import com.zagirlek.weather.usecase.GetRecentCityListUseCase
+import com.zagirlek.weather.usecase.GetWeatherPointsHistoryFlowUseCase
 
 class MainModule(
     private val storeFactory: StoreFactory,

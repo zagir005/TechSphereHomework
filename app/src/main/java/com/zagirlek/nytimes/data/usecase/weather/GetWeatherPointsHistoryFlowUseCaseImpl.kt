@@ -1,8 +1,9 @@
 package com.zagirlek.nytimes.data.usecase.weather
 
-import com.zagirlek.nytimes.domain.model.WeatherPoint
-import com.zagirlek.nytimes.domain.repository.WeatherRepository
-import com.zagirlek.nytimes.domain.usecase.weather.GetWeatherPointsHistoryFlowUseCase
+
+import com.zagirlek.weather.model.WeatherPoint
+import com.zagirlek.weather.repository.WeatherRepository
+import com.zagirlek.weather.usecase.GetWeatherPointsHistoryFlowUseCase
 import kotlinx.coroutines.flow.Flow
 
 class GetWeatherPointsHistoryFlowUseCaseImpl(

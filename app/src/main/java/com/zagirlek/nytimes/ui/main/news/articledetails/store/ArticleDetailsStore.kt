@@ -1,7 +1,7 @@
 package com.zagirlek.nytimes.ui.main.news.articledetails.store
 
 import com.arkivanov.mvikotlin.core.store.Store
-import com.zagirlek.nytimes.domain.model.ArticleFullWithStatus
+import com.zagirlek.news.model.ArticleFullWithStatus
 import com.zagirlek.nytimes.ui.main.news.articledetails.store.ArticleDetailsStore.Intent
 import com.zagirlek.nytimes.ui.main.news.articledetails.store.ArticleDetailsStore.State
 

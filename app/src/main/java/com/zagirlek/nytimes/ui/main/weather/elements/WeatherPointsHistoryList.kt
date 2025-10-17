@@ -29,9 +29,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.zagirlek.nytimes.R
-import com.zagirlek.nytimes.domain.model.City
-import com.zagirlek.nytimes.domain.model.WeatherPoint
 import com.zagirlek.ui.elements.NyTimesPreview
+import com.zagirlek.weather.model.City
+import com.zagirlek.weather.model.WeatherPoint
 
 @Composable
 fun WeatherPointsHistoryList(

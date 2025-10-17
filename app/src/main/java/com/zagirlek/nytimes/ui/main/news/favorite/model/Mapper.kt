@@ -1,6 +1,6 @@
 package com.zagirlek.nytimes.ui.main.news.favorite.model
 
-import com.zagirlek.nytimes.domain.model.ArticleLiteWithStatus
+import com.zagirlek.news.model.ArticleLiteWithStatus
 import com.zagirlek.nytimes.ui.main.news.favorite.store.FavoriteNewsStore
 import com.zagirlek.ui.elements.toUiCategory
 

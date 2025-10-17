@@ -5,8 +5,8 @@ import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.update
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
-import com.zagirlek.nytimes.domain.model.AuthToken
-import com.zagirlek.nytimes.domain.usecase.auth.GetCurrentAuthTokenUseCase
+import com.zagirlek.auth.model.AuthToken
+import com.zagirlek.auth.usecase.GetCurrentAuthTokenUseCase
 import com.zagirlek.nytimes.ui.splash.SplashComponent
 import com.zagirlek.nytimes.ui.splash.cmp.state.SplashAction
 import com.zagirlek.nytimes.ui.splash.cmp.state.SplashState

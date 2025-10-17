@@ -1,9 +1,9 @@
 package com.zagirlek.nytimes.data.usecase.weather
 
 import com.zagirlek.common.utils.runCatchingCancellable
-import com.zagirlek.nytimes.domain.model.City
-import com.zagirlek.nytimes.domain.repository.CityRepository
-import com.zagirlek.nytimes.domain.usecase.weather.GetOrPutCityUseCase
+import com.zagirlek.weather.model.City
+import com.zagirlek.weather.repository.CityRepository
+import com.zagirlek.weather.usecase.GetOrPutCityUseCase
 
 class GetOrPutCityUseCaseImpl(
     private val cityRepository: CityRepository

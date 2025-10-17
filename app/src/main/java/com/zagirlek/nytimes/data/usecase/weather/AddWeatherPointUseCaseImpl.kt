@@ -1,9 +1,10 @@
 package com.zagirlek.nytimes.data.usecase.weather
 
-import com.zagirlek.nytimes.domain.model.City
-import com.zagirlek.nytimes.domain.model.WeatherPoint
-import com.zagirlek.nytimes.domain.repository.WeatherRepository
-import com.zagirlek.nytimes.domain.usecase.weather.AddWeatherPointUseCase
+import com.zagirlek.weather.model.City
+import com.zagirlek.weather.model.WeatherPoint
+import com.zagirlek.weather.repository.WeatherRepository
+import com.zagirlek.weather.usecase.AddWeatherPointUseCase
+
 
 class AddWeatherPointUseCaseImpl(
     private val weatherRepository: WeatherRepository

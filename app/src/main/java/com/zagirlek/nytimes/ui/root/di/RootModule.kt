@@ -1,7 +1,7 @@
 package com.zagirlek.nytimes.ui.root.di
 
 import com.arkivanov.mvikotlin.core.store.StoreFactory
-import com.zagirlek.nytimes.domain.usecase.di.UseCaseModule
+import com.zagirlek.nytimes.domain.UseCaseModule
 import com.zagirlek.nytimes.ui.auth.di.AuthModule
 import com.zagirlek.nytimes.ui.main.di.MainModule
 import com.zagirlek.nytimes.ui.splash.di.SplashModule

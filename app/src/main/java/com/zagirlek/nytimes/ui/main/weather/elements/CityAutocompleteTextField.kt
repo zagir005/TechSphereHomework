@@ -22,9 +22,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.zagirlek.nytimes.R
-import com.zagirlek.nytimes.domain.model.City
 import com.zagirlek.ui.elements.AppTextField
 import com.zagirlek.ui.theme.NyTimesTheme
+import com.zagirlek.weather.model.City
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

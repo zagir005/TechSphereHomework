@@ -6,9 +6,9 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import com.zagirlek.common.model.NewsCategory
-import com.zagirlek.nytimes.domain.model.ArticleLiteWithStatus
-import com.zagirlek.nytimes.domain.usecase.news.FavoriteNewsFlowUseCase
-import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleFavoriteStatusUseCase
+import com.zagirlek.news.model.ArticleLiteWithStatus
+import com.zagirlek.news.usecase.FavoriteNewsFlowUseCase
+import com.zagirlek.news.usecase.ToggleArticleFavoriteStatusUseCase
 import com.zagirlek.nytimes.ui.main.news.favorite.store.FavoriteNewsStore.Intent
 import com.zagirlek.nytimes.ui.main.news.favorite.store.FavoriteNewsStore.State
 import kotlinx.coroutines.Dispatchers

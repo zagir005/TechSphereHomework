@@ -2,7 +2,7 @@ package com.zagirlek.nytimes.ui.main.news.favorite.store
 
 import com.arkivanov.mvikotlin.core.store.Store
 import com.zagirlek.common.model.NewsCategory
-import com.zagirlek.nytimes.domain.model.ArticleLiteWithStatus
+import com.zagirlek.news.model.ArticleLiteWithStatus
 import com.zagirlek.nytimes.ui.main.news.favorite.store.FavoriteNewsStore.Intent
 import com.zagirlek.nytimes.ui.main.news.favorite.store.FavoriteNewsStore.State
 

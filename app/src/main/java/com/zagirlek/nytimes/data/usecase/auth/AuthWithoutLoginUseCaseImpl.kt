@@ -1,8 +1,8 @@
 package com.zagirlek.nytimes.data.usecase.auth
 
-import com.zagirlek.nytimes.domain.model.AuthToken
-import com.zagirlek.nytimes.domain.repository.AuthRepository
-import com.zagirlek.nytimes.domain.usecase.auth.AuthWithoutLoginUseCase
+import com.zagirlek.auth.model.AuthToken
+import com.zagirlek.auth.repository.AuthRepository
+import com.zagirlek.auth.usecase.AuthWithoutLoginUseCase
 
 class AuthWithoutLoginUseCaseImpl(
     private val authRepository: AuthRepository

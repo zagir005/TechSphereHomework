@@ -5,13 +5,13 @@ import com.zagirlek.common.error.AppError
 import com.zagirlek.local.news.dao.ArticleFullDao
 import com.zagirlek.local.news.dao.ArticleLiteDao
 import com.zagirlek.local.news.dao.ArticleStatusDao
+import com.zagirlek.news.model.ArticleFullWithStatus
+import com.zagirlek.news.model.ArticleLite
+import com.zagirlek.news.repository.ArticleRepository
 import com.zagirlek.nytimes.data.mapper.toArticleFull
 import com.zagirlek.nytimes.data.mapper.toArticleWithStatus
 import com.zagirlek.nytimes.data.mapper.toDomain
 import com.zagirlek.nytimes.data.mapper.toEntity
-import com.zagirlek.nytimes.domain.model.ArticleFullWithStatus
-import com.zagirlek.nytimes.domain.model.ArticleLite
-import com.zagirlek.nytimes.domain.repository.ArticleRepository
 import com.zagirlek.remote.extractor.RemoteNewsExtractorSource
 import com.zagirlek.remote.news.RemoteNewsSource
 import kotlinx.coroutines.flow.Flow

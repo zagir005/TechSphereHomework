@@ -1,8 +1,8 @@
 package com.zagirlek.nytimes.data.repository
 
 import com.zagirlek.local.news.dao.ArticleStatusDao
-import com.zagirlek.nytimes.domain.repository.ArticleRepository
-import com.zagirlek.nytimes.domain.repository.ArticleStatusRepository
+import com.zagirlek.news.repository.ArticleRepository
+import com.zagirlek.news.repository.ArticleStatusRepository
 
 class ArticleStatusRepositoryImpl(
     private val articleStatusDao: ArticleStatusDao,

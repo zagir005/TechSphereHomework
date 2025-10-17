@@ -1,9 +1,9 @@
 package com.zagirlek.nytimes.ui.main.weather.cmp.state
 
 import com.zagirlek.common.basemvi.reducer.ViewState
-import com.zagirlek.nytimes.domain.model.WeatherPoint
 import com.zagirlek.nytimes.ui.main.weather.cmp.state.textfield.CityTextFieldState
 import com.zagirlek.nytimes.ui.main.weather.cmp.state.textfield.DegreeTextFieldState
+import com.zagirlek.weather.model.WeatherPoint
 
 data class WeatherState(
     val cityTextFieldState: CityTextFieldState = CityTextFieldState(),

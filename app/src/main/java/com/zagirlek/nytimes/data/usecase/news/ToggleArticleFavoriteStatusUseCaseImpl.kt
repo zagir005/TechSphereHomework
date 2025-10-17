@@ -1,7 +1,7 @@
 package com.zagirlek.nytimes.data.usecase.news
 
-import com.zagirlek.nytimes.domain.repository.ArticleStatusRepository
-import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleFavoriteStatusUseCase
+import com.zagirlek.news.repository.ArticleStatusRepository
+import com.zagirlek.news.usecase.ToggleArticleFavoriteStatusUseCase
 
 class ToggleArticleFavoriteStatusUseCaseImpl(
     private val articleStatusRepository: ArticleStatusRepository

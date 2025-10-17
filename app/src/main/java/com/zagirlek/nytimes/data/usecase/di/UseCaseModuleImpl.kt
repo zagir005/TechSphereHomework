@@ -1,5 +1,13 @@
 package com.zagirlek.nytimes.data.usecase.di
 
+import com.zagirlek.auth.usecase.AuthUseCase
+import com.zagirlek.auth.usecase.AuthWithoutLoginUseCase
+import com.zagirlek.auth.usecase.GetCurrentAuthTokenUseCase
+import com.zagirlek.news.usecase.FavoriteNewsFlowUseCase
+import com.zagirlek.news.usecase.GetArticleFullFlowUseCase
+import com.zagirlek.news.usecase.LatestNewsPagingUseCase
+import com.zagirlek.news.usecase.ToggleArticleFavoriteStatusUseCase
+import com.zagirlek.news.usecase.ToggleArticleReadStatusUseCase
 import com.zagirlek.nytimes.data.repository.di.RepositoryModule
 import com.zagirlek.nytimes.data.usecase.auth.AuthUseCaseImpl
 import com.zagirlek.nytimes.data.usecase.auth.AuthWithoutLoginUseCaseImpl
@@ -15,21 +23,13 @@ import com.zagirlek.nytimes.data.usecase.weather.GetCityAutocompleteUseCaseImpl
 import com.zagirlek.nytimes.data.usecase.weather.GetOrPutCityUseCaseImpl
 import com.zagirlek.nytimes.data.usecase.weather.GetRecentCityListUseCaseImpl
 import com.zagirlek.nytimes.data.usecase.weather.GetWeatherPointsHistoryFlowUseCaseImpl
-import com.zagirlek.nytimes.domain.usecase.auth.AuthUseCase
-import com.zagirlek.nytimes.domain.usecase.auth.AuthWithoutLoginUseCase
-import com.zagirlek.nytimes.domain.usecase.auth.GetCurrentAuthTokenUseCase
-import com.zagirlek.nytimes.domain.usecase.di.UseCaseModule
-import com.zagirlek.nytimes.domain.usecase.news.FavoriteNewsFlowUseCase
-import com.zagirlek.nytimes.domain.usecase.news.GetArticleFullFlowUseCase
-import com.zagirlek.nytimes.domain.usecase.news.LatestNewsPagingUseCase
-import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleFavoriteStatusUseCase
-import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleReadStatusUseCase
-import com.zagirlek.nytimes.domain.usecase.weather.AddWeatherPointUseCase
-import com.zagirlek.nytimes.domain.usecase.weather.DeleteWeatherPointUseCase
-import com.zagirlek.nytimes.domain.usecase.weather.GetCityAutocompleteUseCase
-import com.zagirlek.nytimes.domain.usecase.weather.GetOrPutCityUseCase
-import com.zagirlek.nytimes.domain.usecase.weather.GetRecentCityListUseCase
-import com.zagirlek.nytimes.domain.usecase.weather.GetWeatherPointsHistoryFlowUseCase
+import com.zagirlek.nytimes.domain.UseCaseModule
+import com.zagirlek.weather.usecase.AddWeatherPointUseCase
+import com.zagirlek.weather.usecase.DeleteWeatherPointUseCase
+import com.zagirlek.weather.usecase.GetCityAutocompleteUseCase
+import com.zagirlek.weather.usecase.GetOrPutCityUseCase
+import com.zagirlek.weather.usecase.GetRecentCityListUseCase
+import com.zagirlek.weather.usecase.GetWeatherPointsHistoryFlowUseCase
 
 class UseCaseModuleImpl(
     private val repositoryModule: RepositoryModule

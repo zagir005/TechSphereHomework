@@ -7,10 +7,10 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import com.zagirlek.common.model.NewsCategory
 import com.zagirlek.local.news.dao.ArticleLiteDao
+import com.zagirlek.news.model.ArticleLiteWithStatus
+import com.zagirlek.news.repository.NewsRepository
 import com.zagirlek.nytimes.data.mapper.toDomain
 import com.zagirlek.nytimes.data.pagermediator.NewsRemoteMediator
-import com.zagirlek.nytimes.domain.model.ArticleLiteWithStatus
-import com.zagirlek.nytimes.domain.repository.NewsRepository
 import com.zagirlek.remote.news.RemoteNewsSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

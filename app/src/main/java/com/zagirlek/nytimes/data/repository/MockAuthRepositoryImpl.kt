@@ -1,10 +1,10 @@
 package com.zagirlek.nytimes.data.repository
 
 import com.zagirlek.android.networkchecker.NetworkConnectionChecker
+import com.zagirlek.auth.model.AuthToken
+import com.zagirlek.auth.repository.AuthRepository
 import com.zagirlek.common.error.AuthError
 import com.zagirlek.common.utils.runCatchingCancellable
-import com.zagirlek.nytimes.domain.model.AuthToken
-import com.zagirlek.nytimes.domain.repository.AuthRepository
 import kotlinx.coroutines.delay
 import kotlin.random.Random
 

@@ -1,8 +1,9 @@
 package com.zagirlek.nytimes.data.mapper
 
 import com.zagirlek.local.weather.entity.CityEntity
-import com.zagirlek.nytimes.domain.model.City
+
 import com.zagirlek.remote.autocomplete.dto.CityDTO
+import com.zagirlek.weather.model.City
 
 fun CityEntity.toDomain(): City = City(
     id = id,

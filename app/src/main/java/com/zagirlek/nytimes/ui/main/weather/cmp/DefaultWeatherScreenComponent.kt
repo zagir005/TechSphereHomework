@@ -8,12 +8,6 @@ import com.arkivanov.essenty.instancekeeper.InstanceKeeper
 import com.arkivanov.essenty.instancekeeper.getOrCreate
 import com.zagirlek.common.basemvi.component.BaseComponent
 import com.zagirlek.common.utils.canceledJob
-import com.zagirlek.nytimes.domain.usecase.weather.AddWeatherPointUseCase
-import com.zagirlek.nytimes.domain.usecase.weather.DeleteWeatherPointUseCase
-import com.zagirlek.nytimes.domain.usecase.weather.GetCityAutocompleteUseCase
-import com.zagirlek.nytimes.domain.usecase.weather.GetOrPutCityUseCase
-import com.zagirlek.nytimes.domain.usecase.weather.GetRecentCityListUseCase
-import com.zagirlek.nytimes.domain.usecase.weather.GetWeatherPointsHistoryFlowUseCase
 import com.zagirlek.nytimes.ui.main.weather.WeatherScreen
 import com.zagirlek.nytimes.ui.main.weather.cmp.reducer.WeatherMutation
 import com.zagirlek.nytimes.ui.main.weather.cmp.reducer.WeatherMutation.AddWeatherPoint
@@ -29,6 +23,12 @@ import com.zagirlek.nytimes.ui.main.weather.cmp.reducer.WeatherReducer
 import com.zagirlek.nytimes.ui.main.weather.cmp.state.WeatherAction
 import com.zagirlek.nytimes.ui.main.weather.cmp.state.WeatherEffect
 import com.zagirlek.nytimes.ui.main.weather.cmp.state.WeatherState
+import com.zagirlek.weather.usecase.AddWeatherPointUseCase
+import com.zagirlek.weather.usecase.DeleteWeatherPointUseCase
+import com.zagirlek.weather.usecase.GetCityAutocompleteUseCase
+import com.zagirlek.weather.usecase.GetOrPutCityUseCase
+import com.zagirlek.weather.usecase.GetRecentCityListUseCase
+import com.zagirlek.weather.usecase.GetWeatherPointsHistoryFlowUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow

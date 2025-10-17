@@ -64,6 +64,10 @@ dependencies {
     implementation(projects.core.remote)
     implementation(projects.core.local)
 
+    implementation(projects.domain.auth)
+    implementation(projects.domain.weather)
+    implementation(projects.domain.news)
+
     implementation(libs.decompose)
     implementation(libs.decompose.extension)
     implementation(libs.essenty.coroutines)

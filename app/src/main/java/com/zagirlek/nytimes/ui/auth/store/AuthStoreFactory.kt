@@ -4,9 +4,9 @@ import com.arkivanov.mvikotlin.core.store.Reducer
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
+import com.zagirlek.auth.usecase.AuthUseCase
+import com.zagirlek.auth.usecase.AuthWithoutLoginUseCase
 import com.zagirlek.common.error.AuthError
-import com.zagirlek.nytimes.domain.usecase.auth.AuthUseCase
-import com.zagirlek.nytimes.domain.usecase.auth.AuthWithoutLoginUseCase
 import com.zagirlek.nytimes.ui.auth.elements.textfield.TextFieldState
 import com.zagirlek.nytimes.ui.auth.elements.textfield.textfielderror.LoginTextFieldError
 import com.zagirlek.nytimes.ui.auth.elements.textfield.textfielderror.PasswordTextFieldError

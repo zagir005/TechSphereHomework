@@ -1,6 +1,6 @@
 package com.zagirlek.nytimes.ui.main.weather.cmp.state.textfield
 
-import com.zagirlek.nytimes.domain.model.City
+import com.zagirlek.weather.model.City
 
 data class CityTextFieldState(
     val value: String = "",

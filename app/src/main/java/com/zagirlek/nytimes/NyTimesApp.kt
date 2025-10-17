@@ -5,7 +5,7 @@ import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.zagirlek.nytimes.data.repository.di.RepositoryModule
 import com.zagirlek.nytimes.data.usecase.di.UseCaseModuleImpl
 import com.zagirlek.nytimes.di.AppDi
-import com.zagirlek.nytimes.domain.usecase.di.UseCaseModule
+import com.zagirlek.nytimes.domain.UseCaseModule
 import com.zagirlek.nytimes.ui.root.di.RootModule
 
 class NyTimesApp: Application() {

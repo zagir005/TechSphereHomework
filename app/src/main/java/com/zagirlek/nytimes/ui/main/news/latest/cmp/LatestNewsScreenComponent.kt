@@ -14,9 +14,9 @@ import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
 import com.zagirlek.common.model.NewsCategory
 import com.zagirlek.common.utils.getStore
-import com.zagirlek.nytimes.domain.usecase.news.LatestNewsPagingUseCase
-import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleFavoriteStatusUseCase
-import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleReadStatusUseCase
+import com.zagirlek.news.usecase.LatestNewsPagingUseCase
+import com.zagirlek.news.usecase.ToggleArticleFavoriteStatusUseCase
+import com.zagirlek.news.usecase.ToggleArticleReadStatusUseCase
 import com.zagirlek.nytimes.ui.main.news.articledetails.ArticleDetailsComponent
 import com.zagirlek.nytimes.ui.main.news.articledetails.cmp.ArticleDetailsComponentFactory
 import com.zagirlek.nytimes.ui.main.news.latest.LatestNewsScreen

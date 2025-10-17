@@ -21,8 +21,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.valentinilk.shimmer.shimmer
 import com.zagirlek.common.utils.timeAgoOrDate
+import com.zagirlek.news.model.ArticleFullWithStatus
 import com.zagirlek.nytimes.R
-import com.zagirlek.nytimes.domain.model.ArticleFullWithStatus
 import com.zagirlek.nytimes.ui.main.news.articledetails.store.ArticleDetailsStore
 import com.zagirlek.ui.elements.AppButton
 import com.zagirlek.ui.elements.ArticleStatus

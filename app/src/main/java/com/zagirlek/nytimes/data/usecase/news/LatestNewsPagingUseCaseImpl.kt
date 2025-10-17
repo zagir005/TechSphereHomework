@@ -2,9 +2,9 @@ package com.zagirlek.nytimes.data.usecase.news
 
 import androidx.paging.PagingData
 import com.zagirlek.common.model.NewsCategory
-import com.zagirlek.nytimes.domain.model.ArticleLiteWithStatus
-import com.zagirlek.nytimes.domain.repository.NewsRepository
-import com.zagirlek.nytimes.domain.usecase.news.LatestNewsPagingUseCase
+import com.zagirlek.news.model.ArticleLiteWithStatus
+import com.zagirlek.news.repository.NewsRepository
+import com.zagirlek.news.usecase.LatestNewsPagingUseCase
 import kotlinx.coroutines.flow.Flow
 
 class LatestNewsPagingUseCaseImpl(

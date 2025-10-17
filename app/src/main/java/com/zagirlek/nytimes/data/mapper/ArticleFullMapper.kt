@@ -5,8 +5,8 @@ import com.zagirlek.common.utils.toEpochMillis
 import com.zagirlek.common.utils.toLocalDateTime
 import com.zagirlek.local.news.entity.ArticleFullEntity
 import com.zagirlek.local.news.entity.ArticleFullWithStatusEntity
-import com.zagirlek.nytimes.domain.model.ArticleFull
-import com.zagirlek.nytimes.domain.model.ArticleFullWithStatus
+import com.zagirlek.news.model.ArticleFull
+import com.zagirlek.news.model.ArticleFullWithStatus
 
 fun ArticleFull.toEntity(): ArticleFullEntity = ArticleFullEntity(
     articleId = articleId,

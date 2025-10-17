@@ -10,10 +10,10 @@ import com.zagirlek.nytimes.R
 import com.zagirlek.common.error.AppError
 import com.zagirlek.common.error.ExtractorApiError
 import com.zagirlek.common.error.NewsApiError
-import com.zagirlek.nytimes.domain.model.ArticleFullWithStatus
-import com.zagirlek.nytimes.domain.usecase.news.GetArticleFullFlowUseCase
-import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleFavoriteStatusUseCase
-import com.zagirlek.nytimes.domain.usecase.news.ToggleArticleReadStatusUseCase
+import com.zagirlek.news.model.ArticleFullWithStatus
+import com.zagirlek.news.usecase.GetArticleFullFlowUseCase
+import com.zagirlek.news.usecase.ToggleArticleFavoriteStatusUseCase
+import com.zagirlek.news.usecase.ToggleArticleReadStatusUseCase
 import com.zagirlek.nytimes.ui.main.news.articledetails.store.ArticleDetailsStore.Intent
 import com.zagirlek.nytimes.ui.main.news.articledetails.store.ArticleDetailsStore.State
 import kotlinx.coroutines.Dispatchers

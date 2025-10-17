@@ -2,8 +2,8 @@ package com.zagirlek.nytimes.ui.main.weather.cmp.reducer
 
 
 import com.zagirlek.common.basemvi.reducer.Mutation
-import com.zagirlek.nytimes.domain.model.City
-import com.zagirlek.nytimes.domain.model.WeatherPoint
+import com.zagirlek.weather.model.City
+import com.zagirlek.weather.model.WeatherPoint
 
 sealed class WeatherMutation: Mutation {
     sealed class CityField: WeatherMutation(){

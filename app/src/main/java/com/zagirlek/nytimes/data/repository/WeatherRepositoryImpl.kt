@@ -3,9 +3,9 @@ package com.zagirlek.nytimes.data.repository
 import com.zagirlek.local.weather.dao.WeatherDao
 import com.zagirlek.local.weather.entity.WeatherInfoEntity
 import com.zagirlek.nytimes.data.mapper.toDomain
-import com.zagirlek.nytimes.domain.model.City
-import com.zagirlek.nytimes.domain.model.WeatherPoint
-import com.zagirlek.nytimes.domain.repository.WeatherRepository
+import com.zagirlek.weather.model.City
+import com.zagirlek.weather.model.WeatherPoint
+import com.zagirlek.weather.repository.WeatherRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

@@ -10,7 +10,6 @@ import com.zagirlek.nytimes.ui.main.news.model.Article
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
-
 interface LatestNewsStore: Store<Intent, State, Label> {
     data class State (
         val newsFlow: Flow<PagingData<Article>> = emptyFlow(),

@@ -1,7 +1,7 @@
 package com.zagirlek.nytimes.ui.splash.di
 
 import com.arkivanov.decompose.ComponentContext
-import com.zagirlek.nytimes.domain.usecase.auth.GetCurrentAuthTokenUseCase
+import com.zagirlek.auth.usecase.GetCurrentAuthTokenUseCase
 import com.zagirlek.nytimes.ui.splash.SplashComponent
 import com.zagirlek.nytimes.ui.splash.cmp.DefaultSplashComponent
 

@@ -1,7 +1,7 @@
 package com.zagirlek.nytimes.ui.main.weather.cmp.state
 
 import com.zagirlek.common.basemvi.component.Action
-import com.zagirlek.nytimes.domain.model.City
+import com.zagirlek.weather.model.City
 
 sealed class WeatherAction: Action {
     sealed class CityField{
