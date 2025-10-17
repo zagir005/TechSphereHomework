@@ -17,6 +17,8 @@ android {
         versionCode = 1
         versionName = "0.2"
 
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
         buildConfigField(name = "WEATHER_BASE_URL", value = "\"https://api.weatherapi.com/v1/\"", type = "String")
         buildConfigField(name = "WEATHER_API_KEY", value = "\"dd9eadf389194d2c828170710251809\"", type = "String")
 
@@ -31,8 +33,6 @@ android {
         buildConfigField(name = "EXTRACTOR_API_KEY_1", value = "\"8F15YKkE2jOzXwk0YxYPYYxrYp9CqaH56r2yuR41\"", type = "String")
         buildConfigField(name = "EXTRACTOR_API_KEY_2", value = "\"hHTr6AVMaruVdfk7iNmpZKmKqoHBj8ZnpvJvJhXm\"", type = "String")
         buildConfigField(name = "EXTRACTOR_API_KEY_3", value = "\"667018glHoOpF6HxrzbKJP6x273uhGn7SrFYAbKH\"", type = "String")
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -58,20 +58,34 @@ android {
 }
 
 dependencies {
+    implementation(projects.core.common)
+    implementation(projects.core.ui)
+    implementation(projects.core.android)
+    implementation(projects.core.remote)
+    implementation(projects.core.local)
+
+    implementation(projects.data.auth)
+    implementation(projects.data.weather)
+    implementation(projects.data.news)
+
+    implementation(projects.domain.auth)
+    implementation(projects.domain.weather)
+    implementation(projects.domain.news)
+
+    implementation(projects.feature.auth)
+    implementation(projects.feature.splash)
+    implementation(projects.feature.main)
+    implementation(projects.feature.weather)
+    implementation(projects.feature.news.articledetails)
+    implementation(projects.feature.news.latest)
+    implementation(projects.feature.news.favorite)
+
     implementation(libs.decompose)
     implementation(libs.decompose.extension)
     implementation(libs.essenty.coroutines)
     implementation(libs.mvikotlin)
     implementation(libs.mvikotlin.main)
     implementation(libs.mvikotlin.coroutines)
-
-    implementation(libs.kotlin.serialization.json)
-
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.converter.gson)
-    implementation(libs.okhttp)
-    implementation(libs.okhttp.interceptor)
-    implementation(libs.androidx.core.i18n)
 
     ksp(libs.androidx.room.ksp)
     implementation(libs.androidx.room.runtime)
@@ -86,6 +100,7 @@ dependencies {
 
     implementation(libs.shimmer)
 
+    implementation(libs.material.icons.extended)
     implementation(libs.androidx.ui.animation)
     implementation(libs.androidx.core.splash)
     implementation(libs.androidx.core.ktx)

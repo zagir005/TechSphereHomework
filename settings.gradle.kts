@@ -19,5 +19,30 @@ dependencyResolutionManagement {
     }
 }
 
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 rootProject.name = "Nytimes"
 include(":app")
+include(":core")
+include(":data")
+include(":domain")
+include(":core:common")
+include(":core:android")
+include(":core:ui")
+include(":core:local")
+include(":core:remote")
+include(":domain:auth")
+include(":domain:news")
+include(":domain:weather")
+include(":data:auth")
+include(":feature")
+include(":feature:auth")
+include(":feature:weather")
+include(":feature:splash")
+include(":data:weather")
+include(":data:news")
+include(":feature:news")
+include(":feature:news:latest")
+include(":feature:news:favorite")
+include(":feature:news:articledetails")
+include(":feature:main")

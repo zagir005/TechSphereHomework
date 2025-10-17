@@ -1,37 +1,31 @@
 package com.zagirlek.nytimes
 
 import android.app.Application
-import com.arkivanov.mvikotlin.core.store.StoreFactory
-import com.zagirlek.nytimes.data.repository.di.RepositoryModule
-import com.zagirlek.nytimes.data.usecase.di.UseCaseModuleImpl
-import com.zagirlek.nytimes.di.AppDi
-import com.zagirlek.nytimes.domain.usecase.di.UseCaseModule
-import com.zagirlek.nytimes.ui.root.di.RootModule
+import com.zagirlek.nytimes.di.CoreDi
+import com.zagirlek.nytimes.di.DataDi
+import com.zagirlek.nytimes.di.DomainDi
+import com.zagirlek.nytimes.di.FeatureModule
 
 class NyTimesApp: Application() {
-    private val appDi: AppDi by lazy {
-        AppDi(this)
-    }
-    private val repositoryModule: RepositoryModule by lazy {
-        RepositoryModule(
-            database = appDi.getDatabase(),
-            networkModule = appDi.networkModule,
-            connectionChecker = appDi.networkConnectionChecker
-        )
+
+    private val coreDi: CoreDi by lazy {
+        CoreDi(this)
     }
 
-    private val useCaseModule: UseCaseModule by lazy {
-        UseCaseModuleImpl(repositoryModule)
+    private val dataDi: DataDi by lazy {
+        DataDi(coreDi)
     }
 
-    private val storeFactory: StoreFactory by lazy {
-        appDi.storeFactory
+    private val domainDi: DomainDi by lazy {
+        DomainDi(dataDi)
     }
 
-    val rootModule: RootModule by lazy {
-        RootModule(
-            useCaseModule = useCaseModule,
-            storeFactory = storeFactory
+    val featureModule: FeatureModule by lazy {
+        FeatureModule(
+            storeFactory = coreDi.storeFactory,
+            authDomainModule = domainDi.authDomainModule,
+            weatherDomainModule = domainDi.weatherDomainModule,
+            newsDomainModule = domainDi.newsDomainModule
         )
     }
 }
