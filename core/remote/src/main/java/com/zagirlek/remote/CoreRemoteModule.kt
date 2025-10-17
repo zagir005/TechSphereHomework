@@ -89,7 +89,7 @@ class CoreRemoteModule(
         RemoteNewsExtractorSourceImpl(createNewsExtractorService())
     }
 
-    val provideAutocompleteService: AutocompleteService by lazy {
+    val autocompleteService: AutocompleteService by lazy {
         createAutocompleteService()
     }
 }

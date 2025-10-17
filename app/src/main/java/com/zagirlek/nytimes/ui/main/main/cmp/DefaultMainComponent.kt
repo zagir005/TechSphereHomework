@@ -12,7 +12,7 @@ import com.zagirlek.nytimes.ui.main.main.MainComponent
 import com.zagirlek.nytimes.ui.main.main.MainComponent.Child
 import com.zagirlek.nytimes.ui.main.news.favorite.FavoriteNewsScreen
 import com.zagirlek.nytimes.ui.main.news.latest.LatestNewsScreen
-import com.zagirlek.nytimes.ui.main.weather.WeatherScreen
+import com.zagirlek.weather.WeatherScreen
 import kotlinx.serialization.Serializable
 
 class DefaultMainComponent(

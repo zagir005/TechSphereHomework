@@ -1,23 +1,23 @@
 package com.zagirlek.nytimes.ui.root.di
 
 import com.arkivanov.mvikotlin.core.store.StoreFactory
+import com.zagirlek.auth.di.AuthDomainModule
+import com.zagirlek.auth.di.AuthFeatureModule
 import com.zagirlek.nytimes.domain.UseCaseModule
-import com.zagirlek.nytimes.ui.auth.di.AuthModule
 import com.zagirlek.nytimes.ui.main.di.MainModule
-import com.zagirlek.nytimes.ui.splash.di.SplashModule
+import com.zagirlek.splash.di.SplashFeatureModule
+import com.zagirlek.weather.di.WeatherDomainModule
+import com.zagirlek.weather.di.WeatherFeatureModule
 
 class RootModule(
+    private val authDomainModule: AuthDomainModule,
+    private val weatherDomainModule: WeatherDomainModule,
     private val useCaseModule: UseCaseModule,
     private val storeFactory: StoreFactory
 ) {
     fun getMainModule(): MainModule = MainModule(
         storeFactory = storeFactory,
-        getCityAutocompleteUseCase = useCaseModule.getCityAutocompleteUseCase(),
-        getWeatherPointsHistoryFlowUseCase = useCaseModule.getWeatherPointsHistoryFlowUseCase(),
-        getRecentCityListUseCase = useCaseModule.getRecentCityListUseCase(),
-        deleteWeatherPointUseCase = useCaseModule.deleteWeatherPointUseCase(),
-        addWeatherPointUseCase = useCaseModule.addWeatherPointUseCase(),
-        getOrPutCityUseCase = useCaseModule.getOrPutCityUseCase(),
+        weatherFeatureModule = WeatherFeatureModule(weatherDomainModule),
         latestNewsPagingUseCase = useCaseModule.getLatestNewsPagingUseCase(),
         favoriteNewsFlowUseCase = useCaseModule.getFavoriteNewsFlowUseCase(),
         toggleArticleFavoriteStatusUseCase = useCaseModule.toggleArticleFavoriteStatusUseCase(),
@@ -25,13 +25,13 @@ class RootModule(
         getArticleFullFlowUseCase = useCaseModule.getArticleFullByIdFlowUseCase(),
     )
 
-    fun getSplashModule(): SplashModule = SplashModule(
-        getCurrentAuthTokenUseCase = useCaseModule.getCurrentAuthTokenUseCase()
+    fun getSplashModule(): SplashFeatureModule = SplashFeatureModule(
+        getCurrentAuthTokenUseCase = authDomainModule.provideGetCurrentAuthTokenUseCase()
     )
 
-    fun getAuthModule(): AuthModule = AuthModule(
+    fun getAuthModule(): AuthFeatureModule = AuthFeatureModule(
         storeFactory = storeFactory,
-        authUseCase = useCaseModule.authUseCase(),
-        authWithoutLoginUseCase = useCaseModule.authWithoutLoginUseCase()
+        authUseCase = authDomainModule.provideAuthUseCase(),
+        authWithoutLoginUseCase = authDomainModule.provideAuthWithoutLoginUseCase()
     )
 }

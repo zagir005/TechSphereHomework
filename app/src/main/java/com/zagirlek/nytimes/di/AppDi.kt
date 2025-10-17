@@ -5,9 +5,11 @@ import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.main.store.DefaultStoreFactory
 import com.zagirlek.android.CoreAndroidModule
 import com.zagirlek.android.networkchecker.NetworkConnectionChecker
+import com.zagirlek.auth.di.AuthDataModule
 import com.zagirlek.local.CoreLocalModule
 import com.zagirlek.nytimes.BuildConfig
 import com.zagirlek.remote.CoreRemoteModule
+import com.zagirlek.weather.di.WeatherDataModule
 
 class AppDi(applicationContext: Context) {
     val coreLocalModule: CoreLocalModule by lazy {
@@ -40,5 +42,15 @@ class AppDi(applicationContext: Context) {
     }
     val storeFactory: StoreFactory by lazy {
         DefaultStoreFactory()
+    }
+    val authDataModule: AuthDataModule by lazy {
+        AuthDataModule(networkConnectionChecker)
+    }
+    val weatherDataModule: WeatherDataModule by lazy {
+        WeatherDataModule(
+            autocompleteService = coreRemoteModule.autocompleteService,
+            cityDao = coreLocalModule.cityDao(),
+            weatherDao = coreLocalModule.weatherDao()
+        )
     }
 }

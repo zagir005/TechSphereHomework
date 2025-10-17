@@ -14,23 +14,12 @@ import com.zagirlek.nytimes.ui.main.news.favorite.FavoriteNewsScreen
 import com.zagirlek.nytimes.ui.main.news.favorite.cmp.FavoriteNewsScreenComponent
 import com.zagirlek.nytimes.ui.main.news.latest.LatestNewsScreen
 import com.zagirlek.nytimes.ui.main.news.latest.cmp.LatestNewsScreenComponent
-import com.zagirlek.nytimes.ui.main.weather.WeatherScreen
-import com.zagirlek.nytimes.ui.main.weather.cmp.DefaultWeatherScreen
-import com.zagirlek.weather.usecase.AddWeatherPointUseCase
-import com.zagirlek.weather.usecase.DeleteWeatherPointUseCase
-import com.zagirlek.weather.usecase.GetCityAutocompleteUseCase
-import com.zagirlek.weather.usecase.GetOrPutCityUseCase
-import com.zagirlek.weather.usecase.GetRecentCityListUseCase
-import com.zagirlek.weather.usecase.GetWeatherPointsHistoryFlowUseCase
+import com.zagirlek.weather.WeatherScreen
+import com.zagirlek.weather.di.WeatherFeatureModule
 
 class MainModule(
     private val storeFactory: StoreFactory,
-    private val getCityAutocompleteUseCase: GetCityAutocompleteUseCase,
-    private val getWeatherPointsHistoryFlowUseCase: GetWeatherPointsHistoryFlowUseCase,
-    private val getRecentCityListUseCase: GetRecentCityListUseCase,
-    private val deleteWeatherPointUseCase: DeleteWeatherPointUseCase,
-    private val addWeatherPointUseCase: AddWeatherPointUseCase,
-    private val getOrPutCityUseCase: GetOrPutCityUseCase,
+    private val weatherFeatureModule: WeatherFeatureModule,
     private val latestNewsPagingUseCase: LatestNewsPagingUseCase,
     private val favoriteNewsFlowUseCase: FavoriteNewsFlowUseCase,
     private val toggleArticleFavoriteStatusUseCase: ToggleArticleFavoriteStatusUseCase,
@@ -52,15 +41,7 @@ class MainModule(
     fun getWeatherComponent(
         componentContext: ComponentContext
     ): WeatherScreen =
-        DefaultWeatherScreen(
-            componentContext = componentContext,
-            getCityAutocompleteUseCase = getCityAutocompleteUseCase,
-            getWeatherPointsHistoryFlowUseCase = getWeatherPointsHistoryFlowUseCase,
-            getRecentCityListUseCase = getRecentCityListUseCase,
-            deleteWeatherPointUseCase = deleteWeatherPointUseCase,
-            addWeatherPointUseCase = addWeatherPointUseCase,
-            getOrPutCityUseCase = getOrPutCityUseCase
-        )
+        weatherFeatureModule.getWeatherComponent(componentContext)
 
     fun getLatestNewsComponent(
         componentContext: ComponentContext,

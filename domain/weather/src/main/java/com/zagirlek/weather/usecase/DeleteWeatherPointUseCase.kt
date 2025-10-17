@@ -1,5 +1,9 @@
 package com.zagirlek.weather.usecase
 
-fun interface DeleteWeatherPointUseCase {
-    suspend operator fun invoke(id: Long)
+import com.zagirlek.weather.repository.WeatherRepository
+
+class DeleteWeatherPointUseCase(
+    private val weatherRepository: WeatherRepository
+) {
+    suspend operator fun invoke(id: Long) = weatherRepository.deleteWeatherPointById(id)
 }

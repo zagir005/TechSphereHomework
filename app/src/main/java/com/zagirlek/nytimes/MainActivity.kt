@@ -21,10 +21,11 @@ class MainActivity : ComponentActivity() {
 
         val defaultRootComponent = DefaultRootComponent(
             componentContext = defaultComponentContext(),
-            authModule = app.rootModule.getAuthModule(),
             mainModule = app.rootModule.getMainModule(),
-            splashModule = app.rootModule.getSplashModule()
+            splashFeatureModule = app.rootModule.getSplashModule(),
+            authFeatureModule = app.rootModule.getAuthModule()
         )
+
 
         setContent {
             NyTimesTheme {

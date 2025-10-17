@@ -21,7 +21,7 @@ import com.zagirlek.nytimes.ui.main.main.element.MainNavigationBar
 import com.zagirlek.nytimes.ui.main.main.element.Tab
 import com.zagirlek.nytimes.ui.main.news.favorite.FavoriteNewsScreenUi
 import com.zagirlek.nytimes.ui.main.news.latest.LatestNewsScreenUi
-import com.zagirlek.nytimes.ui.main.weather.WeatherScreenUi
+import com.zagirlek.weather.WeatherScreenUi
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

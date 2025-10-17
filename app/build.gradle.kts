@@ -64,9 +64,16 @@ dependencies {
     implementation(projects.core.remote)
     implementation(projects.core.local)
 
+    implementation(projects.data.auth)
+    implementation(projects.data.weather)
+
     implementation(projects.domain.auth)
     implementation(projects.domain.weather)
     implementation(projects.domain.news)
+
+    implementation(projects.feature.auth)
+    implementation(projects.feature.splash)
+    implementation(projects.feature.weather)
 
     implementation(libs.decompose)
     implementation(libs.decompose.extension)
