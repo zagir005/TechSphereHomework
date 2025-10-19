@@ -1,12 +1,14 @@
-package com.zagirlek.remote
+package com.zagirlek.remote.di
 
+import com.zagirlek.remote.autocomplete.source.RemoteAutocompleteCitySource
+import com.zagirlek.remote.autocomplete.source.RemoteAutocompleteCitySourceImpl
 import com.zagirlek.remote.autocomplete.service.AutocompleteService
 import com.zagirlek.remote.extractor.RemoteNewsExtractorSource
 import com.zagirlek.remote.extractor.RemoteNewsExtractorSourceImpl
 import com.zagirlek.remote.extractor.service.ExtractorService
 import com.zagirlek.remote.interceptor.APIKeyInterceptor
-import com.zagirlek.remote.news.RemoteNewsSource
-import com.zagirlek.remote.news.RemoteNewsSourceImpl
+import com.zagirlek.remote.news.source.RemoteNewsSource
+import com.zagirlek.remote.news.source.RemoteNewsSourceImpl
 import com.zagirlek.remote.news.service.NewsService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -15,7 +17,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
-class CoreRemoteModule(
+class CoreRemoteModuleImpl(
     private val autocompleteBaseUrl: String,
     private val extractorBaseUrl: String,
     private val newsBaseUrl: String,
@@ -23,7 +25,7 @@ class CoreRemoteModule(
     private val newsKey: List<String>,
     private val extractorKey: List<String>,
     private val autocompleteKey: List<String>,
-) {
+): CoreRemoteModule {
     private fun createOkHttpClient(vararg interceptors: Interceptor): OkHttpClient {
         val builder = OkHttpClient.Builder()
 
@@ -52,7 +54,7 @@ class CoreRemoteModule(
                     keyParameterName = "key"
                 )
             )
-        ).create(AutocompleteService::class.java)
+        ).create()
 
 
     private fun createNewsService(): NewsService =
@@ -77,19 +79,20 @@ class CoreRemoteModule(
             )
         ).create()
 
-
-    val remoteNewsSource: RemoteNewsSource by lazy {
+    override val remoteNewsSource: RemoteNewsSource by lazy {
         RemoteNewsSourceImpl(
             newsService = createNewsService(),
             newsDomains = newsDomains
         )
     }
-
-    val remoteNewsExtractorSource: RemoteNewsExtractorSource by lazy {
-        RemoteNewsExtractorSourceImpl(createNewsExtractorService())
+    override val remoteNewsExtractorSource: RemoteNewsExtractorSource by lazy {
+        RemoteNewsExtractorSourceImpl(
+            extractorService = createNewsExtractorService()
+        )
     }
-
-    val autocompleteService: AutocompleteService by lazy {
-        createAutocompleteService()
+    override val remoteAutocompleteSource: RemoteAutocompleteCitySource by lazy {
+        RemoteAutocompleteCitySourceImpl(
+            autocompleteService = createAutocompleteService()
+        )
     }
 }

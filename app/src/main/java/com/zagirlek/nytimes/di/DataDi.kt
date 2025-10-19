@@ -14,7 +14,7 @@ class DataDi(
     }
     val weatherDataModule: WeatherDataModule by lazy {
         WeatherDataModule(
-            autocompleteService = coreDi.coreRemoteModule.autocompleteService,
+            autocompleteCitySource = coreDi.coreRemoteModule.remoteAutocompleteSource,
             cityDao = coreDi.coreLocalModule.cityDao(),
             weatherDao = coreDi.coreLocalModule.weatherDao()
         )

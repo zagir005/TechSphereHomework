@@ -8,7 +8,7 @@ import com.zagirlek.common.model.NewsCategory
 import com.zagirlek.local.news.dao.ArticleLiteDao
 import com.zagirlek.local.news.entity.ArticleLiteWithStatusEntity
 import com.zagirlek.news.mapper.toEntity
-import com.zagirlek.remote.news.RemoteNewsSource
+import com.zagirlek.remote.news.source.RemoteNewsSource
 
 @OptIn(ExperimentalPagingApi::class)
 class NewsRemoteMediator(

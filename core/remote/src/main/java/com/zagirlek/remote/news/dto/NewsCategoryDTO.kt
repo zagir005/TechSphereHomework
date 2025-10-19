@@ -53,6 +53,4 @@ enum class NewsCategoryDTO() {
 
     @SerializedName("other")
     OTHER;
-
-
 }

@@ -15,12 +15,14 @@ android {
     }
 
     buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+        buildTypes {
+            debug {
+                buildConfigField("Boolean", "USE_MOCK_DATA", "true")
+            }
+            release {
+                buildConfigField("Boolean", "USE_MOCK_DATA", "false")
+                isMinifyEnabled = true
+            }
         }
     }
     compileOptions {
@@ -29,6 +31,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
+    }
+    buildFeatures {
+        buildConfig = true
     }
 }
 

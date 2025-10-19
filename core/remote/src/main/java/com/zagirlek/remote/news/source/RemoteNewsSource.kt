@@ -1,4 +1,4 @@
-package com.zagirlek.remote.news
+package com.zagirlek.remote.news.source
 
 import com.zagirlek.common.model.NewsCategory
 import com.zagirlek.remote.news.dto.NewsPageDTO

@@ -1,4 +1,4 @@
-package com.zagirlek.local
+package com.zagirlek.local.di
 
 import android.content.Context
 import androidx.room.Room

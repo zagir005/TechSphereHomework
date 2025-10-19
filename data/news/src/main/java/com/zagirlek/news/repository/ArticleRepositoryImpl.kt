@@ -12,7 +12,7 @@ import com.zagirlek.news.mapper.toEntity
 import com.zagirlek.news.model.ArticleFullWithStatus
 import com.zagirlek.news.model.ArticleLite
 import com.zagirlek.remote.extractor.RemoteNewsExtractorSource
-import com.zagirlek.remote.news.RemoteNewsSource
+import com.zagirlek.remote.news.source.RemoteNewsSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
