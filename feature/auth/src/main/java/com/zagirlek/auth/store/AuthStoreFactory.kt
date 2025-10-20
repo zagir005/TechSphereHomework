@@ -82,7 +82,7 @@ internal class AuthStoreFactory(
                     scope.launch {
                         authWithoutLoginUseCase()
                     }
-                    publish(AuthStore.Label.ToClient)
+                    publish(AuthStore.Label.ToAdmin)
                 }
             }
 

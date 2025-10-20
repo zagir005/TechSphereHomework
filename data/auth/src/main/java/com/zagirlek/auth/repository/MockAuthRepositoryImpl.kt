@@ -33,6 +33,6 @@ class MockAuthRepositoryImpl(
     }
 
     override suspend fun getTokenWithoutLogin(): AuthToken {
-        return AuthToken.CLIENT_TOKEN
+        return AuthToken.ADMIN_TOKEN
     }
 }

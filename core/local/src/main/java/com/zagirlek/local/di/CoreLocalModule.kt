@@ -18,6 +18,7 @@ class CoreLocalModule(private val applicationContext: Context) {
     fun cityDao() = database.cityDao()
     fun weatherDao() = database.weatherDao()
     fun remoteKeyDao() = database.remoteKeyDao()
+    fun userDao() = database.userDao()
     fun articleStatusDao() = database.articleStatusDao()
     fun articleLiteDao() = database.articleLiteDao()
     fun articleFullDao() = database.articleFullDao()
