@@ -53,7 +53,8 @@ class DefaultRootComponent(
     private fun auth(componentContext: ComponentContext): AuthScreen =
         authFeatureModule.getAuthComponent(
             componentContext = componentContext,
-            toMain = { navigation.replaceCurrent(Config.ClientRoot) }
+            toClient = { navigation.replaceCurrent(Config.ClientRoot) },
+            toAdmin = { navigation.replaceCurrent(Config.AdminRoot) }
         )
     private fun client(componentContext: ComponentContext): ClientRootComponent =
         clientRootFeatureModule.getMainComponent(componentContext = componentContext)

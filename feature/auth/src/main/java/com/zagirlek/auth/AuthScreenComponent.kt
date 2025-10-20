@@ -30,7 +30,8 @@ internal class AuthScreenComponent(
     private val storeFactory: StoreFactory,
     private val authUseCase: AuthUseCase,
     private val authWithoutLoginUseCase: AuthWithoutLoginUseCase,
-    private val toMain: () -> Unit
+    private val toClient: () -> Unit,
+    private val toAdmin: () -> Unit,
 ): AuthScreen, ComponentContext by componentContext {
     private val storeInstance = instanceKeeper.getStore{
         AuthStoreFactory(
@@ -61,8 +62,12 @@ internal class AuthScreenComponent(
         .map {
             when(it){
                 is AuthStore.Label.ShowError -> AuthSideEffect.ShowErrorDialog(it.toModel())
-                AuthStore.Label.ToMain -> {
-                    toMain()
+                AuthStore.Label.ToClient -> {
+                    toClient()
+                    return@map null
+                }
+                AuthStore.Label.ToAdmin -> {
+                    toAdmin()
                     return@map null
                 }
             }

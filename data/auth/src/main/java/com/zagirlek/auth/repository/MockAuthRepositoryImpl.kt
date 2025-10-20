@@ -25,12 +25,14 @@ class MockAuthRepositoryImpl(
         else if (Random.nextBoolean())
             throw AuthError.ServerError
         else if (login == "Логин_Юзера" && password == "Пароль123")
-            AuthToken.DEFAULT_TOKEN
+            AuthToken.CLIENT_TOKEN
+        else if (login == "Логин_Админа" && password == "Пароль123")
+            AuthToken.ADMIN_TOKEN
         else
             throw AuthError.InvalidCredentials
     }
 
     override suspend fun getTokenWithoutLogin(): AuthToken {
-        return AuthToken.DEFAULT_TOKEN
+        return AuthToken.CLIENT_TOKEN
     }
 }

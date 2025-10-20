@@ -26,7 +26,8 @@ internal interface AuthStore: Store<AuthStore.Intent, AuthStore.State, AuthStore
 
     sealed class Label {
         data class ShowError(val error: Error): Label()
-        data object ToMain: Label()
+        data object ToClient: Label()
+        data object ToAdmin: Label()
     }
 
     sealed class Error {

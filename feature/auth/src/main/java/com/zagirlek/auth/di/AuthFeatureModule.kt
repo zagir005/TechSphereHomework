@@ -15,12 +15,14 @@ class AuthFeatureModule(
 ){
     fun getAuthComponent(
         componentContext: ComponentContext,
-        toMain: () -> Unit
+        toClient: () -> Unit,
+        toAdmin: () -> Unit
     ): AuthScreen = AuthScreenComponent(
         componentContext = componentContext,
         storeFactory = storeFactory,
         authUseCase = authUseCase,
         authWithoutLoginUseCase = authWithoutLoginUseCase,
-        toMain = toMain
+        toClient = toClient,
+        toAdmin = toAdmin
     )
 }

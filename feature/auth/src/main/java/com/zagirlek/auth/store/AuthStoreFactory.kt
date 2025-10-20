@@ -7,12 +7,11 @@ import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import com.zagirlek.auth.elements.textfield.TextFieldState
 import com.zagirlek.auth.elements.textfield.textfielderror.LoginTextFieldError
 import com.zagirlek.auth.elements.textfield.textfielderror.PasswordTextFieldError
+import com.zagirlek.auth.model.AuthToken
 import com.zagirlek.auth.usecase.AuthUseCase
 import com.zagirlek.auth.usecase.AuthWithoutLoginUseCase
 import com.zagirlek.common.error.AuthError
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 internal class AuthStoreFactory(
     private val storeFactory: StoreFactory,
@@ -83,17 +82,20 @@ internal class AuthStoreFactory(
                     scope.launch {
                         authWithoutLoginUseCase()
                     }
-                    publish(AuthStore.Label.ToMain)
+                    publish(AuthStore.Label.ToClient)
                 }
             }
 
         private fun auth(login: String, password: String){
             dispatch(Msg.Loading(true))
             scope.launch {
-                withContext(Dispatchers.IO){ authUseCase(login, password) }
+                authUseCase(login, password)
                     .onSuccess {
+                        when(it.token){
+                            AuthToken.ADMIN_TOKEN.token -> publish(AuthStore.Label.ToAdmin)
+                            AuthToken.CLIENT_TOKEN.token -> publish(AuthStore.Label.ToClient)
+                        }
                         dispatch(Msg.Loading(false))
-                        publish(AuthStore.Label.ToMain)
                     }
                     .onFailure { error ->
                         dispatch(Msg.Loading(false))
