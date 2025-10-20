@@ -34,8 +34,6 @@ android {
 
 dependencies {
     implementation(projects.core.common)
-    implementation(projects.core.local)
-    implementation(projects.domain.user)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

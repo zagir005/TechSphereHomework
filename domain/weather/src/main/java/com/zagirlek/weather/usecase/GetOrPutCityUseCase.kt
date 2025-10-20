@@ -8,7 +8,7 @@ class GetOrPutCityUseCase(
     private val cityRepository: CityRepository
 ) {
     suspend operator fun invoke(name: String): Result<City> = runCatchingCancellable {
-        val id = cityRepository.addCity(name)
+        val id = cityRepository.add(name)
         if (id == -1L)
             cityRepository.getCityByName(name) ?: throw IllegalStateException("Город есть, но не найден")
         else

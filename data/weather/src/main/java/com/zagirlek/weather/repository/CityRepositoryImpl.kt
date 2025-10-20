@@ -8,8 +8,8 @@ import com.zagirlek.weather.model.City
 class CityRepositoryImpl(
     private val cityDao: CityDao
 ): CityRepository {
-    override suspend fun addCity(name: String): Long = cityDao.insertCity(
-        CityEntity(name = name)
+    override suspend fun add(name: String): Long = cityDao.insertCity(
+            CityEntity(name = name)
         )
     override suspend fun findCitiesByName(name: String): List<City> = cityDao.getCitiesByName(name).map {
             it.toDomain()
