@@ -18,6 +18,7 @@ class DataDi(
             cityDao = coreDi.coreLocalModule.cityDao(),
             weatherDao = coreDi.coreLocalModule.weatherDao()
         )
+
     }
     val newsDataModule: NewsDataModule by lazy {
         NewsDataModule(
