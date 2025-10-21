@@ -12,6 +12,7 @@ import com.zagirlek.root.di.AdminRootFeatureModule
 import com.zagirlek.root.di.ClientRootFeatureModule
 import com.zagirlek.root.di.DashboardRootFeatureModule
 import com.zagirlek.splash.di.SplashFeatureModule
+import com.zagirlek.user.di.UserDomainModule
 import com.zagirlek.weather.di.WeatherDomainModule
 import com.zagirlek.weather.di.WeatherFeatureModule
 
@@ -19,6 +20,7 @@ class FeatureModule(
     private val authDomainModule: AuthDomainModule,
     private val weatherDomainModule: WeatherDomainModule,
     private val newsDomainModule: NewsDomainModule,
+    private val userDomainModule: UserDomainModule,
     private val storeFactory: StoreFactory
 ) {
     fun getClientRootModule(): ClientRootFeatureModule = ClientRootFeatureModule(
@@ -40,7 +42,10 @@ class FeatureModule(
     )
 
     private fun getDashboardRootFeatureModule(): DashboardRootFeatureModule = DashboardRootFeatureModule()
-    private fun getUserListFeatureModule(): UserListFeatureModule = UserListFeatureModule()
+    private fun getUserListFeatureModule(): UserListFeatureModule = UserListFeatureModule(
+        storeFactory = storeFactory,
+        userDomainModule = userDomainModule
+    )
     private fun getWeatherModule(): WeatherFeatureModule = WeatherFeatureModule(
         weatherDomainModule
     )

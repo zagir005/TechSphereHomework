@@ -67,10 +67,12 @@ dependencies {
     implementation(projects.data.auth)
     implementation(projects.data.weather)
     implementation(projects.data.news)
+    implementation(projects.data.user)
 
     implementation(projects.domain.auth)
     implementation(projects.domain.weather)
     implementation(projects.domain.news)
+    implementation(projects.domain.user)
 
     implementation(projects.feature.auth)
     implementation(projects.feature.splash)
@@ -96,7 +98,6 @@ dependencies {
     implementation(libs.mvikotlin.coroutines)
 
     implementation(libs.kotlin.serialization.json)
-
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
     implementation(libs.okhttp)

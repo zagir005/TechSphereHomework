@@ -2,6 +2,7 @@ package com.zagirlek.nytimes.di
 
 import com.zagirlek.auth.di.AuthDataModule
 import com.zagirlek.news.di.NewsDataModule
+import com.zagirlek.user.di.UserDataModule
 import com.zagirlek.weather.di.WeatherDataModule
 
 class DataDi(
@@ -28,6 +29,11 @@ class DataDi(
             articleStatusDao = coreDi.coreLocalModule.articleStatusDao(),
             remoteNewsSource = coreDi.coreRemoteModule.remoteNewsSource,
             remoteExtractorNewsSource = coreDi.coreRemoteModule.remoteNewsExtractorSource
+        )
+    }
+    val userDataModule: UserDataModule by lazy {
+        UserDataModule(
+            userDao = coreDi.coreLocalModule.userDao()
         )
     }
 }

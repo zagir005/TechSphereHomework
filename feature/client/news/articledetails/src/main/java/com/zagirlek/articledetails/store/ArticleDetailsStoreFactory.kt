@@ -101,6 +101,7 @@ internal class ArticleDetailsStoreFactory(
             is AppError -> {
                 when(error){
                     AppError.NoNetworkConnection -> R.string.no_network_connection_cant_load
+                    else -> R.string.unknown_error
                 }
             }
             else -> R.string.unknown_error

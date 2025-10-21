@@ -21,7 +21,8 @@ class NyTimesApp: Application() {
             storeFactory = coreDi.storeFactory,
             authDomainModule = domainDi.authDomainModule,
             weatherDomainModule = domainDi.weatherDomainModule,
-            newsDomainModule = domainDi.newsDomainModule
+            newsDomainModule = domainDi.newsDomainModule,
+            userDomainModule = domainDi.userDomainModule
         )
     }
 }

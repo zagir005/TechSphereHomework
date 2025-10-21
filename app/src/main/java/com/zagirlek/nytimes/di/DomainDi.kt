@@ -2,6 +2,7 @@ package com.zagirlek.nytimes.di
 
 import com.zagirlek.auth.di.AuthDomainModule
 import com.zagirlek.news.di.NewsDomainModule
+import com.zagirlek.user.di.UserDomainModule
 import com.zagirlek.weather.di.WeatherDomainModule
 
 class DomainDi(
@@ -24,6 +25,11 @@ class DomainDi(
             newsRepository = dataDi.newsDataModule.newsRepository,
             articleRepository = dataDi.newsDataModule.articleRepository,
             articleStatusRepository = dataDi.newsDataModule.articleStatusRepository
+        )
+    }
+    val userDomainModule: UserDomainModule by lazy {
+        UserDomainModule(
+            userRepository = dataDi.userDataModule.userRepository
         )
     }
 }
