@@ -85,7 +85,6 @@ internal class AuthScreenComponent(
     override fun passwordFieldValueChanged(value: String) =
         storeInstance.accept(AuthStore.Intent.PasswordTextFieldChange(value))
 
-
     override fun onAuth() =
         storeInstance.accept(AuthStore.Intent.Auth)
 

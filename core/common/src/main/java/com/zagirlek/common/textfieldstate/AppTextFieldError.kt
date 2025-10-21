@@ -1,0 +1,3 @@
+package com.zagirlek.common.textfieldstate
+
+interface AppTextFieldError

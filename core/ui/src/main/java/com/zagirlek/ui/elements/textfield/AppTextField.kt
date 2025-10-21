@@ -1,4 +1,4 @@
-package com.zagirlek.ui.elements
+package com.zagirlek.ui.elements.textfield
 
 import android.content.res.Configuration
 import androidx.compose.foundation.interaction.MutableInteractionSource

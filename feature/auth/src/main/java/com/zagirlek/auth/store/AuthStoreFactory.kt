@@ -4,13 +4,15 @@ import com.arkivanov.mvikotlin.core.store.Reducer
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import com.zagirlek.auth.elements.textfield.TextFieldState
-import com.zagirlek.auth.elements.textfield.textfielderror.LoginTextFieldError
-import com.zagirlek.auth.elements.textfield.textfielderror.PasswordTextFieldError
 import com.zagirlek.auth.model.AuthToken
 import com.zagirlek.auth.usecase.AuthUseCase
 import com.zagirlek.auth.usecase.AuthWithoutLoginUseCase
 import com.zagirlek.common.error.AuthError
+import com.zagirlek.common.textfieldstate.AppTextFieldState
+import com.zagirlek.common.validation.nickname.NicknameTextFieldError
+import com.zagirlek.common.validation.nickname.validateNickname
+import com.zagirlek.common.validation.password.PasswordTextFieldError
+import com.zagirlek.common.validation.password.validatePassword
 import kotlinx.coroutines.launch
 
 internal class AuthStoreFactory(
@@ -21,7 +23,7 @@ internal class AuthStoreFactory(
     private sealed interface Msg {
         data class LoginFieldValue(
             val text: String,
-            val error: LoginTextFieldError?
+            val error: NicknameTextFieldError?
         ): Msg
         data class PasswordFieldValue(
             val text: String,
@@ -46,13 +48,13 @@ internal class AuthStoreFactory(
                     dispatch(
                         Msg.LoginFieldValue(
                             text = intent.text,
-                            error = validateLogin(intent.text)
+                            error = validateNickname(intent.text)
                         )
                     )
                     dispatch(
                         Msg.AuthAvailability(
                             isAvailable = isAuthAvailable(
-                                loginTextFieldState = state().loginTextFieldState,
+                                nicknameTextFieldState = state().loginTextFieldState,
                                 passwordTextFieldState = state().passwordTextFieldState
                             )
                         )
@@ -68,7 +70,7 @@ internal class AuthStoreFactory(
                     dispatch(
                         Msg.AuthAvailability(
                             isAuthAvailable(
-                                loginTextFieldState = state().loginTextFieldState,
+                                nicknameTextFieldState = state().loginTextFieldState,
                                 passwordTextFieldState = state().passwordTextFieldState
                             )
                         )
@@ -114,30 +116,11 @@ internal class AuthStoreFactory(
         }
 
         private fun isAuthAvailable(
-            loginTextFieldState: TextFieldState<LoginTextFieldError>,
-            passwordTextFieldState: TextFieldState<PasswordTextFieldError>,
+            nicknameTextFieldState: AppTextFieldState<NicknameTextFieldError>,
+            passwordTextFieldState: AppTextFieldState<PasswordTextFieldError>,
         ): Boolean {
-            return loginTextFieldState.isNotEmpty() && passwordTextFieldState.isNotEmpty()
-                    && loginTextFieldState.isValid() && passwordTextFieldState.isValid()
-        }
-
-        private fun validateLogin(login: String): LoginTextFieldError? {
-            return when {
-                login.isEmpty() -> null
-                !login.matches(Regex("^[^A-Za-z]+$")) -> LoginTextFieldError.OnlyCyrillic
-                else -> null
-            }
-        }
-
-        private fun validatePassword(password: String): PasswordTextFieldError? {
-            return when {
-                password.isEmpty() -> null
-                password.length < 6 -> PasswordTextFieldError.LengthLessThenSix
-                password.length > 12 -> PasswordTextFieldError.LengthMoreThenTwelve
-                password.toCharArray().none { it.isDigit() } -> PasswordTextFieldError.WithoutNumber
-                password.toCharArray().none { it.isLetter() } -> PasswordTextFieldError.WithoutLetter
-                else -> null
-            }
+            return nicknameTextFieldState.isNotEmpty() && passwordTextFieldState.isNotEmpty()
+                    && nicknameTextFieldState.isValid() && passwordTextFieldState.isValid()
         }
     }
 

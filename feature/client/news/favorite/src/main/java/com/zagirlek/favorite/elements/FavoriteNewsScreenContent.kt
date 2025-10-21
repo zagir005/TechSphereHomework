@@ -17,7 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.zagirlek.favorite.model.FavoriteNewsModel
 import com.zagirlek.ui.R
-import com.zagirlek.ui.elements.AppTextField
+import com.zagirlek.ui.elements.textfield.AppTextField
 import com.zagirlek.ui.elements.NewsCategorySelector
 import com.zagirlek.ui.elements.NewsCategoryUi
 

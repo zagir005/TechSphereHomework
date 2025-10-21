@@ -1,7 +1,3 @@
 package com.zagirlek.common.model
 
-enum class UserStatus {
-    ADMIN,
-    CLIENT,
-    BLOCKED
-}
+enum class UserStatus { ADMIN, CLIENT }

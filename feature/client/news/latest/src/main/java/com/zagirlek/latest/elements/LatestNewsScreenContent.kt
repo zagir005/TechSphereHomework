@@ -22,7 +22,7 @@ import com.zagirlek.common.model.Article
 import com.zagirlek.latest.model.LatestNewsModel
 import com.zagirlek.ui.R
 
-import com.zagirlek.ui.elements.AppTextField
+import com.zagirlek.ui.elements.textfield.AppTextField
 import com.zagirlek.ui.elements.NewsCategorySelector
 import com.zagirlek.ui.elements.NewsCategoryUi
 

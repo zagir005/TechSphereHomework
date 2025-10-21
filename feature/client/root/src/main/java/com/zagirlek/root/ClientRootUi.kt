@@ -72,7 +72,7 @@ fun ClientRootUi(
         snackbarHost = {
             SnackbarHost(snackbarHostState)
         }
-    ){ paddingValues ->
+    ){paddingValues ->
         Box(
             modifier = Modifier
                 .padding(paddingValues)

@@ -5,7 +5,7 @@ import com.zagirlek.auth.store.AuthStore
 
 internal fun AuthStore.State.toModel(): AuthModel =
     AuthModel(
-        loginField = loginTextFieldState,
+        nicknameField = loginTextFieldState,
         passwordField = passwordTextFieldState,
         loading = loading,
         isButtonEnabled = isAuthAvailable

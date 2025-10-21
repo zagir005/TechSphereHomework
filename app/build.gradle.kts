@@ -82,7 +82,8 @@ dependencies {
     implementation(projects.feature.admin.dashboard.home)
     implementation(projects.feature.admin.dashboard.home)
     implementation(projects.feature.admin.users.list)
-    implementation(projects.feature.admin.users.addoredit)
+    implementation(projects.feature.admin.users.add)
+    implementation(projects.feature.admin.users.edit)
 
     implementation(projects.feature.client.root)
     implementation(projects.feature.client.weather)

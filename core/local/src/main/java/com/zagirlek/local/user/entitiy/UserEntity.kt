@@ -15,5 +15,6 @@ data class UserEntity(
     val phone: String,
     val nickname: String,
     val status: UserStatus,
+    val isBlocked: Boolean = false,
     val password: String
 )

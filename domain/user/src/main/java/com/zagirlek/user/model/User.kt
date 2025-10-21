@@ -3,10 +3,11 @@ package com.zagirlek.user.model
 import com.zagirlek.common.model.UserStatus
 
 data class User(
-    val phone: String,
-    val nickname: String,
-    val status: UserStatus,
-    val password: String,
+    val phone: String = "",
+    val nickname: String = "",
+    val status: UserStatus = UserStatus.CLIENT,
+    val isBlocked: Boolean = false,
+    val password: String = "",
     val id: Long = 0,
 ){
     companion object{

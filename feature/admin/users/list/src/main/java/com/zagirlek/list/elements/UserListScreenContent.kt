@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.zagirlek.list.model.UserListModel
 import com.zagirlek.ui.R
-import com.zagirlek.ui.elements.AppTextField
+import com.zagirlek.ui.elements.textfield.AppTextField
 
 @Composable
 internal fun UserListScreenContent(

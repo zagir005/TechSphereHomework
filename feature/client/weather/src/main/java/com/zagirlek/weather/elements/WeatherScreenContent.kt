@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.zagirlek.ui.R
 import com.zagirlek.ui.elements.AppButton
-import com.zagirlek.ui.elements.AppTextField
+import com.zagirlek.ui.elements.textfield.AppTextField
 import com.zagirlek.ui.elements.NyTimesPreview
 import com.zagirlek.weather.cmp.state.WeatherAction
 import com.zagirlek.weather.cmp.state.WeatherState

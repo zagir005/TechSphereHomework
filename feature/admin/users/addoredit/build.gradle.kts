@@ -38,6 +38,11 @@ android {
 }
 
 dependencies {
+    implementation(projects.core.common)
+    implementation(projects.core.ui)
+
+    implementation(projects.domain.user)
+
     implementation(libs.decompose)
     implementation(libs.decompose.extension)
     implementation(libs.essenty.coroutines)
@@ -46,14 +51,6 @@ dependencies {
     implementation(libs.mvikotlin.coroutines)
 
     implementation(libs.kotlin.serialization.json)
-
-    implementation(libs.paging.common)
-    implementation(libs.paging.compose)
-
-    implementation(libs.coil.compose)
-    implementation(libs.coil.okhttp)
-
-    implementation(libs.shimmer)
 
     implementation(libs.material.icons.extended)
     implementation(libs.androidx.activity.compose)
