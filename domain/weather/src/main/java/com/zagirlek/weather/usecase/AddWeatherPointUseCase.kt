@@ -17,7 +17,6 @@ class AddWeatherPointUseCase(
         if (id == -1L){
             throw IllegalStateException("Не удалось добавить WeatherInfoEntity")
         }
-
         weatherRepository.getWeatherPointById(id)
             ?: throw IllegalStateException("WeatherPoint с id=$id существует, но не найден")
     }
