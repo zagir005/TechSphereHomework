@@ -6,10 +6,11 @@ import kotlinx.serialization.Serializable
 
 interface AddUserScreen {
     val model: StateFlow<AddUserModel>
-    fun loginEdit(value: String)
+    fun nicknameEdit(value: String)
     fun passwordEdit(value: String)
     fun phoneEdit(value: String)
     fun toggleAdminStatus()
+    fun saveUser()
 
     @Serializable
     data object AddUserConfig

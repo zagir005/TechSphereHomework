@@ -39,7 +39,10 @@ android {
 dependencies {
     implementation(projects.core.common)
     implementation(projects.core.ui)
+
     implementation(projects.domain.user)
+
+    implementation(projects.feature.admin.users.add)
 
     implementation(libs.decompose)
     implementation(libs.decompose.extension)

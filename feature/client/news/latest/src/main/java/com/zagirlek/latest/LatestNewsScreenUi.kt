@@ -36,8 +36,8 @@ fun LatestNewsScreenUi(
         }
 
     }
-    val childSlot by component.dialog.subscribeAsState()
 
+    val childSlot by component.dialog.subscribeAsState()
     childSlot.child?.instance?.let { sheetComponent ->
         ModalBottomSheet(
             onDismissRequest = { component.hideArticleDetails() },

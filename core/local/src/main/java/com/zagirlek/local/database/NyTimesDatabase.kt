@@ -27,7 +27,7 @@ import com.zagirlek.local.weather.entity.WeatherInfoEntity
         RemoteKeyEntity::class,
         UserEntity::class
                ],
-    version = 2
+    version = 1
 )
 internal abstract class NyTimesDatabase: RoomDatabase() {
     abstract fun weatherDao(): WeatherDao

@@ -10,6 +10,6 @@ data class AddUserModel(
     val phoneTextField: AppTextFieldState<PhoneTextFieldError> = AppTextFieldState(),
     val passwordTextField: AppTextFieldState<PasswordTextFieldError> = AppTextFieldState(),
     val isAdmin: Boolean = false,
-    val isContinueButtonEnabled: Boolean = false
+    val isCreateButtonEnabled: Boolean = false
 )
 

@@ -12,23 +12,22 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import com.zagirlek.common.textfieldstate.AppTextFieldState
 import com.zagirlek.common.validation.password.PasswordTextFieldError
 import com.zagirlek.ui.R
 
 @Composable
 fun PasswordField(
-    value: String,
-    error: PasswordTextFieldError?,
+    state: AppTextFieldState<PasswordTextFieldError>,
     modifier: Modifier = Modifier,
     onValueChange: (String) -> Unit
 ) {
     var passwordVisibility by rememberSaveable { mutableStateOf(true) }
-
     AppTextField(
-        value = value,
+        value = state.value,
         onValueChange = onValueChange,
         label = stringResource(R.string.password),
-        errorMessage = error?.let { stringResource(error.msgRes) },
+        errorMessage = state.error?.msgRes?.let { stringResource(it) },
         trailingIcon = {
             IconButton(
                 onClick = {

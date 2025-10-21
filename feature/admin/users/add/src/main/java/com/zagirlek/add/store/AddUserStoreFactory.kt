@@ -42,9 +42,9 @@ class AddUserStoreFactory(
 
         override fun executeIntent(intent: Intent) {
             when(intent){
-                is Intent.EditNickname -> dispatch(Msg.Nickname(intent.value))
-                is Intent.EditPassword -> dispatch(Msg.Password(intent.value))
-                is Intent.EditPhone -> dispatch(Msg.Phone(intent.value))
+                is Intent.NicknameEdit -> dispatch(Msg.Nickname(intent.value))
+                is Intent.PasswordEdit -> dispatch(Msg.Password(intent.value))
+                is Intent.PhoneEdit -> dispatch(Msg.Phone(intent.value))
                 Intent.Save -> forward(Action.SaveUser)
                 Intent.ToggleIsAdminStatus -> dispatch(Msg.IsAdmin(!state().isAdmin))
             }

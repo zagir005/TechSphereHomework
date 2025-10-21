@@ -14,12 +14,12 @@ interface AddUserStore: Store<Intent, State, Nothing> {
         val phoneTextField: AppTextFieldState<PhoneTextFieldError> = AppTextFieldState(),
         val passwordTextField: AppTextFieldState<PasswordTextFieldError> = AppTextFieldState(),
         val isAdmin: Boolean = false,
-        val isContinueButtonEnabled: Boolean = false
+        val isContinueButtonEnabled: Boolean = true
     )
     sealed class Intent{
-        data class EditNickname(val value: String): Intent()
-        data class EditPassword(val value: String): Intent()
-        data class EditPhone(val value: String): Intent()
+        data class NicknameEdit(val value: String): Intent()
+        data class PasswordEdit(val value: String): Intent()
+        data class PhoneEdit(val value: String): Intent()
         data object ToggleIsAdminStatus: Intent()
         data object Save: Intent()
     }

@@ -52,15 +52,13 @@ fun AuthContent(
                     verticalArrangement = Arrangement.Center
                 ) {
                     NicknameField(
-                        value = model.nicknameField.value,
-                        error = model.nicknameField.error,
+                        state = model.nicknameField,
                         onValueChange = loginFieldValueChange,
                         modifier = Modifier.fillMaxWidth()
                     )
 
                     PasswordField(
-                        value = model.passwordField.value,
-                        error = model.passwordField.error,
+                        state = model.passwordField,
                         onValueChange = passwordFieldValueChange,
                         modifier = Modifier.fillMaxWidth()
                     )

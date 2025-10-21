@@ -10,3 +10,11 @@ internal fun AddUserStore.State.toUser(): User = User(
     password = passwordTextField.value,
     status = if (isAdmin) UserStatus.ADMIN else UserStatus.CLIENT
 )
+
+internal fun AddUserStore.State.toModel(): AddUserModel = AddUserModel(
+    nicknameTextField = nicknameTextField,
+    phoneTextField = phoneTextField,
+    passwordTextField = passwordTextField,
+    isAdmin = isAdmin,
+    isCreateButtonEnabled = isContinueButtonEnabled
+)

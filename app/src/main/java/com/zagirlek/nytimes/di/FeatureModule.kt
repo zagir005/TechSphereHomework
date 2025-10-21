@@ -1,6 +1,7 @@
 package com.zagirlek.nytimes.di
 
 import com.arkivanov.mvikotlin.core.store.StoreFactory
+import com.zagirlek.add.di.AddUserFeatureModule
 import com.zagirlek.articledetails.di.ArticleDetailsFeatureModule
 import com.zagirlek.auth.di.AuthDomainModule
 import com.zagirlek.auth.di.AuthFeatureModule
@@ -43,6 +44,12 @@ class FeatureModule(
 
     private fun getDashboardRootFeatureModule(): DashboardRootFeatureModule = DashboardRootFeatureModule()
     private fun getUserListFeatureModule(): UserListFeatureModule = UserListFeatureModule(
+        storeFactory = storeFactory,
+        userDomainModule = userDomainModule,
+        addUserFeatureModule = addUserFeatureModule()
+    )
+
+    private fun addUserFeatureModule(): AddUserFeatureModule = AddUserFeatureModule(
         storeFactory = storeFactory,
         userDomainModule = userDomainModule
     )
