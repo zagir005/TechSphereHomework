@@ -14,4 +14,5 @@ interface UserListScreen {
     fun editUser(userId: Long)
     fun hideAddEditUserDialog()
     fun deleteUser(userId: Long)
+    fun onDialogDismiss()
 }

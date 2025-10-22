@@ -11,6 +11,7 @@ import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.zagirlek.addoredit.AddOrEditUserScreenUi
 import com.zagirlek.list.elements.UserListScreenContent
 import com.zagirlek.list.elements.UserListTopAppBar
+import com.zagirlek.ui.elements.alertdialog.AppAlertDialog
 import com.zagirlek.ui.elements.navigationbar.Tab
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -35,6 +36,11 @@ fun UserListScreenUi(
     topBar { tabInfo ->
         UserListTopAppBar(tabInfo) { component.addUser() }
     }
+
+    AppAlertDialog(
+        state = model.alertDialogState,
+        onDismiss = { component.onDialogDismiss() }
+    )
 
     UserListScreenContent(
         model = model,

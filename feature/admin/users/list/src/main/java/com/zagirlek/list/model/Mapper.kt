@@ -1,8 +1,9 @@
 package com.zagirlek.list.model
 
-import com.zagirlek.list.store.UserStore
+import com.zagirlek.list.store.UserListStore
 
-internal fun UserStore.State.toModel(): UserListModel = UserListModel(
+internal fun UserListStore.State.toModel(): UserListModel = UserListModel(
     userList = userList,
-    searchField = searchField
+    searchField = searchField,
+    alertDialogState = alertDialogState
 )

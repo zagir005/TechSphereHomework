@@ -17,8 +17,8 @@ import com.zagirlek.common.utils.getStore
 import com.zagirlek.list.UserListScreen
 import com.zagirlek.list.model.UserListModel
 import com.zagirlek.list.model.toModel
-import com.zagirlek.list.store.UserStore
-import com.zagirlek.list.store.UserStoreFactory
+import com.zagirlek.list.store.UserListStore
+import com.zagirlek.list.store.UserListStoreFactory
 import com.zagirlek.user.usecase.DeleteUserByIdUseCase
 import com.zagirlek.user.usecase.GetUserListFlowUseCase
 import kotlinx.coroutines.Dispatchers
@@ -28,7 +28,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 
 internal class UserListScreenComponent(
     componentContext: ComponentContext,
@@ -44,9 +43,10 @@ internal class UserListScreenComponent(
     }
 
     private val storeInstance = instanceKeeper.getStore {
-        UserStoreFactory(
+        UserListStoreFactory(
             storeFactory = storeFactory,
-            userListFlow = getUserListFlowUseCase
+            userListFlow = getUserListFlowUseCase,
+            deleteUserByIdUseCase = deleteUserByIdUseCase
         ).create()
     }
 
@@ -76,12 +76,14 @@ internal class UserListScreenComponent(
     }
 
     override fun search(query: String) {
-        storeInstance.accept(UserStore.Intent.SearchFieldChange(query.ifEmpty { null }))
+        storeInstance.accept(UserListStore.Intent.SearchFieldChange(query.ifEmpty { null }))
     }
     override fun deleteUser(userId: Long) {
-        componentScope.launch {
-            deleteUserByIdUseCase(userId)
-        }
+        storeInstance.accept(UserListStore.Intent.DeleteUser(userId))
+    }
+
+    override fun onDialogDismiss() {
+        storeInstance.accept(UserListStore.Intent.DialogDismiss)
     }
 
     override fun addUser() {
