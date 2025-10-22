@@ -1,4 +1,4 @@
-package com.zagirlek.add.cmp
+package com.zagirlek.addoredit.cmp
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
@@ -6,13 +6,15 @@ import com.arkivanov.essenty.lifecycle.doOnDestroy
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
-import com.zagirlek.add.AddUserScreen
-import com.zagirlek.add.model.AddUserModel
-import com.zagirlek.add.model.toModel
-import com.zagirlek.add.store.AddUserStore
-import com.zagirlek.add.store.AddUserStoreFactory
+import com.zagirlek.addoredit.AddOrEditUserScreen
+import com.zagirlek.addoredit.model.AddOrEditUserModel
+import com.zagirlek.addoredit.model.toModel
+import com.zagirlek.addoredit.store.AddOrEditUserStore
+import com.zagirlek.addoredit.store.AddOrEditUserStoreFactory
 import com.zagirlek.common.utils.getStore
 import com.zagirlek.user.usecase.AddUserUseCase
+import com.zagirlek.user.usecase.EditUserUseCase
+import com.zagirlek.user.usecase.GetUserByIdUseCase
 import com.zagirlek.user.usecase.IsNicknameUniqueUseCase
 import com.zagirlek.user.usecase.IsPhoneUniqueUseCase
 import kotlinx.coroutines.Dispatchers
@@ -24,26 +26,32 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class AddUserScreenComponent(
+class AddOrEditUserScreenComponent(
     componentContext: ComponentContext,
-    private val onSave: () -> Unit,
+    private val userId: Long? = null,
     private val storeFactory: StoreFactory,
     private val addUserUseCase: AddUserUseCase,
     private val isNicknameUniqueUseCase: IsNicknameUniqueUseCase,
-    private val isPhoneUniqueUseCase: IsPhoneUniqueUseCase
-): AddUserScreen, ComponentContext by componentContext {
+    private val isPhoneUniqueUseCase: IsPhoneUniqueUseCase,
+    private val getUserByIdUseCase: GetUserByIdUseCase,
+    private val editUserUseCase: EditUserUseCase,
+    private val onFinish: () -> Unit,
+): AddOrEditUserScreen, ComponentContext by componentContext {
     val componentScope = coroutineScope(context = SupervisorJob() + Dispatchers.Main.immediate).also {
         doOnDestroy { it.cancel() }
     }
-    val storeInstance: AddUserStore = instanceKeeper.getStore {
-        AddUserStoreFactory(
+    val storeInstance: AddOrEditUserStore = instanceKeeper.getStore {
+        AddOrEditUserStoreFactory(
+            userId = userId,
             storeFactory = storeFactory,
             addUserUseCase = addUserUseCase,
             isNicknameUniqueUseCase = isNicknameUniqueUseCase,
-            isPhoneUniqueUseCase = isPhoneUniqueUseCase
+            isPhoneUniqueUseCase = isPhoneUniqueUseCase,
+            getUserByIdUseCase = getUserByIdUseCase,
+            editUserUseCase = editUserUseCase
         ).create()
     }
-    override val model: StateFlow<AddUserModel> = storeInstance
+    override val model: StateFlow<AddOrEditUserModel> = storeInstance
         .stateFlow(lifecycle)
         .map {
             it.toModel()
@@ -51,31 +59,35 @@ class AddUserScreenComponent(
         .stateIn(
             scope = componentScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = AddUserModel()
+            initialValue = AddOrEditUserModel()
         )
 
     init {
         componentScope.launch {
             storeInstance.labels.collect {
-                if (it is AddUserStore.Label.OnSave)
-                    onSave()
+                if (it is AddOrEditUserStore.Label.OnFinish)
+                    onFinish()
             }
         }
     }
 
     override fun nicknameEdit(value: String) =
-        storeInstance.accept(AddUserStore.Intent.NicknameEdit(value))
+        storeInstance.accept(AddOrEditUserStore.Intent.NicknameEdit(value))
 
     override fun passwordEdit(value: String) =
-        storeInstance.accept(AddUserStore.Intent.PasswordEdit(value))
+        storeInstance.accept(AddOrEditUserStore.Intent.PasswordEdit(value))
 
     override fun phoneEdit(value: String) =
-        storeInstance.accept(AddUserStore.Intent.PhoneEdit(value))
+        storeInstance.accept(AddOrEditUserStore.Intent.PhoneEdit(value))
 
     override fun toggleAdminStatus() =
-        storeInstance.accept(AddUserStore.Intent.ToggleIsAdminStatus)
+        storeInstance.accept(AddOrEditUserStore.Intent.ToggleIsAdminStatus)
 
     override fun saveUser() =
-        storeInstance.accept(AddUserStore.Intent.Save)
+        storeInstance.accept(AddOrEditUserStore.Intent.Save)
+
+    override fun cancel() =
+        onFinish()
+
 
 }

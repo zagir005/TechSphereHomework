@@ -17,7 +17,8 @@ import com.zagirlek.user.model.User
 internal fun UserList(
     list: List<User>,
     modifier: Modifier = Modifier,
-    onItemClick: () -> Unit = {},
+    onEditClick: (User) -> Unit = {},
+    onDeleteClick: (User) -> Unit = {}
 ) {
     LazyColumn(
         modifier = modifier,
@@ -29,7 +30,8 @@ internal fun UserList(
         ) {
             UserItemCard(
                 user = it,
-                onClick = onItemClick,
+                onEditClick = onEditClick,
+                onDeleteClick = onDeleteClick,
                 modifier = Modifier
                     .fillMaxWidth()
                     .animateItem()

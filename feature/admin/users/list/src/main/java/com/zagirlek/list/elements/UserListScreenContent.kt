@@ -12,12 +12,15 @@ import androidx.compose.ui.res.stringResource
 import com.zagirlek.list.model.UserListModel
 import com.zagirlek.ui.R
 import com.zagirlek.ui.elements.textfield.AppTextField
+import com.zagirlek.user.model.User
 
 @Composable
 internal fun UserListScreenContent(
     model: UserListModel,
     onSearchFieldChange: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onEditClick: (User) -> Unit = {},
+    onDeleteClick: (User) -> Unit = {},
 ) {
     Column(
         modifier = Modifier.fillMaxSize()
@@ -38,7 +41,9 @@ internal fun UserListScreenContent(
         )
 
         UserList(
-            list = model.userList
+            list = model.userList,
+            onEditClick = onEditClick,
+            onDeleteClick = onDeleteClick
         )
     }
 }

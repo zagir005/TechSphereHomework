@@ -42,7 +42,7 @@ dependencies {
 
     implementation(projects.domain.user)
 
-    implementation(projects.feature.admin.users.add)
+    implementation(projects.feature.admin.users.addoredit)
 
     implementation(libs.decompose)
     implementation(libs.decompose.extension)

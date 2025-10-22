@@ -71,4 +71,5 @@
     <string name="repeat">Повторить</string>
     <string name="article_not_saved_check_network_connection">Не удалось сохранить новость. Проверьте интернет соединение</string>
     <string name="phone">Номер телефона</string>
+    <string name="edit">Редактировать</string>
 </resources>

@@ -1,16 +1,18 @@
-package com.zagirlek.add
+package com.zagirlek.addoredit
 
-import com.zagirlek.add.model.AddUserModel
+import com.zagirlek.addoredit.model.AddOrEditUserModel
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
 
-interface AddUserScreen {
-    val model: StateFlow<AddUserModel>
+interface AddOrEditUserScreen {
+    val model: StateFlow<AddOrEditUserModel>
     fun nicknameEdit(value: String)
     fun passwordEdit(value: String)
     fun phoneEdit(value: String)
     fun toggleAdminStatus()
     fun saveUser()
+    fun cancel()
+
     @Serializable
-    data object AddUserConfig
+    data class AddOrEditUserConfig(val userId: Long?)
 }

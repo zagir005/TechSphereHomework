@@ -1,20 +1,21 @@
-package com.zagirlek.add.model
+package com.zagirlek.addoredit.model
 
-import com.zagirlek.add.store.AddUserStore
+import com.zagirlek.addoredit.store.AddOrEditUserStore
 import com.zagirlek.common.model.UserStatus
 import com.zagirlek.user.model.User
 
-internal fun AddUserStore.State.toUser(): User = User(
+internal fun AddOrEditUserStore.State.toUser(): User = User(
     phone = phoneTextField.value,
     nickname = nicknameTextField.value,
     password = passwordTextField.value,
     status = if (isAdmin) UserStatus.ADMIN else UserStatus.CLIENT
 )
 
-internal fun AddUserStore.State.toModel(): AddUserModel = AddUserModel(
+internal fun AddOrEditUserStore.State.toModel(): AddOrEditUserModel = AddOrEditUserModel(
     nicknameTextField = nicknameTextField,
     phoneTextField = phoneTextField,
     passwordTextField = passwordTextField,
     isAdmin = isAdmin,
-    isCreateButtonEnabled = isCreateButtonEnabled
+    isAcceptButtonEnabled = isCreateButtonEnabled
 )
+

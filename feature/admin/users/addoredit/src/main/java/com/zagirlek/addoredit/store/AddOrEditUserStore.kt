@@ -1,15 +1,15 @@
-package com.zagirlek.add.store
+package com.zagirlek.addoredit.store
 
 import com.arkivanov.mvikotlin.core.store.Store
-import com.zagirlek.add.store.AddUserStore.Intent
-import com.zagirlek.add.store.AddUserStore.Label
-import com.zagirlek.add.store.AddUserStore.State
+import com.zagirlek.addoredit.store.AddOrEditUserStore.Intent
+import com.zagirlek.addoredit.store.AddOrEditUserStore.Label
+import com.zagirlek.addoredit.store.AddOrEditUserStore.State
 import com.zagirlek.common.textfieldstate.AppTextFieldState
 import com.zagirlek.common.validation.nickname.NicknameError
 import com.zagirlek.common.validation.password.PasswordError
 import com.zagirlek.common.validation.phone.PhoneError
 
-interface AddUserStore: Store<Intent, State, Label> {
+interface AddOrEditUserStore: Store<Intent, State, Label> {
     data class State(
         val nicknameTextField: AppTextFieldState<NicknameError> = AppTextFieldState(),
         val phoneTextField: AppTextFieldState<PhoneError> = AppTextFieldState(),
@@ -25,6 +25,6 @@ interface AddUserStore: Store<Intent, State, Label> {
         data object Save: Intent()
     }
     sealed class Label{
-        data object OnSave: Label()
+        data object OnFinish: Label()
     }
 }

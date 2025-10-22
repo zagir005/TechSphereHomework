@@ -2,7 +2,7 @@ package com.zagirlek.list.di
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.mvikotlin.core.store.StoreFactory
-import com.zagirlek.add.di.AddUserFeatureModule
+import com.zagirlek.addoredit.di.AddOrEditUserFeatureModule
 import com.zagirlek.list.UserListScreen
 import com.zagirlek.list.cmp.UserListScreenComponent
 import com.zagirlek.user.di.UserDomainModule
@@ -10,7 +10,7 @@ import com.zagirlek.user.di.UserDomainModule
 class UserListFeatureModule(
     private val storeFactory: StoreFactory,
     private val userDomainModule: UserDomainModule,
-    private val addUserFeatureModule: AddUserFeatureModule,
+    private val addOrEditUserFeatureModule: AddOrEditUserFeatureModule,
 ) {
     fun getUserListScreen(
         context: ComponentContext
@@ -19,6 +19,7 @@ class UserListFeatureModule(
             componentContext = context,
             storeFactory = storeFactory,
             getUserListFlowUseCase = userDomainModule.getUserListFlowUseCase(),
-            addUserModule = addUserFeatureModule
+            addOrEditUserModule = addOrEditUserFeatureModule,
+            deleteUserByIdUseCase = userDomainModule.deleteUserByIdUseCase()
         )
 }

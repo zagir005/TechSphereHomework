@@ -1,4 +1,4 @@
-package com.zagirlek.add.elements
+package com.zagirlek.addoredit.elements
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,9 +15,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.zagirlek.add.R
-import com.zagirlek.add.model.AddUserModel
+import com.zagirlek.addoredit.R
+import com.zagirlek.addoredit.model.AddOrEditUserModel
 import com.zagirlek.common.textfieldstate.AppTextFieldState
 import com.zagirlek.common.validation.phone.PhoneError
 import com.zagirlek.ui.elements.textfield.AppTextField
@@ -25,27 +26,29 @@ import com.zagirlek.ui.elements.textfield.NicknameField
 import com.zagirlek.ui.elements.textfield.PasswordField
 
 @Composable
-internal fun AddUserScreenContent(
-    addUserModel: AddUserModel,
+internal fun AddOrEditUserScreenContent(
+    addOrEditUserModel: AddOrEditUserModel,
     onPhoneFieldEdit: (String) -> Unit,
     onNicknameFieldEdit: (String) -> Unit,
     onPasswordFieldEdit: (String) -> Unit,
     onToggleIsAdmin: () -> Unit,
     onCreateClick: () -> Unit,
+    onCancelClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    with(addUserModel){
+    with(addOrEditUserModel){
         Column(
             verticalArrangement = Arrangement.spacedBy(4.dp),
             modifier = modifier
                 .padding(horizontal = 8.dp, vertical = 12.dp)
         ) {
             Text(
-                text = stringResource(R.string.add_user),
+                text = stringResource(R.string.user),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(4.dp),
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.titleLarge,
+                textAlign = TextAlign.Center
             )
             NicknameField(
                 state = nicknameTextField,
@@ -76,14 +79,29 @@ internal fun AddUserScreenContent(
                     onCheckedChange = { onToggleIsAdmin() }
                 )
             }
-            Button(
-                onClick = onCreateClick,
-                enabled = isCreateButtonEnabled,
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                Text(text = stringResource(com.zagirlek.ui.R.string.save))
+                Button(
+                    onClick = onCancelClick,
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(4.dp)
+                ) {
+                    Text(text = stringResource(R.string.cancel))
+                }
+                Button(
+                    onClick = onCreateClick,
+                    enabled = isAcceptButtonEnabled,
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(4.dp)
+                ) {
+                    Text(text = stringResource(com.zagirlek.ui.R.string.save))
+                }
             }
+
         }
     }
 }

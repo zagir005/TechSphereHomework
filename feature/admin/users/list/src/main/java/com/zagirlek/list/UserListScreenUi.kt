@@ -3,11 +3,12 @@ package com.zagirlek.list
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
-import com.zagirlek.add.AddUserScreenUi
+import com.zagirlek.addoredit.AddOrEditUserScreenUi
 import com.zagirlek.list.elements.UserListScreenContent
 import com.zagirlek.list.elements.UserListTopAppBar
 import com.zagirlek.ui.elements.navigationbar.Tab
@@ -23,10 +24,11 @@ fun UserListScreenUi(
 
     childSlot.child?.instance?.let { sheetComponent ->
         ModalBottomSheet(
-            onDismissRequest = { component.hideAddUser() },
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
+            onDismissRequest = { component.hideAddEditUserDialog() },
+            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+            sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
         ) {
-            AddUserScreenUi(sheetComponent)
+            AddOrEditUserScreenUi(sheetComponent)
         }
     }
 
@@ -36,6 +38,8 @@ fun UserListScreenUi(
 
     UserListScreenContent(
         model = model,
-        onSearchFieldChange = { component.search(it) }
+        onSearchFieldChange = { component.search(it) },
+        onEditClick = { component.editUser(it.id) },
+        onDeleteClick = { component.deleteUser(it.id) }
     )
 }
