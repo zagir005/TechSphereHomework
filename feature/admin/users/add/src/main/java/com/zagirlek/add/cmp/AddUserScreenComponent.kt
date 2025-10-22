@@ -4,6 +4,7 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import com.arkivanov.essenty.lifecycle.doOnDestroy
 import com.arkivanov.mvikotlin.core.store.StoreFactory
+import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
 import com.zagirlek.add.AddUserScreen
 import com.zagirlek.add.model.AddUserModel
@@ -12,6 +13,8 @@ import com.zagirlek.add.store.AddUserStore
 import com.zagirlek.add.store.AddUserStoreFactory
 import com.zagirlek.common.utils.getStore
 import com.zagirlek.user.usecase.AddUserUseCase
+import com.zagirlek.user.usecase.IsNicknameUniqueUseCase
+import com.zagirlek.user.usecase.IsPhoneUniqueUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
@@ -19,11 +22,15 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 class AddUserScreenComponent(
     componentContext: ComponentContext,
+    private val onSave: () -> Unit,
     private val storeFactory: StoreFactory,
-    private val addUserUseCase: AddUserUseCase
+    private val addUserUseCase: AddUserUseCase,
+    private val isNicknameUniqueUseCase: IsNicknameUniqueUseCase,
+    private val isPhoneUniqueUseCase: IsPhoneUniqueUseCase
 ): AddUserScreen, ComponentContext by componentContext {
     val componentScope = coroutineScope(context = SupervisorJob() + Dispatchers.Main.immediate).also {
         doOnDestroy { it.cancel() }
@@ -31,7 +38,9 @@ class AddUserScreenComponent(
     val storeInstance: AddUserStore = instanceKeeper.getStore {
         AddUserStoreFactory(
             storeFactory = storeFactory,
-            addUserUseCase = addUserUseCase
+            addUserUseCase = addUserUseCase,
+            isNicknameUniqueUseCase = isNicknameUniqueUseCase,
+            isPhoneUniqueUseCase = isPhoneUniqueUseCase
         ).create()
     }
     override val model: StateFlow<AddUserModel> = storeInstance
@@ -45,6 +54,15 @@ class AddUserScreenComponent(
             initialValue = AddUserModel()
         )
 
+    init {
+        componentScope.launch {
+            storeInstance.labels.collect {
+                if (it is AddUserStore.Label.OnSave)
+                    onSave()
+            }
+        }
+    }
+
     override fun nicknameEdit(value: String) =
         storeInstance.accept(AddUserStore.Intent.NicknameEdit(value))
 
@@ -57,8 +75,7 @@ class AddUserScreenComponent(
     override fun toggleAdminStatus() =
         storeInstance.accept(AddUserStore.Intent.ToggleIsAdminStatus)
 
-    override fun saveUser() {
+    override fun saveUser() =
         storeInstance.accept(AddUserStore.Intent.Save)
 
-    }
 }

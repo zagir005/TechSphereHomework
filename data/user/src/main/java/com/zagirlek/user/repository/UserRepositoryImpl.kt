@@ -30,4 +30,7 @@ class UserRepositoryImpl(
 
     override fun searchUsersFlow(query: String?): Flow<List<User>> =
         userDao.searchUsersFlow(query).map { it.toDomain() }
+
+    override suspend fun searchUsersList(query: String?): List<User> =
+        userDao.searchUsersList(query).map { it.toDomain() }
 }

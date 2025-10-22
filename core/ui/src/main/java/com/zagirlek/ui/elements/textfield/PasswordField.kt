@@ -13,12 +13,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import com.zagirlek.common.textfieldstate.AppTextFieldState
-import com.zagirlek.common.validation.password.PasswordTextFieldError
+import com.zagirlek.common.validation.password.PasswordError
 import com.zagirlek.ui.R
 
 @Composable
 fun PasswordField(
-    state: AppTextFieldState<PasswordTextFieldError>,
+    state: AppTextFieldState<out PasswordError>,
     modifier: Modifier = Modifier,
     onValueChange: (String) -> Unit
 ) {

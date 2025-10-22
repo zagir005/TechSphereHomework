@@ -4,7 +4,7 @@
     <string name="password">Пароль</string>
     <string name="login">Логин</string>
     <string name="enter">Войти</string>
-    <string name="login_error_cyrillic">Логин пользователя должен быть на кириллице</string>
+    <string name="nickname_error_cyrillic">Логин пользователя должен быть на кириллице</string>
     <string name="login_error_invalid">Неверный логин</string>
     <string name="password_less_then_6">Пароль должен содержать не менее 6 символов</string>
     <string name="password_more_then_12">Пароль должен содержать не более 12 символов</string>
@@ -71,4 +71,10 @@
     <string name="repeat">Повторить</string>
     <string name="article_not_saved_check_network_connection">Не удалось сохранить новость. Проверьте интернет соединение</string>
     <string name="phone_should_contain_only_numbers">Номер телефона должен состоять только из цифр</string>
+    <string name="phone_cant_be_empty">Номер телефона не может быть пустым</string>
+    <string name="nickname_cant_be_empty">Никнейм не может быть пустым</string>
+    <string name="password_cant_be_empty">Пароль не может быть пустым</string>
+    <string name="nickname_duplicate_alert">Юзер с таким никнеймом уже существует</string>
+    <string name="password_not_match">Пароли не совпадают</string>
+    <string name="phone_duplicate_alert">Юзер с таким номером уже существует</string>
 </resources>

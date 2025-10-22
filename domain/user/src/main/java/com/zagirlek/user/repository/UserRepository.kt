@@ -11,4 +11,5 @@ interface UserRepository {
     suspend fun getById(id: Long): User?
     suspend fun getByLoginAndPassword(login: String, password: String): User?
     fun searchUsersFlow(query: String?): Flow<List<User>>
+    suspend fun searchUsersList(query: String?): List<User>
 }

@@ -10,10 +10,16 @@ class AddUserFeatureModule(
     private val storeFactory: StoreFactory,
     private val userDomainModule: UserDomainModule
 ) {
-    fun getAddUserComponent(componentContext: ComponentContext): AddUserScreen =
+    fun getAddUserComponent(
+        componentContext: ComponentContext,
+        onSave: () -> Unit
+    ): AddUserScreen =
         AddUserScreenComponent(
             componentContext = componentContext,
             storeFactory = storeFactory,
-            addUserUseCase = userDomainModule.addUserUseCase()
+            addUserUseCase = userDomainModule.addUserUseCase(),
+            isNicknameUniqueUseCase = userDomainModule.getUserByNickname(),
+            isPhoneUniqueUseCase = userDomainModule.getUserByPhone(),
+            onSave = onSave
         )
 }

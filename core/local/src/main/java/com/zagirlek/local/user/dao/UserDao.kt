@@ -50,4 +50,11 @@ interface UserDao {
                OR phone LIKE '%' || :query || '%' COLLATE NOCASE)
         ORDER BY nickname COLLATE NOCASE ASC """)
     fun searchUsersFlow(query: String?): Flow<List<UserEntity>>
+
+    @Query("""
+        SELECT * FROM users
+        WHERE (:query IS NULL OR nickname LIKE '%' || :query || '%' COLLATE NOCASE
+               OR phone LIKE '%' || :query || '%' COLLATE NOCASE)
+        ORDER BY nickname COLLATE NOCASE ASC """)
+    fun searchUsersList(query: String?): List<UserEntity>
 }

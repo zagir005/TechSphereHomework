@@ -3,14 +3,14 @@ package com.zagirlek.auth.store
 
 import com.arkivanov.mvikotlin.core.store.Store
 import com.zagirlek.common.textfieldstate.AppTextFieldState
-import com.zagirlek.common.validation.nickname.NicknameTextFieldError
-import com.zagirlek.common.validation.password.PasswordTextFieldError
+import com.zagirlek.common.validation.nickname.NicknameError
+import com.zagirlek.common.validation.password.PasswordError
 
 
 internal interface AuthStore: Store<AuthStore.Intent, AuthStore.State, AuthStore.Label>{
     data class State (
-        val loginTextFieldState: AppTextFieldState<NicknameTextFieldError> = AppTextFieldState(),
-        val passwordTextFieldState: AppTextFieldState<PasswordTextFieldError> = AppTextFieldState(),
+        val loginTextFieldState: AppTextFieldState<NicknameError.NicknameValidationError> = AppTextFieldState(),
+        val passwordTextFieldState: AppTextFieldState<PasswordError.PasswordValidationError> = AppTextFieldState(),
         val isAuthAvailable: Boolean = false,
         val loading: Boolean = false
     )

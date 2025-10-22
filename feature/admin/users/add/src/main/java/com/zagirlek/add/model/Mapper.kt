@@ -16,5 +16,5 @@ internal fun AddUserStore.State.toModel(): AddUserModel = AddUserModel(
     phoneTextField = phoneTextField,
     passwordTextField = passwordTextField,
     isAdmin = isAdmin,
-    isCreateButtonEnabled = isContinueButtonEnabled
+    isCreateButtonEnabled = isCreateButtonEnabled
 )

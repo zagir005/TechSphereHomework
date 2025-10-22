@@ -1,9 +1,9 @@
 package com.zagirlek.common.validation.nickname
 
-fun validateNickname(login: String): NicknameTextFieldError? {
+fun validateNickname(login: String): NicknameError.NicknameValidationError? {
     return when {
-        login.isEmpty() -> null
-        !login.matches(Regex("^[^A-Za-z]+$")) -> NicknameTextFieldError.OnlyCyrillic
+        login.isEmpty() -> NicknameError.NicknameValidationError.NotEmpty
+        !login.matches(Regex("^[^A-Za-z]+$")) -> NicknameError.NicknameValidationError.OnlyCyrillic
         else -> null
     }
 }

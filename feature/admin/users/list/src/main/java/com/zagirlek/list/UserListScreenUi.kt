@@ -9,11 +9,14 @@ import androidx.compose.runtime.getValue
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.zagirlek.add.AddUserScreenUi
 import com.zagirlek.list.elements.UserListScreenContent
+import com.zagirlek.list.elements.UserListTopAppBar
+import com.zagirlek.ui.elements.navigationbar.Tab
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserListScreenUi(
-    component: UserListScreen
+    component: UserListScreen,
+    topBar: ( @Composable (tabInfo: Tab) -> Unit ) -> Unit
 ) {
     val model by component.model.collectAsState()
     val childSlot by component.dialog.subscribeAsState()
@@ -27,8 +30,12 @@ fun UserListScreenUi(
         }
     }
 
+    topBar { tabInfo ->
+        UserListTopAppBar(tabInfo) { component.addUser() }
+    }
+
     UserListScreenContent(
         model = model,
-        onSearchFieldChange = { component.search(it); component.addUser() }
+        onSearchFieldChange = { component.search(it) }
     )
 }

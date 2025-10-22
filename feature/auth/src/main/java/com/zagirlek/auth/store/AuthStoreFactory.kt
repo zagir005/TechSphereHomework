@@ -9,9 +9,9 @@ import com.zagirlek.auth.usecase.AuthUseCase
 import com.zagirlek.auth.usecase.AuthWithoutLoginUseCase
 import com.zagirlek.common.error.AuthError
 import com.zagirlek.common.textfieldstate.AppTextFieldState
-import com.zagirlek.common.validation.nickname.NicknameTextFieldError
+import com.zagirlek.common.validation.nickname.NicknameError
 import com.zagirlek.common.validation.nickname.validateNickname
-import com.zagirlek.common.validation.password.PasswordTextFieldError
+import com.zagirlek.common.validation.password.PasswordError
 import com.zagirlek.common.validation.password.validatePassword
 import kotlinx.coroutines.launch
 
@@ -23,11 +23,11 @@ internal class AuthStoreFactory(
     private sealed interface Msg {
         data class LoginFieldValue(
             val text: String,
-            val error: NicknameTextFieldError?
+            val error: NicknameError.NicknameValidationError?
         ): Msg
         data class PasswordFieldValue(
             val text: String,
-            val error: PasswordTextFieldError?
+            val error: PasswordError.PasswordValidationError?
         ): Msg
         data class Loading(val isLoading: Boolean): Msg
         data class AuthAvailability(val isAvailable: Boolean): Msg
@@ -116,8 +116,8 @@ internal class AuthStoreFactory(
         }
 
         private fun isAuthAvailable(
-            nicknameTextFieldState: AppTextFieldState<NicknameTextFieldError>,
-            passwordTextFieldState: AppTextFieldState<PasswordTextFieldError>,
+            nicknameTextFieldState: AppTextFieldState<NicknameError.NicknameValidationError>,
+            passwordTextFieldState: AppTextFieldState<PasswordError.PasswordValidationError>,
         ): Boolean {
             return nicknameTextFieldState.isNotEmpty() && passwordTextFieldState.isNotEmpty()
                     && nicknameTextFieldState.isValid() && passwordTextFieldState.isValid()

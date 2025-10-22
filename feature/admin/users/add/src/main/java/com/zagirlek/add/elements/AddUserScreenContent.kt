@@ -5,19 +5,21 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.zagirlek.add.R
 import com.zagirlek.add.model.AddUserModel
 import com.zagirlek.common.textfieldstate.AppTextFieldState
-import com.zagirlek.common.validation.phone.PhoneTextFieldError
-import com.zagirlek.ui.R
+import com.zagirlek.common.validation.phone.PhoneError
 import com.zagirlek.ui.elements.textfield.AppTextField
 import com.zagirlek.ui.elements.textfield.NicknameField
 import com.zagirlek.ui.elements.textfield.PasswordField
@@ -36,7 +38,15 @@ internal fun AddUserScreenContent(
         Column(
             verticalArrangement = Arrangement.spacedBy(4.dp),
             modifier = modifier
+                .padding(horizontal = 8.dp, vertical = 12.dp)
         ) {
+            Text(
+                text = stringResource(R.string.add_user),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(4.dp),
+                style = MaterialTheme.typography.titleLarge
+            )
             NicknameField(
                 state = nicknameTextField,
                 modifier = Modifier.fillMaxWidth(),
@@ -56,7 +66,7 @@ internal fun AddUserScreenContent(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = stringResource(com.zagirlek.add.R.string.admin)
+                    text = stringResource(R.string.admin)
                 )
                 Spacer(
                     modifier = Modifier.width(4.dp)
@@ -71,9 +81,8 @@ internal fun AddUserScreenContent(
                 enabled = isCreateButtonEnabled,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .align(Alignment.End)
             ) {
-                Text(text = stringResource(R.string.save))
+                Text(text = stringResource(com.zagirlek.ui.R.string.save))
             }
         }
     }
@@ -81,16 +90,17 @@ internal fun AddUserScreenContent(
 
 @Composable
 fun PhoneField(
-    state: AppTextFieldState<PhoneTextFieldError>,
+    state: AppTextFieldState<PhoneError>,
     modifier: Modifier = Modifier,
     onValueChange: (String) -> Unit
 ) {
     AppTextField(
         value = state.value,
         onValueChange = onValueChange,
-        label = stringResource(R.string.phone),
+        label = stringResource(com.zagirlek.ui.R.string.phone),
         errorMessage = state.error?.msgRes?.let { stringResource(it) },
         modifier = modifier
     )
 }
+
 

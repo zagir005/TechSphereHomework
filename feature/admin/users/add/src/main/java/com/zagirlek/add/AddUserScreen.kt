@@ -11,7 +11,6 @@ interface AddUserScreen {
     fun phoneEdit(value: String)
     fun toggleAdminStatus()
     fun saveUser()
-
     @Serializable
     data object AddUserConfig
 }

@@ -64,7 +64,10 @@ internal class UserListScreenComponent(
         handleBackButton = true,
     ) { config, childComponentContext ->
         addUserModule.getAddUserComponent(
-            componentContext = childComponentContext
+            componentContext = childComponentContext,
+            onSave = {
+                hideAddUser()
+            }
         )
     }
 

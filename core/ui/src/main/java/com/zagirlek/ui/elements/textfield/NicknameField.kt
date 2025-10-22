@@ -4,12 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.zagirlek.common.textfieldstate.AppTextFieldState
-import com.zagirlek.common.validation.nickname.NicknameTextFieldError
+import com.zagirlek.common.validation.nickname.NicknameError
 import com.zagirlek.ui.R
 
 @Composable
 fun NicknameField(
-    state: AppTextFieldState<NicknameTextFieldError>,
+    state: AppTextFieldState<out NicknameError>,
     modifier: Modifier = Modifier,
     onValueChange: (String) -> Unit
 ) {
