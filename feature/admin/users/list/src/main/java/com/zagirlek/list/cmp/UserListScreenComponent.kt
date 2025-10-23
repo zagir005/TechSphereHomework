@@ -66,7 +66,7 @@ internal class UserListScreenComponent(
         serializer = AddOrEditUserScreen.AddOrEditUserConfig.serializer(),
         handleBackButton = true,
     ) { config, childComponentContext ->
-        addOrEditUserModule.getAddUserComponent(
+        addOrEditUserModule.getAddOrEditUserComponent(
             componentContext = childComponentContext,
             onFinish = {
                 hideAddEditUserDialog()

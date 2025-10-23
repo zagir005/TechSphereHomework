@@ -9,8 +9,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import com.zagirlek.common.model.UserStatus
 import com.zagirlek.list.model.UserListModel
 import com.zagirlek.ui.R
+import com.zagirlek.ui.elements.shimmerable
 import com.zagirlek.ui.elements.textfield.AppTextField
 import com.zagirlek.user.model.User
 
@@ -23,7 +25,7 @@ internal fun UserListScreenContent(
     onDeleteClick: (User) -> Unit = {},
 ) {
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) {
         // TODO: Возможно стоит сделать отдельный AppSearchField
         AppTextField(
@@ -39,11 +41,17 @@ internal fun UserListScreenContent(
             },
             singleLine = true
         )
-
         UserList(
-            list = model.userList,
+            list = model.userList ?: List(4) {
+                User(
+                    status = UserStatus.entries.random(),
+                    id = it.toLong()
+                )
+            },
             onEditClick = onEditClick,
-            onDeleteClick = onDeleteClick
+            onDeleteClick = onDeleteClick,
+            modifier = Modifier
+                .shimmerable(model.userList == null)
         )
     }
 }

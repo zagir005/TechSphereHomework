@@ -10,7 +10,7 @@ class AddOrEditUserFeatureModule(
     private val storeFactory: StoreFactory,
     private val userDomainModule: UserDomainModule
 ) {
-    fun getAddUserComponent(
+    fun getAddOrEditUserComponent(
         componentContext: ComponentContext,
         userId: Long? = null,
         onFinish: () -> Unit

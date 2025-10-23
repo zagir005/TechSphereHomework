@@ -43,6 +43,8 @@ dependencies {
     implementation(libs.coil.okhttp)
     implementation(libs.material.icons.extended)
 
+    implementation(libs.shimmer)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

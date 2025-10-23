@@ -10,17 +10,19 @@ data class User(
     val password: String = "",
     val id: Long = 0,
 ){
-    companion object{
+    companion object {
         fun exampleUser(
             phone: String = "89743214312",
             nickname: String = "User",
             status: UserStatus = UserStatus.ADMIN,
-            password: String = "Password"
+            password: String = "Password",
+            id: Long = 0
         ): User = User(
-                phone = phone,
-                nickname = nickname,
-                status = status,
-                password = password
-            )
+            phone = phone,
+            nickname = nickname,
+            status = status,
+            password = password,
+            id = id
+        )
     }
 }
