@@ -5,13 +5,13 @@ import com.arkivanov.mvikotlin.core.store.SimpleBootstrapper
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
+import com.zagirlek.common.model.User
 import com.zagirlek.list.store.UserListStore.Intent
 import com.zagirlek.list.store.UserListStore.State
 import com.zagirlek.list.store.UserListStoreFactory.Action.LoadUserFlow
 import com.zagirlek.list.store.UserListStoreFactory.Msg.SearchField
 import com.zagirlek.ui.elements.alertdialog.AlertDialogState
 import com.zagirlek.ui.elements.alertdialog.DialogButton
-import com.zagirlek.user.model.User
 import com.zagirlek.user.usecase.DeleteUserByIdUseCase
 import com.zagirlek.user.usecase.GetUserListFlowUseCase
 import kotlinx.coroutines.Dispatchers

@@ -2,9 +2,9 @@ package com.zagirlek.user.usecase
 
 import android.database.sqlite.SQLiteConstraintException
 import com.zagirlek.common.error.AppError
+import com.zagirlek.common.model.User
 import com.zagirlek.common.utils.mapError
 import com.zagirlek.common.utils.runCatchingCancellable
-import com.zagirlek.user.model.User
 import com.zagirlek.user.repository.UserRepository
 
 class EditUserUseCase(

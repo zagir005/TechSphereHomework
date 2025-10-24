@@ -8,7 +8,6 @@ import com.arkivanov.decompose.router.stack.replaceCurrent
 import com.arkivanov.decompose.value.Value
 import com.zagirlek.auth.AuthScreen
 import com.zagirlek.auth.di.AuthFeatureModule
-
 import com.zagirlek.nytimes.root.RootComponent.Child.AdminRoot
 import com.zagirlek.nytimes.root.RootComponent.Child.ClientRoot
 import com.zagirlek.nytimes.root.RootComponent.Child.Login
@@ -26,7 +25,7 @@ class DefaultRootComponent(
     private val splashFeatureModule: SplashFeatureModule,
     private val authFeatureModule: AuthFeatureModule,
     private val clientRootFeatureModule: ClientRootFeatureModule,
-    private val adminRootFeatureModule: AdminRootFeatureModule
+    private val adminRootFeatureModule: AdminRootFeatureModule,
 ): ComponentContext by componentContext, RootComponent {
     private val navigation = StackNavigation<Config>()
     override val stack: Value<ChildStack<*, RootComponent.Child>> = childStack(
@@ -58,7 +57,12 @@ class DefaultRootComponent(
             toAdmin = { navigation.replaceCurrent(Config.AdminRoot) }
         )
     private fun client(componentContext: ComponentContext): ClientRootComponent =
-        clientRootFeatureModule.getMainComponent(componentContext = componentContext)
+        clientRootFeatureModule.getMainComponent(
+            componentContext = componentContext,
+            onLogout = {
+                navigation.replaceCurrent(Config.Auth)
+            }
+        )
 
     private fun admin(componentContext: ComponentContext): AdminRootComponent =
         adminRootFeatureModule.getAdminRootComponent(componentContext = componentContext)

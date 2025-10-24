@@ -27,7 +27,8 @@ class FeatureModule(
     fun getClientRootModule(): ClientRootFeatureModule = ClientRootFeatureModule(
         weatherFeatureModule = getWeatherModule(),
         latestNewsFeatureModule = getLatestNewsModule(),
-        favoriteNewsFeatureModule = getFavoriteNewsModule()
+        favoriteNewsFeatureModule = getFavoriteNewsModule(),
+        getCurrentUserUseCase = authDomainModule.provideGetCurrentUserUseCase()
     )
     fun getAdminRootModule(): AdminRootFeatureModule = AdminRootFeatureModule(
         dashboardRootFeatureModule = getDashboardRootFeatureModule(),

@@ -1,6 +1,6 @@
 package com.zagirlek.user.repository
 
-import com.zagirlek.user.model.User
+import com.zagirlek.common.model.User
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {

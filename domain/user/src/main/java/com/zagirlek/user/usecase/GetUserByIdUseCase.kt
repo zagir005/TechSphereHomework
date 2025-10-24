@@ -1,6 +1,6 @@
 package com.zagirlek.user.usecase
 
-import com.zagirlek.user.model.User
+import com.zagirlek.common.model.User
 import com.zagirlek.user.repository.UserRepository
 
 class GetUserByIdUseCase(

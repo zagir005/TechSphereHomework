@@ -1,8 +1,8 @@
 package com.zagirlek.addoredit.model
 
 import com.zagirlek.addoredit.store.AddOrEditUserStore
+import com.zagirlek.common.model.User
 import com.zagirlek.common.model.UserType
-import com.zagirlek.user.model.User
 
 internal fun AddOrEditUserStore.State.toUser(): User = User(
     phone = phoneTextField.value,

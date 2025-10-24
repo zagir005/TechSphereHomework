@@ -20,9 +20,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.zagirlek.common.model.User
 import com.zagirlek.ui.elements.AppCardFilled
 import com.zagirlek.ui.theme.NyTimesTheme
-import com.zagirlek.user.model.User
 
 @Composable
 internal fun UserItemCard(

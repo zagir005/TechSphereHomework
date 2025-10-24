@@ -1,9 +1,9 @@
 package com.zagirlek.user.repository
 
+import com.zagirlek.common.model.User
 import com.zagirlek.local.user.dao.UserDao
 import com.zagirlek.user.mapper.toDomain
 import com.zagirlek.user.mapper.toEntity
-import com.zagirlek.user.model.User
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

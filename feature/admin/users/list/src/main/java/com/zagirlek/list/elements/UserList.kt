@@ -15,10 +15,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.zagirlek.common.model.User
 import com.zagirlek.common.model.UserType
 import com.zagirlek.list.R
 import com.zagirlek.ui.elements.NyTimesPreview
-import com.zagirlek.user.model.User
 
 @Composable
 internal fun UserList(

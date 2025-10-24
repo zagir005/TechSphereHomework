@@ -40,9 +40,11 @@ android {
 dependencies {
     implementation(projects.core.ui)
     implementation(projects.core.common)
+    implementation(projects.domain.auth)
     implementation(projects.feature.client.news.latest)
     implementation(projects.feature.client.news.favorite)
     implementation(projects.feature.client.weather)
+
 
     implementation(libs.decompose)
     implementation(libs.decompose.extension)

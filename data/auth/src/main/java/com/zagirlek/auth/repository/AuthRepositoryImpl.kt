@@ -2,8 +2,10 @@ package com.zagirlek.auth.repository
 
 import com.zagirlek.android.tokenmanager.AuthTokenManager
 import com.zagirlek.auth.mapper.toAuthToken
+import com.zagirlek.auth.mapper.toUser
 import com.zagirlek.auth.model.AuthToken
 import com.zagirlek.common.error.AuthError
+import com.zagirlek.common.model.User
 import com.zagirlek.common.utils.runCatchingCancellable
 import com.zagirlek.local.user.dao.UserDao
 
@@ -37,4 +39,9 @@ class AuthRepositoryImpl(
 
     override suspend fun logout() =
         authTokenManager.clearToken()
+
+    override suspend fun getCurrUser(): User? =
+        getCurrAuthToken()?.let {
+            userDao.getById(id = it.userId)?.toUser()
+        }
 }

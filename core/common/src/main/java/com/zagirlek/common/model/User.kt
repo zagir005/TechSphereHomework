@@ -1,6 +1,4 @@
-package com.zagirlek.user.model
-
-import com.zagirlek.common.model.UserType
+package com.zagirlek.common.model
 
 data class User(
     val phone: String = "",

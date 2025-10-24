@@ -1,10 +1,10 @@
 package com.zagirlek.list.store
 
 import com.arkivanov.mvikotlin.core.store.Store
+import com.zagirlek.common.model.User
 import com.zagirlek.list.store.UserListStore.Intent
 import com.zagirlek.list.store.UserListStore.State
 import com.zagirlek.ui.elements.alertdialog.AlertDialogState
-import com.zagirlek.user.model.User
 
 interface UserListStore: Store<Intent, State, Nothing> {
     data class State (

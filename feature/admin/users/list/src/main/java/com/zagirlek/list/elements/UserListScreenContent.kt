@@ -9,12 +9,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import com.zagirlek.common.model.User
 import com.zagirlek.common.model.UserType
 import com.zagirlek.list.model.UserListModel
 import com.zagirlek.ui.R
 import com.zagirlek.ui.elements.shimmerable
 import com.zagirlek.ui.elements.textfield.AppTextField
-import com.zagirlek.user.model.User
 
 @Composable
 internal fun UserListScreenContent(

@@ -6,6 +6,7 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import com.zagirlek.addoredit.model.toUser
+import com.zagirlek.common.model.User
 import com.zagirlek.common.model.UserType
 import com.zagirlek.common.utils.canceledJob
 import com.zagirlek.common.validation.nickname.NicknameError
@@ -14,7 +15,6 @@ import com.zagirlek.common.validation.password.PasswordError
 import com.zagirlek.common.validation.password.validatePassword
 import com.zagirlek.common.validation.phone.PhoneError
 import com.zagirlek.common.validation.phone.validatePhone
-import com.zagirlek.user.model.User
 import com.zagirlek.user.usecase.AddUserUseCase
 import com.zagirlek.user.usecase.EditUserUseCase
 import com.zagirlek.user.usecase.GetUserByIdUseCase
