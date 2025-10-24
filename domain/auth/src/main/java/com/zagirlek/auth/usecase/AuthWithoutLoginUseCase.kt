@@ -7,5 +7,5 @@ class AuthWithoutLoginUseCase(
     private val authRepository: AuthRepository
 ) {
     suspend operator fun invoke(): AuthToken =
-        authRepository.getTokenWithoutLogin()
+        authRepository.loginAsGuests()
 }

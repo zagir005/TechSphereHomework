@@ -7,7 +7,7 @@ internal fun User.toEntity(): UserEntity = UserEntity(
     id = id,
     phone = phone,
     nickname = nickname,
-    status = status,
+    type = status,
     password = password
 )
 
@@ -15,7 +15,7 @@ internal fun UserEntity.toDomain(): User = User(
     id = id,
     phone = phone,
     nickname = nickname,
-    status = status,
+    status = type,
     password = password
 )
 

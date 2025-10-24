@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.zagirlek.common.model.UserStatus
+import com.zagirlek.common.model.UserType
 import com.zagirlek.local.database.NyTimesDatabase
 import com.zagirlek.local.user.entitiy.UserEntity
 import kotlinx.coroutines.CoroutineScope
@@ -30,13 +30,13 @@ class CoreLocalModule(private val applicationContext: Context) {
                                     UserEntity(
                                         phone = "48392015432532",
                                         nickname = "Логин_Админа",
-                                        status = UserStatus.ADMIN,
+                                        type = UserType.ADMIN,
                                         password = "Пароль123"
                                     ),
                                     UserEntity(
                                         phone = "483128492134",
                                         nickname = "Логин_Клиента",
-                                        status = UserStatus.CLIENT,
+                                        type = UserType.CLIENT,
                                         password = "Пароль123"
                                     )
                                 )

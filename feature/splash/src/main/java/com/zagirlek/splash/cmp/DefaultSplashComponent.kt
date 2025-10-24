@@ -17,13 +17,13 @@ import kotlinx.coroutines.launch
 internal class DefaultSplashComponent(
     componentContext: ComponentContext,
     private val onAuthRequired: () -> Unit,
-    private val onAuthSuccess: () -> Unit,
+    private val toClient: () -> Unit,
+    private val toAdmin: () -> Unit,
     private val getCurrentAuthTokenUseCase: GetCurrentAuthTokenUseCase
 ): ComponentContext by componentContext, SplashComponent {
 
-    private val _state: MutableValue<SplashState> = MutableValue(initialValue = SplashState(
-        isLoading = true
-    )
+    private val _state: MutableValue<SplashState> = MutableValue(
+        initialValue = SplashState(isLoading = true)
     )
     override val state: Value<SplashState> get() = _state
     private val scope = coroutineScope(Dispatchers.IO + SupervisorJob())
@@ -40,7 +40,14 @@ internal class DefaultSplashComponent(
 
     override fun action(splashAction: SplashAction){
         when(splashAction){
-            SplashAction.SplashFinished -> if (token != null) onAuthSuccess() else onAuthRequired()
+            SplashAction.SplashFinished -> {
+                if (token == null)
+                    onAuthRequired()
+                else if (token?.tokenType == AuthToken.TokenType.ADMIN)
+                    toAdmin()
+                else
+                    toClient()
+            }
         }
     }
 }

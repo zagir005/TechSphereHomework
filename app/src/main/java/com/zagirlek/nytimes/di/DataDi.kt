@@ -10,7 +10,8 @@ class DataDi(
 ) {
     val authDataModule: AuthDataModule by lazy {
         AuthDataModule(
-            networkConnectionChecker = coreDi.networkConnectionChecker
+            userDao = coreDi.coreLocalModule.userDao(),
+            authTokenManager = coreDi.authTokenManager
         )
     }
     val weatherDataModule: WeatherDataModule by lazy {

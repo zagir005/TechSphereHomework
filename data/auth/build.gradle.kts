@@ -33,9 +33,10 @@ android {
 }
 
 dependencies {
-    implementation(projects.domain.auth)
     implementation(projects.core.android)
     implementation(projects.core.common)
+    implementation(projects.core.local)
+    implementation(projects.domain.auth)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

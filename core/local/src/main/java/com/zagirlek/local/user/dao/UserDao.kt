@@ -36,13 +36,15 @@ interface UserDao {
     @Query("SELECT * FROM users WHERE id = :id LIMIT 1")
     suspend fun getById(id: Long): UserEntity?
 
-    @Query("""
+    @Query(
+        """
         SELECT * FROM users
-        WHERE (phone = :login OR nickname = :login)
+        WHERE (phone = :nickname OR nickname = :nickname)
           AND password = :password
         LIMIT 1
-    """)
-    suspend fun findByLoginAndPassword(login: String, password: String): UserEntity?
+    """
+    )
+    suspend fun findByLoginAndPassword(nickname: String, password: String): UserEntity?
 
     @Query("""
         SELECT * FROM users

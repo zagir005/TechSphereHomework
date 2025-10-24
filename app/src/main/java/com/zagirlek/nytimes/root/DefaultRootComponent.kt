@@ -48,7 +48,8 @@ class DefaultRootComponent(
         splashFeatureModule.getSplashComponent(
             componentContext = componentContext,
             toAuth = { navigation.replaceCurrent(Config.Auth) },
-            toMain = { navigation.replaceCurrent(Config.ClientRoot) }
+            toAdmin = { navigation.replaceCurrent(Config.AdminRoot) },
+            toClient = { navigation.replaceCurrent(Config.ClientRoot) }
         )
     private fun auth(componentContext: ComponentContext): AuthScreen =
         authFeatureModule.getAuthComponent(

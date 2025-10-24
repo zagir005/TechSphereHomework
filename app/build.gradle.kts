@@ -117,6 +117,8 @@ dependencies {
 
     implementation(libs.shimmer)
 
+    implementation(libs.datastore.preferences)
+
     implementation(libs.androidx.ui.animation)
     implementation(libs.androidx.core.splash)
     implementation(libs.androidx.core.ktx)

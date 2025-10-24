@@ -24,7 +24,7 @@ class UserRepositoryImpl(
         login: String,
         password: String
     ): User? = userDao.findByLoginAndPassword(
-        login = login,
+        nickname = login,
         password = password
     )?.toDomain()
 

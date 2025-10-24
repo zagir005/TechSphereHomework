@@ -7,5 +7,5 @@ class GetCurrentAuthTokenUseCase(
     private val authRepository: AuthRepository
 ){
     suspend operator fun invoke(): AuthToken? =
-        authRepository.getCurrToken()
+        authRepository.getCurrAuthToken()
 }

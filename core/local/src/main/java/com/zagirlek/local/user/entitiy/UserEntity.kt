@@ -3,7 +3,7 @@ package com.zagirlek.local.user.entitiy
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.zagirlek.common.model.UserStatus
+import com.zagirlek.common.model.UserType
 
 @Entity(
     tableName = "users",
@@ -14,7 +14,7 @@ data class UserEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val phone: String,
     val nickname: String,
-    val status: UserStatus,
+    val type: UserType,
     val isBlocked: Boolean = false,
     val password: String
 )

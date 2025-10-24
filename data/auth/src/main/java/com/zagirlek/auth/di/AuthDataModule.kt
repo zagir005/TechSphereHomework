@@ -1,15 +1,18 @@
 package com.zagirlek.auth.di
 
-import com.zagirlek.android.networkchecker.NetworkConnectionChecker
+import com.zagirlek.android.tokenmanager.AuthTokenManager
 import com.zagirlek.auth.repository.AuthRepository
-import com.zagirlek.auth.repository.MockAuthRepositoryImpl
+import com.zagirlek.auth.repository.AuthRepositoryImpl
+import com.zagirlek.local.user.dao.UserDao
 
 class AuthDataModule(
-    networkConnectionChecker: NetworkConnectionChecker
+    userDao: UserDao,
+    authTokenManager: AuthTokenManager
 ) {
     val authRepository: AuthRepository by lazy {
-        MockAuthRepositoryImpl(
-            networkConnectionChecker
+        AuthRepositoryImpl(
+            userDao = userDao,
+            authTokenManager = authTokenManager
         )
     }
 }

@@ -84,7 +84,7 @@ internal class AuthStoreFactory(
                     scope.launch {
                         authWithoutLoginUseCase()
                     }
-                    publish(AuthStore.Label.ToAdmin)
+                    publish(AuthStore.Label.ToClient)
                 }
             }
 
@@ -93,10 +93,12 @@ internal class AuthStoreFactory(
             scope.launch {
                 authUseCase(login, password)
                     .onSuccess {
-                        when(it.token){
-                            AuthToken.ADMIN_TOKEN.token -> publish(AuthStore.Label.ToAdmin)
-                            AuthToken.CLIENT_TOKEN.token -> publish(AuthStore.Label.ToClient)
-                        }
+                        publish(
+                            label = when(it.tokenType){
+                                AuthToken.TokenType.ADMIN -> AuthStore.Label.ToAdmin
+                                else -> AuthStore.Label.ToClient
+                            }
+                        )
                         dispatch(Msg.Loading(false))
                     }
                     .onFailure { error ->

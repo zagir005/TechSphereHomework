@@ -1,10 +1,13 @@
 package com.zagirlek.auth.model
 
 data class AuthToken(
-    val token: String
+    val userId: Long,
+    val tokenType: TokenType
 ){
+    enum class TokenType{
+        CLIENT, ADMIN, GUEST
+    }
     companion object{
-        val CLIENT_TOKEN = AuthToken("CLIENT")
-        val ADMIN_TOKEN = AuthToken("ADMIN")
+        val GUEST_TOKEN = AuthToken(userId = -1, tokenType = TokenType.GUEST)
     }
 }

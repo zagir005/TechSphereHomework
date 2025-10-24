@@ -9,7 +9,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.zagirlek.common.model.UserStatus
+import com.zagirlek.common.model.UserType
 import com.zagirlek.list.model.UserListModel
 import com.zagirlek.ui.R
 import com.zagirlek.ui.elements.shimmerable
@@ -44,7 +44,7 @@ internal fun UserListScreenContent(
         UserList(
             list = model.userList ?: List(4) {
                 User(
-                    status = UserStatus.entries.random(),
+                    status = UserType.entries.random(),
                     id = it.toLong()
                 )
             },

@@ -6,7 +6,7 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import com.zagirlek.addoredit.model.toUser
-import com.zagirlek.common.model.UserStatus
+import com.zagirlek.common.model.UserType
 import com.zagirlek.common.utils.canceledJob
 import com.zagirlek.common.validation.nickname.NicknameError
 import com.zagirlek.common.validation.nickname.validateNickname
@@ -62,8 +62,9 @@ class AddOrEditUserStoreFactory(
                 is Action.SaveUser -> {
                     scope.launch {
                         if (userId == null)
-                            addUserUseCase(state().toUser())
-                                .onSuccess {
+                            addUserUseCase(
+                                state().toUser()
+                            ).onSuccess {
                                     publish(AddOrEditUserStore.Label.OnFinish)
                                 }
                         else
@@ -84,7 +85,7 @@ class AddOrEditUserStoreFactory(
                         dispatch(Msg.NicknameValue(it.nickname))
                         dispatch(Msg.PhoneValue(it.phone))
                         dispatch(Msg.PasswordValue(it.password))
-                        dispatch(Msg.IsAdmin(it.status == UserStatus.ADMIN))
+                        dispatch(Msg.IsAdmin(it.status == UserType.ADMIN))
                         dispatch(Msg.CreateButtonAvailability(true))
                     }
                 }

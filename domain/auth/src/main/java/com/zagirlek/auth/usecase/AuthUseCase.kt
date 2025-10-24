@@ -10,5 +10,5 @@ class AuthUseCase(
         login: String,
         password: String
     ): Result<AuthToken> =
-        authRepository.login(login = login, password = password)
+        authRepository.login(nickname = login, password = password)
 }
