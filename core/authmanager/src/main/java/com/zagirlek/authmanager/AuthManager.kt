@@ -8,7 +8,10 @@ import com.zagirlek.common.model.AuthToken
 import com.zagirlek.common.model.User
 import com.zagirlek.common.utils.runCatchingCancellable
 import com.zagirlek.local.user.dao.UserDao
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 
 class AuthManager (
@@ -22,7 +25,7 @@ class AuthManager (
     suspend fun login(
         nickname: String,
         password: String
-    ): Result<AuthToken> = runCatchingCancellable{
+    ): Result<AuthToken> = runCatchingCancellable {
         authTokenManager.clearToken()
         val user = userDao.findByLoginAndPassword(
             nickname = nickname,
@@ -48,14 +51,13 @@ class AuthManager (
             userDao.getById(id = it.userId)?.toUser()
         }
 
-    suspend fun getCurrUserFlow(): Flow<User> {
-        val token = getCurrAuthToken() ?: throw IllegalStateException(
-            "Попытка получить текущего пользователя без авторизации"
-        )
-        return userDao.getByIdFlow(id = token.userId).map {
-            requireNotNull(it){
-                "Текущий пользователь не найден в базе"
-            }.toUser()
-        }
-    }
+    @OptIn(ExperimentalCoroutinesApi::class)
+    fun getCurrUserFlow(): Flow<User?> =
+        authTokenManager.tokenFlow
+            .flatMapLatest {
+                if (it != null)
+                    userDao.getByIdFlow(it).map { it?.toUser() }
+                else
+                    flowOf(null)
+            }
 }

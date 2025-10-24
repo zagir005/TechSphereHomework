@@ -64,8 +64,8 @@ class UserListStoreFactory(
                         getUsersWithCurrentUserFlowUseCase(action.searchQuery)
                             .onSuccess {
                                 combine(
-                                    it.current,
-                                    it.allUsersList
+                                    it.currentUserFlow,
+                                    it.allUsersListFlow
                                 ) { current, allUsersList ->
                                     Pair(current, allUsersList)
                                 }.collect { flowPair ->
