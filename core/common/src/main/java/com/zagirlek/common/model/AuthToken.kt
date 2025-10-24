@@ -1,4 +1,4 @@
-package com.zagirlek.auth.model
+package com.zagirlek.common.model
 
 data class AuthToken(
     val userId: Long,

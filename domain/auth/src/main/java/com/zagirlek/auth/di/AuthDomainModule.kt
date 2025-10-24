@@ -1,23 +1,26 @@
 package com.zagirlek.auth.di
 
-import com.zagirlek.auth.repository.AuthRepository
 import com.zagirlek.auth.usecase.AuthUseCase
 import com.zagirlek.auth.usecase.AuthWithoutLoginUseCase
 import com.zagirlek.auth.usecase.GetCurrentAuthTokenUseCase
+import com.zagirlek.auth.usecase.GetCurrentUserFlowUseCase
 import com.zagirlek.auth.usecase.GetCurrentUserUseCase
 import com.zagirlek.auth.usecase.LogoutUseCase
+import com.zagirlek.authmanager.AuthManager
 
 class AuthDomainModule(
-    private val authRepository: AuthRepository
+    private val authManager: AuthManager
 ) {
     fun provideAuthUseCase(): AuthUseCase =
-        AuthUseCase(authRepository)
+        AuthUseCase(authManager)
     fun provideAuthWithoutLoginUseCase(): AuthWithoutLoginUseCase =
-        AuthWithoutLoginUseCase(authRepository)
+        AuthWithoutLoginUseCase(authManager)
     fun provideGetCurrentAuthTokenUseCase(): GetCurrentAuthTokenUseCase =
-        GetCurrentAuthTokenUseCase(authRepository)
+        GetCurrentAuthTokenUseCase(authManager)
     fun provideGetCurrentUserUseCase(): GetCurrentUserUseCase =
-        GetCurrentUserUseCase(authRepository)
+        GetCurrentUserUseCase(authManager)
     fun provideLogoutUseCase(): LogoutUseCase =
-        LogoutUseCase(authRepository)
+        LogoutUseCase(authManager)
+    fun getCurrentUserFlowUseCase(): GetCurrentUserFlowUseCase =
+        GetCurrentUserFlowUseCase(authManager)
 }

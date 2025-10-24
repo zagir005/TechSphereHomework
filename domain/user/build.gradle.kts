@@ -34,7 +34,8 @@ android {
 
 dependencies {
     implementation(projects.core.common)
-
+    implementation(projects.core.authmanager)
+    
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

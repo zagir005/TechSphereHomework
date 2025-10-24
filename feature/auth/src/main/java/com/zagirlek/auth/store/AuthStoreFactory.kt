@@ -4,10 +4,10 @@ import com.arkivanov.mvikotlin.core.store.Reducer
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import com.zagirlek.auth.model.AuthToken
 import com.zagirlek.auth.usecase.AuthUseCase
 import com.zagirlek.auth.usecase.AuthWithoutLoginUseCase
 import com.zagirlek.common.error.AuthError
+import com.zagirlek.common.model.AuthToken
 import com.zagirlek.common.textfieldstate.AppTextFieldState
 import com.zagirlek.common.validation.nickname.NicknameError
 import com.zagirlek.common.validation.nickname.validateNickname

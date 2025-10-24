@@ -10,11 +10,13 @@ class AdminRootFeatureModule(
     private val userListFeatureModule: UserListFeatureModule
 ) {
     fun getAdminRootComponent(
-        componentContext: ComponentContext
+        componentContext: ComponentContext,
+        onLogout: () -> Unit
     ): AdminRootComponent =
         DefaultAdminRootComponent(
             componentContext = componentContext,
             dashboardRootFeatureModule = dashboardRootFeatureModule,
-            userListFeatureModule = userListFeatureModule
+            userListFeatureModule = userListFeatureModule,
+            logout = onLogout
         )
 }

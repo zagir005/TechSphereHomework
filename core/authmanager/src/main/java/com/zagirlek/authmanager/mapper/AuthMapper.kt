@@ -1,6 +1,6 @@
-package com.zagirlek.auth.mapper
+package com.zagirlek.authmanager.mapper
 
-import com.zagirlek.auth.model.AuthToken
+import com.zagirlek.common.model.AuthToken
 import com.zagirlek.common.model.User
 import com.zagirlek.common.model.UserType
 import com.zagirlek.local.user.entitiy.UserEntity

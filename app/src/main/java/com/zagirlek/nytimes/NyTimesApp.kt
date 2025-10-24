@@ -14,7 +14,10 @@ class NyTimesApp: Application() {
         DataDi(coreDi)
     }
     private val domainDi: DomainDi by lazy {
-        DomainDi(dataDi)
+        DomainDi(
+            dataDi = dataDi,
+            coreDi = coreDi
+        )
     }
     val featureModule: FeatureModule by lazy {
         FeatureModule(

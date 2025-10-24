@@ -63,8 +63,8 @@ dependencies {
     implementation(projects.core.android)
     implementation(projects.core.remote)
     implementation(projects.core.local)
+    implementation(projects.core.authmanager)
 
-    implementation(projects.data.auth)
     implementation(projects.data.weather)
     implementation(projects.data.news)
     implementation(projects.data.user)

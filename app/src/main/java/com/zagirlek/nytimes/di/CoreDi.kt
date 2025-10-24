@@ -5,8 +5,7 @@ import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.main.store.DefaultStoreFactory
 import com.zagirlek.android.CoreAndroidModule
 import com.zagirlek.android.networkchecker.NetworkConnectionChecker
-import com.zagirlek.android.tokenmanager.AuthTokenManager
-import com.zagirlek.android.tokenmanager.tokenDataStore
+import com.zagirlek.authmanager.di.AuthManagerModule
 import com.zagirlek.local.di.CoreLocalModule
 import com.zagirlek.nytimes.BuildConfig
 import com.zagirlek.remote.di.CoreRemoteModule
@@ -50,7 +49,11 @@ class CoreDi(
     val storeFactory: StoreFactory by lazy {
         DefaultStoreFactory()
     }
-    val authTokenManager by lazy {
-        AuthTokenManager(tokenDataStore = applicationContext.tokenDataStore)
+    val authManager by lazy {
+        AuthManagerModule(
+            userDao = coreLocalModule.userDao()
+        ).getAuthManager(
+            context = applicationContext
+        )
     }
 }

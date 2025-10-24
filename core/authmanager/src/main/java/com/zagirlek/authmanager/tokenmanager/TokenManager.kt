@@ -1,14 +1,17 @@
-package com.zagirlek.android.tokenmanager
+package com.zagirlek.authmanager.tokenmanager
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.longPreferencesKey
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 
-class AuthTokenManager(
+class TokenManager(
     private val tokenDataStore: DataStore<Preferences>
 ) {
+    val tokenFlow: Flow<Long?> = tokenDataStore.data .map { prefs -> prefs[TOKEN_KEY] }
     suspend fun saveToken(token: Long) {
         tokenDataStore.edit { prefs ->
             prefs[TOKEN_KEY] = token

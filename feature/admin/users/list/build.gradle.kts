@@ -41,6 +41,7 @@ dependencies {
     implementation(projects.core.ui)
 
     implementation(projects.domain.user)
+    implementation(projects.domain.auth)
 
     implementation(projects.feature.admin.users.addoredit)
 

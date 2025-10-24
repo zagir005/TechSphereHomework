@@ -65,7 +65,12 @@ class DefaultRootComponent(
         )
 
     private fun admin(componentContext: ComponentContext): AdminRootComponent =
-        adminRootFeatureModule.getAdminRootComponent(componentContext = componentContext)
+        adminRootFeatureModule.getAdminRootComponent(
+            componentContext = componentContext,
+            onLogout = {
+                navigation.replaceCurrent(Config.Auth)
+            }
+        )
 
     @Serializable
     private sealed class Config{

@@ -6,11 +6,12 @@ import com.zagirlek.user.di.UserDomainModule
 import com.zagirlek.weather.di.WeatherDomainModule
 
 class DomainDi(
-    private val dataDi: DataDi
+    private val dataDi: DataDi,
+    private val coreDi: CoreDi
 ) {
     val authDomainModule: AuthDomainModule by lazy {
         AuthDomainModule(
-            authRepository = dataDi.authDataModule.authRepository
+            authManager = coreDi.authManager
         )
     }
     val weatherDomainModule: WeatherDomainModule by lazy {
@@ -29,7 +30,8 @@ class DomainDi(
     }
     val userDomainModule: UserDomainModule by lazy {
         UserDomainModule(
-            userRepository = dataDi.userDataModule.userRepository
+            userRepository = dataDi.userDataModule.userRepository,
+            authManager = coreDi.authManager
         )
     }
 }

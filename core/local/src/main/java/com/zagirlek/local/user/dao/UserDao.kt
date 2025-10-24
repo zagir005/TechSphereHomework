@@ -36,6 +36,9 @@ interface UserDao {
     @Query("SELECT * FROM users WHERE id = :id LIMIT 1")
     suspend fun getById(id: Long): UserEntity?
 
+    @Query("SELECT * FROM users WHERE id = :id")
+    fun getByIdFlow(id: Long): Flow<UserEntity?>
+
     @Query(
         """
         SELECT * FROM users

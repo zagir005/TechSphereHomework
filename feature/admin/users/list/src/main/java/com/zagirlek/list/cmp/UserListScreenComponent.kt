@@ -20,7 +20,7 @@ import com.zagirlek.list.model.toModel
 import com.zagirlek.list.store.UserListStore
 import com.zagirlek.list.store.UserListStoreFactory
 import com.zagirlek.user.usecase.DeleteUserByIdUseCase
-import com.zagirlek.user.usecase.GetUserListFlowUseCase
+import com.zagirlek.user.usecase.GetUsersWithCurrentUserFlowUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
@@ -32,24 +32,23 @@ import kotlinx.coroutines.flow.stateIn
 internal class UserListScreenComponent(
     componentContext: ComponentContext,
     private val storeFactory: StoreFactory,
-    private val getUserListFlowUseCase: GetUserListFlowUseCase,
     private val deleteUserByIdUseCase: DeleteUserByIdUseCase,
     private val addOrEditUserModule: AddOrEditUserFeatureModule,
+    private val getUsersWithCurrentUserFlowUseCase: GetUsersWithCurrentUserFlowUseCase,
+    private val onLogout: () -> Unit,
 ): UserListScreen, ComponentContext by componentContext{
     private val componentScope = coroutineScope(
         context = SupervisorJob() + Dispatchers.Main.immediate
     ).also {
         doOnDestroy { it.cancel() }
     }
-
     private val storeInstance = instanceKeeper.getStore {
         UserListStoreFactory(
             storeFactory = storeFactory,
-            userListFlow = getUserListFlowUseCase,
-            deleteUserByIdUseCase = deleteUserByIdUseCase
+            deleteUserByIdUseCase = deleteUserByIdUseCase,
+            getUsersWithCurrentUserFlowUseCase = getUsersWithCurrentUserFlowUseCase
         ).create()
     }
-
     override val model: StateFlow<UserListModel> = storeInstance
         .stateFlow(lifecycle)
         .map {
@@ -81,26 +80,23 @@ internal class UserListScreenComponent(
     override fun deleteUser(userId: Long) {
         storeInstance.accept(UserListStore.Intent.DeleteUser(userId))
     }
-
     override fun onDialogDismiss() {
         storeInstance.accept(UserListStore.Intent.DialogDismiss)
     }
+
+    override fun logout() = onLogout()
 
     override fun addUser() {
         dialogNavigation.activate(
             AddOrEditUserScreen.AddOrEditUserConfig(null)
         )
     }
-
     override fun editUser(userId: Long) {
         dialogNavigation.activate(
             AddOrEditUserScreen.AddOrEditUserConfig(userId)
         )
     }
-
     override fun hideAddEditUserDialog() {
         dialogNavigation.dismiss()
     }
-
-
 }

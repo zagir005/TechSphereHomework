@@ -13,19 +13,20 @@ import com.zagirlek.list.store.UserListStoreFactory.Msg.SearchField
 import com.zagirlek.ui.elements.alertdialog.AlertDialogState
 import com.zagirlek.ui.elements.alertdialog.DialogButton
 import com.zagirlek.user.usecase.DeleteUserByIdUseCase
-import com.zagirlek.user.usecase.GetUserListFlowUseCase
+import com.zagirlek.user.usecase.GetUsersWithCurrentUserFlowUseCase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 class UserListStoreFactory(
     private val storeFactory: StoreFactory,
-    private val userListFlow: GetUserListFlowUseCase,
-    private val deleteUserByIdUseCase: DeleteUserByIdUseCase
+    private val deleteUserByIdUseCase: DeleteUserByIdUseCase,
+    private val getUsersWithCurrentUserFlowUseCase: GetUsersWithCurrentUserFlowUseCase
 ) {
     fun create(): UserListStore = object: UserListStore, Store<Intent, State, Nothing> by storeFactory.create(
         name = "user_store",
         initialState = State(),
-        bootstrapper = SimpleBootstrapper(Action.LoadUserFlow()),
+        bootstrapper = SimpleBootstrapper(LoadUserFlow()),
         executorFactory = ::ExecutorImpl,
         reducer = ReducerImpl
     ){ }
@@ -60,9 +61,18 @@ class UserListStoreFactory(
             when(action){
                 is LoadUserFlow -> {
                     scope.launch {
-                        userListFlow(action.searchQuery).collect {
-                            dispatch(Msg.UserList(userList = it))
-                        }
+                        getUsersWithCurrentUserFlowUseCase(action.searchQuery)
+                            .onSuccess {
+                                combine(
+                                    it.current,
+                                    it.allUsersList
+                                ) { current, allUsersList ->
+                                    Pair(current, allUsersList)
+                                }.collect { flowPair ->
+                                    dispatch(Msg.CurrentUser(user = flowPair.first))
+                                    dispatch(Msg.UserList(userList = flowPair.second))
+                                }
+                            }
                     }
                 }
             }
@@ -99,6 +109,7 @@ class UserListStoreFactory(
         data class UserList(val userList: List<User>): Msg()
         data class SearchField(val query: String?): Msg()
         data class AlertDialog(val alertDialogState: AlertDialogState?): Msg()
+        data class CurrentUser(val user: User?): Msg()
     }
 
     private object ReducerImpl: Reducer<State, Msg>{
@@ -106,6 +117,7 @@ class UserListStoreFactory(
             is Msg.UserList -> copy(userList = msg.userList)
             is SearchField -> copy(searchField = msg.query)
             is Msg.AlertDialog -> copy(alertDialogState = msg.alertDialogState)
+            is Msg.CurrentUser -> copy(currentUser = msg.user)
         }
     }
 }

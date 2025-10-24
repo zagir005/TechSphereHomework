@@ -17,7 +17,8 @@ import kotlinx.serialization.Serializable
 class DefaultAdminRootComponent(
     componentContext: ComponentContext,
     private val dashboardRootFeatureModule: DashboardRootFeatureModule,
-    private val userListFeatureModule: UserListFeatureModule
+    private val userListFeatureModule: UserListFeatureModule,
+    private val logout: () -> Unit,
 ): AdminRootComponent, ComponentContext by componentContext {
     private val navigation = PagesNavigation<Config>()
     override val pages: Value<ChildPages<Config, AdminRootComponent.Child>> = childPages(
@@ -50,7 +51,10 @@ class DefaultAdminRootComponent(
 
 
     private fun userList(context: ComponentContext): UserListScreen =
-        userListFeatureModule.getUserListScreen(context)
+        userListFeatureModule.getUserListScreen(
+            context = context,
+            logout = logout
+        )
 
     @Serializable
     sealed class Config{

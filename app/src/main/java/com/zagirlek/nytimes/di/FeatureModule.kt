@@ -40,7 +40,8 @@ class FeatureModule(
     fun getAuthModule(): AuthFeatureModule = AuthFeatureModule(
         storeFactory = storeFactory,
         authUseCase = authDomainModule.provideAuthUseCase(),
-        authWithoutLoginUseCase = authDomainModule.provideAuthWithoutLoginUseCase()
+        authWithoutLoginUseCase = authDomainModule.provideAuthWithoutLoginUseCase(),
+        logoutUseCase = authDomainModule.provideLogoutUseCase()
     )
 
     private fun getDashboardRootFeatureModule(): DashboardRootFeatureModule = DashboardRootFeatureModule()

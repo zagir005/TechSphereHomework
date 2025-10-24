@@ -13,13 +13,15 @@ class UserListFeatureModule(
     private val addOrEditUserFeatureModule: AddOrEditUserFeatureModule,
 ) {
     fun getUserListScreen(
-        context: ComponentContext
+        context: ComponentContext,
+        logout: () -> Unit
     ): UserListScreen =
         UserListScreenComponent(
             componentContext = context,
             storeFactory = storeFactory,
-            getUserListFlowUseCase = userDomainModule.getUserListFlowUseCase(),
             addOrEditUserModule = addOrEditUserFeatureModule,
-            deleteUserByIdUseCase = userDomainModule.deleteUserByIdUseCase()
+            deleteUserByIdUseCase = userDomainModule.deleteUserByIdUseCase(),
+            getUsersWithCurrentUserFlowUseCase = userDomainModule.getUsersWithCurrentUserFlowUseCase(),
+            onLogout = logout
         )
 }

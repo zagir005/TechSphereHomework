@@ -8,7 +8,8 @@ import com.zagirlek.ui.elements.alertdialog.AlertDialogState
 
 interface UserListStore: Store<Intent, State, Nothing> {
     data class State (
-        val userList: List<User> = emptyList(),
+        val currentUser: User? = null,
+        val userList: List<User>? = null,
         val searchField: String? = null,
         val alertDialogState: AlertDialogState? = null
     )

@@ -1,11 +1,10 @@
 package com.zagirlek.auth.usecase
 
-import com.zagirlek.auth.repository.AuthRepository
+import com.zagirlek.authmanager.AuthManager
 
 class LogoutUseCase(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthManager
 ) {
     suspend operator fun invoke() =
         authRepository.logout()
-
 }

@@ -46,6 +46,7 @@ fun UserListScreenUi(
         model = model,
         onSearchFieldChange = { component.search(it) },
         onEditClick = { component.editUser(it.id) },
-        onDeleteClick = { component.deleteUser(it.id) }
+        onDeleteClick = { component.deleteUser(it.id) },
+        onLogoutClick = { component.logout() }
     )
 }
