@@ -11,7 +11,7 @@ import com.zagirlek.news.repository.ArticleStatusRepositoryImpl
 import com.zagirlek.news.repository.NewsRepository
 import com.zagirlek.news.repository.NewsRepositoryImpl
 import com.zagirlek.remote.extractor.RemoteNewsExtractorSource
-import com.zagirlek.remote.news.RemoteNewsSource
+import com.zagirlek.remote.news.source.RemoteNewsSource
 
 class NewsDataModule(
     private val networkConnectionChecker: NetworkConnectionChecker,

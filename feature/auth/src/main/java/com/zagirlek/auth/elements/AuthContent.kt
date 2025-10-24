@@ -10,30 +10,21 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.zagirlek.auth.elements.textfield.textfielderror.LoginTextFieldError
-import com.zagirlek.auth.elements.textfield.textfielderror.PasswordTextFieldError
 import com.zagirlek.auth.model.AuthModel
 import com.zagirlek.ui.R
 import com.zagirlek.ui.elements.AppButton
-import com.zagirlek.ui.elements.AppTextField
+import com.zagirlek.ui.elements.textfield.NicknameField
+import com.zagirlek.ui.elements.textfield.PasswordField
 import com.zagirlek.ui.theme.Typography
 import com.zagirlek.ui.theme.robotoFlexFamily
 
@@ -60,16 +51,14 @@ fun AuthContent(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    LoginField(
-                        value = model.loginField.value,
-                        error = model.loginField.error,
+                    NicknameField(
+                        state = model.nicknameField,
                         onValueChange = loginFieldValueChange,
                         modifier = Modifier.fillMaxWidth()
                     )
 
                     PasswordField(
-                        value = model.passwordField.value,
-                        error = model.passwordField.error,
+                        state = model.passwordField,
                         onValueChange = passwordFieldValueChange,
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -105,66 +94,6 @@ fun AuthContent(
             }
         }
     }
-}
-
-@Composable
-private fun LoginField(
-    value: String,
-    error: LoginTextFieldError?,
-    modifier: Modifier = Modifier,
-    onValueChange: (String) -> Unit
-) {
-    AppTextField(
-        value = value,
-        onValueChange = onValueChange,
-        label = stringResource(R.string.login),
-        errorMessage = when (error) {
-            LoginTextFieldError.OnlyCyrillic -> stringResource(R.string.login_error_cyrillic)
-            LoginTextFieldError.WrongLogin -> stringResource(R.string.login_error_invalid)
-            null -> null
-        },
-        modifier = modifier
-    )
-}
-
-@Composable
-private fun PasswordField(
-    value: String,
-    error: PasswordTextFieldError?,
-    modifier: Modifier = Modifier,
-    onValueChange: (String) -> Unit
-) {
-    var passwordVisibility by rememberSaveable { mutableStateOf(true) }
-
-    AppTextField(
-        value = value,
-        onValueChange = onValueChange,
-        label = stringResource(R.string.password),
-        errorMessage = when(error){
-            PasswordTextFieldError.LengthLessThenSix -> stringResource(R.string.password_less_then_6)
-            PasswordTextFieldError.LengthMoreThenTwelve -> stringResource(R.string.password_more_then_12)
-            PasswordTextFieldError.WithoutLetter -> stringResource(R.string.password_without_letter)
-            PasswordTextFieldError.WithoutNumber -> stringResource(R.string.password_without_number)
-            null -> null
-        },
-        trailingIcon = {
-            IconButton(
-                onClick = {
-                    passwordVisibility = !passwordVisibility
-                }
-            ) {
-                Icon(
-                    painterResource(
-                        if (!passwordVisibility) R.drawable.ic_visibility
-                        else R.drawable.ic_visibility_off
-                    ),
-                    null
-                )
-            }
-        },
-        visualTransformation = if (passwordVisibility) PasswordVisualTransformation() else VisualTransformation.None,
-        modifier = modifier
-    )
 }
 
 @Composable

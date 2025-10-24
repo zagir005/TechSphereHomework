@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="admin">Администратор</string>
+    <string name="add_user">Добавить пользователя</string>
+    <string name="save">Сохранить</string>
+    <string name="user">Пользователь</string>
+    <string name="cancel">Отмена</string>
+</resources>

@@ -4,15 +4,16 @@ import com.arkivanov.mvikotlin.core.store.Reducer
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import com.zagirlek.auth.elements.textfield.TextFieldState
-import com.zagirlek.auth.elements.textfield.textfielderror.LoginTextFieldError
-import com.zagirlek.auth.elements.textfield.textfielderror.PasswordTextFieldError
 import com.zagirlek.auth.usecase.AuthUseCase
 import com.zagirlek.auth.usecase.AuthWithoutLoginUseCase
 import com.zagirlek.common.error.AuthError
-import kotlinx.coroutines.Dispatchers
+import com.zagirlek.common.model.AuthToken
+import com.zagirlek.common.textfieldstate.AppTextFieldState
+import com.zagirlek.common.validation.nickname.NicknameError
+import com.zagirlek.common.validation.nickname.validateNickname
+import com.zagirlek.common.validation.password.PasswordError
+import com.zagirlek.common.validation.password.validatePassword
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 internal class AuthStoreFactory(
     private val storeFactory: StoreFactory,
@@ -22,11 +23,11 @@ internal class AuthStoreFactory(
     private sealed interface Msg {
         data class LoginFieldValue(
             val text: String,
-            val error: LoginTextFieldError?
+            val error: NicknameError.NicknameValidationError?
         ): Msg
         data class PasswordFieldValue(
             val text: String,
-            val error: PasswordTextFieldError?
+            val error: PasswordError.PasswordValidationError?
         ): Msg
         data class Loading(val isLoading: Boolean): Msg
         data class AuthAvailability(val isAvailable: Boolean): Msg
@@ -47,13 +48,13 @@ internal class AuthStoreFactory(
                     dispatch(
                         Msg.LoginFieldValue(
                             text = intent.text,
-                            error = validateLogin(intent.text)
+                            error = validateNickname(intent.text)
                         )
                     )
                     dispatch(
                         Msg.AuthAvailability(
                             isAvailable = isAuthAvailable(
-                                loginTextFieldState = state().loginTextFieldState,
+                                nicknameTextFieldState = state().loginTextFieldState,
                                 passwordTextFieldState = state().passwordTextFieldState
                             )
                         )
@@ -69,7 +70,7 @@ internal class AuthStoreFactory(
                     dispatch(
                         Msg.AuthAvailability(
                             isAuthAvailable(
-                                loginTextFieldState = state().loginTextFieldState,
+                                nicknameTextFieldState = state().loginTextFieldState,
                                 passwordTextFieldState = state().passwordTextFieldState
                             )
                         )
@@ -83,17 +84,22 @@ internal class AuthStoreFactory(
                     scope.launch {
                         authWithoutLoginUseCase()
                     }
-                    publish(AuthStore.Label.ToMain)
+                    publish(AuthStore.Label.ToClient)
                 }
             }
 
         private fun auth(login: String, password: String){
             dispatch(Msg.Loading(true))
             scope.launch {
-                withContext(Dispatchers.IO){ authUseCase(login, password) }
+                authUseCase(login, password)
                     .onSuccess {
+                        publish(
+                            label = when(it.tokenType){
+                                AuthToken.TokenType.ADMIN -> AuthStore.Label.ToAdmin
+                                else -> AuthStore.Label.ToClient
+                            }
+                        )
                         dispatch(Msg.Loading(false))
-                        publish(AuthStore.Label.ToMain)
                     }
                     .onFailure { error ->
                         dispatch(Msg.Loading(false))
@@ -112,30 +118,11 @@ internal class AuthStoreFactory(
         }
 
         private fun isAuthAvailable(
-            loginTextFieldState: TextFieldState<LoginTextFieldError>,
-            passwordTextFieldState: TextFieldState<PasswordTextFieldError>,
+            nicknameTextFieldState: AppTextFieldState<NicknameError.NicknameValidationError>,
+            passwordTextFieldState: AppTextFieldState<PasswordError.PasswordValidationError>,
         ): Boolean {
-            return loginTextFieldState.isNotEmpty() && passwordTextFieldState.isNotEmpty()
-                    && loginTextFieldState.isValid() && passwordTextFieldState.isValid()
-        }
-
-        private fun validateLogin(login: String): LoginTextFieldError? {
-            return when {
-                login.isEmpty() -> null
-                !login.matches(Regex("^[^A-Za-z]+$")) -> LoginTextFieldError.OnlyCyrillic
-                else -> null
-            }
-        }
-
-        private fun validatePassword(password: String): PasswordTextFieldError? {
-            return when {
-                password.isEmpty() -> null
-                password.length < 6 -> PasswordTextFieldError.LengthLessThenSix
-                password.length > 12 -> PasswordTextFieldError.LengthMoreThenTwelve
-                password.toCharArray().none { it.isDigit() } -> PasswordTextFieldError.WithoutNumber
-                password.toCharArray().none { it.isLetter() } -> PasswordTextFieldError.WithoutLetter
-                else -> null
-            }
+            return nicknameTextFieldState.isNotEmpty() && passwordTextFieldState.isNotEmpty()
+                    && nicknameTextFieldState.isValid() && passwordTextFieldState.isValid()
         }
     }
 

@@ -4,7 +4,7 @@
     <string name="password">Пароль</string>
     <string name="login">Логин</string>
     <string name="enter">Войти</string>
-    <string name="login_error_cyrillic">Логин пользователя должен быть на кириллице</string>
+    <string name="nickname_error_cyrillic">Логин пользователя должен быть на кириллице</string>
     <string name="login_error_invalid">Неверный логин</string>
     <string name="password_less_then_6">Пароль должен содержать не менее 6 символов</string>
     <string name="password_more_then_12">Пароль должен содержать не более 12 символов</string>
@@ -13,6 +13,8 @@
     <string name="news">Новости</string>
     <string name="continue_without_auth">Продолжить без авторизации</string>
     <string name="weather">Погода</string>
+    <string name="users">Пользователи</string>
+    <string name="dashboard">Админ Панель</string>
     <string name="favorites">Избранное</string>
     <string name="save">Сохранить</string>
     <string name="saved_cities">Сохранённые города</string>
@@ -68,4 +70,7 @@
     <string name="too_many_requests_try_later">Слишком много запросов к серверу. Попробуйте позже</string>
     <string name="repeat">Повторить</string>
     <string name="article_not_saved_check_network_connection">Не удалось сохранить новость. Проверьте интернет соединение</string>
+    <string name="phone">Номер телефона</string>
+    <string name="edit">Редактировать</string>
+    <string name="logout">Выйти</string>
 </resources>

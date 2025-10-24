@@ -13,6 +13,7 @@ import com.zagirlek.auth.store.AuthStore
 import com.zagirlek.auth.store.AuthStoreFactory
 import com.zagirlek.auth.usecase.AuthUseCase
 import com.zagirlek.auth.usecase.AuthWithoutLoginUseCase
+import com.zagirlek.auth.usecase.LogoutUseCase
 import com.zagirlek.common.utils.getStore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -24,13 +25,16 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 internal class AuthScreenComponent(
     componentContext: ComponentContext,
     private val storeFactory: StoreFactory,
     private val authUseCase: AuthUseCase,
+    private val logoutUseCase: LogoutUseCase,
     private val authWithoutLoginUseCase: AuthWithoutLoginUseCase,
-    private val toMain: () -> Unit
+    private val toClient: () -> Unit,
+    private val toAdmin: () -> Unit,
 ): AuthScreen, ComponentContext by componentContext {
     private val storeInstance = instanceKeeper.getStore{
         AuthStoreFactory(
@@ -43,6 +47,12 @@ internal class AuthScreenComponent(
         context = SupervisorJob() + Dispatchers.Main.immediate
     ).also {
         doOnDestroy { it.cancel() }
+    }
+
+    init {
+        componentScope.launch {
+            logoutUseCase()
+        }
     }
 
     override val model: StateFlow<AuthModel> = storeInstance
@@ -61,8 +71,12 @@ internal class AuthScreenComponent(
         .map {
             when(it){
                 is AuthStore.Label.ShowError -> AuthSideEffect.ShowErrorDialog(it.toModel())
-                AuthStore.Label.ToMain -> {
-                    toMain()
+                AuthStore.Label.ToClient -> {
+                    toClient()
+                    return@map null
+                }
+                AuthStore.Label.ToAdmin -> {
+                    toAdmin()
                     return@map null
                 }
             }
@@ -79,7 +93,6 @@ internal class AuthScreenComponent(
 
     override fun passwordFieldValueChanged(value: String) =
         storeInstance.accept(AuthStore.Intent.PasswordTextFieldChange(value))
-
 
     override fun onAuth() =
         storeInstance.accept(AuthStore.Intent.Auth)

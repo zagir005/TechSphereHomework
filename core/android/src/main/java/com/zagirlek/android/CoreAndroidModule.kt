@@ -6,5 +6,5 @@ import com.zagirlek.android.networkchecker.NetworkConnectionCheckerImpl
 
 object CoreAndroidModule {
     fun provideNetworkConnectionChecker(context: Context): NetworkConnectionChecker =
-        NetworkConnectionCheckerImpl(context)
+        NetworkConnectionCheckerImpl(context = context)
 }

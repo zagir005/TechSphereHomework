@@ -10,6 +10,8 @@ import com.zagirlek.local.news.entity.ArticleFullEntity
 import com.zagirlek.local.news.entity.ArticleLiteEntity
 import com.zagirlek.local.news.entity.ArticleStatusEntity
 import com.zagirlek.local.news.entity.RemoteKeyEntity
+import com.zagirlek.local.user.dao.UserDao
+import com.zagirlek.local.user.entitiy.UserEntity
 import com.zagirlek.local.weather.dao.CityDao
 import com.zagirlek.local.weather.dao.WeatherDao
 import com.zagirlek.local.weather.entity.CityEntity
@@ -22,9 +24,10 @@ import com.zagirlek.local.weather.entity.WeatherInfoEntity
         ArticleLiteEntity::class,
         ArticleStatusEntity::class,
         ArticleFullEntity::class,
-        RemoteKeyEntity::class
+        RemoteKeyEntity::class,
+        UserEntity::class
                ],
-    version = 1
+    version = 2
 )
 internal abstract class NyTimesDatabase: RoomDatabase() {
     abstract fun weatherDao(): WeatherDao
@@ -33,4 +36,5 @@ internal abstract class NyTimesDatabase: RoomDatabase() {
     abstract fun articleFullDao(): ArticleFullDao
     abstract fun remoteKeyDao(): RemoteKeyDao
     abstract fun articleStatusDao(): ArticleStatusDao
+    abstract fun userDao(): UserDao
 }

@@ -1,12 +1,13 @@
 package com.zagirlek.auth.model
 
-import com.zagirlek.auth.elements.textfield.TextFieldState
-import com.zagirlek.auth.elements.textfield.textfielderror.LoginTextFieldError
-import com.zagirlek.auth.elements.textfield.textfielderror.PasswordTextFieldError
+import com.zagirlek.common.textfieldstate.AppTextFieldState
+import com.zagirlek.common.validation.nickname.NicknameError
+import com.zagirlek.common.validation.password.PasswordError
 
-data class AuthModel(
-    val loginField: TextFieldState<LoginTextFieldError> = TextFieldState(),
-    val passwordField: TextFieldState<PasswordTextFieldError> = TextFieldState(),
+data class
+AuthModel(
+    val nicknameField: AppTextFieldState<NicknameError.NicknameValidationError> = AppTextFieldState(),
+    val passwordField: AppTextFieldState<PasswordError.PasswordValidationError> = AppTextFieldState(),
     val loading: Boolean = false,
     val isButtonEnabled: Boolean = false
 )

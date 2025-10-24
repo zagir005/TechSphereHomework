@@ -4,6 +4,7 @@ import com.zagirlek.news.model.ArticleFullWithStatus
 import com.zagirlek.news.repository.ArticleRepository
 import kotlinx.coroutines.flow.Flow
 
+
 class GetArticleFullFlowUseCase(
     private val articleRepository: ArticleRepository
 ) {

@@ -10,7 +10,7 @@ import com.zagirlek.local.news.dao.ArticleLiteDao
 import com.zagirlek.news.mapper.toDomain
 import com.zagirlek.news.model.ArticleLiteWithStatus
 import com.zagirlek.news.pagermediator.NewsRemoteMediator
-import com.zagirlek.remote.news.RemoteNewsSource
+import com.zagirlek.remote.news.source.RemoteNewsSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

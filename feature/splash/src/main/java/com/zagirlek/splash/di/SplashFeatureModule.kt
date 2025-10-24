@@ -11,11 +11,13 @@ class SplashFeatureModule(
     fun getSplashComponent(
         componentContext: ComponentContext,
         toAuth: () -> Unit,
-        toMain: () -> Unit,
+        toAdmin: () -> Unit,
+        toClient: () -> Unit
     ): SplashComponent = DefaultSplashComponent(
         componentContext = componentContext,
         onAuthRequired = toAuth,
-        onAuthSuccess = toMain,
+        toAdmin = toAdmin,
+        toClient = toClient,
         getCurrentAuthTokenUseCase = getCurrentAuthTokenUseCase
     )
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="delete">Удалить</string>
+    <string name="admins">Админинстраторы</string>
+    <string name="clients">Клиенты</string>
+    <string name="you">Вы</string>
+</resources>

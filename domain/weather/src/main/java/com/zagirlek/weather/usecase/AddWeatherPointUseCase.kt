@@ -13,11 +13,10 @@ class AddWeatherPointUseCase(
         city: City,
         temperature: Int
     ): Result<WeatherPoint> = runCatching {
-        val id = weatherRepository.addWeatherPoint(city = city, temperature = temperature)
+        val id = weatherRepository.add(city = city, temperature = temperature)
         if (id == -1L){
             throw IllegalStateException("Не удалось добавить WeatherInfoEntity")
         }
-
         weatherRepository.getWeatherPointById(id)
             ?: throw IllegalStateException("WeatherPoint с id=$id существует, но не найден")
     }

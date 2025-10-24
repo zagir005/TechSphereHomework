@@ -1,14 +1,14 @@
 package com.zagirlek.auth.usecase
 
-import com.zagirlek.auth.model.AuthToken
-import com.zagirlek.auth.repository.AuthRepository
+import com.zagirlek.authmanager.AuthManager
+import com.zagirlek.common.model.AuthToken
 
 class AuthUseCase(
-    private val authRepository: AuthRepository
+    private val authManager: AuthManager
 ) {
     suspend operator fun invoke(
         login: String,
         password: String
     ): Result<AuthToken> =
-        authRepository.login(login = login, password = password)
+        authManager.login(nickname = login, password = password)
 }

@@ -39,6 +39,7 @@ android {
 dependencies {
     implementation(projects.core.common)
     implementation(projects.core.ui)
+
     implementation(projects.domain.auth)
 
     implementation(libs.decompose)

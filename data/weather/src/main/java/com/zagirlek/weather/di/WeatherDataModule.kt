@@ -2,7 +2,7 @@ package com.zagirlek.weather.di
 
 import com.zagirlek.local.weather.dao.CityDao
 import com.zagirlek.local.weather.dao.WeatherDao
-import com.zagirlek.remote.autocomplete.service.AutocompleteService
+import com.zagirlek.remote.autocomplete.source.RemoteAutocompleteCitySource
 import com.zagirlek.weather.repository.CityAutocompleteRepository
 import com.zagirlek.weather.repository.CityAutocompleteRepositoryImpl
 import com.zagirlek.weather.repository.CityRepository
@@ -11,12 +11,12 @@ import com.zagirlek.weather.repository.WeatherRepository
 import com.zagirlek.weather.repository.WeatherRepositoryImpl
 
 class WeatherDataModule(
-    private val autocompleteService: AutocompleteService,
+    private val autocompleteCitySource: RemoteAutocompleteCitySource,
     private val cityDao: CityDao,
     private val weatherDao: WeatherDao
 ) {
     val cityAutocompleteRepository: CityAutocompleteRepository by lazy {
-        CityAutocompleteRepositoryImpl(autocompleteService = autocompleteService)
+        CityAutocompleteRepositoryImpl(autocompleteCitySource = autocompleteCitySource)
     }
 
     val cityRepository: CityRepository by lazy {

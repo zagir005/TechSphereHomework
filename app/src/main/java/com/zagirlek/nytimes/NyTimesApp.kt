@@ -7,25 +7,25 @@ import com.zagirlek.nytimes.di.DomainDi
 import com.zagirlek.nytimes.di.FeatureModule
 
 class NyTimesApp: Application() {
-
     private val coreDi: CoreDi by lazy {
         CoreDi(this)
     }
-
     private val dataDi: DataDi by lazy {
         DataDi(coreDi)
     }
-
     private val domainDi: DomainDi by lazy {
-        DomainDi(dataDi)
+        DomainDi(
+            dataDi = dataDi,
+            coreDi = coreDi
+        )
     }
-
     val featureModule: FeatureModule by lazy {
         FeatureModule(
             storeFactory = coreDi.storeFactory,
             authDomainModule = domainDi.authDomainModule,
             weatherDomainModule = domainDi.weatherDomainModule,
-            newsDomainModule = domainDi.newsDomainModule
+            newsDomainModule = domainDi.newsDomainModule,
+            userDomainModule = domainDi.userDomainModule
         )
     }
 }
