@@ -9,8 +9,6 @@ import com.arkivanov.decompose.router.pages.select
 import com.arkivanov.decompose.value.Value
 import com.zagirlek.list.UserListScreen
 import com.zagirlek.list.di.UserListFeatureModule
-import com.zagirlek.root.AdminRootComponent.Child.Dashboard
-import com.zagirlek.root.AdminRootComponent.Child.UserList
 import com.zagirlek.root.di.DashboardRootFeatureModule
 import kotlinx.serialization.Serializable
 
@@ -42,8 +40,8 @@ class DefaultAdminRootComponent(
 
     private fun child(config: Config, component: ComponentContext): AdminRootComponent.Child =
         when(config){
-            Config.Dashboard -> Dashboard(dashboard(component))
-            Config.UserList -> UserList(userList(component))
+            Config.Dashboard -> AdminRootComponent.Child.Dashboard(dashboard(component))
+            Config.UserList -> AdminRootComponent.Child.UserList(userList(component))
         }
 
     private fun dashboard(context: ComponentContext): DashboardRootComponent =

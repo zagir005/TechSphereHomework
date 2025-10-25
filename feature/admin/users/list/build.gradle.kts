@@ -54,12 +54,6 @@ dependencies {
 
     implementation(libs.kotlin.serialization.json)
 
-    implementation(libs.paging.common)
-    implementation(libs.paging.compose)
-
-    implementation(libs.coil.compose)
-    implementation(libs.coil.okhttp)
-
     implementation(libs.shimmer)
 
     implementation(libs.material.icons.extended)
