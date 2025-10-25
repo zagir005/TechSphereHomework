@@ -6,7 +6,9 @@ import com.zagirlek.articledetails.di.ArticleDetailsFeatureModule
 import com.zagirlek.auth.di.AuthDomainModule
 import com.zagirlek.auth.di.AuthFeatureModule
 import com.zagirlek.favorite.di.FavoriteNewsFeatureModule
+import com.zagirlek.home.di.DashboardHomeFeatureModule
 import com.zagirlek.latest.di.LatestNewsFeatureModule
+import com.zagirlek.list.di.ComputersListFeatureModule
 import com.zagirlek.list.di.UserListFeatureModule
 import com.zagirlek.news.di.NewsDomainModule
 import com.zagirlek.root.di.AdminRootFeatureModule
@@ -24,6 +26,7 @@ class FeatureModule(
     private val userDomainModule: UserDomainModule,
     private val storeFactory: StoreFactory
 ) {
+    /* == ROOT MODULES == */
     fun getClientRootModule(): ClientRootFeatureModule = ClientRootFeatureModule(
         weatherFeatureModule = getWeatherModule(),
         latestNewsFeatureModule = getLatestNewsModule(),
@@ -34,9 +37,34 @@ class FeatureModule(
         dashboardRootFeatureModule = getDashboardRootFeatureModule(),
         userListFeatureModule = getUserListFeatureModule()
     )
+
+    /* == ADMIN == */
+    fun getDashboardRootFeatureModule(): DashboardRootFeatureModule = DashboardRootFeatureModule(
+        dashboardHomeModule = getDashboardHomeModule(),
+        computersListModule = getComputersListModule()
+    )
+    fun getDashboardHomeModule(): DashboardHomeFeatureModule = DashboardHomeFeatureModule(
+        storeFactory = storeFactory
+    )
+    fun getComputersListModule(): ComputersListFeatureModule = ComputersListFeatureModule(
+        storeFactory = storeFactory
+    )
     fun getSplashModule(): SplashFeatureModule = SplashFeatureModule(
         getCurrentAuthTokenUseCase = authDomainModule.provideGetCurrentAuthTokenUseCase()
     )
+    fun getUserListFeatureModule(): UserListFeatureModule = UserListFeatureModule(
+        storeFactory = storeFactory,
+        userDomainModule = userDomainModule,
+        addOrEditUserFeatureModule = addOrEditUserFeatureModule()
+    )
+
+    fun addOrEditUserFeatureModule(): AddOrEditUserFeatureModule = AddOrEditUserFeatureModule (
+        storeFactory = storeFactory,
+        userDomainModule = userDomainModule
+    )
+
+    /* == CLIENT == */
+
     fun getAuthModule(): AuthFeatureModule = AuthFeatureModule(
         storeFactory = storeFactory,
         authUseCase = authDomainModule.provideAuthUseCase(),
@@ -44,30 +72,19 @@ class FeatureModule(
         logoutUseCase = authDomainModule.provideLogoutUseCase()
     )
 
-    private fun getDashboardRootFeatureModule(): DashboardRootFeatureModule = DashboardRootFeatureModule()
-    private fun getUserListFeatureModule(): UserListFeatureModule = UserListFeatureModule(
-        storeFactory = storeFactory,
-        userDomainModule = userDomainModule,
-        addOrEditUserFeatureModule = addOrEditUserFeatureModule()
-    )
-
-    private fun addOrEditUserFeatureModule(): AddOrEditUserFeatureModule = AddOrEditUserFeatureModule (
-        storeFactory = storeFactory,
-        userDomainModule = userDomainModule
-    )
-    private fun getWeatherModule(): WeatherFeatureModule = WeatherFeatureModule(
+    fun getWeatherModule(): WeatherFeatureModule = WeatherFeatureModule(
         weatherDomainModule
     )
-    private fun getArticleDetailsModule(): ArticleDetailsFeatureModule = ArticleDetailsFeatureModule(
+    fun getArticleDetailsModule(): ArticleDetailsFeatureModule = ArticleDetailsFeatureModule(
         storeFactory = storeFactory,
         newsDomainModule = newsDomainModule
     )
-    private fun getLatestNewsModule(): LatestNewsFeatureModule = LatestNewsFeatureModule(
+    fun getLatestNewsModule(): LatestNewsFeatureModule = LatestNewsFeatureModule(
         storeFactory = storeFactory,
         articleDetailsModule = getArticleDetailsModule(),
         newsDomainModule = newsDomainModule
     )
-    private fun getFavoriteNewsModule(): FavoriteNewsFeatureModule = FavoriteNewsFeatureModule(
+    fun getFavoriteNewsModule(): FavoriteNewsFeatureModule = FavoriteNewsFeatureModule(
         storeFactory = storeFactory,
         articleDetailsModule = getArticleDetailsModule(),
         newsDomainModule = newsDomainModule

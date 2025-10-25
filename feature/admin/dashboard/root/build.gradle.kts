@@ -42,7 +42,6 @@ dependencies {
     implementation(projects.core.common)
     implementation(projects.feature.admin.dashboard.home)
     implementation(projects.feature.admin.dashboard.computer.list)
-    implementation(projects.feature.admin.dashboard.session.list)
     implementation(projects.feature.admin.dashboard.tariff.list)
 
     implementation(libs.decompose)
