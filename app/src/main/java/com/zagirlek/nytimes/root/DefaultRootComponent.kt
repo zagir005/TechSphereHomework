@@ -13,6 +13,7 @@ import com.zagirlek.nytimes.root.RootComponent.Child.ClientRoot
 import com.zagirlek.nytimes.root.RootComponent.Child.Login
 import com.zagirlek.nytimes.root.RootComponent.Child.Splash
 import com.zagirlek.root.AdminRootComponent
+import com.zagirlek.root.DashboardRootComponent
 import com.zagirlek.root.ClientRootComponent
 import com.zagirlek.root.di.AdminRootFeatureModule
 import com.zagirlek.root.di.ClientRootFeatureModule

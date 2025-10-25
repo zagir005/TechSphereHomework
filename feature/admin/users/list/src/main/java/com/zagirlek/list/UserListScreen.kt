@@ -16,5 +16,4 @@ interface UserListScreen {
     fun deleteUser(userId: Long)
     fun onDialogDismiss()
     fun logout()
-
 }

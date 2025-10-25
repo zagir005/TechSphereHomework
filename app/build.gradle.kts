@@ -80,7 +80,12 @@ dependencies {
     implementation(projects.feature.admin.root)
     implementation(projects.feature.admin.dashboard.root)
     implementation(projects.feature.admin.dashboard.home)
-    implementation(projects.feature.admin.dashboard.home)
+    implementation(projects.feature.admin.dashboard.tariff.list)
+    implementation(projects.feature.admin.dashboard.tariff.addoredit)
+    implementation(projects.feature.admin.dashboard.session.add)
+    implementation(projects.feature.admin.dashboard.session.finish)
+    implementation(projects.feature.admin.dashboard.computer.list)
+    implementation(projects.feature.admin.dashboard.computer.addoredit)
     implementation(projects.feature.admin.users.list)
     implementation(projects.feature.admin.users.addoredit)
 

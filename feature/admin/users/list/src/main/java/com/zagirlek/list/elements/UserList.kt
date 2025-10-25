@@ -17,6 +17,7 @@ import com.zagirlek.common.model.UserType
 import com.zagirlek.common.utils.ifNotEmpty
 import com.zagirlek.list.R
 import com.zagirlek.ui.elements.NyTimesPreview
+import com.zagirlek.ui.elements.TitleText
 
 @Composable
 internal fun UserList(

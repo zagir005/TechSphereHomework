@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="create_session">Создать сессию</string>
+    <string name="computers">ПК</string>
+    <string name="tariffs">Тарифы</string>
+    <string name="sessions">Сессии</string>
+</resources>
