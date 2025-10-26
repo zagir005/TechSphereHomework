@@ -16,7 +16,7 @@ class UserRepositoryImpl(
 
     override suspend fun deleteById(id: Long): Int = userDao.deleteById(id)
 
-    override fun getAllFlow(): Flow<List<User>> = userDao.getAllFlow().map { it.toDomain() }
+    override fun getAllFlow(): Flow<List<User>> = userDao.getAllFlow(null).map { it.toDomain() }
 
     override suspend fun getById(id: Long): User? = userDao.getById(id)?.toDomain()
 
@@ -29,8 +29,8 @@ class UserRepositoryImpl(
     )?.toDomain()
 
     override fun searchUsersFlow(query: String?): Flow<List<User>> =
-        userDao.searchUsersFlow(query).map { it.toDomain() }
+        userDao.getAllFlow(query).map { it.toDomain() }
 
     override suspend fun searchUsersList(query: String?): List<User> =
-        userDao.searchUsersList(query).map { it.toDomain() }
+        userDao.getAllList(query).map { it.toDomain() }
 }

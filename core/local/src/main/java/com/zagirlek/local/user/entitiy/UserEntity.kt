@@ -7,8 +7,10 @@ import com.zagirlek.common.model.UserType
 
 @Entity(
     tableName = "users",
-    indices = [Index(value = ["phone"], unique = true),
-        Index(value = ["nickname"], unique = true)]
+    indices = [
+        Index(value = ["phone"], unique = true),
+        Index(value = ["nickname"], unique = true)
+    ]
 )
 data class UserEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,

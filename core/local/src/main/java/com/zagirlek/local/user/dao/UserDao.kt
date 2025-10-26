@@ -17,27 +17,30 @@ import kotlinx.coroutines.flow.Flow
 interface UserDao {
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insert(user: UserEntity): Long
-
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insertAll(userList: List<UserEntity>)
-
     @Update(onConflict = OnConflictStrategy.ABORT)
     suspend fun update(user: UserEntity): Int
-
     @Query("DELETE FROM users WHERE id = :id")
     suspend fun deleteById(id: Long): Int
 
-    @Query("SELECT * FROM users ORDER BY nickname COLLATE NOCASE ASC")
-    fun getAllFlow(): Flow<List<UserEntity>>
-
-    @Query("SELECT * FROM users ORDER BY nickname COLLATE NOCASE ASC")
-    suspend fun getAllList(): List<UserEntity>
-
     @Query("SELECT * FROM users WHERE id = :id LIMIT 1")
     suspend fun getById(id: Long): UserEntity?
-
     @Query("SELECT * FROM users WHERE id = :id")
     fun getByIdFlow(id: Long): Flow<UserEntity?>
+
+    @Query("""
+        SELECT * FROM users
+        WHERE (:query IS NULL OR nickname LIKE '%' || :query || '%' COLLATE NOCASE
+               OR phone LIKE '%' || :query || '%' COLLATE NOCASE)
+        ORDER BY nickname COLLATE NOCASE ASC """)
+    fun getAllList(query: String? = null): List<UserEntity>
+    @Query("""
+        SELECT * FROM users
+        WHERE (:query IS NULL OR nickname LIKE '%' || :query || '%' COLLATE NOCASE
+               OR phone LIKE '%' || :query || '%' COLLATE NOCASE)
+        ORDER BY nickname COLLATE NOCASE ASC """)
+    fun getAllFlow(query: String? = null): Flow<List<UserEntity>>
 
     @Query(
         """
@@ -48,18 +51,4 @@ interface UserDao {
     """
     )
     suspend fun findByLoginAndPassword(nickname: String, password: String): UserEntity?
-
-    @Query("""
-        SELECT * FROM users
-        WHERE (:query IS NULL OR nickname LIKE '%' || :query || '%' COLLATE NOCASE
-               OR phone LIKE '%' || :query || '%' COLLATE NOCASE)
-        ORDER BY nickname COLLATE NOCASE ASC """)
-    fun searchUsersFlow(query: String?): Flow<List<UserEntity>>
-
-    @Query("""
-        SELECT * FROM users
-        WHERE (:query IS NULL OR nickname LIKE '%' || :query || '%' COLLATE NOCASE
-               OR phone LIKE '%' || :query || '%' COLLATE NOCASE)
-        ORDER BY nickname COLLATE NOCASE ASC """)
-    fun searchUsersList(query: String?): List<UserEntity>
 }
