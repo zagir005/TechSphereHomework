@@ -3,6 +3,7 @@ package com.zagirlek.authmanager
 import com.zagirlek.authmanager.mapper.toAuthToken
 import com.zagirlek.authmanager.mapper.toUser
 import com.zagirlek.authmanager.tokenmanager.TokenManager
+import com.zagirlek.common.error.AppError
 import com.zagirlek.common.error.AuthError
 import com.zagirlek.common.model.AuthToken
 import com.zagirlek.common.model.User
@@ -11,7 +12,6 @@ import com.zagirlek.local.user.dao.UserDao
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 
 class AuthManager (
@@ -52,12 +52,17 @@ class AuthManager (
         }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    fun getCurrUserFlow(): Flow<User?> =
+    fun getCurrUserFlow(): Result<Flow<User>> = runCatchingCancellable {
         authTokenManager.tokenFlow
-            .flatMapLatest {
-                if (it != null)
-                    userDao.getByIdFlow(it).map { it?.toUser() }
-                else
-                    flowOf(null)
+            .flatMapLatest { token ->
+                token?.let { id ->
+                    userDao
+                        .getByIdFlow(id)
+                        .map {
+                            it?.toUser() ?: throw AppError.TryingGetCurrentUserWithoutAuth
+                        }
+                } ?: throw AppError.TryingGetCurrentUserWithoutAuth
             }
+    }
+
 }

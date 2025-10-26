@@ -21,7 +21,7 @@ class UserListFeatureModule(
             storeFactory = storeFactory,
             addOrEditUserModule = addOrEditUserFeatureModule,
             deleteUserByIdUseCase = userDomainModule.deleteUserByIdUseCase(),
-            getUsersWithCurrentUserFlowUseCase = userDomainModule.getUsersWithCurrentUserFlowUseCase(),
+            getUserListAndCurrentUserFlowUseCase = userDomainModule.getUsersWithCurrentUserFlowUseCase(),
             onLogout = logout
         )
 }

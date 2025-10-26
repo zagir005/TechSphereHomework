@@ -7,7 +7,7 @@ import com.zagirlek.user.usecase.DeleteUserByIdUseCase
 import com.zagirlek.user.usecase.EditUserUseCase
 import com.zagirlek.user.usecase.GetUserByIdUseCase
 import com.zagirlek.user.usecase.GetUserListFlowUseCase
-import com.zagirlek.user.usecase.GetUsersWithCurrentUserFlowUseCase
+import com.zagirlek.user.usecase.GetUserListAndCurrentUserFlowUseCase
 import com.zagirlek.user.usecase.IsNicknameUniqueUseCase
 import com.zagirlek.user.usecase.IsPhoneUniqueUseCase
 import com.zagirlek.user.usecase.ToggleBlockUserUseCase
@@ -32,8 +32,8 @@ class UserDomainModule(
         IsPhoneUniqueUseCase(userRepository)
     fun getUserByNickname(): IsNicknameUniqueUseCase =
         IsNicknameUniqueUseCase(userRepository)
-    fun getUsersWithCurrentUserFlowUseCase(): GetUsersWithCurrentUserFlowUseCase =
-        GetUsersWithCurrentUserFlowUseCase(
+    fun getUsersWithCurrentUserFlowUseCase(): GetUserListAndCurrentUserFlowUseCase =
+        GetUserListAndCurrentUserFlowUseCase(
             authManager = authManager,
             userRepository = userRepository
         )

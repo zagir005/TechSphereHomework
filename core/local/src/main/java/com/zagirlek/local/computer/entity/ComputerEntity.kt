@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.zagirlek.common.crud.CrudEntity
 
 @Entity(
     tableName = "computers",
@@ -13,7 +14,7 @@ import androidx.room.PrimaryKey
     ]
 )
 data class ComputerEntity(
-    @ColumnInfo(collate = ColumnInfo.NOCASE) val code: String,
-    val description: String,
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
-)
+    @ColumnInfo(collate = ColumnInfo.NOCASE) val code: String,
+    val description: String? = null,
+): CrudEntity

@@ -2,6 +2,7 @@ package com.zagirlek.local.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.zagirlek.local.computer.dao.ComputerDao
 import com.zagirlek.local.computer.entity.ComputerEntity
 import com.zagirlek.local.news.dao.ArticleFullDao
 import com.zagirlek.local.news.dao.ArticleLiteDao
@@ -39,4 +40,5 @@ internal abstract class NyTimesDatabase: RoomDatabase() {
     abstract fun remoteKeyDao(): RemoteKeyDao
     abstract fun articleStatusDao(): ArticleStatusDao
     abstract fun userDao(): UserDao
+    abstract fun computerDao(): ComputerDao
 }
