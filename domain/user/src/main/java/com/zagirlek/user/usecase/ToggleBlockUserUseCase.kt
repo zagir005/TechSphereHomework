@@ -8,7 +8,7 @@ class ToggleBlockUserUseCase(
 ) {
     suspend operator fun invoke(user: User){
         userRepository.update(
-            user = user.copy(
+            model = user.copy(
                 isBlocked = !user.isBlocked
             )
         )

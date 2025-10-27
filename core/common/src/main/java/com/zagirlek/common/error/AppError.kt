@@ -11,4 +11,7 @@ sealed class AppError(
     data class TryingUpdateWithDuplicateValues(
         override val message: String? = "Новые данные уже содержатся в другом объекте"
     ): AppError(message = message)
+
+    object TryingGetCurrentUserWithoutAuth:
+        AppError(message = "Попытка получения текущего пользователя без авторизации")
 }

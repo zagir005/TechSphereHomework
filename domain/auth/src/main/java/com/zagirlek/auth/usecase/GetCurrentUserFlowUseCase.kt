@@ -7,6 +7,6 @@ import kotlinx.coroutines.flow.Flow
 class GetCurrentUserFlowUseCase(
     private val authManager: AuthManager
 ) {
-    suspend operator fun invoke(): Flow<User?>? =
+    operator fun invoke(): Result<Flow<User>> =
         authManager.getCurrUserFlow()
 }

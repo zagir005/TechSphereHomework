@@ -30,8 +30,8 @@ import com.zagirlek.common.model.Article
 import com.zagirlek.ui.R
 import com.zagirlek.ui.elements.ArticleStatus
 import com.zagirlek.ui.elements.ArticleText
-import com.zagirlek.ui.elements.CategoryDateInfo
-import com.zagirlek.ui.elements.NewsCategoryUi
+import com.zagirlek.ui.elements.newscategory.CategoryDateInfo
+import com.zagirlek.ui.elements.newscategory.NewsCategoryUi
 import com.zagirlek.ui.elements.NyTimesPreview
 
 @Composable

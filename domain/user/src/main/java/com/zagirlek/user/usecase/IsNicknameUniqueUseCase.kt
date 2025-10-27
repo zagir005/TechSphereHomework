@@ -6,7 +6,7 @@ class IsNicknameUniqueUseCase(
     private val userRepository: UserRepository
 ) {
     suspend operator fun invoke(nickname: String): Boolean {
-        val userList = userRepository.searchUsersList(nickname)
+        val userList = userRepository.getAllList(nickname)
         return userList.none { it.nickname.contentEquals(other = nickname, ignoreCase = true) }
     }
 }

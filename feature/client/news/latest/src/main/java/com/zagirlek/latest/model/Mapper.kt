@@ -6,7 +6,7 @@ import com.zagirlek.common.model.Article
 import com.zagirlek.common.utils.timeAgoOrDate
 import com.zagirlek.latest.store.LatestNewsStore
 import com.zagirlek.news.model.ArticleLiteWithStatus
-import com.zagirlek.ui.elements.toUiCategory
+import com.zagirlek.ui.elements.newscategory.toUiCategory
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

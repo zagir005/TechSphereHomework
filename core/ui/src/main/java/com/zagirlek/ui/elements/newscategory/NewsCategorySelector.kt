@@ -1,4 +1,4 @@
-package com.zagirlek.ui.elements
+package com.zagirlek.ui.elements.newscategory
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.zagirlek.ui.R
+import com.zagirlek.ui.elements.NyTimesPreview
 
 
 @Composable

@@ -20,7 +20,7 @@ import com.zagirlek.list.model.toModel
 import com.zagirlek.list.store.UserListStore
 import com.zagirlek.list.store.UserListStoreFactory
 import com.zagirlek.user.usecase.DeleteUserByIdUseCase
-import com.zagirlek.user.usecase.GetUsersWithCurrentUserFlowUseCase
+import com.zagirlek.user.usecase.GetUserListAndCurrentUserFlowUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
@@ -34,7 +34,7 @@ internal class UserListScreenComponent(
     private val storeFactory: StoreFactory,
     private val deleteUserByIdUseCase: DeleteUserByIdUseCase,
     private val addOrEditUserModule: AddOrEditUserFeatureModule,
-    private val getUsersWithCurrentUserFlowUseCase: GetUsersWithCurrentUserFlowUseCase,
+    private val getUserListAndCurrentUserFlowUseCase: GetUserListAndCurrentUserFlowUseCase,
     private val onLogout: () -> Unit,
 ): UserListScreen, ComponentContext by componentContext{
     private val componentScope = coroutineScope(
@@ -46,7 +46,7 @@ internal class UserListScreenComponent(
         UserListStoreFactory(
             storeFactory = storeFactory,
             deleteUserByIdUseCase = deleteUserByIdUseCase,
-            getUsersWithCurrentUserFlowUseCase = getUsersWithCurrentUserFlowUseCase
+            getUserListAndCurrentUserFlowUseCase = getUserListAndCurrentUserFlowUseCase
         ).create()
     }
     override val model: StateFlow<UserListModel> = storeInstance

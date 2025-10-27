@@ -8,5 +8,5 @@ class GetUserListFlowUseCase(
     private val userRepository: UserRepository
 ) {
     operator fun invoke(query: String?): Flow<List<User>> =
-        userRepository.searchUsersFlow(query)
+        userRepository.getAllFlow(query)
 }

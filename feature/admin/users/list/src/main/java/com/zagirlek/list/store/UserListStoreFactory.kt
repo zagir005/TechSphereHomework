@@ -13,7 +13,7 @@ import com.zagirlek.list.store.UserListStoreFactory.Msg.SearchField
 import com.zagirlek.ui.elements.alertdialog.AlertDialogState
 import com.zagirlek.ui.elements.alertdialog.DialogButton
 import com.zagirlek.user.usecase.DeleteUserByIdUseCase
-import com.zagirlek.user.usecase.GetUsersWithCurrentUserFlowUseCase
+import com.zagirlek.user.usecase.GetUserListAndCurrentUserFlowUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 class UserListStoreFactory(
     private val storeFactory: StoreFactory,
     private val deleteUserByIdUseCase: DeleteUserByIdUseCase,
-    private val getUsersWithCurrentUserFlowUseCase: GetUsersWithCurrentUserFlowUseCase
+    private val getUserListAndCurrentUserFlowUseCase: GetUserListAndCurrentUserFlowUseCase
 ) {
     fun create(): UserListStore = object: UserListStore, Store<Intent, State, Nothing> by storeFactory.create(
         name = "user_store",
@@ -61,7 +61,7 @@ class UserListStoreFactory(
             when(action){
                 is LoadUserFlow -> {
                     scope.launch {
-                        getUsersWithCurrentUserFlowUseCase(action.searchQuery)
+                        getUserListAndCurrentUserFlowUseCase(action.searchQuery)
                             .onSuccess {
                                 combine(
                                     it.currentUserFlow,

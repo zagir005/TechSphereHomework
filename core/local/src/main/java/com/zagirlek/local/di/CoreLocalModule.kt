@@ -5,6 +5,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.zagirlek.common.model.UserType
+import com.zagirlek.local.computer.entity.ComputerEntity
 import com.zagirlek.local.database.NyTimesDatabase
 import com.zagirlek.local.user.entitiy.UserEntity
 import kotlinx.coroutines.CoroutineScope
@@ -41,6 +42,21 @@ class CoreLocalModule(private val applicationContext: Context) {
                                     )
                                 )
                             )
+                        val computerDao = database.computerDao()
+                        if(computerDao.getAllList().isEmpty()){
+                            computerDao.insertAll(
+                                computerList = listOf(
+                                    ComputerEntity(
+                                        code = "PC-01",
+                                        description = "Рабочий"
+                                    ),
+                                    ComputerEntity(
+                                        code = "PC-02",
+                                        description = "Игровой, не работает"
+                                    )
+                                )
+                            )
+                        }
                     }
                 }
             })

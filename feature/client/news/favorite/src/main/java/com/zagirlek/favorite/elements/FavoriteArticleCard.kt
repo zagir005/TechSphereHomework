@@ -39,7 +39,7 @@ import coil3.compose.AsyncImage
 import com.zagirlek.favorite.model.FavoriteArticle
 import com.zagirlek.ui.R
 import com.zagirlek.ui.elements.AppChip
-import com.zagirlek.ui.elements.NewsCategoryUi
+import com.zagirlek.ui.elements.newscategory.NewsCategoryUi
 import com.zagirlek.ui.elements.NyTimesPreview
 
 @Composable

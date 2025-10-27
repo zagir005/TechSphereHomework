@@ -2,6 +2,8 @@ package com.zagirlek.local.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.zagirlek.local.computer.dao.ComputerDao
+import com.zagirlek.local.computer.entity.ComputerEntity
 import com.zagirlek.local.news.dao.ArticleFullDao
 import com.zagirlek.local.news.dao.ArticleLiteDao
 import com.zagirlek.local.news.dao.ArticleStatusDao
@@ -25,9 +27,10 @@ import com.zagirlek.local.weather.entity.WeatherInfoEntity
         ArticleStatusEntity::class,
         ArticleFullEntity::class,
         RemoteKeyEntity::class,
-        UserEntity::class
+        UserEntity::class,
+        ComputerEntity::class
                ],
-    version = 2
+    version = 1
 )
 internal abstract class NyTimesDatabase: RoomDatabase() {
     abstract fun weatherDao(): WeatherDao
@@ -37,4 +40,5 @@ internal abstract class NyTimesDatabase: RoomDatabase() {
     abstract fun remoteKeyDao(): RemoteKeyDao
     abstract fun articleStatusDao(): ArticleStatusDao
     abstract fun userDao(): UserDao
+    abstract fun computerDao(): ComputerDao
 }

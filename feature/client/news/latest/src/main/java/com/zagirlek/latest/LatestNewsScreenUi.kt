@@ -16,7 +16,7 @@ import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.zagirlek.articledetails.ArticleDetailsBottomSheet
 import com.zagirlek.latest.elements.LatestNewsScreenContent
 import com.zagirlek.latest.model.NewsSideEffect
-import com.zagirlek.ui.elements.toCategory
+import com.zagirlek.ui.elements.newscategory.toCategory
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

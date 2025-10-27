@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.zagirlek.articledetails.ArticleDetailsBottomSheet
 import com.zagirlek.favorite.elements.FavoriteNewsScreenContent
-import com.zagirlek.ui.elements.toCategory
+import com.zagirlek.ui.elements.newscategory.toCategory
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
