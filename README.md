@@ -48,7 +48,7 @@
 ## ⏯️ Видео-демонстрация
 <div align="center">
 
-[gameplay01.webm](https://github.com/user-attachments/assets/cdeb8c16-ae12-4e97-8d56-8c9ecb1ff5a3)
+https://github.com/user-attachments/assets/a5d7a1ba-13ec-44e9-8e46-15523e0b7cd6
 
 </div>
 
