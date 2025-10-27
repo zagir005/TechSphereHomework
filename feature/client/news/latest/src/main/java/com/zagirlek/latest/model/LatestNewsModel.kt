@@ -2,7 +2,7 @@ package com.zagirlek.latest.model
 
 import androidx.paging.PagingData
 import com.zagirlek.common.model.Article
-import com.zagirlek.ui.elements.NewsCategoryUi
+import com.zagirlek.ui.elements.newscategory.NewsCategoryUi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 

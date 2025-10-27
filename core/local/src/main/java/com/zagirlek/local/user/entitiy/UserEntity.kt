@@ -3,6 +3,7 @@ package com.zagirlek.local.user.entitiy
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.zagirlek.common.crud.CrudEntity
 import com.zagirlek.common.model.UserType
 
 @Entity(
@@ -19,4 +20,4 @@ data class UserEntity(
     val type: UserType,
     val isBlocked: Boolean = false,
     val password: String
-)
+): CrudEntity

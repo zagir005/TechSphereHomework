@@ -1,4 +1,4 @@
-package com.zagirlek.ui.elements
+package com.zagirlek.ui.elements.newscategory
 
 import com.zagirlek.common.model.NewsCategory
 import com.zagirlek.ui.R

@@ -2,7 +2,7 @@ package com.zagirlek.favorite.model
 
 import com.zagirlek.favorite.store.FavoriteNewsStore
 import com.zagirlek.news.model.ArticleLiteWithStatus
-import com.zagirlek.ui.elements.toUiCategory
+import com.zagirlek.ui.elements.newscategory.toUiCategory
 
 internal fun List<ArticleLiteWithStatus>.toFavoriteArticle(): List<FavoriteArticle> = map {
     it.toFavoriteArticle()

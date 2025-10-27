@@ -23,8 +23,8 @@ import com.zagirlek.latest.model.LatestNewsModel
 import com.zagirlek.ui.R
 
 import com.zagirlek.ui.elements.textfield.AppTextField
-import com.zagirlek.ui.elements.NewsCategorySelector
-import com.zagirlek.ui.elements.NewsCategoryUi
+import com.zagirlek.ui.elements.newscategory.NewsCategorySelector
+import com.zagirlek.ui.elements.newscategory.NewsCategoryUi
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

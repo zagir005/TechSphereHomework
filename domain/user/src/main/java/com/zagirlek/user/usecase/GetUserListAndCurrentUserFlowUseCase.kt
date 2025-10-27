@@ -14,7 +14,7 @@ class GetUserListAndCurrentUserFlowUseCase(
             onSuccess = { currUserFlow ->
                 val allUsersFlow = combine(
                     flow = currUserFlow,
-                    flow2 = userRepository.searchUsersFlow(query)
+                    flow2 = userRepository.getAllFlow(query)
                 ) { user, usersList ->
                     usersList.filterNot { it.id == user.id }
                 }

@@ -1,6 +1,6 @@
 package com.zagirlek.favorite.model
 
-import com.zagirlek.ui.elements.NewsCategoryUi
+import com.zagirlek.ui.elements.newscategory.NewsCategoryUi
 
 data class FavoriteArticle(
     val articleId: String,

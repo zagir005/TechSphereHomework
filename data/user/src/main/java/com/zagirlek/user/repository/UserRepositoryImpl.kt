@@ -1,24 +1,13 @@
 package com.zagirlek.user.repository
 
+import com.zagirlek.common.crud.BaseCrudRepository
 import com.zagirlek.common.model.User
 import com.zagirlek.local.user.dao.UserDao
-import com.zagirlek.user.mapper.toDomain
-import com.zagirlek.user.mapper.toEntity
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import com.zagirlek.local.user.entitiy.UserEntity
 
 class UserRepositoryImpl(
-    private val userDao: UserDao
-): UserRepository {
-    override suspend fun add(user: User): Long = userDao.insert(user.toEntity())
-
-    override suspend fun update(user: User): Int = userDao.update(user.toEntity())
-
-    override suspend fun deleteById(id: Long): Int = userDao.deleteById(id)
-
-    override fun getAllFlow(): Flow<List<User>> = userDao.getAllFlow(null).map { it.toDomain() }
-
-    override suspend fun getById(id: Long): User? = userDao.getById(id)?.toDomain()
+    private val userDao: UserDao,
+): UserRepository, BaseCrudRepository<User, UserEntity, UserDao>(crudDao = userDao) {
 
     override suspend fun getByLoginAndPassword(
         login: String,
@@ -28,9 +17,19 @@ class UserRepositoryImpl(
         password = password
     )?.toDomain()
 
-    override fun searchUsersFlow(query: String?): Flow<List<User>> =
-        userDao.getAllFlow(query).map { it.toDomain() }
+    override fun UserEntity.toDomain(): User = User(
+        id = id,
+        phone = phone,
+        nickname = nickname,
+        status = type,
+        password = password
+    )
 
-    override suspend fun searchUsersList(query: String?): List<User> =
-        userDao.getAllList(query).map { it.toDomain() }
+    override fun User.toEntity(): UserEntity = UserEntity(
+        id = id,
+        phone = phone,
+        nickname = nickname,
+        type = status,
+        password = password
+    )
 }
